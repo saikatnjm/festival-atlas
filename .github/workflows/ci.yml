@@ -24,9 +24,9 @@ jobs:
       # Test-only origin that scripts/smoke.mjs expects (same as docker-compose `verify`). Not a real domain.
       NEXT_PUBLIC_SITE_URL: "http://localhost:3100"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           # Same major as the Dockerfile; tests load .ts files via Node's built-in type stripping.
           node-version: 24
