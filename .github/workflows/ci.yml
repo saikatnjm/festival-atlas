@@ -1,0 +1,52 @@
+# CI: data validation, unit tests, type-check, production build and route smoke test.
+# Runs on every push and pull request. Vercel (connected separately) does the preview/production
+# deploys; mark the "verify" job as a required check in branch protection so broken builds can't merge.
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      # Test-only origin that scripts/smoke.mjs expects (same as docker-compose `verify`). Not a real domain.
+      NEXT_PUBLIC_SITE_URL: "http://localhost:3100"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Same major as the Dockerfile; tests load .ts files via Node's built-in type stripping.
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Validate pandal data
+        run: npm run validate
+
+      - name: Unit tests
+        run: npm test
+
+      # Build first: it generates next-env.d.ts (git-ignored) and .next/types used by the type-check.
+      - name: Build
+        run: npm run build
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Smoke test (next start + routes)
+        run: node scripts/smoke.mjs

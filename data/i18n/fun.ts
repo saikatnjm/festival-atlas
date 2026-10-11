@@ -1,0 +1,68 @@
+// Interface text for personalisation, card formats, friend challenges, squads and local discovery.
+// Kept as {bn, en} pairs (like the game content) so both languages are always written together.
+
+import type { L } from "@/lib/i18n";
+
+const l = (bn: string, en: string): L => ({ bn, en });
+
+export const fun = {
+  me: {
+    askTitle: l("তোমায় কী নামে ডাকব?", "What should we call you?"),
+    askHint: l("নাম বা ডাকনাম দিলে কার্ডে বড় করে লেখা থাকবে। না দিলেও দিব্যি খেলা যাবে।", "Add a name or nickname and it goes big on your card. Skipping is totally fine."),
+    nameLabel: l("নাম বা ডাকনাম (ঐচ্ছিক)", "Name or nickname (optional)"),
+    namePh: l("যেমন: সৈকত, Rini, পিন্টু", "e.g. Saikat, রিনি, Pintu"),
+    go: l("চলো খেলি", "Let’s play"),
+    skip: l("নাম ছাড়াই খেলব", "Play without a name"),
+    more: l("আরও মজার জন্য (সবই ঐচ্ছিক)", "Extra fun details (all optional)"),
+    city: l("শহর বা পাড়া", "City or neighbourhood"),
+    cityPh: l("যেমন: বেহালা, ঢাকা", "e.g. Behala, Dhaka"),
+    activity: l("পুজোয় সবচেয়ে প্রিয়", "Favourite Puja thing"),
+    role: l("বন্ধুদের দলে তুমি", "In your friend group you’re"),
+    mood: l("এবারের মুড", "This year’s mood"),
+    privacy: l("শুধু তোমার এই ব্রাউজারেই থাকে, কোথাও পাঠানো হয় না।", "Saved only in this browser. Never sent anywhere."),
+    playingAs: l("{name} হিসেবে খেলছ", "Playing as {name}"),
+    playingAnon: l("নাম ছাড়া খেলছ", "Playing without a name"),
+    change: l("বদলাও", "Change"),
+    forget: l("আমার তথ্য মুছে দাও", "Forget my details"),
+    hello: l("নমস্কার {name}! চলো, শুরু করা যাক।", "Hi {name}! Let’s get going."),
+    helloAnon: l("চলো, শুরু করা যাক!", "Let’s get going!"),
+  },
+  card: {
+    format: l("কার্ডের মাপ", "Card size"),
+    portrait: l("পোর্ট্রেট", "Portrait"),
+    square: l("স্কোয়্যার", "Square"),
+    story: l("স্টোরি", "Story"),
+    newTitle: l("অন্য টাইটেল", "Another title"),
+    traits: l("বৈশিষ্ট্য", "Traits"),
+  },
+  duel: {
+    challenge: l("বন্ধুকে চ্যালেঞ্জ করো", "Challenge a friend"),
+    challengeText: l("{name} পুজোয় হয়েছে “{title}”। তুমি কী হবে? খেলে দেখো!", "{name} got “{title}” at Puja. What will you get? Play and see!"),
+    friend: l("এক বন্ধু", "A friend"),
+    banner: l("{name} তোমাকে চ্যালেঞ্জ করেছে! ওর ফল: “{title}”।", "{name} challenged you! Their result: “{title}”."),
+    play: l("খেলে দেখো তুমি কী হও →", "Play and see what you get →"),
+    vs: l("{a} বনাম {b}", "{a} vs {b}"),
+    you: l("তুমি", "You"),
+    note: l("চ্যালেঞ্জ লিঙ্কে শুধু তোমার দেওয়া নাম আর ফলাফলের নাম যায়, আর কিছু নয়।", "A challenge link carries only the name you gave and the result, nothing else."),
+    copied: l("চ্যালেঞ্জ লিঙ্ক কপি হয়েছে।", "Challenge link copied."),
+  },
+  home: {
+    localH2: l("তোমার এলাকার পুজো", "Puja near you"),
+    localP: l("কলকাতা ও পশ্চিমবঙ্গ, নাকি বাংলাদেশ? সূত্রসহ খবর, প্যান্ডেল-হপিং প্ল্যান আর নিজের ‘আমার পুজো প্ল্যান’ কার্ড।", "Kolkata & West Bengal, or Bangladesh? Sourced news, pandal-hopping plans and your own Puja plan card."),
+    friendsH3: l("বন্ধুদের নিয়ে খেলো", "Play with friends"),
+    friendsP: l("দলের রোল কার্ড বানাও, বা যেকোনো খেলার ফল পাঠিয়ে বন্ধুকে চ্যালেঞ্জ করো। অ্যাকাউন্ট লাগে না।", "Make a squad role card, or send any result to challenge a friend. No accounts needed."),
+  },
+  squad: {
+    friendPh: l("বন্ধু {n}", "Friend {n}"),
+    add: l("আরেকজন যোগ করো", "Add a friend"),
+    remove: l("সরাও", "Remove"),
+    make: l("দল বানাও!", "Make our squad!"),
+    reshuffle: l("রোল বদলাও", "Reshuffle roles"),
+    edit: l("নাম বদলাও", "Edit names"),
+    needTwo: l("অন্তত দু’জনের নাম লাগবে।", "Add at least two names."),
+    kicker: l("আমাদের পুজো-দল", "Our Puja squad"),
+    shareText: l("আমাদের পুজো-দলের রোল ঠিক হয়ে গেল! তোমাদের দলেরটা বানাও:", "Our Puja squad roles are sorted! Make yours:"),
+    note: l("নামগুলো লিঙ্কের মধ্যেই থাকে, তাই লিঙ্ক যে খুলবে সে একই কার্ড দেখবে। শুধু তাদের নামই দাও যারা রাজি।", "The names travel inside the link, so whoever opens it sees the same card. Only add friends who are happy to be included."),
+    intro: l("বন্ধুদের নাম লেখো, কে দলের নেতা আর কে হারিয়ে যাওয়া GPS, আমরা ঠিক করে দিচ্ছি!", "Type your friends’ names and we’ll decide who leads and who’s the lost GPS!"),
+  },
+} as const;

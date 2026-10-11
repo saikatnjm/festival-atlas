@@ -1,0 +1,26 @@
+services:
+  dev:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    # Build cache in RAM, writable by any uid. Option string is passed to the
+    # mount as-is, so it isn't affected by YAML/Compose number parsing.
+    tmpfs:
+      - /app/.next:mode=1777,size=1g
+    environment:
+      # Local-only origin so canonical URLs, sitemap and share previews can be tested.
+      NEXT_PUBLIC_SITE_URL: "http://localhost:3000"
+
+  verify:
+    profiles: ["verify"]
+    build:
+      context: .
+      target: verify
+    environment:
+      # Test-only origin (matches scripts/smoke.mjs); not a real domain.
+      NEXT_PUBLIC_SITE_URL: "http://localhost:3100"
