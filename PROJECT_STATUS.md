@@ -1,6 +1,15 @@
 # Festival Atlas — Project Status
 
-## CI/CD setup (latest)
+## Improvement tasks, group 1 (latest, from the "Festival Atlas improvement tasks" checklist)
+- **Live domain metadata:** the origin is resolved once in `next.config.ts` (`NEXT_PUBLIC_SITE_ORIGIN`). On Vercel, `VERCEL_PROJECT_PRODUCTION_URL` always wins, so a stale `NEXT_PUBLIC_SITE_URL` (the dead festival-atlas-eight domain) no longer leaks into canonical, og:url, og:image, the sitemap or card footers. Preview builds also canonicalise to production. Docker and CI still use `NEXT_PUBLIC_SITE_URL`.
+- **Homepage share image:** `app/[lang]/opengraph-image.tsx` with alt text (Latin-only, like the other OG images).
+- **Pins:** 15 more IN/BD listings now have area- or city-level pins taken from Wikipedia infobox coordinates (`coordSource` on each).
+  - City-level: Khardaha, Narayanganj, Bagerhat, Barishal.
+  - Still unpinned (no citable coordinates found): Rajdanga Naba Uday Sangha, Siddheshwari Kali Mandir, Shankhari Bazar, Krishibid Institute (Farmgate), Rayshaheb Bari (Dinajpur).
+- **Get directions:** a button on each pandal page opens Google Maps directions by name, address and city (more precise than our area pins).
+- Not run here (no shell). The last CI run passed install, validate, tests, build and type-check; only the smoke test failed, and its FAIL lines are still needed.
+
+## CI/CD setup
 - `.github/workflows/ci.yml` runs on every push and PR with Node 24: `npm ci` → validate → tests → build → type-check → smoke test (`NEXT_PUBLIC_SITE_URL=http://localhost:3100`, as in docker-compose `verify`). It has not run yet; it first runs on the first push.
 - Deploys are left to Vercel's Git integration: previews per branch/PR, production on `main`. Set `NEXT_PUBLIC_SITE_URL` in Vercel (production = real domain; optionally Preview = the preview URL), plus the optional verification variables.
 - `package.json` engines changed to `node >=22.18`, matching what the tests already needed.

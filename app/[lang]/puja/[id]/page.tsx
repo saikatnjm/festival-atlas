@@ -114,8 +114,17 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
       </dl>
 
       <p className="cta-row">
+        {/* Google Maps resolves the venue by name and address, which is more precise than our area-level pins. */}
+        <a
+          className="button"
+          href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent([p.name, p.address ?? p.area, p.city].filter(Boolean).join(", "))}`}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {t.directions}
+        </a>
         {hasPin(p) ? (
-          <Link className="button" href={`${withLang(lang, "/puja")}#e=${p.id}`}>
+          <Link className="button button-light" href={`${withLang(lang, "/puja")}#e=${p.id}`}>
             {t.showOnMap}
           </Link>
         ) : null}

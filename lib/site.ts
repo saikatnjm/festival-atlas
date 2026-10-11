@@ -2,16 +2,12 @@ import type { Metadata } from "next";
 import { LANGS, OG_LOCALE, type Lang, withLang } from "./i18n";
 
 /**
- * Public origin of the site, or undefined if none is configured.
- * Set NEXT_PUBLIC_SITE_URL (e.g. your custom domain) before deploying.
- * On Vercel, VERCEL_PROJECT_PRODUCTION_URL (provided by Vercel) is used as a fallback.
+ * Public origin of the site, or undefined if none is configured. Resolved at build time in
+ * next.config.ts: Vercel's production domain on Vercel, NEXT_PUBLIC_SITE_URL elsewhere.
  * Nothing is assumed otherwise: without an origin there are no canonical URLs or sitemap entries.
  */
 export function siteUrl(): string | undefined {
-  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL;
-  const fromVercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  const raw = fromEnv || (fromVercel ? `https://${fromVercel}` : undefined);
-  return raw ? raw.replace(/\/+$/, "") : undefined;
+  return process.env.NEXT_PUBLIC_SITE_ORIGIN || undefined;
 }
 
 /** Host shown on share cards when an origin is configured (the browser host is used otherwise). */

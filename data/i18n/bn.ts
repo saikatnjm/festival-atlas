@@ -243,6 +243,7 @@ const bn: Dict = {
     sources: "সূত্র",
     sourcesNote: "তথ্য এই পাতাগুলো থেকে নেওয়া। আমরা নিজের ভাষায় সারাংশ লিখেছি।",
     openOsm: "OpenStreetMap-এ খুলুন",
+    directions: "পথ দেখাও",
     backToDirectory: "সব প্যান্ডেল",
     sameCity: "{city}-এর আরও প্যান্ডেল",
     detailTitle: "{name}: {place}-এর দুর্গাপুজো",

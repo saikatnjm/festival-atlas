@@ -241,6 +241,7 @@ const en = {
     sources: "Sources",
     sourcesNote: "Information comes from these pages. We summarise it in our own words.",
     openOsm: "Open in OpenStreetMap",
+    directions: "Get directions",
     backToDirectory: "All pandals",
     sameCity: "More in {city}",
     detailTitle: "{name}: Durga Puja in {place}",

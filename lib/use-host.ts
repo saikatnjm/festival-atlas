@@ -11,8 +11,8 @@ function hostOf(url: string | undefined): string {
   }
 }
 
-// Inlined at build time when NEXT_PUBLIC_SITE_URL is set.
-const CONFIGURED = hostOf(process.env.NEXT_PUBLIC_SITE_URL);
+// Inlined at build time (see siteOrigin in next.config.ts).
+const CONFIGURED = hostOf(process.env.NEXT_PUBLIC_SITE_ORIGIN);
 
 /**
  * The website name shown on cards. The configured site host when there is one; otherwise the host the
