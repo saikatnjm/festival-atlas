@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { captionPunchlines, captionScenes, excuseOpeners, excuseReasons, meta } from "@/data/play/lines";
+import { captionPunchlines, captionScenes, excuseOpeners, excuseReasons, meta, reelShots, reelTwists } from "@/data/play/lines";
 import type { CharId, Mood } from "@/data/play/types";
 import { fmt } from "@/lib/format";
 import type { L, Lang } from "@/lib/i18n";
@@ -10,7 +10,9 @@ import ResultPanel from "./ResultPanel";
 import Character from "./art/Character";
 import type { PlayStrings } from "./strings";
 
-type Mode = "caption" | "excuse";
+type Mode = "caption" | "excuse" | "reel";
+const MODES: Mode[] = ["caption", "excuse", "reel"];
+const isMode = (v: unknown): v is Mode => MODES.includes(v as Mode);
 interface Pick {
   a: number;
   b: number;
@@ -19,10 +21,12 @@ interface Pick {
 const PARTS: Record<Mode, [L[], L[]]> = {
   caption: [captionScenes, captionPunchlines],
   excuse: [excuseOpeners, excuseReasons],
+  reel: [reelShots, reelTwists],
 };
 const WHO: Record<Mode, { who: CharId; idle: Mood; done: Mood }> = {
   caption: { who: "selfie", idle: "happy", done: "proud" },
   excuse: { who: "excuse", idle: "smug", done: "wow" },
+  reel: { who: "selfie", idle: "wow", done: "smug" },
 };
 
 const randomIndex = (n: number) => Math.floor(Math.random() * n);
@@ -38,7 +42,7 @@ export default function PujaLines({ lang, s }: { lang: Lang; s: PlayStrings }) {
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
     const m = p.get("m");
-    if (m !== "caption" && m !== "excuse") return;
+    if (!isMode(m)) return;
     const a = Number(p.get("a"));
     const b = Number(p.get("b"));
     if (inRange(a, PARTS[m][0].length) && inRange(b, PARTS[m][1].length)) {
@@ -70,14 +74,19 @@ export default function PujaLines({ lang, s }: { lang: Lang; s: PlayStrings }) {
   const [first, second] = PARTS[mode];
   const who = WHO[mode];
   const text = pick ? `${first[pick.a][lang]} ${second[pick.b][lang]}` : "";
-  const label = mode === "caption" ? { prompt: l.captionPrompt, kicker: l.captionKicker, again: l.captionAgain } : { prompt: l.excusePrompt, kicker: l.excuseKicker, again: l.excuseAgain };
+  const LABELS = {
+    caption: { name: l.caption, prompt: l.captionPrompt, kicker: l.captionKicker, again: l.captionAgain },
+    excuse: { name: l.excuse, prompt: l.excusePrompt, kicker: l.excuseKicker, again: l.excuseAgain },
+    reel: { name: l.reel, prompt: l.reelPrompt, kicker: l.reelKicker, again: l.reelAgain },
+  } as const;
+  const label = LABELS[mode];
 
   return (
     <div className="cx-stage">
       <div className="cx-share-row" role="group" aria-label={l.whatToMake}>
-        {(Object.keys(PARTS) as Mode[]).map((m) => (
+        {MODES.map((m) => (
           <button key={m} type="button" className="cx-chip" aria-pressed={mode === m} onClick={() => switchMode(m)}>
-            {m === "caption" ? l.caption : l.excuse}
+            {LABELS[m].name}
           </button>
         ))}
       </div>

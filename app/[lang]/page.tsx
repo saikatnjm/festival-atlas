@@ -3,18 +3,18 @@ import Link from "next/link";
 import { cast } from "@/data/play/cast";
 import { activities } from "@/data/play";
 import { getDict } from "@/data/i18n";
-import { cityName, pandals, summary } from "@/data/pandals";
+import { cityName, pandals } from "@/data/pandals";
 import Character from "@/components/play/art/Character";
 import CastStrip from "@/components/home/CastStrip";
+import Countdown from "@/components/home/Countdown";
+import HeroCard from "@/components/home/HeroCard";
 import EventList from "@/components/local/EventList";
+import { playStrings } from "@/components/play/strings";
 import { events } from "@/data/events/events";
 import { fun } from "@/data/i18n/fun";
 import { REGIONS, regionInfo, ui } from "@/data/local/content";
-import { meta as squadMeta } from "@/data/play/squad";
-import { fmt } from "@/lib/format";
-import { ICON_SVG } from "@/lib/brand";
 import JsonLd, { abs } from "@/lib/jsonld";
-import { withLang } from "@/lib/i18n";
+import { num, withLang } from "@/lib/i18n";
 import { langOf } from "@/lib/route";
 import { pageMeta } from "@/lib/site";
 
@@ -36,13 +36,18 @@ function topCities(limit: number): { city: string; n: number }[] {
     .slice(0, limit);
 }
 
+/** The three games shown on the home page; the rest live on /play. */
+const FEATURED = ["puja-personality", "puja-squad", "pandal-challenge"];
+
 export default async function HomePage({ params }: { params: Promise<Params> }) {
   const lang = langOf((await params).lang);
   const t = getDict(lang);
   const h = t.home;
-  const { total, countries } = summary();
+  const f = fun.home;
   const cities = topCities(6);
   const url = abs(withLang(lang, "/"));
+  const featured = FEATURED.map((slug) => activities.find((a) => a.meta.slug === slug)).filter((a): a is (typeof activities)[number] => Boolean(a));
+  const rest = activities.length - featured.length;
 
   return (
     <>
@@ -61,46 +66,26 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
 
       <section className="home-hero" aria-labelledby="home-h1">
         <div className="home-hero-text">
-          <p className="eyebrow">{h.eyebrow}</p>
-          <h1 id="home-h1">{h.h1}</h1>
-          <p className="lead">{h.lead}</p>
+          <Countdown lang={lang} />
+          <h1 id="home-h1">{f.h1[lang]}</h1>
+          <p className="lead">{f.lead[lang]}</p>
           <p className="cta-row">
-            <Link className="button button-big" href={withLang(lang, "/play")}>
-              {h.ctaPlay}
+            <Link className="button button-big" href={withLang(lang, "/play/puja-personality")}>
+              {f.ctaQuiz[lang]}
             </Link>
-            <Link className="button button-big button-light" href={withLang(lang, "/puja")}>
-              {h.ctaMap}
+            <Link className="button button-big button-light" href={withLang(lang, "/local")}>
+              {f.ctaLocal[lang]}
             </Link>
           </p>
-          <ul className="stat-row" aria-label={t.site.name}>
-            <li>{fmt(h.statPandals, { n: total }, lang)}</li>
-            <li>{fmt(h.statCountries, { n: countries }, lang)}</li>
-            <li>{h.statSources}</li>
-          </ul>
         </div>
-        <div className="home-hero-art" aria-hidden="true">
-          <span className="hero-globe" dangerouslySetInnerHTML={{ __html: ICON_SVG }} />
-          <span className="hero-char hero-char-a">
-            <Character id="selfie" mood="proud" />
-          </span>
-          <span className="hero-char hero-char-b">
-            <Character id="bhog" mood="happy" />
-          </span>
-          <span className="hero-char hero-char-c">
-            <Character id="detective" mood="smug" />
-          </span>
-          <i className="confetti c1" />
-          <i className="confetti c2" />
-          <i className="confetti c3" />
-          <i className="confetti c4" />
-        </div>
+        <HeroCard lang={lang} s={playStrings(t)} />
       </section>
 
       <section className="home-section" aria-labelledby="home-play">
-        <h2 id="home-play">{h.playH2}</h2>
-        <p className="section-lead">{h.playP}</p>
-        <ul className="game-grid">
-          {activities.map(({ meta }) => {
+        <h2 id="home-play">{f.pickH2[lang]}</h2>
+        <p className="section-lead">{f.pickP[lang]}</p>
+        <ul className="game-grid game-pick">
+          {featured.map(({ meta }) => {
             const lead = cast[meta.chars[0]];
             return (
               <li key={meta.slug} className="game-card" style={{ "--c1": lead.c1, "--c2": lead.c2 } as React.CSSProperties}>
@@ -119,31 +104,31 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
           })}
         </ul>
         <p>
-          <Link href={withLang(lang, "/play")}>{h.playCta} →</Link>
+          <Link className="button button-light" href={withLang(lang, "/play")}>
+            {f.moreGames[lang].replace("{n}", num(rest, lang))} →
+          </Link>
         </p>
-        <div className="notice home-friends">
-          <h3>{fun.home.friendsH3[lang]}</h3>
-          <p>{fun.home.friendsP[lang]}</p>
-          <p>
-            <Link className="button" href={withLang(lang, "/play/puja-squad")}>
-              {squadMeta.title[lang]}
-            </Link>
-          </p>
-        </div>
       </section>
 
       <section className="home-section" aria-labelledby="home-trend">
         <h2 id="home-trend">{ui.trendH2[lang]}</h2>
         <p className="section-lead">{ui.trendNote[lang]}</p>
         <EventList lang={lang} events={events} limit={4} showRegion />
-        <p>
-          <Link href={withLang(lang, "/local")}>{ui.seeAll[lang]}</Link>
+        <p className="cta-row">
+          <Link className="button" href={`${withLang(lang, "/local")}#local-route`}>
+            <span className="home-night">
+              <span aria-hidden="true">🌙</span> {f.tonight[lang]}
+            </span>
+          </Link>
+          <Link className="button button-light" href={withLang(lang, "/local")}>
+            {ui.seeAll[lang]}
+          </Link>
         </p>
       </section>
 
       <section className="home-section" aria-labelledby="home-local">
-        <h2 id="home-local">{fun.home.localH2[lang]}</h2>
-        <p className="section-lead">{fun.home.localP[lang]}</p>
+        <h2 id="home-local">{f.localH2[lang]}</h2>
+        <p className="section-lead">{f.localP[lang]}</p>
         <p className="cta-row">
           {REGIONS.map((r) => (
             <Link key={r} className="button button-big button-light" href={`${withLang(lang, "/local")}?r=${r}`}>
@@ -152,7 +137,6 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
           ))}
         </p>
       </section>
-
 
       <section className="home-section" aria-labelledby="home-map">
         <div className="feature">
@@ -164,6 +148,9 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
                 {h.mapCta}
               </Link>
             </p>
+            <p className="fineprint">
+              {f.sourcedLine[lang]} <Link href={withLang(lang, "/about")}>{f.aboutLink[lang]}</Link>
+            </p>
           </div>
           <div className="feature-side">
             <p className="feature-label">{h.mapCities}</p>
@@ -171,7 +158,7 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
               {cities.map(({ city, n }) => (
                 <li key={city}>
                   <Link href={`${withLang(lang, "/puja")}?city=${encodeURIComponent(city)}`}>
-                    {cityName(city, lang)} <span>{lang === "bn" ? n.toString().replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)]) : n}</span>
+                    {cityName(city, lang)} <span>{num(n, lang)}</span>
                   </Link>
                 </li>
               ))}
@@ -182,33 +169,8 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
 
       <section className="home-section" aria-labelledby="home-cast">
         <h2 id="home-cast">{h.castH2}</h2>
-        <p className="section-lead">{h.castHint}</p>
-        <CastStrip lang={lang} labels={{ tap: t.card.tapChar, strength: t.play.strength, weakness: t.play.weakness }} />
-      </section>
-
-      <section className="home-section" aria-labelledby="home-honest">
-        <h2 id="home-honest">{h.honestH2}</h2>
-        <ul className="honest-grid">
-          {h.honest.map((x) => (
-            <li key={x.t} className="honest-card">
-              <h3>{x.t}</h3>
-              <p>{x.p}</p>
-            </li>
-          ))}
-        </ul>
-        <p className="notice">{h.coverage}</p>
-      </section>
-
-      <section className="home-section" aria-labelledby="home-faq">
-        <h2 id="home-faq">{h.faqH2}</h2>
-        <dl className="faq">
-          {h.faq.map((f) => (
-            <div key={f.q}>
-              <dt>{f.q}</dt>
-              <dd>{f.a}</dd>
-            </div>
-          ))}
-        </dl>
+        <p className="section-lead">{f.castHint[lang]}</p>
+        <CastStrip lang={lang} labels={{ tap: t.card.tapChar, strength: t.play.strength, weakness: t.play.weakness, play: f.castPlay[lang] }} />
       </section>
     </>
   );

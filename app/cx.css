@@ -6,7 +6,7 @@
   font-family: var(--cx-font);
 }
 body:has(.cx) {
-  background-color: #fff3d9;
+  background-color: var(--cx-bg, #fff3d9);
   background-image: radial-gradient(rgba(42, 26, 20, 0.09) 1.3px, transparent 1.6px);
   background-size: 14px 14px;
 }
@@ -921,6 +921,13 @@ body:has(.cx) {
 }
 .cx-duel-vs {
   font-size: 1.3rem;
+  font-weight: 800;
+}
+.cx-play-too .cx-btn-big {
+  width: 100%;
+}
+.cx-nudge {
+  margin: 0;
   font-weight: 800;
 }
 .cx-squad-art {

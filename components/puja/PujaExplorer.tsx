@@ -7,9 +7,16 @@ import type { Facets, PandalStatus } from "@/data/pandals";
 import type { PandalItem } from "@/data/pandals/view";
 import type { Dict } from "@/data/i18n";
 import { fmt } from "@/lib/format";
-import type { Lang } from "@/lib/i18n";
+import { num, type Lang } from "@/lib/i18n";
 import { applyFilters, filtersFromSearch, hasFilters, NO_FILTERS, searchFromFilters, type Filters } from "@/lib/pandal-filter";
 import StatusBadge from "./StatusBadge";
+
+/** One-tap city picks shown above the filters; "All" clears them. */
+const QUICK = [
+  { city: "Kolkata", bn: "কলকাতা", icon: "🥁" },
+  { city: "Dhaka", bn: "ঢাকা", icon: "🛕" },
+  { city: "", bn: "", icon: "🌍" },
+];
 
 // Leaflet touches `window`, so the map is only loaded in the browser.
 const PujaMap = dynamic(() => import("./PujaMap"), { ssr: false });
@@ -30,11 +37,22 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
   const [view, setView] = useState<"map" | "list">("list"); // narrow screens; wide screens show both
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const listRef = useRef<HTMLUListElement>(null);
+  const activeCount = (["country", "year", "status", "theme"] as const).filter((k) => filters[k] !== "").length + (filters.city && !QUICK.some((q) => q.city === filters.city) ? 1 : 0);
 
   // Filters and the selected pandal live in the URL (?city=...#e=id), so links and the language switch keep them.
   useEffect(() => {
-    setFilters(filtersFromSearch(window.location.search));
+    const fromUrl = filtersFromSearch(window.location.search);
+    // No filters in the link: open on the visitor's region (the choice saved on the Local page), if any.
+    let region = "";
+    try {
+      const r = window.localStorage.getItem("fa:region");
+      region = r === "wb" ? "IN" : r === "bd" ? "BD" : "";
+    } catch {
+      // ignore
+    }
+    setFilters(!hasFilters(fromUrl) && region ? { ...fromUrl, country: region } : fromUrl);
     const m = /^#e=([\w-]+)$/.exec(window.location.hash);
     if (m && items.some((i) => i.id === m[1])) {
       setSelectedId(m[1]);
@@ -68,11 +86,26 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
 
   return (
     <div className="explorer-wrap">
+      <div className="quick-pick" role="group" aria-label={t.quickAria}>
+        {QUICK.map((q) => {
+          const on = filters.city === q.city && !filters.country;
+          return (
+            <button key={q.city || "all"} type="button" className="chip" aria-pressed={on} onClick={() => setFilters({ ...NO_FILTERS, q: filters.q, city: q.city })}>
+              {q.icon} {q.city ? (lang === "bn" ? q.bn : q.city) : t.all}
+            </button>
+          );
+        })}
+      </div>
       <form className="filters" role="search" onSubmit={(e) => e.preventDefault()}>
         <label className="field field-wide">
           <span>{t.search}</span>
           <input type="search" value={filters.q} onChange={set("q")} placeholder={t.searchPlaceholder} autoComplete="off" />
         </label>
+        <button type="button" className="chip filters-toggle" aria-expanded={moreOpen} aria-controls="more-filters" onClick={() => setMoreOpen((o) => !o)}>
+          {t.moreFilters}
+          {activeCount ? ` (${num(activeCount, lang)})` : ""}
+        </button>
+        <div id="more-filters" className={`filters-more${moreOpen ? " is-open" : ""}`}>
         <label className="field">
           <span>{t.country}</span>
           <select value={filters.country} onChange={set("country")}>
@@ -130,6 +163,7 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
             </select>
           </label>
         )}
+        </div>
       </form>
 
       <div className="status-line">

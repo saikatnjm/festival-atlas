@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/puja",
     "/play",
     "/local",
+    "/about",
     ...pandals.map((p) => `/puja/${p.id}`),
     ...activities.flatMap((a) => [`/play/${a.meta.slug}`, ...a.results.map((r) => `/play/${a.meta.slug}/r/${r.id}`)]),
   ];

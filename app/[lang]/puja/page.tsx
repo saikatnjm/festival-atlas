@@ -54,8 +54,8 @@ export default async function PujaPage({ params }: { params: Promise<Params> }) 
         <h1>{t.puja.h1}</h1>
         <p className="lead">{t.puja.lead}</p>
       </header>
-      <p className="notice">{t.puja.notice}</p>
       <PujaExplorer lang={lang} items={items} facets={facets(pandals, lang)} t={t.puja} />
+      <p className="fineprint">{t.puja.notice}</p>
 
       <section className="about" aria-labelledby="guide-h">
         <h2 id="guide-h">{t.puja.guideH2}</h2>

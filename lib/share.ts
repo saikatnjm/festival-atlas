@@ -18,7 +18,7 @@ export interface CardData {
   punchline?: string;
   blurb?: string;
   stat?: { label: string; value: number };
-  /** Personal ribbon, e.g. "সৈকতের ভোগ খাওয়ার সরকারি লাইসেন্স". Shown big; omitted on generic pages. */
+  /** Personal ribbon, e.g. "পিন্টুর ভোগ খাওয়ার সরকারি লাইসেন্স". Shown big; omitted on generic pages. */
   owner?: string;
   /** A personal one-liner addressed to the player. */
   verdict?: string;

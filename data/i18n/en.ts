@@ -13,6 +13,7 @@ const en = {
     language: "Language",
     switchTo: "Switch to {name}",
     home: "Festival Atlas home",
+    me: "Playing as",
   },
   nav: { home: "Home", puja: "Pandals", play: "Play", local: "Local Puja" },
   footer: {
@@ -23,12 +24,12 @@ const en = {
   },
   meta: {
     home: {
-      title: "Festival Atlas: Cartoon Festival Games & Durga Puja Pandal Map",
+      title: "Festival Atlas: Durga Puja 2026 Games, Local Guide & Pandal Map",
       description:
-        "Play funny Bengali cartoon quizzes and share your result card, and explore a sourced world map of Durga Puja pandals. In English and বাংলা.",
+        "Find out who you are at Puja in 30 seconds, get a card with your name, challenge friends, and plan pandal-hopping in Kolkata and Dhaka with sourced news. English and বাংলা.",
     },
     puja: {
-      title: "Durga Puja Pandal Map & Directory",
+      title: "Kolkata & Dhaka Durga Puja Pandals 2026: Map & Directory",
       description:
         "Search and filter sourced Durga Puja pandals by city, country, year and theme on a world map. Every entry shows its status and sources. Coverage is partial.",
     },
@@ -150,6 +151,10 @@ const en = {
       excuseKicker: "Pia's excuse",
       captionAgain: "Another caption",
       excuseAgain: "Another excuse",
+      reel: "Reel idea",
+      reelPrompt: "Phone ready? I'll give you a reel to shoot: one shot, one twist.",
+      reelKicker: "Rini's reel idea",
+      reelAgain: "Another idea",
       make: "Make one!",
       copyText: "Copy text",
       madeStatus: "New text made: {text}",
@@ -183,10 +188,9 @@ const en = {
     brand: "Festival Atlas",
   },
   puja: {
-    h1: "Durga Puja pandal map & directory",
-    lead: "Sourced Durga Puja pandals around the world, from Kolkata and Dhaka to Bengali communities abroad. Search, filter and open any entry to see its sources.",
-    notice:
-      "Good to know: this is a curated, growing list, not every pandal. Pins are approximate. Themes, dates and venues change every year, so check the organisers before you travel.",
+    h1: "Pandals of Kolkata & Dhaka, on a map",
+    lead: "Sourced pandals, 2026 themes where reported, and a Get-directions button on every entry. Bengali communities abroad are in here too.",
+    notice: "A curated, growing list, not every pandal. Pins are approximate; check the organisers before you travel.",
     search: "Search pandals, cities or countries",
     searchPlaceholder: "e.g. Kolkata, Dhaka, London",
     country: "Country",
@@ -199,6 +203,8 @@ const en = {
     viewMap: "Map",
     viewList: "List",
     viewAria: "Show map or list",
+    quickAria: "Quick picks",
+    moreFilters: "Filters",
     count: "{n} of {total} listings",
     pinned: "{n} on the map",
     clear: "Clear filters",
@@ -292,6 +298,11 @@ const en = {
       tip: "Ask before photographing people or rituals, and avoid flash during worship.",
     },
   ],
+  about: {
+    title: "How Festival Atlas works",
+    lead: "A free, no-account guide to Durga Puja: sourced pandal listings, a local guide for Kolkata and Dhaka, and cartoon games you can share.",
+    description: "How Festival Atlas sources its pandal listings, labels entries, handles privacy, and answers common questions.",
+  },
   notFound: {
     h1: "We couldn't find that page",
     p: "The link may be old or mistyped.",

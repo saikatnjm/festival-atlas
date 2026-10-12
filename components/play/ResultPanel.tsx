@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { activities } from "@/data/play";
 import { fun } from "@/data/i18n/fun";
-import { VERDICTS, duoLine, fill, pickBadge, traitsFor } from "@/data/play/personal";
+import { CHAR_EMOJI, VERDICTS, duoLine, fill, pickBadge, traitsFor } from "@/data/play/personal";
 import type { CharId } from "@/data/play/types";
 import { withLang } from "@/lib/i18n";
 import { cleanName, possessive } from "@/lib/profile";
@@ -95,14 +95,25 @@ export default function ResultPanel({ s, slug, card, sharePath, shareText, onAga
     const q = new URLSearchParams({ vr: resultId });
     if (name) q.set("vs", name);
     const url = new URL(withLang(lang, `/play/${slug}?${q.toString()}`), window.location.origin).toString();
-    const text = fill(fun.duel.challengeText[lang], { name: name || fun.duel.friend[lang], title: card.title });
-    const outcome = await shareLink({ title: `${card.title} · Festival Atlas`, text, url });
+    const challenge = `${CHAR_EMOJI[card.char]} ${fill(fun.duel.challengeText[lang], { name: name || fun.duel.friend[lang], title: card.title })}`;
+    const outcome = await shareLink({ title: `${card.title} · Festival Atlas`, text: challenge, url });
     if (outcome === "copied") setDuelMsg(fun.duel.copied[lang]);
     else if (outcome === "failed") setDuelMsg((await copyText(url)) ? fun.duel.copied[lang] : s.share.copyFailed);
   };
 
+  // Share text leads with the character's emoji so it stands out in a chat.
+  const text = `${CHAR_EMOJI[card.char]} ${shareText}`;
+
   return (
     <section className="cx-result" aria-label={s.play.resultAria}>
+      {!onAgain ? (
+        // A friend opened a shared result: the way in should be the first thing they see.
+        <p className="cx-share-row cx-play-too">
+          <Link className="cx-btn cx-btn-big" href={withLang(lang, `/play/${slug}`)}>
+            {fun.duel.playToo[lang]}
+          </Link>
+        </p>
+      ) : null}
       {vs ? (
         <div className="cx-duel" role="status">
           <p className="cx-duel-vs">{fill(fun.duel.vs[lang], { a: name || fun.duel.you[lang], b: vs.name })}</p>
@@ -120,7 +131,7 @@ export default function ResultPanel({ s, slug, card, sharePath, shareText, onAga
         s={s}
         path={withLang(lang, path)}
         title={`${shown.owner ?? card.title} · Festival Atlas`}
-        text={shareText}
+        text={text}
         card={shown}
         getArt={getArt}
         artKey={artKey}
@@ -156,6 +167,11 @@ export default function ResultPanel({ s, slug, card, sharePath, shareText, onAga
       {personal && resultId ? (
         <p className="cx-note" role="status">
           {duelMsg || fun.duel.note[lang]}
+        </p>
+      ) : null}
+      {personal && slug !== "puja-squad" ? (
+        <p className="cx-nudge">
+          <Link href={withLang(lang, "/play/puja-squad")}>{fun.squad.nudge[lang]}</Link>
         </p>
       ) : null}
       <h3 className="cx-h3">{s.play.moreGames}</h3>

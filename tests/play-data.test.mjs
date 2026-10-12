@@ -148,7 +148,7 @@ test("bingo: enough items for a card, no duplicates in either language, tiers ex
 });
 
 test("generator: part lists are non-empty, unique per language, with plenty of combinations", () => {
-  const lists = [lines.captionScenes, lines.captionPunchlines, lines.excuseOpeners, lines.excuseReasons];
+  const lists = [lines.captionScenes, lines.captionPunchlines, lines.excuseOpeners, lines.excuseReasons, lines.reelShots, lines.reelTwists];
   for (const list of lists) {
     assert.ok(list.length >= 6);
     for (const l of LANGS) assert.equal(new Set(list.map((x) => x[l])).size, list.length, l);

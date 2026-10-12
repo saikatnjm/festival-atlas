@@ -38,7 +38,9 @@ export function trending(list: readonly FestEvent[], now: Date, region?: Region,
   const key = (e: FestEvent) => {
     const s = eventStatus(e, now);
     const t = localMidnight(e.start, e.region);
-    return { s: RANK[s], k: e.kind === "pandal" ? 1 : 0, t: s === "past" ? -t : t };
+    // A long-running notice (e.g. "no carnival this year") shouldn't sit above the next real happening.
+    const rank = s === "live" && e.kind === "notice" ? RANK.upcoming + 0.5 : RANK[s];
+    return { s: rank, k: e.kind === "pandal" ? 1 : 0, t: s === "past" ? -t : t };
   };
   return pool
     .map((e) => ({ e, k: key(e) }))

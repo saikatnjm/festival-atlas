@@ -1475,5 +1475,413 @@
    }
   ],
   "lastVerified": "2026-10-09"
+ },
+ {
+  "id": "sreebhumi-sporting-club",
+  "name": "Sreebhumi Sporting Club",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Lake Town",
+  "lat": 22.605,
+  "lng": 88.405,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Lake_Town,_Kolkata",
+  "year": 2026,
+  "status": "confirmed",
+  "theme": "Hawa Mahal, Jaipur",
+  "themeYear": 2026,
+  "description": "One of Kolkata's biggest crowd-pullers, in Lake Town; its 2026 pandal is reported to recreate Jaipur's Hawa Mahal with its 953 windows.",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2026 top 10 theme pandals (7 Oct 2026)", "url": "https://thefederal.com/category/features/top-10-theme-pandals-kolkata-durga-puja-2026-258758" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "ekdalia-evergreen",
+  "name": "Ekdalia Evergreen Club",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Ballygunge",
+  "lat": 22.529,
+  "lng": 88.362,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Ballygunge",
+  "year": 2026,
+  "status": "confirmed",
+  "theme": "Somnath Temple",
+  "themeYear": 2026,
+  "description": "A south Kolkata club puja in its 84th year, known for temple-replica pandals; the 2026 pandal is reported to be modelled on the Somnath Temple.",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2026 top 10 theme pandals (7 Oct 2026)", "url": "https://thefederal.com/category/features/top-10-theme-pandals-kolkata-durga-puja-2026-258758" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "ballygunge-samaj-sebi-sangha",
+  "name": "Ballygunge Samaj Sebi Sangha",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Ballygunge",
+  "lat": 22.529,
+  "lng": 88.362,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Ballygunge",
+  "year": 2026,
+  "status": "confirmed",
+  "theme": "Mahapujay Mahanayak (Uttam Kumar centenary)",
+  "themeYear": 2026,
+  "description": "A Ballygunge community puja whose 2026 theme is reported as a centenary tribute to the actor Uttam Kumar.",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2026 top 10 theme pandals (7 Oct 2026)", "url": "https://thefederal.com/category/features/top-10-theme-pandals-kolkata-durga-puja-2026-258758" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "kumartuli-park",
+  "name": "Kumartuli Park Sarbojanin",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Kumartuli",
+  "lat": 22.6,
+  "lng": 88.3614,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Kumortuli",
+  "year": 2026,
+  "status": "confirmed",
+  "theme": "The Ganga's journey from Gangotri to the sea",
+  "themeYear": 2026,
+  "description": "A north Kolkata puja beside the idol-makers' quarter, in its 34th year; the 2026 theme is reported as the journey of the Ganga.",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2026 top 10 theme pandals (7 Oct 2026)", "url": "https://thefederal.com/category/features/top-10-theme-pandals-kolkata-durga-puja-2026-258758" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "jagat-mukherjee-park",
+  "name": "Jagat Mukherjee Park",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Jatindra Mohan Avenue, Sovabazar",
+  "lat": 22.6,
+  "lng": 88.3614,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Kumortuli",
+  "year": 2026,
+  "status": "confirmed",
+  "theme": "Tribute to Uday Shankar",
+  "themeYear": 2026,
+  "description": "A 90-year-old north Kolkata puja; its 2026 pandal is reported as a tribute to the dancer Uday Shankar.",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2026 top 10 theme pandals (7 Oct 2026)", "url": "https://thefederal.com/category/features/top-10-theme-pandals-kolkata-durga-puja-2026-258758" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "shibmandir-sarbojanin",
+  "name": "Shibmandir Sarbojanin Durgotsav",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Near Rabindra Sarobar",
+  "lat": 22.511,
+  "lng": 88.36,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Rabindra_Sarobar",
+  "year": 2026,
+  "status": "confirmed",
+  "theme": "Porob: Rajasthan's Gangaur festival",
+  "themeYear": 2026,
+  "description": "A 90-year-old south Kolkata puja near Rabindra Sarobar; the 2026 theme 'Porob' is reported to draw on Rajasthan's Gangaur festival.",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2026 top 10 theme pandals (7 Oct 2026)", "url": "https://thefederal.com/category/features/top-10-theme-pandals-kolkata-durga-puja-2026-258758" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "chorebagan-sarbojanin",
+  "name": "Chorebagan Sarbojanin",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "North Kolkata",
+  "year": 2026,
+  "status": "confirmed",
+  "theme": "Akal Bodhon",
+  "themeYear": 2026,
+  "description": "A north Kolkata puja in its 91st year; its 2026 theme is reported as 'Akal Bodhon', the untimely awakening of the goddess.",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2026 top 10 theme pandals (7 Oct 2026)", "url": "https://thefederal.com/category/features/top-10-theme-pandals-kolkata-durga-puja-2026-258758" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "chaltabagan-lohapatty",
+  "name": "Chaltabagan Lohapatty Durga Puja",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Manicktala",
+  "lat": 22.585,
+  "lng": 88.375,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Maniktala",
+  "year": 2026,
+  "status": "confirmed",
+  "theme": "Nishan – The Mark (Ramnami Samaj)",
+  "themeYear": 2026,
+  "description": "A Manicktala puja in its 84th year; the 2026 pandal 'Nishan' is reported to honour the Ramnami Samaj, with a soundtrack by Pt Vishwa Mohan Bhatt.",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2026 top 10 theme pandals (7 Oct 2026)", "url": "https://thefederal.com/category/features/top-10-theme-pandals-kolkata-durga-puja-2026-258758" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "college-square",
+  "name": "College Square Sarbojanin Durgotsav",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "College Square",
+  "year": 2025,
+  "status": "confirmed",
+  "theme": "Angkor Wat",
+  "themeYear": 2025,
+  "description": "Famous for its lights reflected in the square's pool; the 2025 pandal recreated Cambodia's Angkor Wat, after Mysore Palace (2023) and the Swiss Parliament (2024).",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2025 top 10 theme pandals (15 Sep 2025)", "url": "https://thefederal.com/category/features/kolkata-durga-puja-top-10-theme-pandals-2025-must-visit-206759" },
+   { "title": "The Federal: 10 best Kolkata Durga Puja 2025 theme pandals in photos (29 Sep 2025)", "url": "https://thefederal.com/category/features/theyyam-op-sindoor-sholay-10-best-kolkata-durga-puja-2025-theme-pandals-in-photos-209077" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "mohammad-ali-park",
+  "name": "Mohammad Ali Park Durga Puja",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Mohammad Ali Park, Central Kolkata",
+  "year": 2025,
+  "status": "confirmed",
+  "theme": "Shakti Sagar",
+  "themeYear": 2025,
+  "description": "A central Kolkata crowd-puller; its 2025 pandal was themed 'Shakti Sagar'.",
+  "sources": [
+   { "title": "The Federal: 10 best Kolkata Durga Puja 2025 theme pandals in photos (29 Sep 2025)", "url": "https://thefederal.com/category/features/theyyam-op-sindoor-sholay-10-best-kolkata-durga-puja-2025-theme-pandals-in-photos-209077" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "66-pally",
+  "name": "66 Pally Durga Puja",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "South Kolkata",
+  "year": 2025,
+  "status": "confirmed",
+  "theme": "Shaktirupa (Theyyam)",
+  "themeYear": 2025,
+  "description": "A south Kolkata puja whose 2025 pandal and idol drew on Kerala's Theyyam, with Theyyam artistes performing.",
+  "sources": [
+   { "title": "The Federal: 10 best Kolkata Durga Puja 2025 theme pandals in photos (29 Sep 2025)", "url": "https://thefederal.com/category/features/theyyam-op-sindoor-sholay-10-best-kolkata-durga-puja-2025-theme-pandals-in-photos-209077" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "64-pally",
+  "name": "64 Pally Durga Puja",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Near Rashbehari crossing",
+  "year": 2025,
+  "status": "confirmed",
+  "theme": "Chamundeshwari Devi temple, Mysuru",
+  "themeYear": 2025,
+  "description": "A lane puja about 700 metres from Rashbehari crossing; its 2025 pandal was modelled on Mysuru's Chamundeshwari Devi temple.",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2025 top 10 theme pandals (15 Sep 2025)", "url": "https://thefederal.com/category/features/kolkata-durga-puja-top-10-theme-pandals-2025-must-visit-206759" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "lalabagan-nabankur",
+  "name": "Lalabagan Nabankur",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Manicktala",
+  "lat": 22.585,
+  "lng": 88.375,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Maniktala",
+  "year": 2025,
+  "status": "confirmed",
+  "theme": "Karagar (Jail)",
+  "themeYear": 2025,
+  "description": "A Manicktala puja whose 2025 pandal 'Karagar' was reported to be built from more than five lakh bottles and thousands of live fish.",
+  "sources": [
+   { "title": "The Federal: Kolkata Durga Puja 2025 top 10 theme pandals (15 Sep 2025)", "url": "https://thefederal.com/category/features/kolkata-durga-puja-top-10-theme-pandals-2025-must-visit-206759" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "simla-sporting-club",
+  "name": "Simla Sporting Club",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Simla, North Kolkata",
+  "year": 2025,
+  "status": "confirmed",
+  "theme": "Sholay (50 years)",
+  "themeYear": 2025,
+  "description": "A north Kolkata club puja whose 2025 pandal celebrated 50 years of the film Sholay.",
+  "sources": [
+   { "title": "The Federal: 10 best Kolkata Durga Puja 2025 theme pandals in photos (29 Sep 2025)", "url": "https://thefederal.com/category/features/theyyam-op-sindoor-sholay-10-best-kolkata-durga-puja-2025-theme-pandals-in-photos-209077" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "deshapriya-park",
+  "name": "Deshapriya Park Durga Puja",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Deshapriya Park, Rashbehari Avenue",
+  "lat": 22.5182917,
+  "lng": 88.3536525,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Deshapriya_Park",
+  "year": 2025,
+  "status": "confirmed",
+  "description": "One of south Kolkata's biggest park pujas; in 2025 it was reported to bring back its giant 'Boro Durga' idol from a decade earlier.",
+  "sources": [
+   { "title": "Asianet Newsable: Durga Puja 2025, Kolkata's famous Puja pandals (27 Sep 2025)", "url": "https://newsable.asianetnews.com/gallery/lifestyle/durga-puja-2025-check-out-10-kolkata-famous-puja-pandals-pdwm8e3" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "singhi-park",
+  "name": "Singhi Park Durga Puja",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Ballygunge",
+  "lat": 22.529,
+  "lng": 88.362,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Ballygunge",
+  "year": 2025,
+  "status": "confirmed",
+  "description": "A Ballygunge puja that turned 84 in 2025, known for its traditional idol.",
+  "sources": [
+   { "title": "Asianet Newsable: Durga Puja 2025, Kolkata's famous Puja pandals (27 Sep 2025)", "url": "https://newsable.asianetnews.com/gallery/lifestyle/durga-puja-2025-check-out-10-kolkata-famous-puja-pandals-pdwm8e3" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "tridhara-sammilani",
+  "name": "Tridhara Sammilani",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Kalighat",
+  "lat": 22.518,
+  "lng": 88.346,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Kalighat",
+  "year": 2025,
+  "status": "confirmed",
+  "address": "Near Manohar Pukur Road, Kalighat, opposite Priya Cinema",
+  "description": "A south Kolkata puja established in 1950, which turned 75 in 2025.",
+  "sources": [
+   { "title": "Asianet Newsable: Durga Puja 2025, Kolkata's famous Puja pandals (27 Sep 2025)", "url": "https://newsable.asianetnews.com/gallery/lifestyle/durga-puja-2025-check-out-10-kolkata-famous-puja-pandals-pdwm8e3" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "rabindra-sangha-siliguri",
+  "name": "Rabindra Sangha Durga Puja, Siliguri",
+  "country": "IN",
+  "city": "Siliguri",
+  "year": 2026,
+  "status": "confirmed",
+  "theme": "Aami (Me)",
+  "themeYear": 2026,
+  "description": "A Siliguri club whose 2026 pandal highlights the impact of parental separation on children, with a courtroom scene where the goddess sits in judgment.",
+  "sources": [
+   { "title": "ANI: Rabindra Sangha's Durga Puja pandal in Siliguri highlights impact of parental separation on children (10 Oct 2026)", "url": "https://www.aninews.in/news/national/general-news/west-bengal-rabindra-sangha8217s-durga-puja-pandal-in-siliguri-highlights-impact-of-parental-separation-on-children20261010084019/" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "haiderpara-sporting-club-siliguri",
+  "name": "Haiderpara Sporting Club Durga Puja, Siliguri",
+  "country": "IN",
+  "city": "Siliguri",
+  "area": "Haiderpara",
+  "year": 2026,
+  "status": "confirmed",
+  "theme": "Banglar Mati o Shilpo (Bengal's soil and craft)",
+  "themeYear": 2026,
+  "description": "In its 57th year the club decorates its 2026 pandal with terracotta sara, ghot, glasses and lamps; it was reported to open after inauguration on 12 October.",
+  "sources": [
+   { "title": "Uttarbanga Sambad: Durga Puja 2026, Haiderpara Sporting Club theme (30 Sep 2026)", "url": "https://uttarbangasambad.com/durga-puja-2026-haidarpara-sporting-club-durga-puja-theme-siliguri/" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "brahmarajpur-durga-mandir-satkhira",
+  "name": "Brahmarajpur Sarbojanin Durga Mandir",
+  "country": "BD",
+  "city": "Satkhira",
+  "area": "Dhulihar-Brahmarajpur, Satkhira Sadar",
+  "lat": 22.718802,
+  "lng": 89.071277,
+  "pin": "city",
+  "coordSource": "https://en.wikipedia.org/wiki/Satkhira",
+  "year": 2026,
+  "status": "confirmed",
+  "description": "A puja celebrated for over 200 years; its 2026 Durga idol is made with more than 150,000 matchsticks, after a 100 kg Chinigura rice idol in 2025.",
+  "sources": [
+   { "title": "Dhaka Tribune: Durga idol made with 1.5 lakh matchsticks draws crowds in Satkhira (11 Oct 2026)", "url": "https://www.dhakatribune.com/bangladesh/nation/421874/durga-idol-made-with-1.5-lakh-matchsticks-draws" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "chandranath-temple-sitakunda",
+  "name": "Chandranath Temple (চন্দ্রনাথ মন্দির)",
+  "country": "BD",
+  "city": "Sitakunda",
+  "area": "Chandranath Hill",
+  "lat": 22.633611,
+  "lng": 91.684306,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Chandranath_Temple",
+  "year": 2026,
+  "status": "confirmed",
+  "description": "A hilltop Shakti Peeth near Chattogram, about 310 m up Chandranath Hill; Sharadiya Puja draws pilgrims who combine worship with the climb and the view.",
+  "sources": [
+   { "title": "The Daily Star: 7 historic Bangladesh temples to visit this Durga Puja season (11 Oct 2026)", "url": "https://www.thedailystar.net/life-living/travel/news/7-historic-bangladesh-temples-visit-durga-puja-season-4295891" },
+   { "title": "Wikipedia: Chandranath Temple", "url": "https://en.wikipedia.org/wiki/Chandranath_Temple" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "bhabanipur-shaktipeeth-bogura",
+  "name": "Bhabanipur Shaktipeeth",
+  "country": "BD",
+  "city": "Bogura",
+  "area": "Karatoya river bank, Sherpur",
+  "year": 2026,
+  "status": "confirmed",
+  "description": "A Shakti Peeth complex beside the Karatoya with several shrines and the Shankha Pukur pond; pilgrims gather for special rituals during Sharadiya Puja.",
+  "sources": [
+   { "title": "The Daily Star: 7 historic Bangladesh temples to visit this Durga Puja season (11 Oct 2026)", "url": "https://www.thedailystar.net/life-living/travel/news/7-historic-bangladesh-temples-visit-durga-puja-season-4295891" }
+  ],
+  "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "jeshoreshwari-kali-temple-satkhira",
+  "name": "Jeshoreshwari Kali Temple",
+  "country": "BD",
+  "city": "Satkhira",
+  "area": "Ishwaripur, Shyamnagar",
+  "year": 2026,
+  "status": "confirmed",
+  "description": "A major pilgrimage site known for its Natmandir; Kali Puja is the main draw, and Sharadiya Navaratri and Durga Puja are also observed with village-wide festivities.",
+  "sources": [
+   { "title": "The Daily Star: 7 historic Bangladesh temples to visit this Durga Puja season (11 Oct 2026)", "url": "https://www.thedailystar.net/life-living/travel/news/7-historic-bangladesh-temples-visit-durga-puja-season-4295891" }
+  ],
+  "lastVerified": "2026-10-12"
  }
 ]

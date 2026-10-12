@@ -8,6 +8,8 @@ import SiteHeader from "@/components/SiteHeader";
 import { getDict } from "@/data/i18n";
 import { LANGS, OG_LOCALE, isLang } from "@/lib/i18n";
 import { siteUrl } from "@/lib/site";
+import { THEME_BOOT_SCRIPT } from "@/lib/theme";
+import InstallHint from "@/components/InstallHint";
 
 export const dynamicParams = false;
 
@@ -44,7 +46,11 @@ export default async function LangLayout({ children, params }: { children: React
   if (!isLang(lang)) notFound();
   const t = getDict(lang);
   return (
-    <html lang={lang}>
+    <html lang={lang} suppressHydrationWarning>
+      <head>
+        {/* Applies the saved colour palette before first paint (see lib/theme.ts). */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+      </head>
       <body data-lang={lang}>
         <a className="skip-link" href="#main">
           {t.a11y.skip}
@@ -56,6 +62,7 @@ export default async function LangLayout({ children, params }: { children: React
           </LangProvider>
         </main>
         <SiteFooter lang={lang} t={t} />
+        <InstallHint lang={lang} />
       </body>
     </html>
   );

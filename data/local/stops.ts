@@ -17,8 +17,11 @@ export interface Stop {
 export function stopsFor(region: Region, lang: Lang): Stop[] {
   const highlights = events.filter((e) => e.region === region && e.kind === "pandal");
   const byPandal = new Map(highlights.filter((e) => e.pandalId).map((e) => [e.pandalId as string, e]));
+  // Only this region's main city/metro area: the route maker orders stops by neighbourhood, so a
+  // temple 300 km away would make no sense in a night's route.
+  const cities = region === "wb" ? ["Kolkata", "Khardaha"] : ["Dhaka", "Narayanganj"];
   const fromDirectory: Stop[] = toItems(lang)
-    .filter((p) => p.country === regionInfo[region].country)
+    .filter((p) => p.country === regionInfo[region].country && cities.includes(p.city))
     .map((p) => {
       const h = byPandal.get(p.id);
       const year = p.year ? num(p.year, lang) : "";

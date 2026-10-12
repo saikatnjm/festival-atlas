@@ -20,7 +20,9 @@ export default function PlayerSetup({ lang }: { lang: Lang }) {
 
   useEffect(() => {
     // Decide once, when the stored profile has loaded.
-    if (ready) setOpen(!profile.name && !wasAsked());
+    if (!ready) return;
+    const wantsEdit = new URLSearchParams(window.location.search).get("me") === "1"; // header name chip
+    setOpen(wantsEdit || (!profile.name && !wasAsked()));
   }, [ready]);
   useEffect(() => {
     if (open) setDraft(profile);

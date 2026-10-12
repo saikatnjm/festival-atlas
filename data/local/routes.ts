@@ -81,16 +81,24 @@ const BREAKS: Record<Region, L[]> = {
 
 /** Rough area and vibe tags for stops (directory ids, or event ids for 2026 highlights without a listing). */
 export const STOP_META: Record<string, { region: Region; zone: Zone; tags: Tag[] }> = {
-  // Kolkata 2026 highlights
-  "wb-kumartuli-park-2026": { region: "wb", zone: "north", tags: ["heritage", "theme"] },
-  "wb-jagat-mukherjee-2026": { region: "wb", zone: "north", tags: ["heritage", "theme"] },
-  "wb-chorebagan-2026": { region: "wb", zone: "north", tags: ["heritage"] },
-  "wb-chaltabagan-lohapatty-2026": { region: "wb", zone: "north", tags: ["theme"] },
-  "wb-sreebhumi-2026": { region: "wb", zone: "east", tags: ["theme"] },
-  "wb-ekdalia-2026": { region: "wb", zone: "south", tags: ["theme"] },
-  "wb-ballygunge-ssss-2026": { region: "wb", zone: "south", tags: ["theme"] },
-  "wb-shibmandir-2026": { region: "wb", zone: "south", tags: ["theme"] },
-  // Kolkata directory
+  // Kolkata directory (ids in data/pandals/entries.json)
+  "kumartuli-park": { region: "wb", zone: "north", tags: ["heritage", "theme"] },
+  "jagat-mukherjee-park": { region: "wb", zone: "north", tags: ["heritage", "theme"] },
+  "chorebagan-sarbojanin": { region: "wb", zone: "north", tags: ["heritage"] },
+  "chaltabagan-lohapatty": { region: "wb", zone: "north", tags: ["theme"] },
+  "lalabagan-nabankur": { region: "wb", zone: "north", tags: ["theme"] },
+  "simla-sporting-club": { region: "wb", zone: "north", tags: ["theme"] },
+  "sreebhumi-sporting-club": { region: "wb", zone: "east", tags: ["theme"] },
+  "ekdalia-evergreen": { region: "wb", zone: "south", tags: ["theme"] },
+  "ballygunge-samaj-sebi-sangha": { region: "wb", zone: "south", tags: ["theme"] },
+  "singhi-park": { region: "wb", zone: "south", tags: ["heritage"] },
+  "shibmandir-sarbojanin": { region: "wb", zone: "south", tags: ["theme"] },
+  "deshapriya-park": { region: "wb", zone: "south", tags: ["heritage", "theme"] },
+  "tridhara-sammilani": { region: "wb", zone: "south", tags: ["heritage", "theme"] },
+  "66-pally": { region: "wb", zone: "south", tags: ["theme"] },
+  "64-pally": { region: "wb", zone: "south", tags: ["theme"] },
+  "college-square": { region: "wb", zone: "central", tags: ["heritage", "theme"] },
+  "mohammad-ali-park": { region: "wb", zone: "central", tags: ["heritage", "theme"] },
   "santosh-mitra-square": { region: "wb", zone: "central", tags: ["heritage", "theme"] },
   "alipore-sarbojanin": { region: "wb", zone: "south", tags: ["theme"] },
   "chaltabagan-sarbojanin": { region: "wb", zone: "north", tags: ["heritage"] },

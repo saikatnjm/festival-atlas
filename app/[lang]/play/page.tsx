@@ -5,6 +5,7 @@ import { activities } from "@/data/play";
 import { cast, castAll } from "@/data/play/cast";
 import { getDict } from "@/data/i18n";
 import Bubble from "@/components/play/Bubble";
+import PlayerSetup from "@/components/play/PlayerSetup";
 import Character from "@/components/play/art/Character";
 import { LANGS, withLang } from "@/lib/i18n";
 import JsonLd, { breadcrumbs } from "@/lib/jsonld";
@@ -34,6 +35,7 @@ export default async function PlayPage({ params }: { params: Promise<Params> }) 
       {crumbs ? <JsonLd data={crumbs} /> : null}
       <h1 className="cx-h1">{t.play.h1}</h1>
       <p className="lead">{t.play.lead}</p>
+      <PlayerSetup lang={lang} />
       <ul className="cx-menu">
         {activities.map(({ meta }, i) => (
           <li key={meta.slug} className="cx-menu-item" style={{ "--c1": cast[meta.chars[0]].c1 } as CSSProperties}>
@@ -78,7 +80,9 @@ export default async function PlayPage({ params }: { params: Promise<Params> }) 
             );
           })}
         </ul>
-        <p className="cx-note">{t.play.fiction}</p>
+        <p className="cx-note">
+          {t.play.fiction} <Link href={withLang(lang, "/about")}>{t.about.title} →</Link>
+        </p>
       </section>
 
       <p className="next-up">

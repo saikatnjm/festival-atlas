@@ -1,6 +1,32 @@
 # Festival Atlas — Project Status
 
-## Improvement tasks, group 1 (latest, from the "Festival Atlas improvement tasks" checklist)
+## Data, map page & reel ideas (latest, 2026-10-12)
+Not run here (no shell); owner tests with `docker compose run --rm --build verify`.
+- **23 new directory entries** (`entries.json`, Bangla in `bn.json`), all with 2025/2026 news sources: the eight 2026 Kolkata theme highlights are now listings (Sreebhumi, Ekdalia, Ballygunge SSS, Kumartuli Park, Jagat Mukherjee Park, Shibmandir, Chorebagan, Chaltabagan Lohapatty) and the events link to them; plus College Square, Mohammad Ali Park, 66 Pally, 64 Pally, Lalabagan Nabankur, Simla Sporting, Deshapriya Park, Singhi Park, Tridhara; Siliguri (Rabindra Sangha, Haiderpara); Bangladesh: Brahmarajpur Satkhira (matchstick idol, also a trending card), Chandranath Temple, Bhabanipur Shaktipeeth, Jeshoreshwari. Pins only where Wikipedia infobox coordinates were seen (area/city level, `coordSource`). New cities in `geo-bn.json`.
+- **Route maker** stops now use directory ids (so each stop links to its page) and only Kolkata/Khardaha or Dhaka/Narayanganj listings.
+- **Map page:** one-tap 🥁 Kolkata / 🛕 Dhaka / 🌍 All chips above the search; other filters sit behind one "Filters" button on phones (always open on wide screens); shorter heading, lead and notice; the notice moved below the explorer.
+- **Captions & Excuses** gained a third mode, **Reel idea** (shot + last-second twist): evergreen formats people film at Puja (dhak-beat transition, anjali POV, dhunuchi slow-mo, hopping timelapse, queue before/after, bhog top-shot, Mahalaya 4 a.m., Puja abroad, friends' roll call, phuchka challenge). Not claims about what is trending.
+- **Research outcome:** no reliable 2026 data on viral reel formats, trending audio or hashtags could be found (platform trends aren't crawlable), so nothing "trending" was invented. Verified diaspora 2026 events were found (West London Durga Puja 17–21 Oct, Newham 16–20 Oct, BAS Singapore from 16 Oct, Sydney VMS 24 Oct, Christchurch 17 Oct); the event model is WB/BD only, so adding a "world" region is a follow-up.
+- Removed the owner's name from UI placeholders and code comments; tests use other names.
+
+## Home & engagement upgrade (2026-10-12)
+Not run here (no shell); owner tests with `docker compose run --rm --build verify` and the dev server.
+- **Hero:** live countdown pill (`components/home/Countdown.tsx`: days to Shashthi / "আজ অষ্টমী" / Bijoya; region from the Local page choice, WB default; calendar in `lib/puja-dates.ts`), one headline ("পুজোয় তুমি কে? ৩০ সেকেন্ডে জেনে নাও।"), one main CTA into the personality quiz, and a sample result card (`HeroCard.tsx`) that uses the player's own name once set.
+- **Games:** three tiles on the home page (personality quiz, squad card, pandal challenge) plus "আরও {n}টা খেলা" → `/play`.
+- **Trending:** a live, long-running notice ("no carnival this year") now sorts after the next real happening (`lib/events.ts`); test updated. "🌙 আজ রাতের রুট বানাও" shortcut into the route maker.
+- **Voice:** `bn.ts` rewritten to তুমি throughout (37 lines); `a11y.skip` too.
+- **About page** `/about` (honesty cards, coverage note, FAQ with FAQPage JSON-LD); the home page keeps one sourced line + link. Footer links to Local and About; sitemap updated.
+- **Characters** on the home strip link to their quiz (`QUIZ_OF` in `CastStrip.tsx`).
+- **Sharing loop:** shared result pages open with a full-width "তুমিও খেলো" button above the card; share texts start with the character's emoji (`CHAR_EMOJI`); personal results end with a nudge into the squad card.
+- **Colour palettes:** header 🎨 picker (`components/ThemePicker.tsx`, `lib/theme.ts`): Classic, সিঁদুর, শিউলি, নদী, and "Puja mode (auto)" = সিঁদুর from Mahalaya to Dashami, Classic otherwise. Saved in localStorage; applied via `data-theme` on `<html>` by an inline script in `<head>` (no flash). Palettes override the raw colour tokens in `site.css`; the game pages' background follows via `--cx-bg`.
+- **Name chip** in the header (shows the saved name, opens the name prompt via `/play?me=1`).
+- **Install:** `app/manifest.ts` + `InstallHint.tsx` (banner on the second visit: Chrome install prompt where available, iOS tip otherwise; dismissible; hidden when already installed).
+- **Map:** `/puja` opens on the visitor's region (IN/BD) when the link has no filters and a region was chosen on the Local page.
+- **SEO quick wins:** home and map titles now carry "2026" and "Kolkata & Dhaka".
+- **Tests:** puja phase per region (incl. BD's missing 20 Oct), Puja-mode window, theme auto, boot script; smoke test covers the new hero, About, manifest and `data-theme`.
+- **Still to check on a phone:** the header with four nav links + chip + 🎨 + language switch at 320px (chip is capped at 9rem), the palette popover, the install banner on iOS, and the sample card's ribbon in all four palettes.
+
+## Improvement tasks, group 1 (from the "Festival Atlas improvement tasks" checklist)
 - **Live domain metadata:** the origin is resolved once in `next.config.ts` (`NEXT_PUBLIC_SITE_ORIGIN`). On Vercel, `VERCEL_PROJECT_PRODUCTION_URL` always wins, so a stale `NEXT_PUBLIC_SITE_URL` (the dead festival-atlas-eight domain) no longer leaks into canonical, og:url, og:image, the sitemap or card footers. Preview builds also canonicalise to production. Docker and CI still use `NEXT_PUBLIC_SITE_URL`.
 - **Homepage share image:** `app/[lang]/opengraph-image.tsx` with alt text (Latin-only, like the other OG images).
 - **Pins:** 15 more IN/BD listings now have area- or city-level pins taken from Wikipedia infobox coordinates (`coordSource` on each).

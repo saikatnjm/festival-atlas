@@ -56,6 +56,41 @@
   color-scheme: light;
 }
 
+/* Colour palettes (chosen in the header; lib/theme.ts). Each overrides the raw tokens so every rule follows. */
+:root[data-theme="sindoor"] {
+  --indigo: #b5121b;
+  --marigold: #f2a900;
+  --coral: #ff7a59;
+  --teal: #1b8a7a;
+  --cream: #fff3ea;
+  --ink: #2b1416;
+  --color-muted: #6b4a45;
+  --color-border: #f0d8c4;
+  --cx-bg: #ffe9d9;
+}
+:root[data-theme="shiuli"] {
+  --indigo: #d9480f;
+  --marigold: #ffd166;
+  --coral: #e03131;
+  --teal: #2b8a3e;
+  --cream: #fffbf3;
+  --ink: #2b2118;
+  --color-muted: #6a5a4a;
+  --color-border: #f1e3cc;
+  --cx-bg: #fff1d6;
+}
+:root[data-theme="nodi"] {
+  --indigo: #0b7f8a;
+  --marigold: #ffc857;
+  --coral: #ff5a5f;
+  --teal: #2b2d8f;
+  --cream: #eefaf8;
+  --ink: #11292c;
+  --color-muted: #4e6a6c;
+  --color-border: #cfe8e6;
+  --cx-bg: #e2f5f2;
+}
+
 *,
 *::before,
 *::after {
@@ -81,9 +116,9 @@ img {
   max-width: 100%;
 }
 :focus-visible {
-  outline: 3px solid var(--indigo);
+  outline: 3px solid var(--color-primary);
   outline-offset: 2px;
-  box-shadow: 0 0 0 6px var(--marigold);
+  box-shadow: 0 0 0 6px var(--color-accent);
 }
 h1,
 h2,
@@ -637,6 +672,12 @@ h3 {
   font-size: 0.85rem;
   font-weight: 700;
 }
+.cast-play {
+  display: inline-block;
+  min-height: var(--tap);
+  line-height: var(--tap);
+  font-weight: 800;
+}
 .honest-grid {
   display: grid;
   gap: var(--space-3);
@@ -675,11 +716,43 @@ h3 {
 .filters {
   display: grid;
   gap: var(--space-2) var(--space-3);
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
   padding: var(--space-3);
   background: #fff;
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
+}
+.filters-toggle {
+  align-self: end;
+}
+/* Everything but search sits behind one "Filters" button on phones; always open on wide screens. */
+.filters-more {
+  display: none;
+  grid-column: 1 / -1;
+  gap: var(--space-2) var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+}
+.filters-more.is-open {
+  display: grid;
+}
+@media (min-width: 48rem) {
+  .filters-more {
+    display: grid;
+  }
+  .filters-toggle {
+    display: none;
+  }
+}
+.quick-pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+}
+.quick-pick .chip[aria-pressed="true"] {
+  background: var(--indigo);
+  color: #fff;
 }
 .field {
   display: grid;
@@ -1360,4 +1433,171 @@ h3 {
 }
 .home-friends h3 {
   margin-top: 0;
+}
+
+/* Header tools: name chip, palette picker, language switch */
+.bar-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+.name-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  max-width: 9rem;
+  min-height: var(--tap);
+  padding: 0 0.7rem;
+  border: 2px solid var(--indigo);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.theme {
+  position: relative;
+}
+.theme-btn {
+  min-width: var(--tap);
+  min-height: var(--tap);
+  font: inherit;
+  font-size: 1.25rem;
+  background: #fff;
+  border: 2px solid var(--indigo);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.theme-pop {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.4rem);
+  z-index: 20;
+  display: grid;
+  gap: 0.3rem;
+  width: min(18rem, calc(100vw - 2rem));
+  padding: 0.6rem;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.theme-pop .fineprint {
+  margin: 0.2rem 0 0;
+}
+.theme-opt {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: var(--tap);
+  padding: 0.3rem 0.5rem;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  color: var(--ink);
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.theme-opt small {
+  display: block;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+.theme-opt[aria-pressed="true"] {
+  border-color: var(--ink);
+  background: var(--cream);
+}
+.theme-sw {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+}
+.theme-sw-auto {
+  background: conic-gradient(#2b2d8f 0 25%, #ffb400 25% 50%, #b5121b 50% 75%, #f2a900 75%);
+}
+
+/* Install banner */
+.install {
+  position: sticky;
+  bottom: 0;
+  z-index: 9;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: #fff;
+  border-top: 3px solid var(--marigold);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+}
+.install p {
+  margin: 0;
+}
+.install-btns {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Countdown hero */
+.countdown {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.6rem;
+  margin: 0 0 var(--space-2);
+  padding: 0.3rem 1rem;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 999px;
+  font-weight: 800;
+}
+.countdown b {
+  font-family: var(--font-display);
+  font-size: 1.6em;
+  color: var(--marigold);
+}
+.hero-card {
+  /* The comic card outside the .cx scope: give it the tokens cx.css expects. */
+  --gold: var(--marigold);
+  --cx-font: "Hind Siliguri", "Baloo Da 2", system-ui, sans-serif;
+  display: grid;
+  gap: var(--space-2);
+  justify-items: center;
+  font-family: var(--cx-font);
+}
+.hero-card .cx-card {
+  width: 100%;
+  max-width: 22rem;
+  transform: rotate(-2deg);
+}
+.hero-card-hint {
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+.game-pick {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+.game-pick .game-card h3 {
+  font-size: 1.35rem;
+}
+.home-night {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-card .cx-card {
+    transform: none;
+  }
 }

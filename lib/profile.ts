@@ -47,7 +47,7 @@ const BN_VOWEL_END = /[অ-ঔা-ৌৗ]$/; // independent vowels and vowel sig
 const BN_SCRIPT = /[ঀ-৿]/;
 
 /**
- * Possessive form: "সৈকতের", "পিয়ার", "Saikat-এর", "Saikat’s", "James’".
+ * Possessive form: "তন্ময়ের", "পিয়ার", "Rini-র", "Pintu’s", "James’".
  * Without a name: "তোমার" / "Your".
  */
 export function possessive(name: string | undefined, lang: Lang): string {

@@ -22,6 +22,12 @@ export default function SiteFooter({ lang, t }: { lang: Lang; t: Dict }) {
               <Link href={withLang(lang, "/play")}>{t.footer.play}</Link>
             </li>
             <li>
+              <Link href={withLang(lang, "/local")}>{t.nav.local}</Link>
+            </li>
+            <li>
+              <Link href={withLang(lang, "/about")}>{t.about.title}</Link>
+            </li>
+            <li>
               <Link href={lang === "en" ? "/bn" : "/en"} hrefLang={lang === "en" ? "bn" : "en"} lang={lang === "en" ? "bn" : "en"}>
                 {lang === "en" ? "বাংলা" : "English"}
               </Link>

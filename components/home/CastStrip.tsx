@@ -1,17 +1,33 @@
 "use client";
 
+import Link from "next/link";
 import { cast, castAll } from "@/data/play/cast";
 import type { CharId } from "@/data/play/types";
 import Character from "@/components/play/art/Character";
 import { useReactions } from "@/components/play/useReactions";
 import { fmt } from "@/lib/format";
-import type { Lang } from "@/lib/i18n";
+import { withLang, type Lang } from "@/lib/i18n";
 
 interface Labels {
   tap: string;
   strength: string;
   weakness: string;
+  /** "Play" link label; omit to show no link. */
+  play?: string;
 }
+
+/** The quiz each character belongs to (where they can be a result). */
+const QUIZ_OF: Record<CharId, string> = {
+  detective: "puja-personality",
+  bhog: "puja-personality",
+  selfie: "puja-personality",
+  broke: "puja-personality",
+  excuse: "puja-personality",
+  sleepy: "puja-personality",
+  gopal: "gopal-wit",
+  bagha: "gopal-wit",
+  hansjaru: "book-mood",
+};
 
 function Tile({ id, lang, labels, i }: { id: CharId; lang: Lang; labels: Labels; i: number }) {
   const c = cast[id];
@@ -31,8 +47,13 @@ function Tile({ id, lang, labels, i }: { id: CharId; lang: Lang; labels: Labels;
       <p className="cast-name">{c.name[lang]}</p>
       <p className="cast-role">{c.role[lang]}</p>
       <p className="cast-react" role="status" aria-live="polite">
-        {line ?? " "}
+        {line ?? " "}
       </p>
+      {labels.play ? (
+        <Link className="cast-play" href={withLang(lang, `/play/${QUIZ_OF[id]}`)} aria-label={`${labels.play}: ${c.name[lang]}`}>
+          {labels.play} →
+        </Link>
+      ) : null}
     </li>
   );
 }

@@ -1,12 +1,25 @@
 // Personalisation content and pure helpers: badge titles, choice-driven traits, verdicts,
 // friend-duo lines and squad (group) roles. Only type imports, so tests can load this file directly.
-// Placeholders: {of} = possessive ("সৈকতের" / "Saikat’s" / "তোমার"), {name}, {a}, {b}.
+// Placeholders: {of} = possessive ("পিন্টুর" / "Rini’s" / "তোমার"), {name}, {a}, {b}.
 
 import type { L } from "@/lib/i18n";
 import type { ActivityId, MoodId, Profile, RoleId } from "@/lib/profile";
 import type { CharId } from "./types";
 
 const l = (bn: string, en: string): L => ({ bn, en });
+
+/** One emoji per character, for share texts ("🍛 I'm Bhog-er Bumba!"). */
+export const CHAR_EMOJI: Record<CharId, string> = {
+  detective: "🕵️",
+  bhog: "🍛",
+  selfie: "📸",
+  broke: "💸",
+  excuse: "⏰",
+  sleepy: "😴",
+  gopal: "🎭",
+  bagha: "🥁",
+  hansjaru: "🦆",
+};
 
 /** Licence/permit-style card titles, two per character. Picked by the player's choices (seed). */
 export const BADGES: Record<CharId, L[]> = {

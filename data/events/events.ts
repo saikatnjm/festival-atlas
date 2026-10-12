@@ -60,7 +60,7 @@ const PUJA_DAYS_WB = { start: "2026-10-17", end: "2026-10-21" };
 const VERIFIED = "2026-10-10";
 
 /** Kolkata 2026 theme highlights, as reported (themes are the organisers’ to confirm). */
-function pandal(id: string, name: L, place: L, theme: L, pandalId?: string): FestEvent {
+function pandal(id: string, name: L, place: L, theme: L, pandalId?: string, source: EventSource = FEDERAL): FestEvent {
   return {
     id,
     region: "wb",
@@ -71,8 +71,8 @@ function pandal(id: string, name: L, place: L, theme: L, pandalId?: string): Fes
     ...PUJA_DAYS_WB,
     confidence: "reported",
     pandalId,
-    sources: [FEDERAL],
-    lastVerified: VERIFIED,
+    sources: [source],
+    lastVerified: source === FEDERAL ? VERIFIED : "2026-10-12",
   };
 }
 
@@ -148,14 +148,15 @@ export const events: FestEvent[] = [
   },
   pandal("wb-santosh-mitra-2026", l("সন্তোষ মিত্র স্কোয়্যার", "Santosh Mitra Square"), l("লেবুতলা, শিয়ালদহ", "Lebutala, Sealdah"), l("থিম: ‘বন্দে মাতরম’-এর ১৫০ বছর; প্রথমবার লাইট-অ্যান্ড-সাউন্ড শো", "Theme: 150 years of ‘Vande Mataram’; first light-and-sound show"), "santosh-mitra-square"),
   pandal("wb-alipore-2026", l("আলিপুর সর্বজনীন", "Alipore Sarbojanin"), l("আলিপুর", "Alipore"), l("থিম: ‘রামায়ণ: অ্যান এপিক ওভেন ইন টাইম’", "Theme: ‘Ramayana: An Epic Woven in Time’"), "alipore-sarbojanin"),
-  pandal("wb-chorebagan-2026", l("চোরবাগান সর্বজনীন", "Chorebagan Sarbojanin"), l("উত্তর কলকাতা", "North Kolkata"), l("থিম: ‘অকালবোধন’", "Theme: ‘Akal Bodhon’")),
-  pandal("wb-chaltabagan-lohapatty-2026", l("চালতাবাগান লোহাপট্টি", "Chaltabagan Lohapatty"), l("মানিকতলা", "Manicktala"), l("থিম: ‘নিশান’, রামনামী সমাজকে শ্রদ্ধা", "Theme: ‘Nishan – The Mark’, honouring the Ramnami Samaj")),
-  pandal("wb-sreebhumi-2026", l("শ্রীভূমি স্পোর্টিং ক্লাব", "Sreebhumi Sporting Club"), l("লেক টাউন, উত্তর-পূর্ব কলকাতা", "Lake Town, north-east Kolkata"), l("থিম: জয়পুরের হাওয়া মহল", "Theme: Jaipur’s Hawa Mahal")),
-  pandal("wb-ekdalia-2026", l("একডালিয়া এভারগ্রিন ক্লাব", "Ekdalia Evergreen Club"), l("দক্ষিণ কলকাতা", "South Kolkata"), l("থিম: সোমনাথ মন্দির", "Theme: Somnath Temple")),
-  pandal("wb-ballygunge-ssss-2026", l("বালিগঞ্জ সমাজ সেবী সংঘ", "Ballygunge Samaj Sebi Sangha"), l("দক্ষিণ কলকাতা", "South Kolkata"), l("থিম: ‘মহাপুজোয় মহানায়ক’, উত্তমকুমারের জন্মশতবর্ষ", "Theme: ‘Mahapujay Mahanayak’, Uttam Kumar centenary")),
-  pandal("wb-kumartuli-park-2026", l("কুমোরটুলি পার্ক সর্বজনীন", "Kumartuli Park Sarbojanin"), l("উত্তর কলকাতা", "North Kolkata"), l("থিম: গঙ্গোত্রী থেকে সাগর, গঙ্গার যাত্রা", "Theme: the Ganga’s journey from Gangotri to the sea")),
-  pandal("wb-jagat-mukherjee-2026", l("জগৎ মুখার্জি পার্ক", "Jagat Mukherjee Park"), l("যতীন্দ্রমোহন অ্যাভিনিউ, উত্তর কলকাতা", "Jatindra Mohan Avenue, north Kolkata"), l("থিম: উদয়শঙ্করকে শ্রদ্ধা", "Theme: tribute to Uday Shankar")),
-  pandal("wb-shibmandir-2026", l("শিবমন্দির সর্বজনীন", "Shibmandir Sarbojanin"), l("রবীন্দ্র সরোবরের কাছে", "Near Rabindra Sarobar"), l("থিম: ‘পরব’, রাজস্থানের গণগৌর উৎসব", "Theme: ‘Porob’, Rajasthan’s Gangaur festival")),
+  pandal("wb-chorebagan-2026", l("চোরবাগান সর্বজনীন", "Chorebagan Sarbojanin"), l("উত্তর কলকাতা", "North Kolkata"), l("থিম: ‘অকালবোধন’", "Theme: ‘Akal Bodhon’"), "chorebagan-sarbojanin"),
+  pandal("wb-chaltabagan-lohapatty-2026", l("চালতাবাগান লোহাপট্টি", "Chaltabagan Lohapatty"), l("মানিকতলা", "Manicktala"), l("থিম: ‘নিশান’, রামনামী সমাজকে শ্রদ্ধা", "Theme: ‘Nishan – The Mark’, honouring the Ramnami Samaj"), "chaltabagan-lohapatty"),
+  pandal("wb-sreebhumi-2026", l("শ্রীভূমি স্পোর্টিং ক্লাব", "Sreebhumi Sporting Club"), l("লেক টাউন, উত্তর-পূর্ব কলকাতা", "Lake Town, north-east Kolkata"), l("থিম: জয়পুরের হাওয়া মহল", "Theme: Jaipur’s Hawa Mahal"), "sreebhumi-sporting-club"),
+  pandal("wb-ekdalia-2026", l("একডালিয়া এভারগ্রিন ক্লাব", "Ekdalia Evergreen Club"), l("দক্ষিণ কলকাতা", "South Kolkata"), l("থিম: সোমনাথ মন্দির", "Theme: Somnath Temple"), "ekdalia-evergreen"),
+  pandal("wb-ballygunge-ssss-2026", l("বালিগঞ্জ সমাজ সেবী সংঘ", "Ballygunge Samaj Sebi Sangha"), l("দক্ষিণ কলকাতা", "South Kolkata"), l("থিম: ‘মহাপুজোয় মহানায়ক’, উত্তমকুমারের জন্মশতবর্ষ", "Theme: ‘Mahapujay Mahanayak’, Uttam Kumar centenary"), "ballygunge-samaj-sebi-sangha"),
+  pandal("wb-kumartuli-park-2026", l("কুমোরটুলি পার্ক সর্বজনীন", "Kumartuli Park Sarbojanin"), l("উত্তর কলকাতা", "North Kolkata"), l("থিম: গঙ্গোত্রী থেকে সাগর, গঙ্গার যাত্রা", "Theme: the Ganga’s journey from Gangotri to the sea"), "kumartuli-park"),
+  pandal("wb-jagat-mukherjee-2026", l("জগৎ মুখার্জি পার্ক", "Jagat Mukherjee Park"), l("যতীন্দ্রমোহন অ্যাভিনিউ, উত্তর কলকাতা", "Jatindra Mohan Avenue, north Kolkata"), l("থিম: উদয়শঙ্করকে শ্রদ্ধা", "Theme: tribute to Uday Shankar"), "jagat-mukherjee-park"),
+  pandal("wb-shibmandir-2026", l("শিবমন্দির সর্বজনীন", "Shibmandir Sarbojanin"), l("রবীন্দ্র সরোবরের কাছে", "Near Rabindra Sarobar"), l("থিম: ‘পরব’, রাজস্থানের গণগৌর উৎসব", "Theme: ‘Porob’, Rajasthan’s Gangaur festival"), "shibmandir-sarbojanin"),
+  pandal("wb-siliguri-rabindra-2026", l("রবীন্দ্র সংঘ, শিলিগুড়ি", "Rabindra Sangha, Siliguri"), l("শিলিগুড়ি", "Siliguri"), l("থিম: ‘আমি’, বাবা-মায়ের বিচ্ছেদে সন্তানের কথা", "Theme: ‘Aami’, on children and parental separation"), "rabindra-sangha-siliguri", { title: "ANI: Rabindra Sangha's Durga Puja pandal in Siliguri (10 Oct 2026)", url: "https://www.aninews.in/news/national/general-news/west-bengal-rabindra-sangha8217s-durga-puja-pandal-in-siliguri-highlights-impact-of-parental-separation-on-children20261010084019/", date: "2026-10-10" }),
 
   // ---------------- Bangladesh ----------------
   {
@@ -205,6 +206,23 @@ export const events: FestEvent[] = [
     confidence: "confirmed",
     sources: [AIR_MAHALAYA],
     lastVerified: VERIFIED,
+  },
+  {
+    id: "bd-satkhira-matchstick-2026",
+    region: "bd",
+    kind: "pandal",
+    title: l("দেড় লাখ দেশলাই কাঠির দুর্গা, সাতক্ষীরা", "A Durga of 150,000 matchsticks, Satkhira"),
+    summary: l(
+      "ব্রহ্মরাজপুর সর্বজনীন দুর্গামন্দিরে এবারের প্রতিমা দেড় লাখের বেশি দেশলাই কাঠি দিয়ে তৈরি; গত বছর ছিল ১০০ কেজি চিনিগুঁড়া চালের প্রতিমা।",
+      "This year's idol at Brahmarajpur Sarbojanin Durga Mandir is made of more than 150,000 matchsticks; last year's was 100 kg of Chinigura rice.",
+    ),
+    place: l("ধুলিহর-ব্রহ্মরাজপুর, সাতক্ষীরা সদর", "Dhulihar-Brahmarajpur, Satkhira Sadar"),
+    start: "2026-10-16",
+    end: "2026-10-21",
+    confidence: "confirmed",
+    pandalId: "brahmarajpur-durga-mandir-satkhira",
+    sources: [{ title: "Dhaka Tribune: Durga idol made with 1.5 lakh matchsticks draws crowds in Satkhira", url: "https://www.dhakatribune.com/bangladesh/nation/421874/durga-idol-made-with-1.5-lakh-matchsticks-draws", date: "2026-10-11" }],
+    lastVerified: "2026-10-12",
   },
   {
     id: "bd-holidays-2026",

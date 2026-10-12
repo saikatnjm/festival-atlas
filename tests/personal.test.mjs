@@ -8,20 +8,24 @@ import { events } from "../data/events/events.ts";
 import { checkEvents, eventStatus, trending, daysUntil } from "../lib/events.ts";
 import { traditions } from "../data/local/content.ts";
 import { START_PLACES, VIBES, STOP_META, FACTS, buildRoute } from "../data/local/routes.ts";
+import { pujaPhase, inPujaMode, PUJA_2026, PUJA_MODE_WINDOW } from "../lib/puja-dates.ts";
+import { autoTheme, THEME_BOOT_SCRIPT } from "../lib/theme.ts";
 
 const chars = Object.keys(cast);
 const graphemes = (s) => Array.from(new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(s));
 
 test("possessive forms: Bengali and Latin names, both languages, skipped name", () => {
-  assert.equal(possessive("সৈকত", "bn"), "সৈকতের");
+  assert.equal(possessive("তন্ময়", "bn"), "তন্ময়ের");
   assert.equal(possessive("পিয়া", "bn"), "পিয়ার");
   assert.equal(possessive("রিনি", "bn"), "রিনির");
   assert.equal(possessive("বিশ্বজিৎ", "bn"), "বিশ্বজিতের");
-  assert.equal(possessive("Saikat", "bn"), "Saikat-এর");
+  assert.equal(possessive("Pintu", "bn"), "Pintu-র");
+  assert.equal(possessive("Tanmoy", "bn"), "Tanmoy-র");
+  assert.equal(possessive("Rahul", "bn"), "Rahul-এর");
   assert.equal(possessive("Pia", "bn"), "Pia-র");
-  assert.equal(possessive("Saikat", "en"), "Saikat’s");
+  assert.equal(possessive("Pintu", "en"), "Pintu’s");
   assert.equal(possessive("James", "en"), "James’");
-  assert.equal(possessive("সৈকত", "en"), "সৈকত’s");
+  assert.equal(possessive("তন্ময়", "en"), "তন্ময়’s");
   assert.equal(possessive("", "bn"), "তোমার");
   assert.equal(possessive(undefined, "en"), "Your");
   assert.equal(possessive("   ", "en"), "Your");
@@ -59,8 +63,8 @@ test("personal content covers every character in both languages", () => {
 });
 
 test("badge title is personalised and depends on the choices", () => {
-  const of = possessive("সৈকত", "bn");
-  assert.equal(fill(pickBadge("bhog", 0).bn, { of }), "সৈকতের ভোগ খাওয়ার সরকারি লাইসেন্স");
+  const of = possessive("তন্ময়", "bn");
+  assert.equal(fill(pickBadge("bhog", 0).bn, { of }), "তন্ময়ের ভোগ খাওয়ার সরকারি লাইসেন্স");
   assert.notEqual(pickBadge("bhog", 0).en, pickBadge("bhog", 1).en);
   const seedA = hashString("puja-personality:0123:0");
   const seedB = hashString("puja-personality:3210:0");
@@ -83,7 +87,7 @@ test("traits come from the choices, then optional details; max four, no repeats"
 test("friend duo line is symmetric; squad roles are unique and repeatable from a link", () => {
   assert.deepEqual(duoLine("bhog", "selfie"), duoLine("selfie", "bhog"));
   assert.ok(duoLine("bhog", "bhog").en.includes("twins"));
-  const names = ["সৈকত", "Rini", "পিন্টু", "A very long nickname indeed", "Pia", "বাবাই"];
+  const names = ["তন্ময়", "Rini", "পিন্টু", "A very long nickname indeed", "Pia", "বাবাই"];
   const s1 = assignSquad(names, 0);
   const s2 = assignSquad(names, 0);
   assert.deepEqual(s1, s2);
@@ -117,9 +121,14 @@ test("trending puts what is on now first, then the soonest", () => {
   const now = new Date("2026-10-10T06:00:00Z");
   const top = trending(events, now, undefined, 4);
   assert.equal(eventStatus(top[0], now), "live");
-  const statuses = trending(events, now, undefined, events.length).map((e) => eventStatus(e, now));
   const order = { live: 0, upcoming: 1, unconfirmed: 2, past: 3 };
-  for (let i = 1; i < statuses.length; i++) assert.ok(order[statuses[i - 1]] <= order[statuses[i]]);
+  // Same rule as lib/events.ts: a live notice sorts after the upcoming items.
+  const ranks = trending(events, now, undefined, events.length).map((e) => {
+    const s = eventStatus(e, now);
+    return s === "live" && e.kind === "notice" ? 1.5 : order[s];
+  });
+  for (let i = 1; i < ranks.length; i++) assert.ok(ranks[i - 1] <= ranks[i]);
+  assert.notEqual(top[0].kind, "notice", "a standing notice never leads the list");
   assert.ok(trending(events, now, "bd").every((e) => e.region === "bd"));
 });
 
@@ -139,6 +148,26 @@ test("route-maker stops are real stops of the right region; each region has trad
   assert.ok(traditions.wb.length >= 3 && traditions.bd.length >= 3);
 });
 
+test("puja phase and Puja-mode theme follow the calendar", () => {
+  assert.deepEqual(pujaPhase(new Date("2026-10-12T06:00:00Z"), "wb"), { kind: "before", days: 5, day: { id: "shashthi", bn: "ষষ্ঠী", en: "Shashthi" } });
+  assert.equal(pujaPhase(new Date("2026-10-12T06:00:00Z"), "bd").days, 4);
+  assert.equal(pujaPhase(new Date("2026-10-16T18:00:00Z"), "wb").kind, "before"); // 23:30 IST, 16 Oct
+  assert.equal(pujaPhase(new Date("2026-10-16T20:00:00Z"), "wb").kind, "during"); // 01:30 IST, 17 Oct (Shashthi)
+  assert.equal(pujaPhase(new Date("2026-10-19T06:00:00Z"), "wb").day.id, "ashtami");
+  assert.equal(pujaPhase(new Date("2026-10-19T06:00:00Z"), "bd").day.id, "navami");
+  assert.equal(pujaPhase(new Date("2026-10-20T06:00:00Z"), "bd").day.id, "navami"); // BD calendar has no 20 Oct entry
+  assert.equal(pujaPhase(new Date("2026-10-22T06:00:00Z"), "wb").kind, "after");
+  assert.ok(PUJA_2026.wb.shashthi > PUJA_2026.bd.shashthi);
+  assert.equal(inPujaMode("2026-10-09"), false);
+  assert.equal(inPujaMode("2026-10-10"), true);
+  // lib/theme.ts keeps its own copy of the window; both must agree.
+  assert.equal(autoTheme(PUJA_MODE_WINDOW.start), "sindoor");
+  assert.equal(autoTheme(PUJA_MODE_WINDOW.end), "sindoor");
+  assert.equal(autoTheme("2026-10-09"), "classic");
+  assert.equal(autoTheme("2026-10-22"), "classic");
+  assert.ok(THEME_BOOT_SCRIPT.includes("data-theme") && !THEME_BOOT_SCRIPT.includes("</script"));
+});
+
 test("every start × vibe gives a full route that starts near home", () => {
   for (const p of START_PLACES) {
     const avail = stopIds(p.region);
@@ -155,7 +184,9 @@ test("every start × vibe gives a full route that starts near home", () => {
   assert.equal(STOP_META[buildRoute("wb", "behala", "theme", wb).stops[0]].zone, "south");
   assert.equal(STOP_META[buildRoute("wb", "shyambazar", "theme", wb).stops[0]].zone, "north");
   assert.ok(buildRoute("wb", "behala", "lazy", wb).stops.every((id) => STOP_META[id].zone === "south"));
-  assert.ok(buildRoute("wb", "behala", "heritage", wb).stops.includes("santosh-mitra-square"), "heritage pulls in a heritage stop one area away");
+  const heritage = buildRoute("wb", "behala", "heritage", wb).stops.map((id) => STOP_META[id]);
+  assert.ok(heritage.some((m) => m.zone === "central" && m.tags.includes("heritage")), "heritage pulls in a heritage stop one area away");
+  assert.ok(heritage.every((m) => m.tags.includes("heritage")), "all heritage stops match the vibe when enough exist");
   assert.equal(STOP_META[buildRoute("bd", "olddhaka", "heritage", stopIds("bd")).stops[0]].zone, "old");
   assert.deepEqual(buildRoute("wb", "nowhere", "theme", wb), { stops: [], breaks: [] });
   const variants = new Set([0, 1, 2, 3, 4, 5].map((n) => buildRoute("wb", "behala", "theme", wb, n).stops.join()));
