@@ -36,6 +36,8 @@ interface Props {
    * `chars` = the character each choice leaned to, in play order; `seed` comes from the choices.
    */
   personal?: { chars?: readonly CharId[]; seed: number; traits?: boolean };
+  /** Scroll the card into view when it appears (games whose last question sits below the fold). */
+  scrollOnMount?: boolean;
 }
 
 /** The result id when the share path is a result page (/play/<slug>/r/<id>). */
@@ -44,7 +46,7 @@ function resultIdOf(path: string): string | null {
   return m ? m[1] : null;
 }
 
-export default function ResultPanel({ s, slug, card, sharePath, shareText, onAgain, againLabel, extra, copyLabel, copyValue, note, personal }: Props) {
+export default function ResultPanel({ s, slug, card, sharePath, shareText, onAgain, againLabel, extra, copyLabel, copyValue, note, personal, scrollOnMount }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [artKey, setArtKey] = useState(0);
   const [salt, setSalt] = useState(0);
@@ -62,6 +64,13 @@ export default function ResultPanel({ s, slug, card, sharePath, shareText, onAga
   const pSeed = personal?.seed ?? 0;
   const pTraits = personal?.traits !== false;
   const pChars = (personal?.chars ?? []).join(",");
+
+  // Quiz/challenge: the page is scrolled to the last question when the result appears, so bring the card up.
+  useEffect(() => {
+    if (!scrollOnMount) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    ref.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  }, []);
 
   // A friend's challenge (?vs=Name&vr=resultId) travels in the activity URL.
   useEffect(() => {

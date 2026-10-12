@@ -34,7 +34,7 @@ const en = {
         "Search and filter sourced Durga Puja pandals by city, country, year and theme on a world map. Every entry shows its status and sources. Coverage is partial.",
     },
     play: {
-      title: "Puja Cartoon Universe: Funny Puja Games & Quizzes",
+      title: "Durga Puja Quizzes & Games 2026: Which Puja Character Are You?",
       description:
         "Original cartoon characters and quick Bengali-humour games: Puja quizzes, pandal-hopping, bingo, wit and book-mood tests. Play and share your card.",
     },
@@ -251,6 +251,7 @@ const en = {
     backToDirectory: "All pandals",
     sameCity: "More in {city}",
     detailTitle: "{name}: Durga Puja in {place}",
+    detailTitleYear: "{name}: Durga Puja {year} in {place}",
     detailMeta: "{description} Edition {year}. Sources and last-verified date included.",
     detailMetaNoYear: "{description} Sources included.",
     breadcrumb: "Pandal directory",

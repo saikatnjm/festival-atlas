@@ -60,6 +60,12 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
             url,
             inLanguage: lang,
             description: t.meta.home.description,
+            // Sitelinks search box: the directory's ?q= search.
+            potentialAction: {
+              "@type": "SearchAction",
+              target: { "@type": "EntryPoint", urlTemplate: `${abs(withLang(lang, "/puja"))}?q={search_term_string}` },
+              "query-input": "required name=search_term_string",
+            },
           }}
         />
       ) : null}
@@ -146,6 +152,17 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
             <p>
               <Link className="button" href={withLang(lang, "/puja")}>
                 {h.mapCta}
+              </Link>
+            </p>
+            <p className="cta-row">
+              <Link className="button button-light" href={withLang(lang, "/puja/kolkata")}>
+                🥁 {f.kolkataPage[lang]}
+              </Link>
+              <Link className="button button-light" href={withLang(lang, "/puja/dhaka")}>
+                🛕 {f.dhakaPage[lang]}
+              </Link>
+              <Link className="button button-light" href={withLang(lang, "/durga-puja-2026")}>
+                📅 {f.datesPage[lang]}
               </Link>
             </p>
             <p className="fineprint">

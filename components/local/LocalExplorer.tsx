@@ -27,12 +27,16 @@ export default function LocalExplorer({ lang, s, events, stops }: Props) {
 
   useEffect(() => {
     const fromUrl = new URLSearchParams(window.location.search).get("r");
-    if (isRegion(fromUrl)) return setRegion(fromUrl);
     try {
+      if (isRegion(fromUrl)) {
+        // A link with a region counts as a choice: the map and countdown follow it too.
+        window.localStorage.setItem(STORE, fromUrl);
+        return setRegion(fromUrl);
+      }
       const saved = window.localStorage.getItem(STORE);
       if (isRegion(saved)) setRegion(saved);
     } catch {
-      // Storage blocked: start with both regions.
+      if (isRegion(fromUrl)) setRegion(fromUrl); // storage blocked: still honour the link
     }
   }, []);
 

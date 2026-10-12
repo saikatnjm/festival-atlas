@@ -45,6 +45,8 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
   useEffect(() => {
     const fromUrl = filtersFromSearch(window.location.search);
     // No filters in the link: open on the visitor's region (the choice saved on the Local page), if any.
+    // "?all=1" (used by the abroad page) asks for the whole directory instead.
+    const wantsAll = new URLSearchParams(window.location.search).has("all");
     let region = "";
     try {
       const r = window.localStorage.getItem("fa:region");
@@ -52,7 +54,7 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
     } catch {
       // ignore
     }
-    setFilters(!hasFilters(fromUrl) && region ? { ...fromUrl, country: region } : fromUrl);
+    setFilters(!hasFilters(fromUrl) && region && !wantsAll ? { ...fromUrl, country: region } : fromUrl);
     const m = /^#e=([\w-]+)$/.exec(window.location.hash);
     if (m && items.some((i) => i.id === m[1])) {
       setSelectedId(m[1]);

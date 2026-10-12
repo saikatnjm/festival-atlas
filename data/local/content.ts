@@ -14,7 +14,7 @@ export const regionInfo: Record<Region, { icon: string; name: L; short: L; count
 };
 
 export const ui = {
-  metaTitle: l("আমার পুজো: কলকাতা ও বাংলাদেশের পুজো-গাইড", "Local Puja Guide: Kolkata & Bangladesh"),
+  metaTitle: l("কলকাতা ও ঢাকার দুর্গাপুজো ২০২৬ গাইড: খবর, রুট ও প্ল্যান", "Kolkata & Dhaka Durga Puja 2026 Guide: News, Routes & Plans"),
   metaDesc: l(
     "কলকাতা ও বাংলাদেশের দুর্গাপুজো ২০২৬: সূত্রসহ খবর, তারিখ, থিম-হাইলাইট, প্যান্ডেল-হপিং প্ল্যান আর তোমার নিজের ‘আমার পুজো প্ল্যান’ কার্ড।",
     "Durga Puja 2026 in Kolkata and Bangladesh: sourced news, dates, theme highlights, pandal-hopping plans and your own Puja plan card.",

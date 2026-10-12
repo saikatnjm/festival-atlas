@@ -1,9 +1,17 @@
 import { getActivity } from "@/data/play";
 import { ogImage } from "@/lib/og";
 
-export const alt = "Festival Atlas result";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+const size = { width: 1200, height: 630 };
+const contentType = "image/png";
+
+/** One image per result, with alt text that names the result and its game. */
+export async function generateImageMetadata({ params }: { params: Promise<{ slug: string; result: string }> }) {
+  const { slug, result: resultId } = await params;
+  const activity = getActivity(slug);
+  const result = activity?.results.find((r) => r.id === resultId);
+  const alt = result && activity ? `${result.title.en}: a result card from ${activity.meta.title.en} on Festival Atlas` : "Festival Atlas result card";
+  return [{ id: "card", size, contentType, alt }];
+}
 
 export default async function Image({ params }: { params: Promise<{ slug: string; result: string }> }) {
   const { slug, result: resultId } = await params;

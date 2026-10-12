@@ -34,6 +34,20 @@ const pages = [
   ["/en/puja/sreebhumi-sporting-club", 200, "Hawa Mahal"],
   ["/bn/puja/chandranath-temple-sitakunda", 200, "চন্দ্রনাথ"],
   ["/en/puja/deshapriya-park", 200, "Get directions"],
+  ["/en/puja/kolkata", 200, "Kolkata Durga Puja 2026: pandals, themes and a map"],
+  ["/bn/puja/kolkata", 200, "কলকাতার দুর্গাপুজো ২০২৬"],
+  ["/en/puja/dhaka", 200, "Dhakeshwari"],
+  ["/en/puja/abroad", 200, "London"],
+  ["/en/puja/kolkata", 200, '"@type":"FAQPage"'],
+  ["/en/puja/kolkata", 200, '"@type":"ItemList"'],
+  ["/en/durga-puja-2026", 200, "Durga Puja 2026: the dates, day by day"],
+  ["/bn/durga-puja-2026", 200, "ষষ্ঠী"],
+  ["/en/durga-puja-2026", 200, '"@type":"Event"'],
+  ["/en/puja/sreebhumi-sporting-club", 200, '"@type":"Event"'],
+  ["/en/puja/sreebhumi-sporting-club", 200, '"startDate":"2026-10-17"'],
+  ["/en", 200, '"@type":"SearchAction"'],
+  ["/sitemap.xml", 200, `${O}/bn/puja/kolkata`],
+  ["/sitemap.xml", 200, `${O}/en/durga-puja-2026`],
   ["/en/puja", 200, "Chaltabagan Sarbojanin Durga Pujo"],
   ["/bn/puja", 200, "Chaltabagan Sarbojanin Durga Pujo"], // proper names are kept
   ["/en/puja", 200, `rel="canonical" href="${O}/en/puja"`],
@@ -85,18 +99,20 @@ const redirects = [
   ["/play/puja-bingo", "/en/play/puja-bingo"],
 ];
 
-// Share-preview images must be real PNGs.
-const images = [
-  "/opengraph-image",
-  "/en/puja/opengraph-image",
-  "/bn/puja/opengraph-image",
-  "/en/puja/chaltabagan-sarbojanin/opengraph-image",
-  "/en/play/puja-bingo/opengraph-image",
-  "/bn/play/puja-personality/r/bhog-samrat/opengraph-image",
-  "/en/play/pandal-challenge/r/dead-phone/opengraph-image",
-  "/favicon.ico",
-  "/apple-icon.png",
+// Share-preview images must be real PNGs. Their URLs are read from each page's og:image tag, so the
+// test follows whatever URL scheme Next generates (plain or per-id images).
+const imagePages = [
+  "/en",
+  "/en/puja",
+  "/bn/puja",
+  "/en/puja/chaltabagan-sarbojanin",
+  "/en/play/puja-bingo",
+  "/bn/play/puja-personality/r/bhog-samrat",
+  "/en/play/pandal-challenge/r/dead-phone",
+  "/en/durga-puja-2026",
+  "/en/puja/kolkata",
 ];
+const images = ["/favicon.ico", "/apple-icon.png"];
 
 const server = spawn("node_modules/.bin/next", ["start", "-p", String(PORT)], { stdio: "inherit" });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -136,13 +152,26 @@ try {
     const loc = res.headers.get("location") ?? "";
     report(res.status >= 300 && res.status < 400 && loc.endsWith(to), `/ [${al || "no header"}] -> ${res.status} ${loc} (want ${to})`);
   }
-  for (const path of images) {
+  const checkImage = async (path, label = path) => {
     const res = await fetch(base + path);
     const bytes = new Uint8Array(await res.arrayBuffer());
     const isPng = bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47;
     const isIco = bytes[0] === 0 && bytes[2] === 1;
-    report(res.status === 200 && (isPng || (path.endsWith(".ico") && isIco)), `${path} -> ${res.status}, image=${isPng || isIco}`);
+    report(res.status === 200 && (isPng || (path.endsWith(".ico") && isIco)), `${label} -> ${res.status}, image=${isPng || isIco}`);
+  };
+  for (const page of imagePages) {
+    const html = await (await fetch(base + page)).text();
+    const m = /property="og:image"\s+content="([^"]+)"/.exec(html) ?? /content="([^"]+)"\s+property="og:image"/.exec(html);
+    const alt = /property="og:image:alt"\s+content="([^"]+)"/.exec(html) ?? /content="([^"]+)"\s+property="og:image:alt"/.exec(html);
+    if (!m) {
+      report(false, `${page}: no og:image tag`);
+      continue;
+    }
+    const path = m[1].replace(/^https?:\/\/[^/]+/, "").replace(/&amp;/g, "&");
+    await checkImage(path, `${page} og:image ${path}`);
+    report(Boolean(alt && alt[1].length > 15 && alt[1] !== "Festival Atlas activity"), `${page} og:image:alt is specific (${alt ? alt[1] : "missing"})`);
   }
+  for (const path of images) await checkImage(path);
 } catch (err) {
   failed++;
   console.error("FAIL", err.message);

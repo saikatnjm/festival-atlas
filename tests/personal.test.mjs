@@ -10,6 +10,8 @@ import { traditions } from "../data/local/content.ts";
 import { START_PLACES, VIBES, STOP_META, FACTS, buildRoute } from "../data/local/routes.ts";
 import { pujaPhase, inPujaMode, PUJA_2026, PUJA_MODE_WINDOW } from "../lib/puja-dates.ts";
 import { autoTheme, THEME_BOOT_SCRIPT } from "../lib/theme.ts";
+import { collections, getCollection } from "../data/pandals/collections.ts";
+import { fmtDate, fmtDateWithDay } from "../lib/dates.ts";
 
 const chars = Object.keys(cast);
 const graphemes = (s) => Array.from(new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(s));
@@ -154,8 +156,8 @@ test("puja phase and Puja-mode theme follow the calendar", () => {
   assert.equal(pujaPhase(new Date("2026-10-16T18:00:00Z"), "wb").kind, "before"); // 23:30 IST, 16 Oct
   assert.equal(pujaPhase(new Date("2026-10-16T20:00:00Z"), "wb").kind, "during"); // 01:30 IST, 17 Oct (Shashthi)
   assert.equal(pujaPhase(new Date("2026-10-19T06:00:00Z"), "wb").day.id, "ashtami");
-  assert.equal(pujaPhase(new Date("2026-10-19T06:00:00Z"), "bd").day.id, "navami");
-  assert.equal(pujaPhase(new Date("2026-10-20T06:00:00Z"), "bd").day.id, "navami"); // BD calendar has no 20 Oct entry
+  assert.equal(pujaPhase(new Date("2026-10-19T06:00:00Z"), "bd").day.id, "ashtami"); // BD: 19 Oct has no sourced tithi; Ashtami (18) carries over
+  assert.equal(pujaPhase(new Date("2026-10-20T06:00:00Z"), "bd").day.id, "navami"); // Mahanabami holiday, 20 Oct
   assert.equal(pujaPhase(new Date("2026-10-22T06:00:00Z"), "wb").kind, "after");
   assert.ok(PUJA_2026.wb.shashthi > PUJA_2026.bd.shashthi);
   assert.equal(inPujaMode("2026-10-09"), false);
@@ -166,6 +168,25 @@ test("puja phase and Puja-mode theme follow the calendar", () => {
   assert.equal(autoTheme("2026-10-09"), "classic");
   assert.equal(autoTheme("2026-10-22"), "classic");
   assert.ok(THEME_BOOT_SCRIPT.includes("data-theme") && !THEME_BOOT_SCRIPT.includes("</script"));
+});
+
+test("landing-page collections cover every listing exactly once, in both languages", () => {
+  const entries = JSON.parse(readFileSync(new URL("../data/pandals/entries.json", import.meta.url), "utf8"));
+  for (const p of entries) {
+    const hits = collections.filter((c) => c.match(p)).map((c) => c.slug);
+    assert.deepEqual(hits.length, 1, `${p.id} belongs to exactly one collection (${hits.join(",")})`);
+  }
+  for (const c of collections) {
+    for (const k of ["title", "h1", "lead", "description"]) assert.ok(c[k].bn && c[k].en, `${c.slug}.${k}`);
+    assert.ok(c.faq.length >= 2 && c.faq.every((f) => f.q.bn && f.q.en && f.a.bn && f.a.en), `${c.slug} faq`);
+    assert.ok(c.title.en.length <= 70, `${c.slug} title length ${c.title.en.length}`);
+    assert.ok(c.description.en.length <= 170, `${c.slug} description length ${c.description.en.length}`);
+  }
+  assert.equal(getCollection("kolkata")?.region, "wb");
+  assert.equal(getCollection("nope"), undefined);
+  assert.equal(fmtDate("2026-10-17", "en", "2026-10-21"), "17–21 Oct");
+  assert.equal(fmtDateWithDay("2026-10-17", "en"), "Saturday, 17 Oct");
+  assert.equal(fmtDateWithDay("2026-10-21", "bn"), "বুধবার, ২১ অক্টোবর");
 });
 
 test("every start × vibe gives a full route that starts near home", () => {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Dict } from "@/data/i18n";
+import { fun } from "@/data/i18n/fun";
 import { withLang, type Lang } from "@/lib/i18n";
 
 export default function SiteFooter({ lang, t }: { lang: Lang; t: Dict }) {
@@ -23,6 +24,18 @@ export default function SiteFooter({ lang, t }: { lang: Lang; t: Dict }) {
             </li>
             <li>
               <Link href={withLang(lang, "/local")}>{t.nav.local}</Link>
+            </li>
+            <li>
+              <Link href={withLang(lang, "/puja/kolkata")}>{fun.home.kolkataPage[lang]}</Link>
+            </li>
+            <li>
+              <Link href={withLang(lang, "/puja/dhaka")}>{fun.home.dhakaPage[lang]}</Link>
+            </li>
+            <li>
+              <Link href={withLang(lang, "/puja/abroad")}>{fun.home.abroadPage[lang]}</Link>
+            </li>
+            <li>
+              <Link href={withLang(lang, "/durga-puja-2026")}>{fun.home.datesPage[lang]}</Link>
             </li>
             <li>
               <Link href={withLang(lang, "/about")}>{t.about.title}</Link>

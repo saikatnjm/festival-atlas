@@ -18,11 +18,18 @@ export const PUJA_DAYS: PujaDay[] = [
   { id: "dashami", bn: "দশমী", en: "Dashami" },
 ];
 
-/** Date of each day per region (BD runs one day earlier in 2026; WB per Drik Panchang, "reported"). */
+/**
+ * Date of each day per region. WB follows a Drik Panchang-based report ("reported").
+ * BD: Shashthi 16 Oct and Dashami 21 Oct (News On AIR), Mahanabami 20 Oct (government holiday
+ * notification); Saptami/Ashtami in between are estimated (see ESTIMATED).
+ */
 export const PUJA_2026: Record<Region, Record<PujaDay["id"], string>> = {
   wb: { panchami: "2026-10-16", shashthi: "2026-10-17", saptami: "2026-10-18", ashtami: "2026-10-19", navami: "2026-10-20", dashami: "2026-10-21" },
-  bd: { panchami: "2026-10-15", shashthi: "2026-10-16", saptami: "2026-10-17", ashtami: "2026-10-18", navami: "2026-10-19", dashami: "2026-10-21" },
+  bd: { panchami: "2026-10-15", shashthi: "2026-10-16", saptami: "2026-10-17", ashtami: "2026-10-18", navami: "2026-10-20", dashami: "2026-10-21" },
 };
+
+/** Days whose date is inferred rather than taken from a source. */
+export const ESTIMATED: Record<Region, PujaDay["id"][]> = { wb: [], bd: ["panchami", "saptami", "ashtami"] };
 
 /** Puja mode (red-and-gold theme by default) runs from Mahalaya to Dashami. */
 export const PUJA_MODE_WINDOW = { start: "2026-10-10", end: "2026-10-21" };
@@ -48,7 +55,7 @@ export function pujaPhase(now: Date, region: Region): PujaPhase {
   const shashthi = PUJA_DAYS[1];
   if (today < cal.shashthi) return { kind: "before", days: dayDiff(today, cal.shashthi), day: shashthi };
   if (today > cal.dashami) return { kind: "after", days: dayDiff(cal.dashami, today) };
-  // Between Shashthi and Dashami: the latest day whose date is <= today (BD skips 20 Oct in this calendar).
+  // Between Shashthi and Dashami: the latest day whose date is <= today (a tithi can span two days).
   let current: PujaDay = shashthi;
   for (const d of PUJA_DAYS) if (cal[d.id] <= today) current = d;
   return { kind: "during", day: current };

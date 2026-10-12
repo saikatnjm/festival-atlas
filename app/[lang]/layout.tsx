@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     description: t.meta.home.description,
     openGraph: { siteName: t.site.name, type: "website", locale: OG_LOCALE[lang] },
     twitter: { card: "summary_large_image" },
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
     verification: google || bing ? { google, other: bing ? { "msvalidate.01": bing } : undefined } : undefined,
   };
 }

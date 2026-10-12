@@ -96,6 +96,10 @@
 *::after {
   box-sizing: border-box;
 }
+html {
+  /* Keeps scrolled-to content (result cards, #anchors) clear of the sticky header. */
+  scroll-padding-top: 7.5rem;
+}
 body {
   margin: 0;
   min-height: 100dvh;
@@ -274,6 +278,7 @@ h3 {
   border-bottom: 3px solid var(--marigold);
 }
 .bar {
+  position: relative; /* anchors the palette popover */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1128,6 +1133,19 @@ h3 {
 .nav-list {
   flex-wrap: wrap;
 }
+@media (max-width: 40rem) {
+  /* Two rows on phones: logo + tools, then the nav across the full width. */
+  .bar nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+  .bar-tools {
+    order: 2;
+  }
+  .nav-list {
+    justify-content: space-between;
+  }
+}
 @media (max-width: 26rem) {
   .nav-list a {
     padding-inline: 0.5rem;
@@ -1435,6 +1453,103 @@ h3 {
   margin-top: 0;
 }
 
+/* Collection landing pages (/puja/kolkata, /puja/dhaka, /puja/abroad) */
+.col-group {
+  margin: var(--space-3) 0;
+}
+.col-group h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 var(--space-2);
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--color-border);
+}
+.col-count {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+.col-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.col-list li {
+  display: grid;
+  gap: 0.2rem;
+  padding: var(--space-2) var(--space-3);
+  background: #fff;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+}
+.col-list a {
+  font-weight: 800;
+}
+.col-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.6rem;
+  font-size: 0.9rem;
+}
+.col-theme {
+  color: var(--color-muted);
+}
+@media (min-width: 48rem) {
+  .col-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Durga Puja 2026 dates page */
+.dates-grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  margin: var(--space-3) 0;
+}
+.dates-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 4px 4px 0 var(--marigold);
+}
+.dates-table caption {
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-align: left;
+  color: #fff;
+  background: var(--ink);
+}
+.dates-table th,
+.dates-table td {
+  padding: 0.55rem var(--space-3);
+  text-align: left;
+  border-top: 1px solid var(--color-border);
+}
+.dates-table thead th {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.dates-table tbody th {
+  font-weight: 800;
+}
+.dates-est {
+  color: var(--coral);
+  font-weight: 800;
+}
+
 /* Header tools: name chip, palette picker, language switch */
 .bar-tools {
   display: flex;
@@ -1460,8 +1575,9 @@ h3 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* The popover is positioned against the sticky header, so it never overflows the viewport on phones. */
 .theme {
-  position: relative;
+  position: static;
 }
 .theme-btn {
   min-width: var(--tap);
@@ -1475,7 +1591,7 @@ h3 {
 }
 .theme-pop {
   position: absolute;
-  right: 0;
+  right: var(--space-3);
   top: calc(100% + 0.4rem);
   z-index: 20;
   display: grid;

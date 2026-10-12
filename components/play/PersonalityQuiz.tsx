@@ -132,6 +132,7 @@ export default function PersonalityQuiz({ lang, s, slug }: { lang: Lang; s: Play
         shareText={fmt(meta.share ? meta.share[lang] : q.shareText, { title: result.title[lang] }, lang)}
         onAgain={restart}
         note={meta.note?.[lang]}
+        scrollOnMount
         personal={{
           chars: picks.map((oi, si) => dominantChar(scenes[si].options[oi].score)).filter((c): c is CharId => c !== null),
           seed: hashString(`${meta.slug}:${picks.join("")}:${rank}`),

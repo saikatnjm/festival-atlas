@@ -139,6 +139,7 @@ export default function PandalChallenge({ lang, s }: { lang: Lang; s: PlayString
           shareText={fmt(c.shareText, { title: result.title[lang] }, lang)}
           onAgain={restart}
           note={notice[lang]}
+          scrollOnMount
           personal={{ chars: picks.map((oi, ri) => leanOf(rounds[ri].options[oi].d)), seed: hashString(`${meta.slug}:${picks.join("")}`) }}
         />
       </div>
