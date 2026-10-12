@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { fun } from "@/data/i18n/fun";
 import { CARD_FORMATS, cardToPngBlob, canShareImage, copyText, downloadBlob, shareImage, shareLink, type CardData, type CardFormat } from "@/lib/share";
+import { track } from "@/lib/analytics";
 import { useHost } from "@/lib/use-host";
 import type { PlayStrings } from "./strings";
 
@@ -29,7 +30,7 @@ export default function ShareBar({ s, path, title, text, card, getArt, artKey, c
   const [message, setMessage] = useState("");
   const [format, setFormat] = useState<CardFormat>("portrait");
   const host = useHost();
-  const filename = `festival-atlas-${format}.png`;
+  const filename = `pujo-guide-${format}.png`;
   // Pre-rendered image, so sharing can start right inside the tap (some browsers require that).
   const cache = useRef<{ key: string; blob: Blob } | null>(null);
 
@@ -59,8 +60,10 @@ export default function ShareBar({ s, path, title, text, card, getArt, artKey, c
     return () => window.clearTimeout(id);
   }, [canFiles, makeBlob, artKey]);
 
+  // Analytics events carry the shared path and format only, never the player's name or card text.
   const onShare = async () => {
     if (!url) return;
+    track("share", { method: "native", path, format });
     if (canFiles) {
       try {
         const outcome = await shareImage({ blob: await makeBlob(), filename, title, text, url });
@@ -78,6 +81,7 @@ export default function ShareBar({ s, path, title, text, card, getArt, artKey, c
 
   const onCopyLink = async () => {
     if (!url) return;
+    track("share", { method: "copy_link", path });
     setMessage((await copyText(url)) ? s.share.linkCopied : s.share.copyFailed);
   };
 
@@ -87,6 +91,7 @@ export default function ShareBar({ s, path, title, text, card, getArt, artKey, c
   };
 
   const onSave = async () => {
+    track("save_image", { path, format });
     setMessage(s.share.making);
     try {
       downloadBlob(await makeBlob(), filename);
@@ -130,6 +135,7 @@ export default function ShareBar({ s, path, title, text, card, getArt, artKey, c
               href={`https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("share", { method: "whatsapp", path })}
             >
               {s.share.whatsapp}
             </a>
@@ -138,6 +144,7 @@ export default function ShareBar({ s, path, title, text, card, getArt, artKey, c
               href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("share", { method: "facebook", path })}
             >
               {s.share.facebook}
             </a>

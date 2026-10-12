@@ -2,15 +2,19 @@ import type { NextConfig } from "next";
 
 /**
  * The site's public origin, resolved once at build time.
- * On Vercel, the project's production domain (VERCEL_PROJECT_PRODUCTION_URL) always wins: it follows
- * the custom domain automatically, so a stale NEXT_PUBLIC_SITE_URL can't point metadata at a dead
- * domain, and preview builds still use the production canonical. Elsewhere (Docker, CI)
- * NEXT_PUBLIC_SITE_URL is used. Empty when neither is set.
+ * 1. NEXT_PUBLIC_SITE_URL when set (the explicit choice: set it in Vercel to the address you share).
+ * 2. Otherwise, on Vercel, the project's shortest production domain (VERCEL_PROJECT_PRODUCTION_URL).
+ * Empty when neither is set (no canonical URLs, no sitemap). A mismatch between the two is printed in
+ * the build log, so a stale NEXT_PUBLIC_SITE_URL gets noticed instead of quietly pointing metadata at
+ * an old domain.
  */
 function siteOrigin(): string {
-  const vercel = process.env.VERCEL && process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  const raw = vercel ? `https://${vercel}` : (process.env.NEXT_PUBLIC_SITE_URL ?? "");
-  return raw.replace(/\/+$/, "");
+  const explicit = (process.env.NEXT_PUBLIC_SITE_URL ?? "").replace(/\/+$/, "");
+  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "";
+  if (explicit && vercel && explicit !== vercel) {
+    console.warn(`[site] NEXT_PUBLIC_SITE_URL is ${explicit} but Vercel's production domain is ${vercel}. Metadata uses ${explicit}; update the variable if that is stale.`);
+  }
+  return explicit || vercel;
 }
 
 const nextConfig: NextConfig = {

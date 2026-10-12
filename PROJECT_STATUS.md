@@ -1,6 +1,20 @@
 # Festival Atlas — Project Status
 
-## Live test + SEO pass (latest, 2026-10-12)
+## Rebrand: Pujo Guide + dhak mark (latest, 2026-10-12)
+- Name: "Pujo Guide" (Latin, used in share images, filenames, manifest, `BRAND.name`) and "পুজো গাইড" in the Bangla UI (`t.site.name`, card brand, titles). Every "Festival Atlas" string in app/components/data/lib/scripts is replaced; package name is `pujo-guide`.
+- Mark: a head-on dhak with crossed sticks (own drawing; `lib/brand.ts` ICON_SVG, `public/brand/logo-icon*.svg`, `app/icon.svg`). Previewed at 128/64/32/16 px, on dark and on an app tile. The wordmark is now HTML (`.brand-word`, display font) next to the mark, so Bangla pages show a Bangla wordmark; `logo-primary*.svg` are kept as text-based fallbacks.
+- `app/apple-icon.tsx` generates the 180×180 home-screen PNG at build time (the mark on a cream tile). **The owner must `git rm app/favicon.ico app/apple-icon.png`** before pushing (the static apple-icon would conflict with the generated one; the ICO still showed the old globe). Manifest points at `/icon.svg` and `/apple-icon`; theme colour is sindoor.
+- OG images: brand line and alts say Pujo Guide; default gradient is sindoor→ink. Card PNG footer prints "Pujo Guide" / "পুজো গাইড" by language.
+- `docs/BRAND.md` rewritten. Smoke test: brand strings on home, apple-touch-icon link, `/icon.svg` and `/apple-icon` as images.
+- Not run here.
+
+## Domain + analytics (2026-10-12)
+- Live domain is now `pujoguide.vercel.app` (old `festival-atlas-world.vercel.app` kept attached). The site address is baked in at build time, so metadata, share links and the card footer only change after a rebuild.
+- `next.config.ts` `siteOrigin()` now prefers an explicit `NEXT_PUBLIC_SITE_URL` (set it in Vercel to `https://pujoguide.vercel.app`), falling back to Vercel's shortest production domain; a mismatch between the two is printed in the build log.
+- **Google Analytics 4** (`components/Analytics.tsx`): loads gtag.js after the page is interactive only when `NEXT_PUBLIC_GA_ID` (G-…) is set; `anonymize_ip` on. Custom events via `lib/analytics.ts` `track()`: `game_result` (game + result id), `share` (method, path, format), `save_image`, `challenge_friend`. Names typed by players are never sent. The "Simple and private" copy on About now says visits and shares are counted with Google Analytics.
+- Not run here. Owner: set the two env vars in Vercel, push, redeploy, then verify the card footer host and GA Realtime.
+
+## Live test + SEO pass (2026-10-12)
 **Live test (festival-atlas-world.vercel.app, phone-sized browser, after the owner's push):** name prompt → personalised quiz result (ribbon, traits, verdict, formats, challenge), squad card with Bangla names (names in the link), countdown + Puja-mode palette, palette picker (persists across pages), route maker → plan builder → plan card (share link carries the plan + name), map quick chips + collapsed filters (78 listings, 63 pinned), Get-directions link, shared result page ("play too" + challenge banner), reel-idea mode via link, About page (FAQPage JSON-LD), sitemap (244 URLs), robots, OG images. No console errors. Fixed from that test: palette popover clipped on phones (now anchored to the header bar), result card below the fold after the last question (quiz/challenge scroll it into view; `scroll-padding-top` added), three-row header on phones (now logo+tools, then nav), `?r=` on the Local page now remembered, "Rini, Four scenes" capitalisation.
 
 **SEO (not run here; CI will build it):**
@@ -11,6 +25,7 @@
 - **OG alt text** per game and per result via `generateImageMetadata` (image URLs change to `…/opengraph-image/card`; the smoke test now reads `og:image` from each page instead of hardcoding paths, and checks the alt is specific).
 - Titles: play index "Durga Puja Quizzes & Games 2026: Which Puja Character Are You?", Local page "Kolkata & Dhaka Durga Puja 2026 Guide: News, Routes & Plans".
 - Tests: collections cover every listing exactly once, title/description lengths, date formatting. Smoke: all new pages, JSON-LD types, sitemap entries.
+- **Footer rebuilt** (`components/SiteFooter.tsx`): brand blurb + three grouped columns (Explore: dates, Kolkata, Dhaka, abroad, map, local guide · Play: quiz, squad, all games · This site: about, language) and a bottom row with the OSM credit and year. The old single wrapped line is gone.
 - **Owner to do after deploy:** submit the sitemap in Google Search Console (set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` in Vercel), test `/en/puja/kolkata` and `/en/durga-puja-2026` in the Rich Results Test, and re-check share previews in the Facebook debugger (OG image URLs changed for game/result pages).
 
 ## Data, map page & reel ideas (2026-10-12)

@@ -30,7 +30,7 @@ export function ogImage({ kicker, title, subtitle, art }: Opts) {
   const count = art?.length ?? 0;
   const w = count === 1 ? 360 : count === 2 ? 230 : 160;
   const h = Math.round((w * 240) / 200);
-  const bg = lead ? `linear-gradient(135deg, ${lead.c3}, ${BRAND.ink})` : `linear-gradient(135deg, ${BRAND.indigo}, ${BRAND.ink})`;
+  const bg = lead ? `linear-gradient(135deg, ${lead.c3}, ${BRAND.ink})` : `linear-gradient(135deg, ${BRAND.sindoor}, ${BRAND.ink})`;
   return new ImageResponse(
     (
       <div
@@ -55,7 +55,7 @@ export function ogImage({ kicker, title, subtitle, art }: Opts) {
           <div style={{ display: "flex", alignItems: "center", fontSize: 32, fontWeight: 700 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={ICON_URI} width={56} height={56} alt="" style={{ marginRight: 16 }} />
-            Festival Atlas
+            {BRAND.name}
           </div>
         </div>
         {art && count > 0 ? (

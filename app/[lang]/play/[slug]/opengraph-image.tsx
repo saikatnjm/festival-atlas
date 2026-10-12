@@ -8,8 +8,8 @@ const contentType = "image/png";
 export async function generateImageMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const meta = getActivity(slug)?.meta;
-  const title = meta?.title.en ?? "Festival Atlas";
-  return [{ id: "card", size, contentType, alt: `${title}: a Puja cartoon game on Festival Atlas` }];
+  const title = meta?.title.en ?? "Pujo Guide";
+  return [{ id: "card", size, contentType, alt: `${title}: a Puja cartoon game on Pujo Guide` }];
 }
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
@@ -17,8 +17,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const meta = getActivity(slug)?.meta;
   return ogImage({
     kicker: "PUJA CARTOON UNIVERSE",
-    title: meta?.title.en ?? "Festival Atlas",
-    subtitle: "Play it on Festival Atlas",
+    title: meta?.title.en ?? "Pujo Guide",
+    subtitle: "Play it on Pujo Guide",
     art: (meta?.chars ?? ["detective"]).map((id, i) => ({ id, mood: i % 2 ? "smug" : "happy" })),
   });
 }

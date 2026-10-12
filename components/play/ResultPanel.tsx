@@ -6,6 +6,7 @@ import { activities } from "@/data/play";
 import { fun } from "@/data/i18n/fun";
 import { CHAR_EMOJI, VERDICTS, duoLine, fill, pickBadge, traitsFor } from "@/data/play/personal";
 import type { CharId } from "@/data/play/types";
+import { track } from "@/lib/analytics";
 import { withLang } from "@/lib/i18n";
 import { cleanName, possessive } from "@/lib/profile";
 import { copyText, shareLink, type CardData } from "@/lib/share";
@@ -65,6 +66,11 @@ export default function ResultPanel({ s, slug, card, sharePath, shareText, onAga
   const pTraits = personal?.traits !== false;
   const pChars = (personal?.chars ?? []).join(",");
 
+  // A finished game is the one number worth knowing (ids only, no names or card text).
+  useEffect(() => {
+    if (onAgain) track("game_result", { game: slug, result: resultId ?? "custom" });
+  }, []);
+
   // Quiz/challenge: the page is scrolled to the last question when the result appears, so bring the card up.
   useEffect(() => {
     if (!scrollOnMount) return;
@@ -101,11 +107,12 @@ export default function ResultPanel({ s, slug, card, sharePath, shareText, onAga
 
   const onChallenge = async () => {
     if (!resultId) return;
+    track("challenge_friend", { game: slug, result: resultId });
     const q = new URLSearchParams({ vr: resultId });
     if (name) q.set("vs", name);
     const url = new URL(withLang(lang, `/play/${slug}?${q.toString()}`), window.location.origin).toString();
     const challenge = `${CHAR_EMOJI[card.char]} ${fill(fun.duel.challengeText[lang], { name: name || fun.duel.friend[lang], title: card.title })}`;
-    const outcome = await shareLink({ title: `${card.title} · Festival Atlas`, text: challenge, url });
+    const outcome = await shareLink({ title: `${card.title} · ${s.card.brand}`, text: challenge, url });
     if (outcome === "copied") setDuelMsg(fun.duel.copied[lang]);
     else if (outcome === "failed") setDuelMsg((await copyText(url)) ? fun.duel.copied[lang] : s.share.copyFailed);
   };
@@ -139,7 +146,7 @@ export default function ResultPanel({ s, slug, card, sharePath, shareText, onAga
       <ShareBar
         s={s}
         path={withLang(lang, path)}
-        title={`${shown.owner ?? card.title} · Festival Atlas`}
+        title={`${shown.owner ?? card.title} · ${s.card.brand}`}
         text={text}
         card={shown}
         getArt={getArt}

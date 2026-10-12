@@ -104,7 +104,7 @@ export default function PlanBuilder({ lang, s, region, stops, preset }: Props) {
         <ShareBar
           s={s}
           path={`${withLang(lang, "/local")}?${planQuery(region, ids, day, name)}`}
-          title={`${card.title} · Festival Atlas`}
+          title={`${card.title} · ${s.card.brand}`}
           text={ui.shareText[lang]}
           card={card}
           getArt={getArt}

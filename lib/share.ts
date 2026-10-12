@@ -2,7 +2,7 @@
 
 import { cast } from "@/data/play/cast";
 import type { CharId, Mood, Pattern } from "@/data/play/types";
-import { ICON_SVG } from "@/lib/brand";
+import { BRAND, ICON_SVG } from "@/lib/brand";
 import { num, type Lang } from "@/lib/i18n";
 
 export type ShareOutcome = "shared" | "copied" | "cancelled" | "failed";
@@ -261,7 +261,7 @@ export async function cardToPngBlob(card: CardData, svg: string | null, host: st
     ...(card.traits ?? []),
     ...(card.list ?? []),
     host,
-    "Festival Atlas 0123456789%",
+    `${BRAND.name} পুজো গাইড 0123456789%`,
   ].join(" ");
   await loadFonts(sample);
 
@@ -498,7 +498,7 @@ export async function cardToPngBlob(card: CardData, svg: string | null, host: st
   ctx.textAlign = "left";
   ctx.fillStyle = CREAM;
   ctx.font = display(48);
-  ctx.fillText("Festival Atlas", 152, BOTTOM + FOOT / 2 + 16);
+  ctx.fillText(card.lang === "bn" ? "পুজো গাইড" : BRAND.name, 152, BOTTOM + FOOT / 2 + 16);
   if (host) {
     ctx.textAlign = "right";
     ctx.fillStyle = MARIGOLD;

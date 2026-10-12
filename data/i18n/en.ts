@@ -3,8 +3,8 @@
 
 const en = {
   site: {
-    name: "Festival Atlas",
-    tagline: "Pandal map & festival fun",
+    name: "Pujo Guide",
+    tagline: "Durga Puja guide, games & pandal map",
   },
   a11y: {
     skip: "Skip to content",
@@ -12,7 +12,7 @@ const en = {
     footerNav: "Footer",
     language: "Language",
     switchTo: "Switch to {name}",
-    home: "Festival Atlas home",
+    home: "Pujo Guide home",
     me: "Playing as",
   },
   nav: { home: "Home", puja: "Pandals", play: "Play", local: "Local Puja" },
@@ -24,7 +24,7 @@ const en = {
   },
   meta: {
     home: {
-      title: "Festival Atlas: Durga Puja 2026 Games, Local Guide & Pandal Map",
+      title: "Pujo Guide: Durga Puja 2026 Games, Kolkata & Dhaka Guide, Pandal Map",
       description:
         "Find out who you are at Puja in 30 seconds, get a card with your name, challenge friends, and plan pandal-hopping in Kolkata and Dhaka with sourced news. English and বাংলা.",
     },
@@ -67,14 +67,14 @@ const en = {
     honest: [
       { t: "Sourced", p: "Every pandal links to the pages it came from, with the date we last checked." },
       { t: "Clearly labelled", p: "Confirmed, historical and awaiting-verification entries look different, and the edition year is always shown." },
-      { t: "Simple and private", p: "No sign-up, no accounts, no ads. Games run in your browser." },
+      { t: "Simple and private", p: "No sign-up, no accounts, no ads. Games run in your browser; the name you type never leaves it. We only count visits and shares with Google Analytics." },
     ],
     coverage:
       "Coverage is partial: this is a curated starting set, not a list of every pandal in the world. More entries are added only when they can be sourced.",
     faqH2: "Questions",
     faq: [
       {
-        q: "What is Festival Atlas?",
+        q: "What is Pujo Guide?",
         a: "A free, mobile-friendly guide to festivals. It has an interactive map and directory of Durga Puja pandals, plus funny shareable games, in English and Bangla.",
       },
       {
@@ -185,7 +185,7 @@ const en = {
     reactionLabel: "Reaction",
     change: "Change expression",
     stat: "{n}%",
-    brand: "Festival Atlas",
+    brand: "Pujo Guide",
   },
   puja: {
     h1: "Pandals of Kolkata & Dhaka, on a map",
@@ -300,9 +300,9 @@ const en = {
     },
   ],
   about: {
-    title: "How Festival Atlas works",
+    title: "How Pujo Guide works",
     lead: "A free, no-account guide to Durga Puja: sourced pandal listings, a local guide for Kolkata and Dhaka, and cartoon games you can share.",
-    description: "How Festival Atlas sources its pandal listings, labels entries, handles privacy, and answers common questions.",
+    description: "How Pujo Guide sources its pandal listings, labels entries, handles privacy, and answers common questions.",
   },
   notFound: {
     h1: "We couldn't find that page",

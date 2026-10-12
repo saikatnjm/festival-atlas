@@ -10,6 +10,7 @@ import { LANGS, OG_LOCALE, isLang } from "@/lib/i18n";
 import { siteUrl } from "@/lib/site";
 import { THEME_BOOT_SCRIPT } from "@/lib/theme";
 import InstallHint from "@/components/InstallHint";
+import Analytics from "@/components/Analytics";
 
 export const dynamicParams = false;
 
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#2B2D8F",
+  themeColor: "#B5121B",
 };
 
 export default async function LangLayout({ children, params }: { children: React.ReactNode; params: Promise<{ lang: string }> }) {
@@ -64,6 +65,7 @@ export default async function LangLayout({ children, params }: { children: React
         </main>
         <SiteFooter lang={lang} t={t} />
         <InstallHint lang={lang} />
+        <Analytics />
       </body>
     </html>
   );

@@ -16,9 +16,12 @@ const pages = [
   ["/bn", 200, "পুজোয় তুমি কে? ৩০ সেকেন্ডে জেনে নাও।"],
   ["/en", 200, 'data-theme'],
   ["/en", 200, 'rel="manifest"'],
-  ["/en/about", 200, "How Festival Atlas works"],
+  ["/en/about", 200, "How Pujo Guide works"],
+  ["/en", 200, "Pujo Guide"],
+  ["/bn", 200, "পুজো গাইড"],
+  ["/en", 200, 'rel="apple-touch-icon"'],
   ["/bn/about", 200, "FAQPage"],
-  ["/manifest.webmanifest", 200, '"Festival Atlas"'],
+  ["/manifest.webmanifest", 200, '"Pujo Guide"'],
   ["/en/play/puja-family", 200, "Puja Household"],
   ["/bn/play/gopal-wit", 200, "দরবারি বুদ্ধি"],
   ["/en/play/epic-adda", 200, "Mahabharata"],
@@ -112,7 +115,8 @@ const imagePages = [
   "/en/durga-puja-2026",
   "/en/puja/kolkata",
 ];
-const images = ["/favicon.ico", "/apple-icon.png"];
+// Icons: the SVG favicon and the generated home-screen PNG (app/apple-icon.tsx; the URL has no extension).
+const images = ["/icon.svg", "/apple-icon"];
 
 const server = spawn("node_modules/.bin/next", ["start", "-p", String(PORT)], { stdio: "inherit" });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -157,7 +161,9 @@ try {
     const bytes = new Uint8Array(await res.arrayBuffer());
     const isPng = bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47;
     const isIco = bytes[0] === 0 && bytes[2] === 1;
-    report(res.status === 200 && (isPng || (path.endsWith(".ico") && isIco)), `${label} -> ${res.status}, image=${isPng || isIco}`);
+    const head = new TextDecoder().decode(bytes.slice(0, 64)).trimStart();
+    const isSvg = path.endsWith(".svg") && (head.startsWith("<svg") || head.startsWith("<?xml"));
+    report(res.status === 200 && (isPng || isSvg || (path.endsWith(".ico") && isIco)), `${label} -> ${res.status}, image=${isPng || isSvg || isIco}`);
   };
   for (const page of imagePages) {
     const html = await (await fetch(base + page)).text();

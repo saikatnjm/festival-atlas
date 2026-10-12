@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BRAND } from "./brand";
 import { LANGS, OG_LOCALE, type Lang, withLang } from "./i18n";
 
 /**
@@ -45,7 +46,7 @@ export function pageMeta(opts: { lang: Lang; title: string; description: string;
     openGraph: {
       title: opts.title,
       description: opts.description,
-      siteName: "Festival Atlas",
+      siteName: BRAND.name,
       type: "website",
       locale: OG_LOCALE[opts.lang],
       alternateLocale: [OG_LOCALE[other]],

@@ -1,6 +1,6 @@
 import { ogImage } from "@/lib/og";
 
-export const alt = "Kolkata Durga Puja 2026: pandals, themes and a map on Festival Atlas";
+export const alt = "Kolkata Durga Puja 2026: pandals, themes and a map on Pujo Guide";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

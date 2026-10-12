@@ -1,6 +1,6 @@
 import { ogImage } from "@/lib/og";
 
-export const alt = "Dhaka and Bangladesh Durga Puja 2026: mandaps, Dhakeshwari and holidays on Festival Atlas";
+export const alt = "Dhaka and Bangladesh Durga Puja 2026: mandaps, Dhakeshwari and holidays on Pujo Guide";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

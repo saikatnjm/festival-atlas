@@ -8,7 +8,7 @@ export const contentType = "image/png";
 export default async function Image({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const p = getPandal(id);
-  if (!p) return ogImage({ kicker: "DURGA PUJA PANDAL", title: "Festival Atlas" });
+  if (!p) return ogImage({ kicker: "DURGA PUJA PANDAL", title: "Pujo Guide" });
   const place = `${p.city}, ${COUNTRY_EN[p.country] ?? p.country}`;
   return ogImage({
     kicker: "DURGA PUJA PANDAL",

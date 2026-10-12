@@ -1,6 +1,6 @@
 import { ogImage } from "@/lib/og";
 
-export const alt = "Durga Puja abroad: Bengali pujas in London, New York, Toronto, Sydney and Dubai on Festival Atlas";
+export const alt = "Durga Puja abroad: Bengali pujas in London, New York, Toronto, Sydney and Dubai on Pujo Guide";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
