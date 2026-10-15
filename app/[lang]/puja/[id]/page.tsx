@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import StatusBadge from "@/components/puja/StatusBadge";
+import VisitButton from "@/components/puja/VisitButton";
+import CrowdMeter from "@/components/live/CrowdMeter";
 import { cityName, countryName, descriptionOf, getPandal, hasPin, pandals, placeLabel, sortPandals, themeOf } from "@/data/pandals";
 import { collections } from "@/data/pandals/collections";
 import { getDict } from "@/data/i18n";
@@ -139,6 +141,8 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
       </p>
       <p className="status-help">{t.statusHelp[p.status]}</p>
       <p className="lead">{descriptionOf(p, lang)}</p>
+      <VisitButton id={p.id} lang={lang} />
+      <CrowdMeter id={p.id} lang={lang} />
 
       <dl className="facts facts-table">
         {rows.map(([k, v]) => (

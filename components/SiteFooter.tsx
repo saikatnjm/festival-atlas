@@ -33,8 +33,10 @@ export default function SiteFooter({ lang, t }: { lang: Lang; t: Dict }) {
     {
       title: T.play[lang],
       links: [
+        { href: withLang(lang, "/greetings"), label: fun.greet.homeCta[lang] },
         { href: withLang(lang, "/play/puja-personality"), label: T.quiz[lang] },
         { href: withLang(lang, "/play/puja-squad"), label: T.squad[lang] },
+        { href: withLang(lang, "/passport"), label: `🎫 ${fun.passport.title[lang]}` },
         { href: withLang(lang, "/play"), label: T.allGames[lang] },
       ],
     },

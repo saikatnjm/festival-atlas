@@ -1562,6 +1562,162 @@ h3 {
   }
 }
 
+/* Passport: visit button on pandal pages, tick list on /passport */
+.visit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin: var(--space-2) 0 var(--space-3);
+}
+.visit .button[aria-pressed="true"] {
+  background: var(--st-confirmed);
+  border-color: var(--st-confirmed);
+  color: #fff;
+}
+.visit-meta {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+.tick-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tick {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0.5rem 0.8rem;
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  background: #fff;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.tick.is-on {
+  border-color: var(--st-confirmed);
+  background: #edf9f2;
+}
+.tick-box {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+}
+.tick.is-on .tick-box {
+  background: var(--st-confirmed);
+  border-color: var(--st-confirmed);
+}
+.tick-text {
+  display: grid;
+  min-width: 0;
+}
+.my-chips {
+  margin-top: 0;
+}
+@media (min-width: 48rem) {
+  .tick-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Greeting cards */
+.greet-fields {
+  display: grid;
+  gap: var(--space-2);
+}
+@media (min-width: 40rem) {
+  .greet-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Live crowd meter, badges and board */
+.crowd {
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--coral);
+}
+.crowd h2 {
+  margin: 0 0 var(--space-1);
+  font-size: 1.3rem;
+}
+.crowd p {
+  margin: 0 0 var(--space-2);
+}
+.crowd-level {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+}
+.crowd-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+.live-badge {
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.live-board h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.live-dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: var(--coral);
+  box-shadow: 0 0 0 0 rgba(255, 90, 95, 0.6);
+  animation: live-pulse 1.6s ease-out infinite;
+}
+@keyframes live-pulse {
+  to {
+    box-shadow: 0 0 0 10px rgba(255, 90, 95, 0);
+  }
+}
+.live-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0 0 0 1.4rem;
+}
+.live-list li {
+  display: grid;
+  gap: 0.1rem;
+  padding: var(--space-2) var(--space-3);
+  background: #fff;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+}
+.live-list a {
+  font-weight: 800;
+}
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+}
+
 /* Durga Puja 2026 dates page */
 .dates-grid {
   display: grid;

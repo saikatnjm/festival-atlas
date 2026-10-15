@@ -10,6 +10,8 @@ import { fmt } from "@/lib/format";
 import { num, type Lang } from "@/lib/i18n";
 import { applyFilters, filtersFromSearch, hasFilters, NO_FILTERS, searchFromFilters, type Filters } from "@/lib/pandal-filter";
 import StatusBadge from "./StatusBadge";
+import LiveBadge from "@/components/live/LiveBadge";
+import { useLive } from "@/components/live/useLive";
 
 /** One-tap city picks shown above the filters; "All" clears them. */
 const QUICK = [
@@ -38,6 +40,7 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
+  const live = useLive();
   const listRef = useRef<HTMLUListElement>(null);
   const activeCount = (["country", "year", "status", "theme"] as const).filter((k) => filters[k] !== "").length + (filters.city && !QUICK.some((q) => q.city === filters.city) ? 1 : 0);
 
@@ -214,6 +217,7 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
                     <span className="year-badge">{p.year ? fmt(t.edition, { year: p.year }, lang) : t.yearUnknown}</span>
                   </p>
                   {p.theme ? <p className="entry-theme">{p.theme}</p> : null}
+                  <LiveBadge stats={live.board[p.id]} lang={lang} />
                   <p className="entry-desc">{p.description}</p>
                   <p className="entry-actions">
                     {isPin(p) ? (

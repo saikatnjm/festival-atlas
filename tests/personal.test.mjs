@@ -11,6 +11,9 @@ import { START_PLACES, VIBES, STOP_META, FACTS, buildRoute } from "../data/local
 import { pujaPhase, inPujaMode, PUJA_2026, PUJA_MODE_WINDOW } from "../lib/puja-dates.ts";
 import { autoTheme, THEME_BOOT_SCRIPT } from "../lib/theme.ts";
 import { collections, getCollection } from "../data/pandals/collections.ts";
+import { toVisits, toggleVisit, visitsFromQuery, visitsToQuery, VISITS_MAX } from "../lib/visits.ts";
+import { bucketFor, crowdLevel, isDevice, isPandalId, rankBoard } from "../lib/live-shared.ts";
+import { GREETINGS, getGreeting, greetingForPhase } from "../data/play/greetings.ts";
 import { fmtDate, fmtDateWithDay } from "../lib/dates.ts";
 
 const chars = Object.keys(cast);
@@ -187,6 +190,55 @@ test("landing-page collections cover every listing exactly once, in both languag
   assert.equal(fmtDate("2026-10-17", "en", "2026-10-21"), "17–21 Oct");
   assert.equal(fmtDateWithDay("2026-10-17", "en"), "Saturday, 17 Oct");
   assert.equal(fmtDateWithDay("2026-10-21", "bn"), "বুধবার, ২১ অক্টোবর");
+});
+
+test("passport ticks: validation, toggling, link round-trip", () => {
+  assert.deepEqual(toVisits(null), []);
+  assert.deepEqual(toVisits([{ id: "Bad ID" }, { id: "ok-id", on: "2026-10-18" }, "ok-id", "another-one"]).map((v) => v.id), ["ok-id", "another-one"]);
+  assert.equal(toVisits([{ id: "ok-id", on: "nope" }])[0].on.length, 10, "bad date falls back to today");
+  const a = toggleVisit([], "sreebhumi-sporting-club", "2026-10-18");
+  assert.deepEqual(a, [{ id: "sreebhumi-sporting-club", on: "2026-10-18" }]);
+  assert.deepEqual(toggleVisit(a, "sreebhumi-sporting-club"), []);
+  const many = Array.from({ length: VISITS_MAX + 5 }, (_, i) => ({ id: `p-${i}`, on: "2026-10-18" }));
+  assert.equal(toggleVisit(many, "p-new").length, VISITS_MAX);
+  assert.equal(visitsToQuery(a), "sreebhumi-sporting-club");
+  assert.deepEqual(visitsFromQuery("a-b,c-d,,<x>").map((v) => v.id), ["a-b", "c-d"]);
+});
+
+test("live board helpers: buckets, validation, crowd level, ranking", () => {
+  const t = new Date("2026-10-18T14:30:00Z");
+  assert.equal(bucketFor("crowd", t), "2026-10-18T14");
+  assert.equal(bucketFor("here", t), "2026-10-18T14");
+  assert.equal(bucketFor("love", new Date("2026-10-18T20:00:00Z")), "2026-10-19", "love buckets follow the Kolkata day");
+  assert.ok(isDevice("abcdefghijklmnop") && !isDevice("short") && !isDevice("has space in it 12345"));
+  assert.ok(isPandalId("santosh-mitra-square") && !isPandalId("Santosh Mitra") && !isPandalId(""));
+  assert.equal(crowdLevel(null), null);
+  assert.equal(crowdLevel(1.2), 1);
+  assert.equal(crowdLevel(2), 2);
+  assert.equal(crowdLevel(2.6), 3);
+  const board = {
+    a: { crowd_n: 2, crowd_avg: 2, here_n: 0, love_today: 0 },
+    b: { crowd_n: 0, crowd_avg: null, here_n: 3, love_today: 1 },
+    c: { crowd_n: 0, crowd_avg: null, here_n: 0, love_today: 0 },
+  };
+  assert.deepEqual(rankBoard(board).map((x) => x.id), ["b", "a"], "check-ins outrank crowd reports; empty rows drop out");
+});
+
+test("greeting cards: every day bilingual with lines, and today's pick follows the calendar", () => {
+  const validChars = Object.keys(cast);
+  for (const g of GREETINGS) {
+    assert.ok(g.lines.length >= 2 && g.lines.every((x) => x.bn && x.en), `${g.id} lines`);
+    assert.ok(g.headline.bn.endsWith("!") && g.headline.en.endsWith("!"), `${g.id} headline ends with !`);
+    assert.ok(validChars.includes(g.char), `${g.id} char`);
+    assert.ok(g.tags.length >= 1 && g.tags.every((t) => /^[A-Za-z0-9]+$/.test(t)), `${g.id} tags`);
+  }
+  assert.equal(new Set(GREETINGS.map((g) => g.id)).size, GREETINGS.length);
+  assert.equal(getGreeting("nope"), undefined);
+  assert.equal(greetingForPhase(pujaPhase(new Date("2026-10-19T06:00:00Z"), "wb")), "ashtami");
+  assert.equal(greetingForPhase(pujaPhase(new Date("2026-10-16T06:00:00Z"), "wb")), "panchami");
+  assert.equal(greetingForPhase(pujaPhase(new Date("2026-10-22T06:00:00Z"), "wb")), "bijoya");
+  assert.equal(greetingForPhase(pujaPhase(new Date("2026-11-05T06:00:00Z"), "wb")), "anytime");
+  assert.equal(greetingForPhase(pujaPhase(new Date("2026-10-12T06:00:00Z"), "wb")), "anytime");
 });
 
 test("every start × vibe gives a full route that starts near home", () => {

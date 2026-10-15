@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 import type { Region } from "@/data/events/events";
 import { fill } from "@/data/play/personal";
 import { num, type Lang } from "@/lib/i18n";
+import { cleanName } from "@/lib/profile";
 import { pujaPhase, type PujaPhase } from "@/lib/puja-dates";
+import { useProfile } from "@/lib/use-profile";
 
 const T = {
   before: { bn: "{day} আসতে আর", en: "{day} is in" },
   days: { bn: "{n} দিন", en: "{n} days" },
   tomorrow: { bn: "কালই {day}!", en: "{day} is tomorrow!" },
   today: { bn: "আজ {day}!", en: "It’s {day} today!" },
+  todayName: { bn: "শুভ {day}, {name}!", en: "Shubho {day}, {name}!" },
   after: { bn: "শুভ বিজয়া! আবার দেখা হবে আসছে বছর।", en: "Shubho Bijoya! See you next year." },
   fallback: { bn: "দুর্গাপুজো ২০২৬ · ১৭–২১ অক্টোবর", en: "Durga Puja 2026 · 17–21 Oct" },
   region: { wb: { bn: "কলকাতা", en: "Kolkata" }, bd: { bn: "বাংলাদেশ", en: "Bangladesh" } },
@@ -21,6 +24,8 @@ const isRegion = (v: unknown): v is Region => v === "wb" || v === "bd";
 /** Live countdown pill: days to Shashthi, today's Puja day, or Bijoya. Region follows the Local page choice. */
 export default function Countdown({ lang }: { lang: Lang }) {
   const [state, setState] = useState<{ phase: PujaPhase; region: Region } | null>(null);
+  const { profile } = useProfile();
+  const name = cleanName(profile.name);
 
   useEffect(() => {
     let region: Region = "wb";
@@ -57,7 +62,7 @@ export default function Countdown({ lang }: { lang: Lang }) {
   if (phase.kind === "during") {
     return (
       <p className="countdown" aria-live="polite">
-        <b>{fill(T.today[lang], { day: phase.day[lang] })}</b>
+        <b>{name ? fill(T.todayName[lang], { day: phase.day[lang], name }) : fill(T.today[lang], { day: phase.day[lang] })}</b>
         {tag}
       </p>
     );

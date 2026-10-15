@@ -8,6 +8,10 @@ import Character from "@/components/play/art/Character";
 import CastStrip from "@/components/home/CastStrip";
 import Countdown from "@/components/home/Countdown";
 import HeroCard from "@/components/home/HeroCard";
+import MyPlanChip from "@/components/home/MyPlanChip";
+import LiveBoard, { type BoardName } from "@/components/live/LiveBoard";
+import { toItems } from "@/data/pandals/view";
+import type { Lang } from "@/lib/i18n";
 import EventList from "@/components/local/EventList";
 import { playStrings } from "@/components/play/strings";
 import { events } from "@/data/events/events";
@@ -34,6 +38,13 @@ function topCities(limit: number): { city: string; n: number }[] {
     .map(([city, n]) => ({ city, n }))
     .sort((a, b) => b.n - a.n || a.city.localeCompare(b.city))
     .slice(0, limit);
+}
+
+/** Names and links for the live board (ids only travel over the wire; names come from the build). */
+function boardNames(lang: Lang): Record<string, BoardName> {
+  const out: Record<string, BoardName> = {};
+  for (const p of toItems(lang)) out[p.id] = { name: p.name, place: p.area ? `${p.area}, ${cityName(p.city, lang)}` : cityName(p.city, lang), href: p.href };
+  return out;
 }
 
 /** The three games shown on the home page; the rest live on /play. */
@@ -79,10 +90,14 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
             <Link className="button button-big" href={withLang(lang, "/play/puja-personality")}>
               {f.ctaQuiz[lang]}
             </Link>
+            <Link className="button button-big button-light" href={withLang(lang, "/greetings")}>
+              {fun.greet.homeCta[lang]}
+            </Link>
             <Link className="button button-big button-light" href={withLang(lang, "/local")}>
               {f.ctaLocal[lang]}
             </Link>
           </p>
+          <MyPlanChip lang={lang} />
         </div>
         <HeroCard lang={lang} s={playStrings(t)} />
       </section>
@@ -115,6 +130,8 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
           </Link>
         </p>
       </section>
+
+      <LiveBoard lang={lang} names={boardNames(lang)} />
 
       <section className="home-section" aria-labelledby="home-trend">
         <h2 id="home-trend">{ui.trendH2[lang]}</h2>

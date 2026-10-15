@@ -1,6 +1,17 @@
 # Festival Atlas — Project Status
 
-## Rebrand: Pujo Guide + dhak mark (latest, 2026-10-12)
+## Puja-week engagement: passport, live crowd meter, greeting cards (latest, 2026-10-15)
+**Not run here** (no shell). Two static reviews by a second reader; all findings fixed. Owner: push, paste the SQL, verify on the live URL.
+
+- **Pandal passport** (`lib/visits.ts`, `components/puja/VisitButton.tsx`, `Passport.tsx`, `/passport`): "✓ ঘুরেছি" on every pandal page; `/passport` has a tick list (Kolkata, Dhaka, elsewhere) and a shareable card ("Rini-র পুজো পাসপোর্ট · ৭টা প্যান্ডেল", areas, north+south badge). Ticks live in localStorage (in-memory fallback); a shared link carries the ids and name only. Home shows "🎫 Passport: n pandals" and "🗺️ Your plan" chips once they exist (`MyPlanChip.tsx`; PlanBuilder saves the last plan URL).
+- **Tithi greeting**: the countdown pill says "শুভ অষ্টমী, Rini!" during Puja.
+- **Greeting cards** `/greetings` (`data/play/greetings.ts`, `components/play/GreetingMaker.tsx`): one card per day (Mahalaya, Panchami, Shashthi, Saptami, Ashtami, Navami, Dashami, Bijoya, Sharodiya), today's picked automatically, sender name (from profile) and optional recipient, 2–4 lines per day (warm/funny), portrait/square/story PNG, WhatsApp/Facebook/native share with hashtags. Shared link reproduces the card and offers "make your own". Own OG image; crawlable list of every day's headline for "শুভ অষ্টমী শুভেচ্ছা" searches. Hero button + footer link.
+- **Live layer (Supabase, free tier)**: `supabase/schema.sql` (table `signals`, RLS insert-only for anon, column grants, `live_board()` security-definer function), `lib/live.ts` (REST, no SDK), `app/api/live/route.ts` (GET board cached 30 s at the edge; POST validated, duplicate = 409 = "already"), `components/live/*` (CrowdMeter on pandal pages: ফাঁকা/মাঝারি/ঠাসা + "I'm here" + "❤️"; LiveBadge in the directory list; LiveBoard "Buzzing right now" on the home page). Everything hides itself when `NEXT_PUBLIC_SUPABASE_URL`/`ANON_KEY` are missing (`/api/live` → `{ok:true,disabled:true}`). One report per device/pandal/kind per hour (love: per Kolkata day), remembered in sessionStorage. Anonymous: random device id only.
+- **Setup still needed (owner):** env vars are set in Vercel; paste `supabase/schema.sql` into the Supabase SQL Editor and Run; push; then on the live site tap a crowd level on a pandal page and check the home board updates within a minute. Spam is limited by the hourly rule only (no IP limits).
+- Tests: visits, live helpers, greetings (bilingual, calendar pick). Smoke: `/greetings`, `/passport`, visit button, `/api/live`.
+- Distribution plan: `docs/DISTRIBUTION.md`.
+
+## Rebrand: Pujo Guide + dhak mark (2026-10-12)
 - Name: "Pujo Guide" (Latin, used in share images, filenames, manifest, `BRAND.name`) and "পুজো গাইড" in the Bangla UI (`t.site.name`, card brand, titles). Every "Festival Atlas" string in app/components/data/lib/scripts is replaced; package name is `pujo-guide`.
 - Mark: a head-on dhak with crossed sticks (own drawing; `lib/brand.ts` ICON_SVG, `public/brand/logo-icon*.svg`, `app/icon.svg`). Previewed at 128/64/32/16 px, on dark and on an app tile. The wordmark is now HTML (`.brand-word`, display font) next to the mark, so Bangla pages show a Bangla wordmark; `logo-primary*.svg` are kept as text-based fallbacks.
 - `app/apple-icon.tsx` generates the 180×180 home-screen PNG at build time (the mark on a cream tile). **The owner must `git rm app/favicon.ico app/apple-icon.png`** before pushing (the static apple-icon would conflict with the generated one; the ICO still showed the old globe). Manifest points at `/icon.svg` and `/apple-icon`; theme colour is sindoor.

@@ -94,6 +94,16 @@ export default function PlanBuilder({ lang, s, region, stops, preset }: Props) {
     stat: { label: ui.stat[lang], value: Math.min(100, 40 + ids.length * 8) },
   };
 
+  // Remember the last plan made here, so the home page can offer "your plan for tonight".
+  useEffect(() => {
+    if (view !== "card" || !ids.length || sharedName !== null) return;
+    try {
+      window.localStorage.setItem("fa:plan", `${withLang(lang, "/local")}?${planQuery(region, ids, day, name)}`);
+    } catch {
+      // ignore
+    }
+  }, [view, ids, day, name, region, lang, sharedName]);
+
   if (view === "card" && ids.length) {
     return (
       <section className="cx-result" aria-label={ui.myPlan[lang]}>
