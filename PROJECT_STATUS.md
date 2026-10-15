@@ -1,7 +1,7 @@
 # Festival Atlas — Project Status
 
 ## Puja-week engagement: passport, live crowd meter, greeting cards (latest, 2026-10-15)
-**Not run here** (no shell). Two static reviews by a second reader; all findings fixed. Owner: push, paste the SQL, verify on the live URL.
+**CI run of 2026-10-15:** install, data validation, unit tests, build and type-check all passed; the smoke test ran 100+ checks and failed exactly one: the `x-default` hreflang regex expected a trailing slash that Next strips from the resolved root URL (a pre-existing test bug, fixed in `scripts/smoke.mjs`). Owner: push again, paste the SQL, verify on the live URL.
 
 - **Pandal passport** (`lib/visits.ts`, `components/puja/VisitButton.tsx`, `Passport.tsx`, `/passport`): "✓ ঘুরেছি" on every pandal page; `/passport` has a tick list (Kolkata, Dhaka, elsewhere) and a shareable card ("Rini-র পুজো পাসপোর্ট · ৭টা প্যান্ডেল", areas, north+south badge). Ticks live in localStorage (in-memory fallback); a shared link carries the ids and name only. Home shows "🎫 Passport: n pandals" and "🗺️ Your plan" chips once they exist (`MyPlanChip.tsx`; PlanBuilder saves the last plan URL).
 - **Tithi greeting**: the countdown pill says "শুভ অষ্টমী, Rini!" during Puja.

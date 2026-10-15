@@ -31,7 +31,7 @@ const pages = [
   ["/en", 200, `rel="canonical" href="${O}/en"`],
   ["/bn", 200, alt("en", `${O}/en`)],
   ["/bn", 200, alt("bn", `${O}/bn`)],
-  ["/en", 200, alt("x-default", `${O}/`)],
+  ["/en", 200, alt("x-default", `${O}/?`)], // Next drops the trailing slash on the resolved root URL
   ["/en/puja", 200, "Pandals of Kolkata &amp; Dhaka, on a map"],
   ["/bn/puja", 200, "কলকাতা আর ঢাকার প্যান্ডেল, ম্যাপে"],
   ["/en/puja/sreebhumi-sporting-club", 200, "Hawa Mahal"],
