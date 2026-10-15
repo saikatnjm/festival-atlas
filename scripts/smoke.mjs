@@ -51,6 +51,7 @@ const pages = [
   ["/en/feedback", 200, "Your feedback"],
   ["/bn/feedback", 200, "তোমার মতামত"],
   ["/en", 200, "More pujas, coming up"],
+  ["/en", 200, 'name="google-site-verification" content="8RLTxEbzyALLvzZDgp9mOc_SaMCBxkNwvFr61YL0HXY"'],
   ["/en/admin", 200, "Admin"],
   ["/en/passport", 200, "My Puja passport"],
   ["/bn/passport", 200, "আমার পুজো পাসপোর্ট"],
