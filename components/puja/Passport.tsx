@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Leaderboard from "@/components/community/Leaderboard";
 import ResultCard from "@/components/play/ResultCard";
 import ShareBar from "@/components/play/ShareBar";
 import type { PlayStrings } from "@/components/play/strings";
@@ -99,6 +100,7 @@ export default function Passport({ lang, s, groups }: Props) {
         <p className="cx-note">{p.note[lang]}</p>
       </section>
 
+      {!shared ? <Leaderboard lang={lang} score={mine.filter((v) => all.has(v.id)).length} /> : null}
       {!shared ? (
         <section className="home-section" aria-labelledby="pass-list">
           <h2 id="pass-list">{p.checklist[lang]}</h2>

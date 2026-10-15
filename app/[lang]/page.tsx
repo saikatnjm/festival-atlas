@@ -10,6 +10,7 @@ import Countdown from "@/components/home/Countdown";
 import HeroCard from "@/components/home/HeroCard";
 import MyPlanChip from "@/components/home/MyPlanChip";
 import LiveBoard, { type BoardName } from "@/components/live/LiveBoard";
+import ActivityTicker from "@/components/community/ActivityTicker";
 import { toItems } from "@/data/pandals/view";
 import type { Lang } from "@/lib/i18n";
 import EventList from "@/components/local/EventList";
@@ -44,6 +45,13 @@ function topCities(limit: number): { city: string; n: number }[] {
 function boardNames(lang: Lang): Record<string, BoardName> {
   const out: Record<string, BoardName> = {};
   for (const p of toItems(lang)) out[p.id] = { name: p.name, place: p.area ? `${p.area}, ${cityName(p.city, lang)}` : cityName(p.city, lang), href: p.href };
+  return out;
+}
+
+/** game slug → result id → title, for the activity ticker. */
+function resultTitles(lang: Lang): Record<string, Record<string, string>> {
+  const out: Record<string, Record<string, string>> = {};
+  for (const a of activities) out[a.meta.slug] = Object.fromEntries(a.results.map((r) => [r.id, r.title[lang]]));
   return out;
 }
 
@@ -132,6 +140,7 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
       </section>
 
       <LiveBoard lang={lang} names={boardNames(lang)} />
+      <ActivityTicker lang={lang} names={boardNames(lang)} titles={resultTitles(lang)} />
 
       <section className="home-section" aria-labelledby="home-trend">
         <h2 id="home-trend">{ui.trendH2[lang]}</h2>

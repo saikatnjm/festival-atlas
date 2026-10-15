@@ -44,6 +44,7 @@ const pages = [
   ["/bn/passport", 200, "আমার পুজো পাসপোর্ট"],
   ["/en/puja/deshapriya-park", 200, "Tick as visited"],
   ["/api/live", 200, '"ok":true'],
+  ["/api/community", 200, '"ok":true'],
   ["/en/puja/kolkata", 200, "Kolkata Durga Puja 2026: pandals, themes and a map"],
   ["/bn/puja/kolkata", 200, "কলকাতার দুর্গাপুজো ২০২৬"],
   ["/en/puja/dhaka", 200, "Dhakeshwari"],

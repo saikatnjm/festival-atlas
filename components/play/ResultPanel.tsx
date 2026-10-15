@@ -11,6 +11,7 @@ import { withLang } from "@/lib/i18n";
 import { cleanName, possessive } from "@/lib/profile";
 import { copyText, shareLink, type CardData } from "@/lib/share";
 import { useProfile } from "@/lib/use-profile";
+import ResultStats from "@/components/community/ResultStats";
 import ResultCard from "./ResultCard";
 import ShareBar from "./ShareBar";
 import type { PlayStrings } from "./strings";
@@ -143,6 +144,7 @@ export default function ResultPanel({ s, slug, card, sharePath, shareText, onAga
         <ResultCard key={`${card.char}|${card.title}`} card={shown} s={s} onArtChange={onArtChange} />
       </div>
       {note ? <p className="cx-note">{note}</p> : null}
+      {personal && resultId && onAgain ? <ResultStats game={slug} result={resultId} title={card.title} lang={lang} /> : null}
       <ShareBar
         s={s}
         path={withLang(lang, path)}

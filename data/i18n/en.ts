@@ -67,7 +67,7 @@ const en = {
     honest: [
       { t: "Sourced", p: "Every pandal links to the pages it came from, with the date we last checked." },
       { t: "Clearly labelled", p: "Confirmed, historical and awaiting-verification entries look different, and the edition year is always shown." },
-      { t: "Simple and private", p: "No sign-up, no accounts, no ads. Games run in your browser; the name you type never leaves it. We only count visits and shares with Google Analytics." },
+      { t: "Simple and private", p: "No sign-up, no accounts, no ads. Games run in your browser; the name you type never leaves it unless you add yourself to the leaderboard. Crowd reports and game results are stored anonymously (a random device id, never a name), and visits are counted with Google Analytics." },
     ],
     coverage:
       "Coverage is partial: this is a curated starting set, not a list of every pandal in the world. More entries are added only when they can be sourced.",

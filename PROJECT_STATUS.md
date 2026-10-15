@@ -1,6 +1,16 @@
 # Festival Atlas — Project Status
 
-## Puja-week engagement: passport, live crowd meter, greeting cards (latest, 2026-10-15)
+## Community layer: results, leaderboard, activity feed (latest, 2026-10-15)
+Supabase `plays` table (`supabase/schema.sql`, second section; re-run the whole file, it is idempotent) + `lib/community*.ts` + `/api/community` (GET edge-cached 60 s; POST validated: real game, real result id, passport score ≤ directory size, nickname cleaned to 24 chars) + `components/community/*`:
+- **Quiz result stats**: a player's own result is recorded anonymously (device id + result id, once per session) and the card shows "তোমার মতো {title} হয়েছে আরও ১২ জন (৩৪%)". Hidden without a database.
+- **Passport leaderboard** (`/passport`): opt-in "🏆 লিডারবোর্ডে আমার নাম তোলো" with a nickname (prefilled from the profile, editable); score = pandals ticked; best score per device; top 20 with 🥇🥈🥉; "update my score" after more ticks.
+- **Activity ticker** on the home page: last plays, check-ins and ❤️ ("কেউ একজন চেক-ইন করল শ্রীভূমিতে", "Rini হল ভোগের বুম্বা"); nicknames only where the player joined the board. Result titles are passed from the server so quiz text isn't shipped to the client.
+- Hardened after review: database-sourced keys are looked up as own properties only (a row with game "constructor" can't reach `Object`), null-prototype maps server-side, nickname virama fix.
+- About page copy updated: names leave the browser only when the player joins the leaderboard; results and crowd reports are anonymous.
+- Offensive nicknames: no automatic filter; delete rows in Supabase (`delete from plays where nickname = '…'`). Known soft spot: a scripted client could post fake results/scores; scores are capped and counts use distinct devices.
+- Not run here; CI runs it. Tests: nickname cleaning, result share. Smoke: `/api/community`.
+
+## Puja-week engagement: passport, live crowd meter, greeting cards (2026-10-15)
 **CI run of 2026-10-15:** install, data validation, unit tests, build and type-check all passed; the smoke test ran 100+ checks and failed exactly one: the `x-default` hreflang regex expected a trailing slash that Next strips from the resolved root URL (a pre-existing test bug, fixed in `scripts/smoke.mjs`). Owner: push again, paste the SQL, verify on the live URL.
 
 - **Pandal passport** (`lib/visits.ts`, `components/puja/VisitButton.tsx`, `Passport.tsx`, `/passport`): "✓ ঘুরেছি" on every pandal page; `/passport` has a tick list (Kolkata, Dhaka, elsewhere) and a shareable card ("Rini-র পুজো পাসপোর্ট · ৭টা প্যান্ডেল", areas, north+south badge). Ticks live in localStorage (in-memory fallback); a shared link carries the ids and name only. Home shows "🎫 Passport: n pandals" and "🗺️ Your plan" chips once they exist (`MyPlanChip.tsx`; PlanBuilder saves the last plan URL).

@@ -18,7 +18,8 @@ export default function LiveBoard({ lang, names, limit = 5 }: { lang: Lang; name
   const L = fun.live;
   const { board, enabled, loaded } = useLive();
   if (!loaded || !enabled) return null;
-  const top = rankBoard(board, limit).filter((x) => names[x.id]);
+  // Own-property check: ids come from the database, so "constructor" must not match Object's.
+  const top = rankBoard(board, limit).filter((x) => Object.prototype.hasOwnProperty.call(names, x.id));
   return (
     <section className="home-section live-board" aria-labelledby="live-h2">
       <h2 id="live-h2">

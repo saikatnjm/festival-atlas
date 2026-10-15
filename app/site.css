@@ -1634,6 +1634,96 @@ h3 {
   }
 }
 
+/* Community: result stats line, leaderboard, activity ticker */
+.cx-stats {
+  margin: 0;
+  padding: 0.5rem 0.9rem;
+  font-weight: 700;
+  background: #fff;
+  border: 2px dashed var(--ink);
+  border-radius: 12px;
+}
+.board {
+  margin: var(--space-4) 0;
+  padding: var(--space-3);
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--marigold);
+}
+.board h2 {
+  margin: 0 0 var(--space-1);
+}
+.board-join {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.board-join .button {
+  justify-self: start;
+}
+.board-list {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.board-list li {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+}
+.board-list li.is-me {
+  border-color: var(--indigo);
+  background: #f1ecff;
+}
+.board-rank {
+  font-weight: 800;
+  text-align: center;
+}
+.board-name {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.board-score {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+.ticker {
+  margin: var(--space-3) 0;
+}
+.ticker h2 {
+  font-size: 1.1rem;
+  margin: 0 0 var(--space-2);
+}
+.ticker-list {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ticker-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 0.35rem 0.7rem;
+  font-size: 0.95rem;
+  background: #fff;
+  border-left: 4px solid var(--coral);
+  border-radius: 8px;
+}
+.ticker-when {
+  flex: none;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
 /* Greeting cards */
 .greet-fields {
   display: grid;

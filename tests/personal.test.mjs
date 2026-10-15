@@ -14,6 +14,7 @@ import { collections, getCollection } from "../data/pandals/collections.ts";
 import { toVisits, toggleVisit, visitsFromQuery, visitsToQuery, VISITS_MAX } from "../lib/visits.ts";
 import { bucketFor, crowdLevel, isDevice, isPandalId, rankBoard } from "../lib/live-shared.ts";
 import { GREETINGS, getGreeting, greetingForPhase } from "../data/play/greetings.ts";
+import { cleanNick, resultShare, isGame, NICK_MAX } from "../lib/community-shared.ts";
 import { fmtDate, fmtDateWithDay } from "../lib/dates.ts";
 
 const chars = Object.keys(cast);
@@ -239,6 +240,18 @@ test("greeting cards: every day bilingual with lines, and today's pick follows t
   assert.equal(greetingForPhase(pujaPhase(new Date("2026-10-22T06:00:00Z"), "wb")), "bijoya");
   assert.equal(greetingForPhase(pujaPhase(new Date("2026-11-05T06:00:00Z"), "wb")), "anytime");
   assert.equal(greetingForPhase(pujaPhase(new Date("2026-10-12T06:00:00Z"), "wb")), "anytime");
+});
+
+test("community helpers: nickname cleaning and result share", () => {
+  assert.equal(cleanNick("  Rini  Das "), "Rini Das");
+  assert.equal(cleanNick("<b>পিন্টু</b> 😀"), "bপিন্টুb");
+  assert.equal(cleanNick(42), "");
+  assert.ok(Array.from(cleanNick("x".repeat(80))).length <= NICK_MAX);
+  assert.ok(isGame("puja-personality") && isGame("passport") && !isGame("Bad Game"));
+  const stats = { "puja-personality": { "bhog-samrat": 30, "theme-da": 70 } };
+  assert.deepEqual(resultShare(stats, "puja-personality", "bhog-samrat"), { n: 30, pct: 30 });
+  assert.equal(resultShare(stats, "puja-personality", "nope"), null);
+  assert.equal(resultShare(stats, "other", "x"), null);
 });
 
 test("every start × vibe gives a full route that starts near home", () => {
