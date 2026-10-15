@@ -28,15 +28,18 @@ export default function SiteFooter({ lang, t }: { lang: Lang; t: Dict }) {
         { href: withLang(lang, "/puja/abroad"), label: `🌍 ${fun.home.abroadPage[lang]}` },
         { href: withLang(lang, "/puja"), label: `🗺️ ${T.map[lang]}` },
         { href: withLang(lang, "/local"), label: `🌙 ${t.nav.local}` },
+        { href: withLang(lang, "/add-pandal"), label: fun.places.addCta[lang] },
       ],
     },
     {
       title: T.play[lang],
       links: [
+        { href: withLang(lang, "/postcard"), label: fun.postcard.homeCta[lang] },
         { href: withLang(lang, "/greetings"), label: fun.greet.homeCta[lang] },
         { href: withLang(lang, "/play/puja-personality"), label: T.quiz[lang] },
         { href: withLang(lang, "/play/puja-squad"), label: T.squad[lang] },
         { href: withLang(lang, "/passport"), label: `🎫 ${fun.passport.title[lang]}` },
+        { href: withLang(lang, "/me"), label: fun.my.homeCta[lang] },
         { href: withLang(lang, "/play"), label: T.allGames[lang] },
       ],
     },
@@ -44,6 +47,7 @@ export default function SiteFooter({ lang, t }: { lang: Lang; t: Dict }) {
       title: T.about[lang],
       links: [
         { href: withLang(lang, "/about"), label: t.about.title },
+        { href: withLang(lang, "/feedback"), label: `💬 ${fun.feedback.footer[lang]}` },
         { href: `/${other}`, label: T.language[lang], lang: other },
       ],
     },

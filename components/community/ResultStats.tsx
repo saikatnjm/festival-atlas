@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { fun } from "@/data/i18n/fun";
 import { fill } from "@/data/play/personal";
+import { logActivity } from "@/lib/activity";
 import { num, type Lang } from "@/lib/i18n";
 import { resultShare } from "@/lib/community-shared";
 import { useCommunity } from "./useCommunity";
@@ -14,6 +15,18 @@ import { useCommunity } from "./useCommunity";
 export default function ResultStats({ game, result, title, lang }: { game: string; result: string; title: string; lang: Lang }) {
   const C = fun.community;
   const { data, enabled, loaded, record, refresh } = useCommunity();
+
+  // On-device "my Puja" log, once per result per session (works without a database too).
+  useEffect(() => {
+    const key = `fa:log:${game}:${result}`;
+    try {
+      if (window.sessionStorage.getItem(key)) return;
+      window.sessionStorage.setItem(key, "1");
+    } catch {
+      // private mode: log anyway
+    }
+    logActivity({ kind: "play", id: game, label: title });
+  }, [game, result, title]);
 
   useEffect(() => {
     if (!loaded || !enabled) return;

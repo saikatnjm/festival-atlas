@@ -14,6 +14,11 @@ import { collections, getCollection } from "../data/pandals/collections.ts";
 import { toVisits, toggleVisit, visitsFromQuery, visitsToQuery, VISITS_MAX } from "../lib/visits.ts";
 import { bucketFor, crowdLevel, isDevice, isPandalId, rankBoard, waitLabel, fmtClock, kolkataDay } from "../lib/live-shared.ts";
 import { distanceM, fmtDistance, inServiceArea } from "../lib/geo.ts";
+import { readExifGps } from "../lib/exif.ts";
+import { ACTIVITY_MAX, toActivity } from "../lib/activity.ts";
+import { checkCredentials, constantTimeEqual, makeSession, verifySession } from "../lib/admin-shared.ts";
+import { cleanContact, cleanMessage, cleanPage, cleanTopic } from "../lib/feedback-shared.ts";
+import { cleanPlace, toPlace } from "../lib/places-shared.ts";
 import { GREETINGS, getGreeting, greetingForPhase } from "../data/play/greetings.ts";
 import { cleanNick, resultShare, isGame, NICK_MAX } from "../lib/community-shared.ts";
 import { fmtDate, fmtDateWithDay } from "../lib/dates.ts";
@@ -161,7 +166,8 @@ test("puja phase and Puja-mode theme follow the calendar", () => {
   assert.equal(pujaPhase(new Date("2026-10-16T18:00:00Z"), "wb").kind, "before"); // 23:30 IST, 16 Oct
   assert.equal(pujaPhase(new Date("2026-10-16T20:00:00Z"), "wb").kind, "during"); // 01:30 IST, 17 Oct (Shashthi)
   assert.equal(pujaPhase(new Date("2026-10-19T06:00:00Z"), "wb").day.id, "ashtami");
-  assert.equal(pujaPhase(new Date("2026-10-19T06:00:00Z"), "bd").day.id, "ashtami"); // BD: 19 Oct has no sourced tithi; Ashtami (18) carries over
+  assert.equal(pujaPhase(new Date("2026-10-19T06:00:00Z"), "bd").day.id, "ashtami"); // BD Ashtami 19 Oct (Prothom Alo, 14 Oct)
+  assert.equal(pujaPhase(new Date("2026-10-18T06:00:00Z"), "bd").day.id, "saptami"); // BD Saptami spans 17–18 Oct
   assert.equal(pujaPhase(new Date("2026-10-20T06:00:00Z"), "bd").day.id, "navami"); // Mahanabami holiday, 20 Oct
   assert.equal(pujaPhase(new Date("2026-10-22T06:00:00Z"), "wb").kind, "after");
   assert.ok(PUJA_2026.wb.shashthi > PUJA_2026.bd.shashthi);
@@ -262,6 +268,128 @@ test("queue waits, clock times, Kolkata day and distances", () => {
   assert.equal(fmtDistance(2440, "en"), "2.4 km");
   assert.equal(fmtDistance(12400, "en"), "12 km");
   assert.ok(inServiceArea({ lat: 22.57, lng: 88.36 }) && inServiceArea({ lat: 23.72, lng: 90.39 }) && !inServiceArea({ lat: 51.5, lng: -0.1 }));
+});
+
+/** A minimal JPEG: SOI, one APP1 Exif segment (little-endian TIFF, IFD0 → GPS IFD), EOI. */
+function jpegWithGps({ lat, lng, latRef = "N", lngRef = "E" }) {
+  const tiff = new Uint8Array(128);
+  const v = new DataView(tiff.buffer);
+  tiff.set([0x49, 0x49], 0); // "II"
+  v.setUint16(2, 42, true);
+  v.setUint32(4, 8, true); // IFD0 offset
+  v.setUint16(8, 1, true); // IFD0: one entry, the GPS IFD pointer
+  v.setUint16(10, 0x8825, true);
+  v.setUint16(12, 4, true);
+  v.setUint32(14, 1, true);
+  v.setUint32(18, 26, true);
+  v.setUint32(22, 0, true); // no next IFD
+  v.setUint16(26, 4, true); // GPS IFD: four entries
+  let e = 28;
+  const entry = (tag, type, count, write) => {
+    v.setUint16(e, tag, true);
+    v.setUint16(e + 2, type, true);
+    v.setUint32(e + 4, count, true);
+    write(e + 8);
+    e += 12;
+  };
+  entry(0x0001, 2, 2, (o) => (tiff[o] = latRef.charCodeAt(0)));
+  entry(0x0002, 5, 3, (o) => v.setUint32(o, 80, true));
+  entry(0x0003, 2, 2, (o) => (tiff[o] = lngRef.charCodeAt(0)));
+  entry(0x0004, 5, 3, (o) => v.setUint32(o, 104, true));
+  v.setUint32(e, 0, true);
+  const rational = (o, [n, d]) => {
+    v.setUint32(o, n, true);
+    v.setUint32(o + 4, d, true);
+  };
+  lat.forEach((r, i) => rational(80 + i * 8, r));
+  lng.forEach((r, i) => rational(104 + i * 8, r));
+  const app1 = 2 + 6 + tiff.length;
+  const out = new Uint8Array(4 + app1 + 2);
+  const o = new DataView(out.buffer);
+  o.setUint16(0, 0xffd8);
+  o.setUint16(2, 0xffe1);
+  o.setUint16(4, app1);
+  out.set([0x45, 0x78, 0x69, 0x66, 0, 0], 6); // "Exif\0\0"
+  out.set(tiff, 12);
+  o.setUint16(out.length - 2, 0xffd9);
+  return out.buffer;
+}
+
+test("EXIF GPS: degrees/minutes/seconds, hemispheres, and junk", () => {
+  // 22°34'23.4" N, 88°21'56" E: Santosh Mitra Square, give or take.
+  const g = readExifGps(jpegWithGps({ lat: [[22, 1], [34, 1], [234, 10]], lng: [[88, 1], [21, 1], [56, 1]] }));
+  assert.ok(g, "gps parsed");
+  assert.ok(Math.abs(g.lat - 22.573167) < 1e-4 && Math.abs(g.lng - 88.365556) < 1e-4, JSON.stringify(g));
+  const s = readExifGps(jpegWithGps({ lat: [[33, 1], [52, 1], [0, 1]], lng: [[151, 1], [12, 1], [0, 1]], latRef: "S", lngRef: "W" }));
+  assert.ok(s && s.lat < -33 && s.lng < -151);
+  assert.equal(readExifGps(jpegWithGps({ lat: [[0, 1], [0, 1], [0, 1]], lng: [[0, 1], [0, 1], [0, 1]] })), null, "0/0 is a missing fix");
+  assert.equal(readExifGps(new Uint8Array([0x89, 0x50, 0x4e, 0x47]).buffer), null, "PNG");
+  assert.equal(readExifGps(new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x04, 0x4a, 0x46, 0xff, 0xd9]).buffer), null, "JFIF only");
+  assert.equal(readExifGps(jpegWithGps({ lat: [[22, 1], [0, 1], [0, 1]], lng: [[88, 1], [0, 1], [0, 1]] }).slice(0, 40)), null, "truncated");
+  assert.equal(readExifGps(new ArrayBuffer(0)), null);
+});
+
+test("activity log validation and cap", () => {
+  const list = toActivity([{ kind: "postcard", id: "x", at: 1 }, { kind: "bad", at: 2 }, { kind: "visit", at: "no" }, null, { kind: "play", at: 3, label: "ok", extra: 1 }]);
+  assert.deepEqual(list, [
+    { kind: "postcard", at: 1, id: "x" },
+    { kind: "play", at: 3, label: "ok" },
+  ]);
+  const many = toActivity(Array.from({ length: ACTIVITY_MAX + 50 }, (_, i) => ({ kind: "visit", at: i })));
+  assert.equal(many.length, ACTIVITY_MAX);
+  assert.equal(many[0].at, 50, "oldest entries are dropped");
+  assert.deepEqual(toActivity("nope"), []);
+});
+
+test("admin sessions: sign, verify, expire, tamper", async () => {
+  const secret = "owner:correct-horse-battery";
+  const now = 1_760_000_000_000;
+  const token = await makeSession(secret, now);
+  assert.match(token, /^\d{13}\.[0-9a-f]{64}$/);
+  assert.equal(await verifySession(secret, token, now + 1000), true);
+  assert.equal(await verifySession(secret, token, now + 13 * 3600 * 1000), false, "expired");
+  assert.equal(await verifySession("other-secret", token, now), false, "wrong secret");
+  assert.equal(await verifySession(secret, token.replace(/.$/, (c) => (c === "0" ? "1" : "0")), now), false, "tampered signature");
+  assert.equal(await verifySession(secret, `${now + 999999999}.${token.split(".")[1]}`, now), false, "tampered expiry");
+  assert.equal(await verifySession(secret, undefined, now), false);
+  assert.equal(await verifySession("", token, now), false, "no secret configured");
+  assert.ok(constantTimeEqual("শুভ ষষ্ঠী", "শুভ ষষ্ঠী") && !constantTimeEqual("a", "ab") && !constantTimeEqual("", "a") && constantTimeEqual("", ""));
+  assert.equal(checkCredentials("owner", "correct-horse-battery", "owner", "correct-horse-battery"), true);
+  assert.equal(checkCredentials("owner", "wrong", "owner", "correct-horse-battery"), false);
+  assert.equal(checkCredentials("Owner", "correct-horse-battery", "owner", "correct-horse-battery"), false);
+  assert.equal(checkCredentials("owner", "short", "owner", "short"), false, "password too short to be allowed");
+  assert.equal(checkCredentials(null, "correct-horse-battery", "owner", "correct-horse-battery"), false);
+});
+
+test("feedback cleaning", () => {
+  assert.equal(cleanTopic("puja-kali"), "puja-kali");
+  assert.equal(cleanTopic(" BUG "), "bug");
+  assert.equal(cleanTopic("x".repeat(41)), "general");
+  assert.equal(cleanTopic(42), "general");
+  assert.equal(cleanContact("  rini@example.com  "), "rini@example.com");
+  assert.equal(cleanContact("ab"), null);
+  assert.equal(cleanContact("x".repeat(200)).length, 120);
+  assert.equal(cleanMessage("hi"), null);
+  assert.equal(cleanMessage("line one\r\nline\u0000 two  "), "line one\nline two");
+  assert.equal(cleanMessage("x".repeat(3000)).length, 2000);
+  assert.equal(cleanPage("/bn/puja/sreebhumi-sporting-club?x=1"), "/bn/puja/sreebhumi-sporting-club?x=1");
+  assert.equal(cleanPage("https://evil.example/"), null);
+  assert.equal(cleanPage("/" + "a".repeat(300)), null);
+});
+
+test("community places: cleaning and row validation", () => {
+  const ok = cleanPlace({ name: "  Behala  Nutan Dal ", area: "", city: "Kolkata", country: "IN", lat: 22.4987654321, lng: 88.3123456789, note: "theme: river" });
+  assert.deepEqual(ok, { name: "Behala Nutan Dal", area: null, city: "Kolkata", country: "IN", lat: 22.498765, lng: 88.312346, note: "theme: river" });
+  assert.equal(cleanPlace({ name: "ab", city: "Dhaka", country: "BD", lat: 23.7, lng: 90.4 }), null, "name too short");
+  assert.equal(cleanPlace({ name: "Mandir", city: "Dhaka", country: "bd", lat: 23.7, lng: 90.4 }), null, "country must be two capitals");
+  assert.equal(cleanPlace({ name: "Mandir", city: "Dhaka", country: "BD", lat: "23.7", lng: 90.4 }), null, "lat must be a number");
+  assert.equal(cleanPlace({ name: "Mandir", city: "Dhaka", country: "BD", lat: 0, lng: 0 }), null, "0/0 is a missing fix");
+  assert.equal(cleanPlace({ name: "Mandir", city: "Dhaka", country: "BD", lat: 91, lng: 90.4 }), null);
+  assert.equal(cleanPlace("nope"), null);
+  assert.equal(cleanPlace({ name: "x".repeat(100), city: "Dhaka", country: "BD", lat: 23.7, lng: 90.4 }).name.length, 80);
+  assert.equal(toPlace({ id: 7, name: "Mandir", city: "Dhaka", country: "BD", lat: 23.7, lng: 90.4 }).id, 7);
+  assert.equal(toPlace({ id: "7", name: "Mandir", city: "Dhaka", country: "BD", lat: 23.7, lng: 90.4 }), null);
+  assert.equal(toPlace({ id: 7, name: "Mandir", city: "Dhaka", country: "BD", lat: 23.7, lng: 90.4, constructor: "x" }).name, "Mandir");
 });
 
 test("community helpers: nickname cleaning and result share", () => {

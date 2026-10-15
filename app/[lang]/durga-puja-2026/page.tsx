@@ -5,6 +5,7 @@ import EventList from "@/components/local/EventList";
 import { getDict } from "@/data/i18n";
 import { events, type Region } from "@/data/events/events";
 import { regionInfo, ui as localUi } from "@/data/local/content";
+import { TIMINGS, TIMINGS_TEXT } from "@/data/puja-timings";
 import { fmtDateWithDay } from "@/lib/dates";
 import { LANGS, withLang, type Lang } from "@/lib/i18n";
 import JsonLd, { abs, breadcrumbs } from "@/lib/jsonld";
@@ -36,8 +37,8 @@ const T = {
     en: "West Bengal dates follow a Drik Panchang-based report; some calendars put Shashthi/Saptami a day earlier. Check your own panjika or your para committee's schedule.",
   },
   bdNote: {
-    bn: "বাংলাদেশ: মহাষষ্ঠী ১৬ ও দশমী ২১ অক্টোবর News On AIR অনুযায়ী, মহানবমী ২০ অক্টোবর সরকারি ছুটির প্রজ্ঞাপন অনুযায়ী। * চিহ্নিত দিনগুলো আনুমানিক; তিথি দুই দিন জুড়েও থাকতে পারে, পুজো উদযাপন পরিষদের সূচি মিলিয়ে নাও।",
-    en: "Bangladesh: Maha Shashthi 16 and Dashami 21 Oct per News On AIR, Mahanabami 20 Oct per the government holiday notification. Days marked * are estimates; a tithi can span two days, so check the Puja Udjapan Parishad schedule.",
+    bn: "বাংলাদেশ: মহাষষ্ঠী ১৬ ও দশমী ২১ অক্টোবর News On AIR অনুযায়ী; মহাসপ্তমী ১৭ ও ১৮, মহাষ্টমী ১৯ অক্টোবর প্রথম আলো (১৪ অক্টোবর) অনুযায়ী; মহানবমী ২০ অক্টোবর সরকারি ছুটির প্রজ্ঞাপন অনুযায়ী। তিথি দুই দিন জুড়েও থাকতে পারে, পুজো উদযাপন পরিষদের সূচি মিলিয়ে নাও।",
+    en: "Bangladesh: Maha Shashthi 16 and Dashami 21 Oct per News On AIR; Maha Saptami 17 and 18, Maha Ashtami 19 Oct per Prothom Alo (14 Oct); Mahanabami 20 Oct per the government holiday notification. A tithi can span two days, so check the Puja Udjapan Parishad schedule.",
   },
   newsH2: { bn: "তারিখের সঙ্গে যা জানা দরকার", en: "What goes with the dates" },
   faqH2: { bn: "প্রশ্নোত্তর", en: "Questions" },
@@ -51,7 +52,14 @@ const T = {
     },
     {
       q: { bn: "২০২৬-এ অষ্টমী কবে?", en: "When is Ashtami in 2026?" },
-      a: { bn: "কলকাতায় সোমবার ১৯ অক্টোবর ২০২৬ (অঞ্জলি ও সন্ধিপুজো), খবর অনুযায়ী। বাংলাদেশে আনুমানিক রবিবার ১৮ অক্টোবর; সূত্রে শুধু ষষ্ঠী (১৬), মহানবমী (২০) ও দশমী (২১) আছে।", en: "In Kolkata, Monday 19 October 2026 (anjali and Sandhi Puja), as reported. In Bangladesh an estimated Sunday 18 October; the sources only state Shashthi (16), Mahanabami (20) and Dashami (21)." },
+      a: { bn: "কলকাতা ও বাংলাদেশ দু’জায়গাতেই সোমবার ১৯ অক্টোবর ২০২৬ (অঞ্জলি ও সন্ধিপুজো), খবর অনুযায়ী। বাংলাদেশে মহাসপ্তমী ১৭ ও ১৮ অক্টোবর (প্রথম আলো, ১৪ অক্টোবর)।", en: "Monday 19 October 2026 (anjali and Sandhi Puja) in both Kolkata and Bangladesh, as reported. In Bangladesh Maha Saptami runs 17 and 18 October (Prothom Alo, 14 Oct)." },
+    },
+    {
+      q: { bn: "২০২৬-এ সন্ধিপুজো কখন?", en: "When is Sandhi Puja in 2026?" },
+      a: {
+        bn: "সোমবার ১৯ অক্টোবর। কলকাতায় বিশুদ্ধ সিদ্ধান্ত মতে সকাল ১০:২৭–১১:১৫ (দ্রিক পঞ্চাঙ্গ; বেলুড় মঠে ১০:২৮–১১:১৬), গুপ্তপ্রেস মতে সকাল ৭:২৫–৮:১৩ (সংবাদ প্রতিদিন)। বাংলাদেশে বিশুদ্ধ সিদ্ধান্ত মতে সকাল ১০:৫৮–১১:৪৬, গুপ্তপ্রেস মতে ৭:৫৫–৮:৪৩ (mandir.bd, দ্বিতীয় হাতের সূত্র)। নিচে পুরো সূচি।",
+        en: "Monday 19 October. In Kolkata, 10:27–11:15 am by Bishuddha Siddhanta (Drik Panchang; Belur Math 10:28–11:16 am) or 7:25–8:13 am by Gupta Press (Sangbad Pratidin). In Bangladesh, 10:58–11:46 am by Bishuddha Siddhanta or 7:55–8:43 am by Gupta Press (mandir.bd, a second-hand source). Full table below.",
+      },
     },
     {
       q: { bn: "বাংলাদেশে পুজোর ছুটি কবে?", en: "When are the Puja holidays in Bangladesh?" },
@@ -170,6 +178,46 @@ export default async function DatesPage({ params }: { params: Promise<Params> })
         </div>
         <p className="fineprint">{T.wbNote[lang]}</p>
         <p className="fineprint">{T.bdNote[lang]}</p>
+      </section>
+
+      <section className="home-section" aria-labelledby="dates-timings">
+        <h2 id="dates-timings">{TIMINGS_TEXT.h2[lang]}</h2>
+        <p className="section-lead">{TIMINGS_TEXT.lead[lang]}</p>
+        {REGIONS.map((r) => (
+          <div key={r} className="timings-wrap">
+            <table className="timings-table">
+              <caption>
+                {regionInfo[r].icon} {regionInfo[r].name[lang]} · {r === "wb" ? "IST" : "BST"}
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">{TIMINGS_TEXT.colDay[lang]}</th>
+                  <th scope="col">{TIMINGS_TEXT.colWhat[lang]}</th>
+                  <th scope="col">{TIMINGS_TEXT.colWhen[lang]}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TIMINGS[r].map((row) => (
+                  <tr key={row.what.en + row.day.en}>
+                    <th scope="row">{row.day[lang]}</th>
+                    <td>{row.what[lang]}</td>
+                    <td>
+                      {row.when[lang]}{" "}
+                      <span className="fineprint">
+                        (
+                        <a href={row.source.url} rel="noopener noreferrer nofollow" target="_blank">
+                          {TIMINGS_TEXT.source[lang]}: {row.source.title}
+                        </a>
+                        {row.grade === "secondary" ? `; ${TIMINGS_TEXT.secondary[lang]}` : ""})
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+        <p className="fineprint">{TIMINGS_TEXT.bdNote[lang]}</p>
       </section>
 
       <section className="home-section" aria-labelledby="dates-news">

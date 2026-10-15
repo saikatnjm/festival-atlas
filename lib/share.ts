@@ -87,9 +87,9 @@ export function canShareImage(): boolean {
  * field when a file is attached. Returns "failed" when the file could not be shared, so the caller
  * can fall back to a link.
  */
-export async function shareImage(opts: { blob: Blob; filename: string; title: string; text: string; url: string }): Promise<ShareOutcome> {
+export async function shareImage(opts: { blob: Blob; filename: string; title: string; text: string; url: string; type?: string }): Promise<ShareOutcome> {
   try {
-    const file = new File([opts.blob], opts.filename, { type: "image/png" });
+    const file = new File([opts.blob], opts.filename, { type: opts.type ?? "image/png" });
     if (!navigator.canShare?.({ files: [file] })) return "failed";
     await navigator.share({ files: [file], title: opts.title, text: `${opts.text}\n${opts.url}` });
     return "shared";
@@ -103,10 +103,10 @@ const INK = "#22182E";
 const CREAM = "#FFF8EC";
 const MARIGOLD = "#FFB400";
 // Fonts are bundled in /public/fonts (see app/site.css); the system stack is only a last resort.
-const DISPLAY = '"Baloo Da 2", "Hind Siliguri", system-ui, sans-serif';
-const BODY = '"Hind Siliguri", system-ui, sans-serif';
+export const DISPLAY = '"Baloo Da 2", "Hind Siliguri", system-ui, sans-serif';
+export const BODY = '"Hind Siliguri", system-ui, sans-serif';
 
-function roundedRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+export function roundedRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
   ctx.beginPath();
   ctx.moveTo(x + r, y);
   ctx.arcTo(x + w, y, x + w, y + h, r);
@@ -133,7 +133,7 @@ function wrapLines(ctx: CanvasRenderingContext2D, text: string, maxWidth: number
 }
 
 /** Wraps text, shrinking the font until it fits `maxLines` (and truncating as a last resort). */
-function fitText(
+export function fitText(
   ctx: CanvasRenderingContext2D,
   text: string,
   fontOf: (size: number) => string,
@@ -198,7 +198,7 @@ function drawPattern(ctx: CanvasRenderingContext2D, kind: Pattern, w: number, h:
   ctx.restore();
 }
 
-function loadSvg(svg: string): Promise<HTMLImageElement> {
+export function loadSvg(svg: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
@@ -208,7 +208,7 @@ function loadSvg(svg: string): Promise<HTMLImageElement> {
 }
 
 /** Makes sure the bundled fonts are loaded for exactly the characters we are about to draw. */
-async function loadFonts(sample: string): Promise<void> {
+export async function loadFonts(sample: string): Promise<void> {
   try {
     await Promise.all([
       document.fonts.load('800 40px "Baloo Da 2"', sample),

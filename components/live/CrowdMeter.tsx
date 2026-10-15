@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { fun } from "@/data/i18n/fun";
 import { fill } from "@/data/play/personal";
+import { logActivity } from "@/lib/activity";
 import { track } from "@/lib/analytics";
 import { num, type Lang } from "@/lib/i18n";
 import { TIMING_KINDS, crowdLevel, fmtClock, waitLabel, type SignalKind, type TimingKind } from "@/lib/live-shared";
@@ -31,7 +32,10 @@ export default function CrowdMeter({ id, lang }: { id: string; lang: Lang }) {
     setBusy(true);
     const outcome = await send(id, kind, value);
     setMsg(outcome === "ok" ? L.thanks[lang] : outcome === "already" ? (kind === "love" ? L.alreadyLove : L.already)[lang] : L.failed[lang]);
-    if (outcome === "ok") track("live_report", { kind, pandal: id, value });
+    if (outcome === "ok") {
+      track("live_report", { kind, pandal: id, value });
+      logActivity({ kind: "report", id, label: kind });
+    }
     setBusy(false);
   };
 
@@ -44,7 +48,10 @@ export default function CrowdMeter({ id, lang }: { id: string; lang: Lang }) {
     setBusy(true);
     const outcome = await sendTiming(id, kind, minutes);
     setMsg(outcome === "ok" ? L.thanks[lang] : outcome === "already" ? L.timingAlready[lang] : L.failed[lang]);
-    if (outcome === "ok") track("live_timing", { kind, pandal: id });
+    if (outcome === "ok") {
+      track("live_timing", { kind, pandal: id });
+      logActivity({ kind: "report", id, label: kind });
+    }
     setBusy(false);
   };
 

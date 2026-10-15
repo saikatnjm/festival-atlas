@@ -7,6 +7,7 @@ import CrowdMeter from "@/components/live/CrowdMeter";
 import { cityName, countryName, descriptionOf, getPandal, hasPin, pandals, placeLabel, sortPandals, themeOf } from "@/data/pandals";
 import { collections } from "@/data/pandals/collections";
 import { getDict } from "@/data/i18n";
+import { fun } from "@/data/i18n/fun";
 import { fmt } from "@/lib/format";
 import { LANGS, withLang } from "@/lib/i18n";
 import JsonLd, { abs, breadcrumbs } from "@/lib/jsonld";
@@ -163,6 +164,9 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
         >
           {t.directions}
         </a>
+        <Link className="button button-light" href={`${withLang(lang, "/postcard")}?p=${p.id}`}>
+          {fun.postcard.pandalCta[lang]}
+        </Link>
         {hasPin(p) ? (
           <Link className="button button-light" href={`${withLang(lang, "/puja")}#e=${p.id}`}>
             {t.showOnMap}

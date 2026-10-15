@@ -9,6 +9,7 @@ import CastStrip from "@/components/home/CastStrip";
 import Countdown from "@/components/home/Countdown";
 import HeroCard from "@/components/home/HeroCard";
 import MyPlanChip from "@/components/home/MyPlanChip";
+import PujaMenu from "@/components/home/PujaMenu";
 import LiveBoard, { type BoardName } from "@/components/live/LiveBoard";
 import ActivityTicker from "@/components/community/ActivityTicker";
 import { toItems } from "@/data/pandals/view";
@@ -97,6 +98,9 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
           <p className="cta-row">
             <Link className="button button-big" href={withLang(lang, "/play/puja-personality")}>
               {f.ctaQuiz[lang]}
+            </Link>
+            <Link className="button button-big button-light" href={withLang(lang, "/postcard")}>
+              {fun.postcard.homeCta[lang]}
             </Link>
             <Link className="button button-big button-light" href={withLang(lang, "/greetings")}>
               {fun.greet.homeCta[lang]}
@@ -208,6 +212,12 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
             </ul>
           </div>
         </div>
+      </section>
+
+      <section className="home-section" aria-labelledby="home-pujas">
+        <h2 id="home-pujas">{fun.pujas.h2[lang]}</h2>
+        <p className="section-lead">{fun.pujas.lead[lang]}</p>
+        <PujaMenu lang={lang} />
       </section>
 
       <section className="home-section" aria-labelledby="home-cast">

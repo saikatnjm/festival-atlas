@@ -14,9 +14,12 @@ import LiveBadge from "@/components/live/LiveBadge";
 import { useLive } from "@/components/live/useLive";
 import { useNearMe } from "@/components/live/useNearMe";
 import { fun } from "@/data/i18n/fun";
+import { logActivity } from "@/lib/activity";
 import { distanceM, fmtDistance, inServiceArea } from "@/lib/geo";
+import { withLang } from "@/lib/i18n";
 import { crowdLevel } from "@/lib/live-shared";
-import type { Heat } from "./PujaMap";
+import { toPlace, type Place } from "@/lib/places-shared";
+import type { ExtraPin, Heat } from "./PujaMap";
 
 /** One-tap city picks shown above the filters; "All" clears them. */
 /** Radius for the near-me "I'm here" check-in; pins are area-level, so this is generous. */
@@ -98,12 +101,40 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
     return out;
   }, [live.board]);
   const nearest = me ? pins[0] : undefined;
+
+  // Community-added places (approved on /admin): fetched once, shown as teal dots and a short list.
+  const [community, setCommunity] = useState<Place[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/places")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j: { places?: unknown[] } | null) => {
+        if (cancelled || !j || !Array.isArray(j.places)) return;
+        setCommunity(j.places.map(toPlace).filter((p): p is Place => p !== null));
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  const communityVisible = useMemo(() => {
+    const needle = filters.q.trim().toLowerCase();
+    const list = community.filter((p) => (!filters.country || p.country === filters.country) && (!filters.city || p.city.toLowerCase() === filters.city.toLowerCase()) && (!needle || `${p.name} ${p.area ?? ""} ${p.city}`.toLowerCase().includes(needle)));
+    return me ? [...list].sort((a, b) => distanceM(me, a) - distanceM(me, b)) : list;
+  }, [community, filters.q, filters.country, filters.city, me]);
+  // The map shows the same community places as the list (filters apply to both).
+  const extra = useMemo<ExtraPin[]>(
+    () => communityVisible.map((p) => ({ id: `c-${p.id}`, name: p.name, place: [p.area, p.city].filter(Boolean).join(" · "), lat: p.lat, lng: p.lng, note: p.note })),
+    [communityVisible],
+  );
+
   // "I'm here" only when the nearest pin is actually close; pins are area-level, so allow a generous radius.
   const canCheckIn = !!me && !!nearest && distanceM(me, nearest) <= HERE_RADIUS_M;
 
   const onHereNearest = async () => {
     if (!nearest || !canCheckIn) return;
     const outcome = await live.send(nearest.id, "here");
+    if (outcome === "ok") logActivity({ kind: "report", id: nearest.id, label: "here" });
     setNearMsg(outcome === "ok" ? fun.live.thanks[lang] : outcome === "already" ? fun.live.already[lang] : fun.live.failed[lang]);
   };
   const selected = selectedId ? (items.find((i) => i.id === selectedId) ?? null) : null;
@@ -142,6 +173,9 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
         >
           {near.state === "asking" ? fun.near.asking[lang] : near.state === "on" ? fun.near.on[lang] : fun.near.chip[lang]}
         </button>
+        <Link className="chip" href={withLang(lang, "/add-pandal")}>
+          {fun.places.addCta[lang]}
+        </Link>
       </div>
       {near.state === "denied" || near.state === "unsupported" ? <p className="fineprint">{fun.near.denied[lang]}</p> : null}
       {near.state === "on" && !me ? <p className="fineprint">{fun.near.far[lang]}</p> : null}
@@ -291,10 +325,28 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
               ))}
             </ul>
           )}
+          {communityVisible.length ? (
+            <section className="community-places" aria-labelledby="community-h">
+              <h3 id="community-h">{fun.places.communityH3[lang]}</h3>
+              <ul className="entry-list">
+                {communityVisible.map((p) => (
+                  <li key={p.id} className="entry entry-community">
+                    <h3 className="entry-name">{p.name}</h3>
+                    <p className="entry-meta">
+                      {[p.area, p.city].filter(Boolean).join(" · ")}
+                      {me ? <span className="entry-dist"> · 📍 {fmtDistance(distanceM(me, p), lang)}</span> : null}
+                    </p>
+                    {p.note ? <p className="entry-desc">{p.note}</p> : null}
+                    <p className="fineprint">{fun.places.communityTag[lang]}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
         </div>
 
         <div className="explorer-map" data-active={view === "map"}>
-          <PujaMap pins={pins} selectedId={selectedId} onSelect={onSelect} label={t.mapAria} loading={t.mapLoading} user={me} heat={heat} userLabel={fun.near.you[lang]} />
+          <PujaMap pins={pins} selectedId={selectedId} onSelect={onSelect} label={t.mapAria} loading={t.mapLoading} user={me} heat={heat} userLabel={fun.near.you[lang]} extra={extra} extraLabel={fun.places.communityTag[lang]} />
           {selected && (
             <div className="map-panel" role="region" aria-label={`${t.selected}: ${selected.name}`}>
               <button type="button" className="close" onClick={() => setSelectedId(null)} aria-label={t.close}>

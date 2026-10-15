@@ -19,6 +19,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/play", priority: 0.9, changeFrequency: "weekly" },
     { path: "/passport", priority: 0.6, changeFrequency: "weekly" },
     { path: "/greetings", priority: 0.9, changeFrequency: "daily" },
+    { path: "/postcard", priority: 0.9, changeFrequency: "weekly" },
+    { path: "/add-pandal", priority: 0.6, changeFrequency: "monthly" },
+    { path: "/feedback", priority: 0.3, changeFrequency: "monthly" },
     { path: "/about", priority: 0.4, changeFrequency: "monthly" },
     ...pandals.map((p) => ({ path: `/puja/${p.id}`, priority: p.year === 2026 ? 0.8 : 0.6, changeFrequency: "weekly" as const, lastModified: p.lastVerified })),
     ...activities.flatMap((a) => [

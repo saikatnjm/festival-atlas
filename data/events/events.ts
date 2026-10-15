@@ -197,15 +197,19 @@ export const events: FestEvent[] = [
     kind: "dates",
     title: l("শারদীয় দুর্গোৎসব ২০২৬", "Durga Puja 2026 in Bangladesh"),
     summary: l(
-      "মহাষষ্ঠী ১৬ অক্টোবর থেকে বিজয়া দশমী ও প্রতিমা বিসর্জন ২১ অক্টোবর।",
-      "From Maha Shashthi on 16 Oct to Bijoya Dashami and immersion on 21 Oct.",
+      "মহাষষ্ঠী ১৬ অক্টোবর, মহাসপ্তমী ১৭ ও ১৮, মহাষ্টমী ১৯, মহানবমী ২০, বিজয়া দশমী ও প্রতিমা বিসর্জন ২১ অক্টোবর; ঢাকায় বিজয়া শোভাযাত্রা বিকেল ৩টেয়।",
+      "Maha Shashthi 16 Oct, Maha Saptami 17 and 18, Maha Ashtami 19, Mahanabami 20, Bijoya Dashami and immersion 21 Oct; Dhaka's Bijoya procession starts at 3 pm.",
     ),
     place: l("বাংলাদেশ", "Bangladesh"),
     start: "2026-10-16",
     end: "2026-10-21",
     confidence: "confirmed",
-    sources: [AIR_MAHALAYA],
-    lastVerified: VERIFIED,
+    sources: [
+      AIR_MAHALAYA,
+      { title: "Prothom Alo: শারদীয় দুর্গোৎসবের সূচি", url: "https://www.prothomalo.com/bangladesh/capital/nu4dfnzsde", date: "2026-10-14" },
+      { title: "Prothom Alo English: Durga Puja begins with Bodhan", url: "https://en.prothomalo.com/bangladesh/vjo6ctddnk", date: "2026-10-15" },
+    ],
+    lastVerified: "2026-10-15",
   },
   {
     id: "bd-satkhira-matchstick-2026",

@@ -21,6 +21,16 @@ export interface Heat {
   here: number;
 }
 
+/** A pandal/mandir added by a visitor and approved by the owner (see /add-pandal). */
+export interface ExtraPin {
+  id: string;
+  name: string;
+  place: string;
+  lat: number;
+  lng: number;
+  note?: string | null;
+}
+
 interface Props {
   pins: Pin[];
   selectedId: string | null;
@@ -32,13 +42,18 @@ interface Props {
   /** Heat layer from live reports; keyed by pandal id. */
   heat?: Record<string, Heat>;
   userLabel?: string;
+  /** Community-added places, drawn as teal dots with a popup. */
+  extra?: ExtraPin[];
+  extraLabel?: string;
 }
 
 const HEAT_COLOUR: Record<1 | 2 | 3, string> = { 1: "#2f9e44", 2: "#f08c00", 3: "#e03131" };
+const ESC: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ESC[c] ?? c);
 
-export default function PujaMap({ pins, selectedId, onSelect, label, loading, user, heat, userLabel }: Props) {
+export default function PujaMap({ pins, selectedId, onSelect, label, loading, user, heat, userLabel, extra, extraLabel }: Props) {
   const elRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<{ L: Leaflet; map: LeafletMap; layer: LayerGroup; heat: LayerGroup; me: LayerGroup } | null>(null);
+  const mapRef = useRef<{ L: Leaflet; map: LeafletMap; layer: LayerGroup; heat: LayerGroup; extra: LayerGroup; me: LayerGroup } | null>(null);
   const [ready, setReady] = useState(false);
 
   // Create the map lazily, once the container has a real size (it may start hidden on mobile).
@@ -56,7 +71,7 @@ export default function PujaMap({ pins, selectedId, onSelect, label, loading, us
       const map = L.map(el, { scrollWheelZoom: false, worldCopyJump: true, minZoom: 2 }).setView(WORLD_VIEW, 2);
       L.tileLayer(TILE_URL, { attribution: ATTRIBUTION, maxZoom: 19 }).addTo(map);
       // Heat circles sit under the markers; the "you are here" dot on top.
-      mapRef.current = { L, map, heat: L.layerGroup().addTo(map), layer: L.layerGroup().addTo(map), me: L.layerGroup().addTo(map) };
+      mapRef.current = { L, map, heat: L.layerGroup().addTo(map), extra: L.layerGroup().addTo(map), layer: L.layerGroup().addTo(map), me: L.layerGroup().addTo(map) };
       setReady(true);
     };
 
@@ -119,6 +134,20 @@ export default function PujaMap({ pins, selectedId, onSelect, label, loading, us
     // heatKey stands in for `heat` and `pins`, which are new objects on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, heatKey, pinKey]);
+
+  // Community-added places: teal dots with a popup (text is visitor-written, so it is escaped).
+  const extraKey = extra ? extra.map((e) => e.id).join("|") : "";
+  useEffect(() => {
+    const s = mapRef.current;
+    if (!ready || !s) return;
+    s.extra.clearLayers();
+    for (const e of extra ?? []) {
+      const html = `<b>${esc(e.name)}</b><br>${esc(e.place)}${e.note ? `<br><i>${esc(e.note)}</i>` : ""}${extraLabel ? `<br><small>${esc(extraLabel)}</small>` : ""}`;
+      s.L.circleMarker([e.lat, e.lng], { radius: 9, color: "#fff", weight: 2, fillColor: "#0FA3B1", fillOpacity: 0.95 }).bindPopup(html).addTo(s.extra);
+    }
+    // extraKey stands in for `extra`, a new array on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, extraKey, extraLabel]);
 
   // The visitor's own position, as a blue dot with a soft ring. Shown only after they tapped "near me".
   useEffect(() => {

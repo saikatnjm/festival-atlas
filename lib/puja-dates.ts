@@ -19,17 +19,18 @@ export const PUJA_DAYS: PujaDay[] = [
 ];
 
 /**
- * Date of each day per region. WB follows a Drik Panchang-based report ("reported").
- * BD: Shashthi 16 Oct and Dashami 21 Oct (News On AIR), Mahanabami 20 Oct (government holiday
- * notification); Saptami/Ashtami in between are estimated (see ESTIMATED).
+ * Date of each day per region. WB follows a Drik Panchang-based report ("reported"); the tithi
+ * clock times are in data/puja-timings.ts.
+ * BD: Shashthi 16 Oct and Dashami 21 Oct (News On AIR); Saptami 17–18, Ashtami 19, Dashami 21
+ * (Prothom Alo, 14 Oct 2026); Mahanabami 20 Oct (government holiday notification). Panchami is estimated.
  */
 export const PUJA_2026: Record<Region, Record<PujaDay["id"], string>> = {
   wb: { panchami: "2026-10-16", shashthi: "2026-10-17", saptami: "2026-10-18", ashtami: "2026-10-19", navami: "2026-10-20", dashami: "2026-10-21" },
-  bd: { panchami: "2026-10-15", shashthi: "2026-10-16", saptami: "2026-10-17", ashtami: "2026-10-18", navami: "2026-10-20", dashami: "2026-10-21" },
+  bd: { panchami: "2026-10-15", shashthi: "2026-10-16", saptami: "2026-10-17", ashtami: "2026-10-19", navami: "2026-10-20", dashami: "2026-10-21" },
 };
 
 /** Days whose date is inferred rather than taken from a source. */
-export const ESTIMATED: Record<Region, PujaDay["id"][]> = { wb: [], bd: ["panchami", "saptami", "ashtami"] };
+export const ESTIMATED: Record<Region, PujaDay["id"][]> = { wb: [], bd: ["panchami"] };
 
 /** Puja mode (red-and-gold theme by default) runs from Mahalaya to Dashami. */
 export const PUJA_MODE_WINDOW = { start: "2026-10-10", end: "2026-10-21" };

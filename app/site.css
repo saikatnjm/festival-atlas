@@ -846,7 +846,8 @@ h3 {
   grid-column: 1 / -1;
 }
 .field input,
-.field select {
+.field select,
+.field textarea {
   width: 100%;
   min-width: 0;
   min-height: var(--tap);
@@ -857,6 +858,9 @@ h3 {
   border-radius: 0.6rem;
   font: inherit;
   font-weight: 400;
+}
+.field textarea {
+  padding-block: var(--space-1);
 }
 .status-line {
   display: flex;
@@ -1754,6 +1758,252 @@ h3 {
   }
 }
 
+/* Photo postcard */
+.postcard-block {
+  margin: var(--space-3) 0;
+}
+.postcard-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid var(--ink);
+  background: #fff;
+}
+.postcard-chosen {
+  margin: 0 0 var(--space-1);
+  font-size: 1.1rem;
+}
+.postcard-find {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+}
+@media (min-width: 40rem) {
+  .postcard-find {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}
+.postcard-preview {
+  display: block;
+  width: min(100%, 360px);
+  height: auto;
+  margin: 0 auto var(--space-2);
+  border-radius: 14px;
+  border: 3px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--coral);
+}
+.steps {
+  margin: 0 0 var(--space-2);
+  padding-left: 1.4rem;
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* Pujo menu: live + planned pujas, "coming soon" dialog */
+.puja-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.puja-menu .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  text-decoration: none;
+}
+.chip-soon {
+  opacity: 0.85;
+}
+.puja-menu-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: var(--marigold);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 0.05rem 0.45rem;
+}
+.chip-live .puja-menu-tag {
+  background: var(--teal);
+  color: #fff;
+}
+.soon-dialog {
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 0;
+  width: min(92vw, 28rem);
+  background: var(--color-surface, #fff);
+  color: var(--color-ink);
+  box-shadow: 6px 6px 0 var(--coral);
+}
+.soon-dialog::backdrop {
+  background: rgba(20, 10, 30, 0.55);
+}
+.soon-body {
+  padding: var(--space-3);
+  text-align: center;
+}
+.soon-body h3 {
+  margin: 0 0 var(--space-1);
+}
+.soon-icon {
+  margin: 0;
+  font-size: 3rem;
+  line-height: 1;
+}
+.cta-center {
+  justify-content: center;
+}
+
+.quick-pick a.chip {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.admin-table .cta-row {
+  margin: 0;
+}
+
+/* Community-added places in the explorer */
+.community-places {
+  margin-top: var(--space-3);
+}
+.community-places > h3 {
+  margin: 0 0 var(--space-1);
+  font-size: 1.05rem;
+}
+.entry-community {
+  border-left: 4px solid var(--teal);
+}
+
+/* My Puja */
+.my-hello {
+  font-size: 1.15rem;
+  margin: 0 0 var(--space-2);
+}
+.my-stats {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: var(--space-2);
+}
+.my-stats li {
+  padding: var(--space-2);
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--marigold);
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+.my-stats b {
+  display: block;
+  font-size: 1.8rem;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.my-day {
+  margin: var(--space-2) 0;
+}
+.my-day h3 {
+  margin: 0 0 var(--space-1);
+  font-size: 1.05rem;
+}
+.my-tithi {
+  color: var(--color-primary);
+}
+.my-events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.3rem;
+}
+.my-events li {
+  padding: 0.4rem 0.6rem;
+  background: #fff;
+  border: 2px solid var(--color-border);
+  border-radius: 0.6rem;
+}
+.my-when {
+  display: inline-block;
+  min-width: 4.5rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+/* Admin */
+.admin-bar {
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-stats {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--space-2);
+}
+.admin-stats li {
+  padding: var(--space-2);
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+}
+.admin-stats b {
+  display: block;
+  font-size: 1.6rem;
+}
+.admin-table-wrap {
+  overflow-x: auto;
+  margin: 0 0 var(--space-3);
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background: #fff;
+}
+.admin-table th,
+.admin-table td {
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+.admin-msg {
+  white-space: pre-wrap;
+  min-width: 16rem;
+  max-width: 32rem;
+}
+
+/* Feedback form */
+.feedback-form {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 36rem;
+}
+.feedback-form textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* Live crowd meter, badges and board */
 .crowd {
   margin: var(--space-3) 0;
@@ -1906,6 +2156,48 @@ h3 {
 }
 .dates-table tbody th {
   font-weight: 800;
+}
+/* Puja timings: same look, wider rows, scrolls sideways on phones */
+.timings-wrap {
+  overflow-x: auto;
+  margin: var(--space-3) 0;
+}
+.timings-table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 4px 4px 0 var(--teal);
+  font-size: 0.95rem;
+}
+.timings-table caption {
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-align: left;
+  color: #fff;
+  background: var(--ink);
+}
+.timings-table th,
+.timings-table td {
+  padding: 0.55rem var(--space-2);
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid var(--color-border);
+}
+.timings-table thead th {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.timings-table tbody th {
+  font-weight: 800;
+  white-space: nowrap;
 }
 .dates-est {
   color: var(--coral);
