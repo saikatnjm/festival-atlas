@@ -367,6 +367,7 @@ export const fun = {
     captionPh: l("যেমন: ঢাকের তালে প্রথম ঠাকুর দেখা", "e.g. First pandal of the year, dhak and all"),
     nameLabel: l("কার্ডে তোমার নাম (ঐচ্ছিক)", "Your name on the card (optional)"),
     formatLabel: l("ফরম্যাট", "Format"),
+    themeLabel: l("রং", "Colour"),
     make: l("✨ পোস্টকার্ড বানাও", "✨ Make the postcard"),
     remake: l("🔁 আবার বানাও", "🔁 Make it again"),
     needPhoto: l("আগে একটা ছবি দাও।", "Add a photo first."),

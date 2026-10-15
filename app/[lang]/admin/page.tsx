@@ -158,7 +158,10 @@ export default async function AdminPage({ params, searchParams }: { params: Prom
     return (
       <>
         <Bar lang={lang} error={error} done={done} />
-        <Note title="Could not read the database">{e instanceof Error ? e.message : "Unknown error"}. Has supabase/schema.sql been run (it creates the feedback table)?</Note>
+        <Note title="Could not read the database">
+          {e instanceof Error ? e.message : "Unknown error"}. A 404 means a table is missing: run the whole of supabase/schema.sql in Supabase → SQL Editor (it creates
+          the feedback and places tables). A 401/403 means SUPABASE_SERVICE_ROLE_KEY is wrong or missing in Vercel.
+        </Note>
       </>
     );
   }

@@ -23,15 +23,35 @@ export interface PostcardInput {
   format: CardFormat;
   /** Drawn under the map inset when real tiles were used. */
   attribution: string;
+  theme?: PostcardTheme;
 }
 
 export const POSTCARD_TYPE = "image/jpeg";
 export const POSTCARD_EXT = "jpg";
 
+/** Colour palette for a postcard: accent (caption, byline, host), light text/ring colour, dark overlay RGB and pin colour. */
+export interface PostcardTheme {
+  id: string;
+  name: { bn: string; en: string };
+  accent: string;
+  light: string;
+  /** "r,g,b" of the dark gradient bands and the postmark fill. */
+  band: string;
+  pin: string;
+}
+
+export const POSTCARD_THEMES: readonly PostcardTheme[] = [
+  { id: "marigold", name: { bn: "গাঁদা", en: "Marigold" }, accent: BRAND.marigold, light: BRAND.cream, band: "10,6,14", pin: BRAND.sindoor },
+  { id: "sindoor", name: { bn: "সিঁদুর", en: "Sindoor" }, accent: "#FF8A80", light: "#FFF1E6", band: "58,6,12", pin: BRAND.sindoor },
+  { id: "shiuli", name: { bn: "শিউলি", en: "Shiuli" }, accent: "#FF8C1A", light: "#FFFFFF", band: "24,12,4", pin: "#FF7A1A" },
+  { id: "nodi", name: { bn: "নদী", en: "River" }, accent: "#8AE6EC", light: "#EAF7F7", band: "4,28,40", pin: BRAND.teal },
+  { id: "night", name: { bn: "রাত", en: "Night" }, accent: "#C3C4FF", light: "#F2F2FF", band: "10,12,58", pin: BRAND.indigo },
+  { id: "mono", name: { bn: "সাদা-কালো", en: "Mono" }, accent: "#FFFFFF", light: "#FFFFFF", band: "0,0,0", pin: "#111111" },
+];
+
+export const themeById = (id: unknown): PostcardTheme => POSTCARD_THEMES.find((t) => t.id === id) ?? POSTCARD_THEMES[0];
+
 const INK = BRAND.ink;
-const CREAM = BRAND.cream;
-const MARIGOLD = BRAND.marigold;
-const SINDOOR = BRAND.sindoor;
 const TILE = "https://tile.openstreetmap.org";
 const ZOOM = 15; // ~1 km across the inset: enough streets and water to recognise the neighbourhood
 
@@ -131,18 +151,21 @@ function drawMapFallback(ctx: CanvasRenderingContext2D, x: number, y: number, si
   }
 }
 
-function drawPin(ctx: CanvasRenderingContext2D, cx: number, cy: number) {
-  ctx.fillStyle = "rgba(181,18,27,0.22)";
+function drawPin(ctx: CanvasRenderingContext2D, cx: number, cy: number, colour: string) {
+  ctx.save();
+  ctx.globalAlpha = 0.22;
+  ctx.fillStyle = colour;
   ctx.beginPath();
   ctx.arc(cx, cy, 34, 0, Math.PI * 2);
   ctx.fill();
+  ctx.restore();
   ctx.beginPath();
   ctx.moveTo(cx, cy);
   ctx.lineTo(cx - 16, cy - 30);
   ctx.arc(cx, cy - 34, 17, Math.PI * 0.95, Math.PI * 0.05, false);
   ctx.lineTo(cx, cy);
   ctx.closePath();
-  ctx.fillStyle = SINDOOR;
+  ctx.fillStyle = colour;
   ctx.strokeStyle = "#fff";
   ctx.lineWidth = 4;
   ctx.fill();
@@ -157,6 +180,9 @@ function drawPin(ctx: CanvasRenderingContext2D, cx: number, cy: number) {
 export async function renderPostcard(input: PostcardInput): Promise<Blob> {
   const { w: W, h: H } = CARD_SIZES[input.format];
   const L = LAYOUT[input.format];
+  const T = input.theme ?? POSTCARD_THEMES[0];
+  const CREAM = T.light;
+  const MARIGOLD = T.accent;
   const canvas = document.createElement("canvas");
   canvas.width = W;
   canvas.height = H;
@@ -170,18 +196,18 @@ export async function renderPostcard(input: PostcardInput): Promise<Blob> {
   ctx.fillRect(0, 0, W, H);
   drawCover(ctx, input.photo, W, H);
   const topBand = ctx.createLinearGradient(0, L.safeTop, 0, L.safeTop + 300);
-  topBand.addColorStop(0, "rgba(10,6,14,0.62)");
-  topBand.addColorStop(1, "rgba(10,6,14,0)");
+  topBand.addColorStop(0, `rgba(${T.band},0.62)`);
+  topBand.addColorStop(1, `rgba(${T.band},0)`);
   ctx.fillStyle = topBand;
   ctx.fillRect(0, 0, W, L.safeTop + 300);
   const bottomBand = ctx.createLinearGradient(0, H * 0.42, 0, H - L.safeBottom);
-  bottomBand.addColorStop(0, "rgba(10,6,14,0)");
-  bottomBand.addColorStop(0.55, "rgba(10,6,14,0.62)");
-  bottomBand.addColorStop(1, "rgba(10,6,14,0.9)");
+  bottomBand.addColorStop(0, `rgba(${T.band},0)`);
+  bottomBand.addColorStop(0.55, `rgba(${T.band},0.62)`);
+  bottomBand.addColorStop(1, `rgba(${T.band},0.9)`);
   ctx.fillStyle = bottomBand;
   ctx.fillRect(0, H * 0.42, W, H - H * 0.42);
   if (L.safeBottom) {
-    ctx.fillStyle = "rgba(10,6,14,0.9)";
+    ctx.fillStyle = `rgba(${T.band},0.9)`;
     ctx.fillRect(0, H - L.safeBottom, W, L.safeBottom);
   }
 
@@ -211,7 +237,7 @@ export async function renderPostcard(input: PostcardInput): Promise<Blob> {
   ctx.save();
   ctx.translate(sx, sy);
   ctx.rotate(-0.22);
-  ctx.fillStyle = "rgba(34,24,46,0.5)";
+  ctx.fillStyle = `rgba(${T.band},0.5)`;
   ctx.beginPath();
   ctx.arc(0, 0, R, 0, Math.PI * 2);
   ctx.fill();
@@ -243,7 +269,7 @@ export async function renderPostcard(input: PostcardInput): Promise<Blob> {
   ctx.clip();
   if (input.pin) usedTiles = await drawTiles(ctx, input.pin, mx, my, S);
   if (!usedTiles) drawMapFallback(ctx, mx, my, S);
-  drawPin(ctx, mx + S / 2, my + S / 2);
+  drawPin(ctx, mx + S / 2, my + S / 2, T.pin);
   if (usedTiles) {
     ctx.fillStyle = "rgba(255,248,236,0.85)";
     ctx.fillRect(mx, my + S - 26, S, 26);

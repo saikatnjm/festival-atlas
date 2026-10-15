@@ -12,7 +12,7 @@ import { fmtDate } from "@/lib/dates";
 import { readExifGps } from "@/lib/exif";
 import { distanceM, inServiceArea, type LatLng } from "@/lib/geo";
 import { num, withLang, type Lang } from "@/lib/i18n";
-import { POSTCARD_EXT, POSTCARD_TYPE, loadPhoto, releasePhoto, renderPostcard } from "@/lib/postcard";
+import { POSTCARD_EXT, POSTCARD_THEMES, POSTCARD_TYPE, loadPhoto, releasePhoto, renderPostcard, themeById } from "@/lib/postcard";
 import { NAME_MAX, cleanName } from "@/lib/profile";
 import { localDate, pujaPhase } from "@/lib/puja-dates";
 import { CARD_FORMATS, canShareImage, copyText, downloadBlob, shareImage, shareLink, type CardFormat } from "@/lib/share";
@@ -76,6 +76,7 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
   const [custom, setCustom] = useState("");
   const [name, setName] = useState("");
   const [format, setFormat] = useState<CardFormat>("story");
+  const [themeId, setThemeId] = useState(POSTCARD_THEMES[0].id);
   const [blob, setBlob] = useState<Blob | null>(null);
   const [preview, setPreview] = useState("");
   const [busy, setBusy] = useState(false);
@@ -90,6 +91,10 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
     try {
       const r = window.localStorage.getItem("fa:region");
       if (isRegion(r)) setRegion(r);
+      // Start from the site palette the visitor picked (classic → marigold), or their last postcard colour.
+      const saved = window.localStorage.getItem("fa:postcard:theme");
+      const site = window.localStorage.getItem("fa:theme");
+      setThemeId(themeById(saved ?? (site === "classic" ? "marigold" : site)).id);
     } catch {
       // ignore
     }
@@ -196,11 +201,12 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
         pin: typeof pandal.lat === "number" && typeof pandal.lng === "number" ? { lat: pandal.lat, lng: pandal.lng } : null,
         format,
         attribution: P.attribution,
+        theme: themeById(themeId),
       });
       setBlob(out);
       setMsg(ticked ? fill(P.ticked[lang], { name: pandal.name }) : "");
       logActivity({ kind: "postcard", id: pandal.id, label: stamp });
-      track("postcard", { pandal: pandal.id, format, source: source ?? "pick" });
+      track("postcard", { pandal: pandal.id, format, theme: themeId, source: source ?? "pick" });
     } catch {
       setMsg(s.share.imageFailed);
     }
@@ -318,6 +324,26 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
           {CARD_FORMATS.map((f) => (
             <button key={f} type="button" className="cx-chip" aria-pressed={format === f} onClick={() => setFormat(f)}>
               {fun.card[f][lang]}
+            </button>
+          ))}
+        </div>
+        <div className="cx-chips" role="group" aria-label={P.themeLabel[lang]}>
+          {POSTCARD_THEMES.map((th) => (
+            <button
+              key={th.id}
+              type="button"
+              className="cx-chip"
+              aria-pressed={themeId === th.id}
+              onClick={() => {
+                setThemeId(th.id);
+                try {
+                  window.localStorage.setItem("fa:postcard:theme", th.id);
+                } catch {
+                  // ignore
+                }
+              }}
+            >
+              <span className="swatch" aria-hidden="true" style={{ background: `linear-gradient(135deg, rgb(${th.band}) 50%, ${th.accent} 50%)` }} /> {th.name[lang]}
             </button>
           ))}
         </div>

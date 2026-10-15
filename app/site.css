@@ -1785,6 +1785,14 @@ h3 {
     align-items: center;
   }
 }
+.swatch {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  vertical-align: -0.1em;
+}
 .postcard-preview {
   display: block;
   width: min(100%, 360px);
