@@ -11,14 +11,27 @@ export interface Source {
   url: string;
 }
 
+/** A past edition kept for history once an entry is updated to a new year. */
+export interface Edition {
+  year: number;
+  theme?: string;
+  sources?: Source[];
+}
+
 /** One curated listing. Optional fields are shown only when present (and sourced). */
 export interface Pandal {
   id: string;
   /** Original proper name, never translated. */
   name: string;
+  /** Bangla spelling of the name, shown on /bn pages (falls back to `name`). */
+  name_bn?: string;
   country: string; // ISO 3166-1 alpha-2
   city: string;
   area?: string;
+  /** Bangla spelling of the area, shown on /bn pages (falls back to `area`). */
+  area_bn?: string;
+  /** Earlier editions (year + theme) once the entry moved on to a newer year. */
+  history?: Edition[];
   lat?: number;
   lng?: number;
   pin?: PinKind;
@@ -72,6 +85,11 @@ export const countryName = (code: string, lang: Lang): string =>
 
 export const cityName = (city: string, lang: Lang): string => (lang === "bn" ? (geo.cities[city] ?? city) : city);
 
+/** Name in the page language: the Bangla spelling on /bn when we have one, else the original name. */
+export const nameOf = (p: Pandal, lang: Lang): string => (lang === "bn" && p.name_bn) || p.name;
+/** Area in the page language, with the same fallback; undefined when the entry has no area. */
+export const areaOf = (p: Pandal, lang: Lang): string | undefined => (lang === "bn" && p.area_bn) || p.area;
+
 export const descriptionOf = (p: Pandal, lang: Lang): string => (lang === "bn" ? (bnText[p.id]?.description ?? p.description) : p.description);
 export const themeOf = (p: Pandal, lang: Lang): string | undefined =>
   lang === "bn" ? (bnText[p.id]?.theme ?? p.theme) : p.theme;
@@ -81,7 +99,7 @@ export const placeLabel = (p: Pandal, lang: Lang): string => `${cityName(p.city,
 
 /** Text used for searching: names in both languages, so either script finds an entry. */
 export function searchText(p: Pandal): string {
-  return [p.name, p.city, p.area, p.country, COUNTRY_EN[p.country], geo.cities[p.city], geo.countries[p.country], p.theme, bnText[p.id]?.theme, p.committee]
+  return [p.name, p.name_bn, p.city, p.area, p.area_bn, p.country, COUNTRY_EN[p.country], geo.cities[p.city], geo.countries[p.country], p.theme, bnText[p.id]?.theme, p.committee]
     .filter(Boolean)
     .join(" ")
     .toLowerCase();
@@ -116,7 +134,3 @@ export function facets(list: readonly Pandal[], lang: Lang): Facets {
   };
 }
 
-/** Light summary used on the home page. */
-export function summary(list: readonly Pandal[] = pandals) {
-  return { total: list.length, countries: new Set(list.map((p) => p.country)).size };
-}

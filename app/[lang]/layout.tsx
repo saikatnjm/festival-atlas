@@ -23,8 +23,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   if (!isLang(lang)) return {};
   const t = getDict(lang);
   const origin = siteUrl();
-  // Google Search Console token for pujoguide.vercel.app (public by nature); the env var can override it.
-  const google = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "8RLTxEbzyALLvzZDgp9mOc_SaMCBxkNwvFr61YL0HXY";
+  // Google Search Console HTML-tag verification; omitted when the variable is unset.
+  const google = process.env.NEXT_PUBLIC_GSC_VERIFICATION;
   const bing = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
   return {
     metadataBase: origin ? new URL(origin) : undefined,

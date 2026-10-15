@@ -1869,6 +1869,11 @@ h3 {
   justify-content: center;
 }
 
+.col-city {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-right: 0.4rem;
+}
 .quick-pick a.chip {
   display: inline-flex;
   align-items: center;

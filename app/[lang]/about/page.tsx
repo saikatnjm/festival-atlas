@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getDict } from "@/data/i18n";
-import { summary } from "@/data/pandals";
+import { summary } from "@/data/pandals/counts";
 import { fmt } from "@/lib/format";
 import { LANGS, withLang } from "@/lib/i18n";
 import JsonLd, { breadcrumbs } from "@/lib/jsonld";

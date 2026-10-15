@@ -1,9 +1,11 @@
 import type { Lang } from "@/lib/i18n";
 import { withLang } from "@/lib/i18n";
 import {
+  areaOf,
   cityName,
   countryName,
   descriptionOf,
+  nameOf,
   placeLabel,
   searchText,
   sortPandals,
@@ -36,11 +38,11 @@ export interface PandalItem {
 export function toItems(lang: Lang): PandalItem[] {
   return sortPandals(pandals).map((p) => ({
     id: p.id,
-    name: p.name,
+    name: nameOf(p, lang),
     place: placeLabel(p, lang),
     city: p.city,
     country: p.country,
-    area: p.area,
+    area: areaOf(p, lang),
     year: p.year,
     status: p.status,
     theme: themeOf(p, lang),

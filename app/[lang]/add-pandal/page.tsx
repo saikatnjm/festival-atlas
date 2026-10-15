@@ -3,7 +3,7 @@ import Link from "next/link";
 import AddPlaceForm, { type KnownPin } from "@/components/places/AddPlaceForm";
 import { getDict } from "@/data/i18n";
 import { fun } from "@/data/i18n/fun";
-import { hasPin, pandals } from "@/data/pandals";
+import { hasPin, nameOf, pandals } from "@/data/pandals";
 import { LANGS, withLang } from "@/lib/i18n";
 import JsonLd, { breadcrumbs } from "@/lib/jsonld";
 import { langOf } from "@/lib/route";
@@ -24,7 +24,7 @@ export default async function AddPandalPage({ params }: { params: Promise<Params
   const lang = langOf((await params).lang);
   const t = getDict(lang);
   const P = fun.places;
-  const known: KnownPin[] = pandals.filter(hasPin).map((p) => ({ id: p.id, name: p.name, lat: p.lat, lng: p.lng }));
+  const known: KnownPin[] = pandals.filter(hasPin).map((p) => ({ id: p.id, name: nameOf(p, lang), lat: p.lat, lng: p.lng }));
   const crumbs = breadcrumbs([
     { name: t.nav.home, path: withLang(lang, "/") },
     { name: P.h1[lang], path: withLang(lang, "/add-pandal") },

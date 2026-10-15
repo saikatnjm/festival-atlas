@@ -2,6 +2,18 @@
 
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 
+## SEO fixes batch (latest, 2026-10-16)
+**Owner step:** add `NEXT_PUBLIC_GSC_VERIFICATION=<your Search Console token>` in Vercel (all environments) before/with this deploy; the token is no longer in the code, so without the variable the tag disappears and verification can lapse.
+- **GSC tag** from `NEXT_PUBLIC_GSC_VERIFICATION` only (`app/[lang]/layout.tsx`); old hardcoded token and its smoke line removed.
+- **2026 editions**: Santosh Mitra Square (150 years of ‘Vande Mataram’, first light-and-sound show) and Alipore Sarbojanin (‘Ramayana: An Epic Woven in Time’) updated to 2026 from The Federal (7 Oct 2026, already cited in `events.ts`); their 2025 themes moved into a new optional `history` field (shown as "Past themes" on the pandal page); `bn.json` updated; validator checks `history`, `name_bn`, `area_bn`.
+- **Siliguri off the Kolkata grouping**: collections gained `primaryCity` + `othersLabel`; the Kolkata page groups only Kolkata by area and puts Siliguri/Khardaha under "Elsewhere in West Bengal" with the city shown; stat row reads "N in Kolkata · M elsewhere · P on the map".
+- **One counting function**: `data/pandals/counts.ts` (`countWhere`, `cityCount`, `topCities`, `collectionCounts`) feeds the home city chips and the collection pages, so home "Kolkata N" = Kolkata page "N in Kolkata".
+- **Bangla names**: optional `name_bn`/`area_bn` on entries, `nameOf()`/`areaOf()` with English fallback, used by the directory/map items, pandal page (h1, title, meta, breadcrumb, JSON-LD), collection lists, live board, passport, postcard picker, `/me`, Bangla search text. Filled for the 10 Kolkata 2026 entries.
+- **Coming soon**: only Lakshmi Puja and Kali Puja remain in `data/pujas.ts`.
+- **og:locale**: `pageMeta({ region })` → `bn_IN`/`en_IN` on the Kolkata collection and Indian pandal pages; `bn_BD`/`en_US` elsewhere (`ogLocale()` in `lib/i18n.ts`).
+- **Smoke checks added** (CI runs them; nothing was run here, no shell): hreflang alternates on `/puja/kolkata`, `/durga-puja-2026` and a pandal page; og:locale values; `sitemap.xml` lists kolkata/dhaka/abroad/dates in both languages; `robots.txt` allows `/`; Bangla h1 on `/bn/puja/sreebhumi-sporting-club`; "Elsewhere in West Bengal" group and the split stat row; past themes row. `summary()` moved to `counts.ts` (about page).
+- Tests: none added (counts/collections need the JSON data, which `node --test` cannot import). Next: `area_bn` for the remaining Kolkata entries (Singhi Park, Lalabagan, Kashi Bose Lane share groups with Bangla-named ones), Dhaka `name_bn`, 2026 editions for the other 2025 Kolkata entries as sources appear.
+
 ## My Puja page, community places, puja timings, handover docs (latest, 2026-10-15, evening)
 **Owner steps:** re-run `supabase/schema.sql` (adds `places` + `approved_places()`, service-role grants); the env vars listed in the section below.
 - **`/me` "আমার পুজো-খাতা"** (`components/me/MyPuja.tsx`, `lib/activity.ts`): stats tiles (pandals, days out, postcards, reports, games, km between pins), day-by-day timeline with tithi labels (synthetic rows for visits ticked before logging existed; the passport is the truth), a shareable "My Puja 2026" card from the games' card engine (links to the passport share URL), copy-my-data (JSON) and clear-log. Logging hooks: `useVisits.toggle` (new ticks), `ResultStats` (quiz results, once per session), `CrowdMeter`/near-bar (reports), postcards. Header name chip now opens `/me`; footer link. `noindex`.
@@ -77,7 +89,7 @@ Supabase `plays` table (`supabase/schema.sql`, second section; re-run the whole 
 - Titles: play index "Durga Puja Quizzes & Games 2026: Which Puja Character Are You?", Local page "Kolkata & Dhaka Durga Puja 2026 Guide: News, Routes & Plans".
 - Tests: collections cover every listing exactly once, title/description lengths, date formatting. Smoke: all new pages, JSON-LD types, sitemap entries.
 - **Footer rebuilt** (`components/SiteFooter.tsx`): brand blurb + three grouped columns (Explore: dates, Kolkata, Dhaka, abroad, map, local guide · Play: quiz, squad, all games · This site: about, language) and a bottom row with the OSM credit and year. The old single wrapped line is gone.
-- **Owner to do after deploy:** submit the sitemap in Google Search Console (set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` in Vercel), test `/en/puja/kolkata` and `/en/durga-puja-2026` in the Rich Results Test, and re-check share previews in the Facebook debugger (OG image URLs changed for game/result pages).
+- **Owner to do after deploy:** submit the sitemap in Google Search Console (set `NEXT_PUBLIC_GSC_VERIFICATION` in Vercel; done 16 Oct), test `/en/puja/kolkata` and `/en/durga-puja-2026` in the Rich Results Test, and re-check share previews in the Facebook debugger (OG image URLs changed for game/result pages).
 
 ## Data, map page & reel ideas (2026-10-12)
 Not run here (no shell); owner tests with `docker compose run --rm --build verify`.
@@ -190,7 +202,7 @@ Bilingual (EN/বাংলা) upgrade: worldwide Puja pandal directory, new bra
 
 ## What changed
 - **Routing/i18n:** `/` language chooser; `/en/...` and `/bn/...` (static, `app/[lang]`). Dictionaries in `data/i18n/{en,bn}.ts`; content as `{en,bn}` in `data/play/*`. One codebase, no duplication. Old `/puja`, `/play/*` redirect (temporary) to `/en/...`.
-- **SEO:** per-language `<html lang>`, canonical, hreflang (`en`, `bn`, `x-default` → `/`), localized titles/descriptions, JSON-LD (WebSite, BreadcrumbList, ItemList), bilingual `sitemap.xml` with alternates, `robots.txt`, one indexable URL per pandal and per result. Needs `NEXT_PUBLIC_SITE_URL` (optional: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, `NEXT_PUBLIC_BING_SITE_VERIFICATION`).
+- **SEO:** per-language `<html lang>`, canonical, hreflang (`en`, `bn`, `x-default` → `/`), localized titles/descriptions, JSON-LD (WebSite, BreadcrumbList, ItemList), bilingual `sitemap.xml` with alternates, `robots.txt`, one indexable URL per pandal and per result. Needs `NEXT_PUBLIC_SITE_URL` (optional: `NEXT_PUBLIC_GSC_VERIFICATION`, `NEXT_PUBLIC_BING_SITE_VERIFICATION`).
 - **Directory:** `data/pandals/` (55 entries: West Bengal 20, Bangladesh 15, UK/EU 8, rest of world 12). Statuses `confirmed` / `historical` / `awaiting verification` (text + shape, not colour only). Search, filters (country, city, year, theme, status) synced to the URL, map/list toggle, detail pages `/puja/<id>`, empty states. Every entry has sources and `lastVerified`; pins are labelled approximate.
 - **Brand:** universal globe-and-confetti logo, favicon/apple icon, palette + type in `docs/BRAND.md`; fonts bundled in `public/fonts/` (OFL).
 - **Cards:** tap the character for a reaction/animation, regenerate/replay, brand footer (logo + site host), PNG export (1080×1350, Bangla verified), native image share with link fallback. Reduced motion respected.

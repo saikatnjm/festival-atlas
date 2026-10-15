@@ -4,12 +4,12 @@ import { notFound } from "next/navigation";
 import StatusBadge from "@/components/puja/StatusBadge";
 import VisitButton from "@/components/puja/VisitButton";
 import CrowdMeter from "@/components/live/CrowdMeter";
-import { cityName, countryName, descriptionOf, getPandal, hasPin, pandals, placeLabel, sortPandals, themeOf } from "@/data/pandals";
+import { areaOf, cityName, countryName, descriptionOf, getPandal, hasPin, nameOf, pandals, placeLabel, sortPandals, themeOf } from "@/data/pandals";
 import { collections } from "@/data/pandals/collections";
 import { getDict } from "@/data/i18n";
 import { fun } from "@/data/i18n/fun";
 import { fmt } from "@/lib/format";
-import { LANGS, withLang } from "@/lib/i18n";
+import { LANGS, num, withLang } from "@/lib/i18n";
 import JsonLd, { abs, breadcrumbs } from "@/lib/jsonld";
 import { PUJA_2026 } from "@/lib/puja-dates";
 import { langOf } from "@/lib/route";
@@ -32,12 +32,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const description = p.year
     ? fmt(t.detailMeta, { description: descriptionOf(p, lang), year: p.year }, lang)
     : fmt(t.detailMetaNoYear, { description: descriptionOf(p, lang) }, lang);
+  const name = nameOf(p, lang);
   return pageMeta({
     lang,
     // Titles carry the edition year for current pujas ("… Durga Puja 2026 in Kolkata, India").
-    title: p.year && p.year >= 2025 ? fmt(t.detailTitleYear, { name: p.name, year: p.year, place: placeLabel(p, lang) }, lang) : fmt(t.detailTitle, { name: p.name, place: placeLabel(p, lang) }, lang),
+    title: p.year && p.year >= 2025 ? fmt(t.detailTitleYear, { name, year: p.year, place: placeLabel(p, lang) }, lang) : fmt(t.detailTitle, { name, place: placeLabel(p, lang) }, lang),
     description,
     path: `/puja/${id}`,
+    region: p.country === "IN" ? "wb" : p.country === "BD" ? "bd" : null,
   });
 }
 
@@ -48,6 +50,8 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
   if (!p) notFound();
   const d = getDict(lang);
   const t = d.puja;
+  const name = nameOf(p, lang);
+  const area = areaOf(p, lang);
   const theme = themeOf(p, lang);
   const related = sortPandals(pandals.filter((x) => x.city === p.city && x.id !== p.id)).slice(0, 6);
   const collection = collections.find((c) => c.match(p));
@@ -55,7 +59,7 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
     { name: d.nav.home, path: withLang(lang, "/") },
     { name: d.nav.puja, path: withLang(lang, "/puja") },
     ...(collection ? [{ name: collection.h1[lang], path: withLang(lang, `/puja/${collection.slug}`) }] : []),
-    { name: p.name, path: withLang(lang, `/puja/${p.id}`) },
+    { name, path: withLang(lang, `/puja/${p.id}`) },
   ]);
   const pinText = p.pin ? fmt(t.pinApprox, { kind: t.pinKind[p.pin] }, lang) : undefined;
   const pageUrl = abs(withLang(lang, `/puja/${p.id}`));
@@ -66,7 +70,7 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
       ? {
           "@context": "https://schema.org",
           "@type": "Event",
-          name: `${p.name}: Durga Puja 2026`,
+          name: `${name}: Durga Puja 2026`,
           startDate: PUJA_2026[region].shashthi,
           endDate: PUJA_2026[region].dashami,
           eventStatus: "https://schema.org/EventScheduled",
@@ -76,7 +80,8 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
           description: descriptionOf(p, lang),
           location: {
             "@type": "Place",
-            name: p.name,
+            name,
+            // Postal data stays in English/Latin so geocoders and maps read it the same on both languages.
             address: { "@type": "PostalAddress", streetAddress: p.address, addressLocality: p.area ? `${p.area}, ${p.city}` : p.city, addressCountry: p.country },
             ...(hasPin(p) ? { geo: { "@type": "GeoCoordinates", latitude: p.lat, longitude: p.lng } } : {}),
           },
@@ -85,9 +90,12 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
       : null;
 
   const rows: [string, React.ReactNode][] = [];
-  rows.push([t.facts.location, `${p.area ? `${p.area}, ` : ""}${placeLabel(p, lang)}`]);
+  rows.push([t.facts.location, `${area ? `${area}, ` : ""}${placeLabel(p, lang)}`]);
   rows.push([t.facts.edition, p.year ? fmt(t.edition, { year: p.year }, lang) : t.yearUnknown]);
   if (theme) rows.push([t.facts.theme, p.themeYear ? fmt(t.themeYear, { theme, year: p.themeYear }, lang) : theme]);
+  // Earlier editions, newest first: "2025: Operation Sindoor".
+  const past = (p.history ?? []).filter((h) => h.theme).sort((a, b) => b.year - a.year);
+  if (past.length) rows.push([t.facts.pastThemes, past.map((h) => `${num(h.year, lang)}: ${h.theme}`).join(" · ")]);
   if (p.committee) rows.push([t.facts.committee, p.committee]);
   if (p.address) rows.push([t.facts.address, p.address]);
   if (p.dates) rows.push([t.facts.dates, p.dates]);
@@ -119,7 +127,7 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
           data={{
             "@context": "https://schema.org",
             "@type": "WebPage",
-            name: fmt(t.detailTitle, { name: p.name, place: placeLabel(p, lang) }, lang),
+            name: fmt(t.detailTitle, { name, place: placeLabel(p, lang) }, lang),
             url: abs(withLang(lang, `/puja/${p.id}`)),
             inLanguage: lang,
             description: descriptionOf(p, lang),
@@ -135,7 +143,7 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
           </>
         ) : null}
       </p>
-      <h1>{p.name}</h1>
+      <h1>{name}</h1>
       <p className="entry-badges">
         <StatusBadge status={p.status} label={t.statusLabel[p.status]} />
         <span className="year-badge">{p.year ? fmt(t.edition, { year: p.year }, lang) : t.yearUnknown}</span>
@@ -197,7 +205,7 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
           <ul className="link-list">
             {related.map((r) => (
               <li key={r.id}>
-                <Link href={withLang(lang, `/puja/${r.id}`)}>{r.name}</Link>
+                <Link href={withLang(lang, `/puja/${r.id}`)}>{nameOf(r, lang)}</Link>
               </li>
             ))}
           </ul>

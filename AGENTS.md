@@ -30,6 +30,10 @@ sets environment variables in Vercel. He does **not** run local builds.
   cast), `i18n/{en,bn}.ts` (the `Dict`) and `i18n/fun.ts` (feature strings as `{bn, en}` pairs).
 - `lib/` — pure helpers and server helpers. Anything named `*-shared.ts` is import-free and
   unit-tested; the matching `*.ts` is server-only and does the network.
+- Pandal entries: `name`/`area` are the original (Latin) spellings; optional `name_bn`/`area_bn` are
+  shown on `/bn` via `nameOf()`/`areaOf()` (English fallback); `history: [{year, theme, sources}]`
+  keeps past editions when an entry moves to a new year. Counts always come from
+  `data/pandals/counts.ts` (`cityCount`, `topCities`, `collectionCounts`), never ad-hoc `.length`.
 - `supabase/schema.sql` — the whole database, idempotent, re-run in full after any change.
 - `scripts/validate-data.mjs`, `scripts/smoke.mjs`, `tests/*.test.mjs` — the checks CI runs.
 - `app/site.css`, `app/cx.css` — plain CSS with custom properties; palettes via `data-theme` on `<html>`.
@@ -87,7 +91,7 @@ The smoke script expects `NEXT_PUBLIC_SITE_URL=http://localhost:3100`.
 | `NEXT_PUBLIC_GA_ID` | client | Google Analytics 4 (`components/Analytics.tsx`, events via `lib/analytics.ts`). |
 | `ADMIN_USER`, `ADMIN_PASSWORD` (10+ chars) | server | `/en/admin` login (HMAC-signed 12 h cookie). Optional `ADMIN_SESSION_SECRET`. |
 | `SUPABASE_SERVICE_ROLE_KEY` | server only | Admin reads/updates/deletes (feedback, nicknames, place approval, purge). |
-| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, `NEXT_PUBLIC_BING_SITE_VERIFICATION` | build | Optional search-console verification meta tags. |
+| `NEXT_PUBLIC_GSC_VERIFICATION`, `NEXT_PUBLIC_BING_SITE_VERIFICATION` | build | Optional search-console verification meta tags (never hardcode tokens). |
 
 Without Supabase vars every live/community feature hides itself and `/api/*` answers `disabled: true`.
 

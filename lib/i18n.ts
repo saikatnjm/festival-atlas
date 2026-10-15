@@ -13,7 +13,12 @@ export const isLang = (v: string): v is Lang => (LANGS as readonly string[]).inc
 export const tr = (v: L, lang: Lang): string => v[lang];
 
 export const LANG_NAME: Record<Lang, string> = { en: "English", bn: "বাংলা" };
+/** Default og:locale (Bangladesh/diaspora pages); West Bengal pages use OG_LOCALE_WB. */
 export const OG_LOCALE: Record<Lang, string> = { en: "en_US", bn: "bn_BD" };
+export const OG_LOCALE_WB: Record<Lang, string> = { en: "en_IN", bn: "bn_IN" };
+
+/** og:locale for a page: "wb" pages (Kolkata collection, Indian pandals) are Indian locales, everything else the default. */
+export const ogLocale = (lang: Lang, region?: "wb" | "bd" | null): string => (region === "wb" ? OG_LOCALE_WB[lang] : OG_LOCALE[lang]);
 
 const BN_DIGITS = "০১২৩৪৫৬৭৮৯";
 

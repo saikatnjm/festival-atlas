@@ -30,6 +30,19 @@ for (const e of entries) {
     if (e.pin !== "area" && e.pin !== "city") errors.push(`${w}: pin must be "area" or "city"`);
     if (!e.coordSource) errors.push(`${w}: coordinates need coordSource`);
   }
+  // Optional Bangla spellings and past editions.
+  for (const f of ["name_bn", "area_bn"]) {
+    if (e[f] !== undefined && (typeof e[f] !== "string" || !e[f].trim())) errors.push(`${w}: ${f} must be a non-empty string when present`);
+  }
+  if (e.history !== undefined) {
+    if (!Array.isArray(e.history)) errors.push(`${w}: history must be an array`);
+    else
+      for (const h of e.history) {
+        if (!Number.isInteger(h?.year) || h.year < 1900 || (e.year && h.year >= e.year)) errors.push(`${w}: history years must be integers before the current edition`);
+        if (h?.theme !== undefined && typeof h.theme !== "string") errors.push(`${w}: history theme must be a string`);
+        if (h?.sources !== undefined) for (const s of h.sources) if (!s.title || !isUrl(s.url)) errors.push(`${w}: bad history source ${JSON.stringify(s)}`);
+      }
+  }
   if (!bn[e.id] || !bn[e.id].description) errors.push(`${w}: missing Bangla description in bn.json`);
   if (!geo.countries?.[e.country]) errors.push(`${w}: country "${e.country}" missing in geo-bn.json`);
   if (!geo.cities?.[e.city]) errors.push(`${w}: city "${e.city}" missing in geo-bn.json`);

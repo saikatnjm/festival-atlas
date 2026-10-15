@@ -238,6 +238,7 @@ const bn: Dict = {
       location: "জায়গা",
       edition: "আয়োজন",
       theme: "থিম",
+      pastThemes: "আগের থিম",
       committee: "আয়োজক",
       address: "ঠিকানা বা চেনা জায়গা",
       dates: "তারিখ (সূত্রে যেমন আছে)",

@@ -24,6 +24,12 @@ export interface Collection {
   description: L;
   /** Group listings by this field. */
   groupBy: "area" | "city" | "country";
+  /**
+   * When set, only this city's listings are grouped by `groupBy`; the rest of the region goes into one
+   * trailing group titled `othersLabel` (Siliguri on the Kolkata page, Satkhira on the Dhaka page…).
+   */
+  primaryCity?: string;
+  othersLabel?: L;
   faq: { q: L; a: L }[];
 }
 
@@ -33,6 +39,8 @@ export const collections: Collection[] = [
     region: "wb",
     match: (p) => p.country === "IN",
     mapQuery: "?country=IN",
+    primaryCity: "Kolkata",
+    othersLabel: l("পশ্চিমবঙ্গের অন্যত্র", "Elsewhere in West Bengal"),
     title: l("কলকাতার দুর্গাপুজো ২০২৬: প্যান্ডেল, থিম ও ম্যাপ", "Kolkata Durga Puja 2026: Pandals, Themes & Map"),
     h1: l("কলকাতার দুর্গাপুজো ২০২৬: প্যান্ডেল, থিম আর ম্যাপ", "Kolkata Durga Puja 2026: pandals, themes and a map"),
     lead: l(
@@ -87,6 +95,8 @@ export const collections: Collection[] = [
     region: "bd",
     match: (p) => p.country === "BD",
     mapQuery: "?country=BD",
+    // Counts only: the page keeps its per-city groups (groupBy "city"), so no trailing group is needed.
+    primaryCity: "Dhaka",
     title: l("ঢাকা ও বাংলাদেশের দুর্গাপুজো ২০২৬: মণ্ডপ, ঢাকেশ্বরী ও ছুটি", "Dhaka & Bangladesh Durga Puja 2026: Mandaps, Dhakeshwari & Holidays"),
     h1: l("ঢাকা ও বাংলাদেশের দুর্গাপুজো ২০২৬", "Dhaka & Bangladesh Durga Puja 2026"),
     lead: l(

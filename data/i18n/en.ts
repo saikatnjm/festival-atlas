@@ -236,6 +236,7 @@ const en = {
       location: "Location",
       edition: "Edition",
       theme: "Theme",
+      pastThemes: "Past themes",
       committee: "Organiser",
       address: "Address or landmark",
       dates: "Dates (as listed)",

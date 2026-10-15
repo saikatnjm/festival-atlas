@@ -4,7 +4,7 @@ import MyPuja, { type MePandal } from "@/components/me/MyPuja";
 import { playStrings } from "@/components/play/strings";
 import { getDict } from "@/data/i18n";
 import { fun } from "@/data/i18n/fun";
-import { pandals } from "@/data/pandals";
+import { areaOf, nameOf, pandals } from "@/data/pandals";
 import { LANGS, withLang } from "@/lib/i18n";
 import { langOf } from "@/lib/route";
 import { pageMeta } from "@/lib/site";
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function MePage({ params }: { params: Promise<Params> }) {
   const lang = langOf((await params).lang);
   const t = getDict(lang);
-  const items: MePandal[] = pandals.map((p) => ({ id: p.id, name: p.name, area: p.area, lat: p.lat, lng: p.lng }));
+  const items: MePandal[] = pandals.map((p) => ({ id: p.id, name: nameOf(p, lang), area: areaOf(p, lang), lat: p.lat, lng: p.lng }));
   return (
     <>
       <p className="breadcrumb">

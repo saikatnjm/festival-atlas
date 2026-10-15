@@ -3,7 +3,8 @@ import Link from "next/link";
 import { cast } from "@/data/play/cast";
 import { activities } from "@/data/play";
 import { getDict } from "@/data/i18n";
-import { cityName, pandals } from "@/data/pandals";
+import { cityName } from "@/data/pandals";
+import { topCities } from "@/data/pandals/counts";
 import Character from "@/components/play/art/Character";
 import CastStrip from "@/components/home/CastStrip";
 import Countdown from "@/components/home/Countdown";
@@ -30,16 +31,6 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const lang = langOf((await params).lang);
   const t = getDict(lang);
   return pageMeta({ lang, title: t.meta.home.title, description: t.meta.home.description, path: "/", absoluteTitle: true });
-}
-
-/** Cities with the most listings, for the "browse by place" chips. */
-function topCities(limit: number): { city: string; n: number }[] {
-  const counts = new Map<string, number>();
-  for (const p of pandals) counts.set(p.city, (counts.get(p.city) ?? 0) + 1);
-  return [...counts.entries()]
-    .map(([city, n]) => ({ city, n }))
-    .sort((a, b) => b.n - a.n || a.city.localeCompare(b.city))
-    .slice(0, limit);
 }
 
 /** Names and links for the live board (ids only travel over the wire; names come from the build). */

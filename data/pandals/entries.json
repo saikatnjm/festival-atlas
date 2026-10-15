@@ -196,38 +196,52 @@
  {
   "id": "alipore-sarbojanin",
   "name": "Alipore Sarbojanin",
+  "name_bn": "আলিপুর সর্বজনীন",
   "country": "IN",
   "city": "Kolkata",
   "area": "Alipore",
+  "area_bn": "আলিপুর",
   "lat": 22.5391712,
   "lng": 88.3272782,
   "pin": "area",
   "coordSource": "https://en.wikipedia.org/wiki/Alipore",
-  "year": 2025,
+  "year": 2026,
   "status": "confirmed",
-  "theme": "Chaa (tea)",
-  "themeYear": 2025,
+  "theme": "Ramayana: An Epic Woven in Time",
+  "themeYear": 2026,
   "address": "50 Alipore Park Rd, Alipore, Kolkata",
-  "description": "A south Kolkata community puja whose 2025 pandal explored tea and its heritage.",
+  "description": "A south Kolkata community puja. Its 2026 pandal is themed 'Ramayana: An Epic Woven in Time'; the 2025 pandal explored tea and its heritage.",
+  "history": [
+   {
+    "year": 2025,
+    "theme": "Chaa (tea)",
+    "sources": [
+     {
+      "title": "Founding Fuel, 10 best pandals Kolkata 2025",
+      "url": "https://foundingfuel.com/article/the-10-best-durga-puja-pandals-from-kolkata-2025"
+     },
+     {
+      "title": "Homegrown, Durga Pujo 2025 Kolkata guide",
+      "url": "https://homegrown.co.in/homegrown-explore/the-ultimate-durga-pujo-2025-guide-to-kolkata-best-pandals-street-food-festive-hangouts"
+     },
+     {
+      "title": "Curly Tales, Durga Puja 2025 unique pandals",
+      "url": "https://curlytales.com/india/experiences/durga-puja-unique-pandals-in-kolkata-with-themes-that-will-make-you-think/amp/"
+     }
+    ]
+   }
+  ],
   "sources": [
    {
-    "title": "Founding Fuel, 10 best pandals Kolkata 2025",
-    "url": "https://foundingfuel.com/article/the-10-best-durga-puja-pandals-from-kolkata-2025"
-   },
-   {
-    "title": "Homegrown, Durga Pujo 2025 Kolkata guide",
-    "url": "https://homegrown.co.in/homegrown-explore/the-ultimate-durga-pujo-2025-guide-to-kolkata-best-pandals-street-food-festive-hangouts"
-   },
-   {
-    "title": "Curly Tales, Durga Puja 2025 unique pandals",
-    "url": "https://curlytales.com/india/experiences/durga-puja-unique-pandals-in-kolkata-with-themes-that-will-make-you-think/amp/"
+    "title": "The Federal: Kolkata Durga Puja 2026 top 10 theme pandals (7 Oct 2026)",
+    "url": "https://thefederal.com/category/features/top-10-theme-pandals-kolkata-durga-puja-2026-258758"
    },
    {
     "title": "Wikipedia, Alipore",
     "url": "https://en.wikipedia.org/wiki/Alipore"
    }
   ],
-  "lastVerified": "2026-10-09"
+  "lastVerified": "2026-10-16"
  },
  {
   "id": "hatibagan-sarbojanin-durgotsav",
@@ -288,25 +302,43 @@
  {
   "id": "santosh-mitra-square",
   "name": "Santosh Mitra Square",
+  "name_bn": "সন্তোষ মিত্র স্কোয়্যার",
   "country": "IN",
   "city": "Kolkata",
   "area": "Bowbazar (Lebutala Park)",
+  "area_bn": "বউবাজার (লেবুতলা পার্ক)",
   "lat": 22.565877,
   "lng": 88.365564,
   "pin": "area",
   "coordSource": "https://en.wikipedia.org/wiki/Santosh_Mitra_Square",
-  "year": 2025,
+  "year": 2026,
   "status": "confirmed",
-  "theme": "Operation Sindoor",
-  "themeYear": 2025,
-  "description": "A large Sealdah-area puja running since 1936, known for elaborate yearly pandals; its 2025 theme was Operation Sindoor.",
+  "theme": "150 years of 'Vande Mataram'",
+  "themeYear": 2026,
+  "description": "A large Sealdah-area puja running since 1936, known for elaborate yearly pandals. Its 2026 theme marks 150 years of 'Vande Mataram', with the puja's first light-and-sound show; 2025's theme was Operation Sindoor.",
+  "history": [
+   {
+    "year": 2025,
+    "theme": "Operation Sindoor",
+    "sources": [
+     {
+      "title": "Wikipedia, Santosh Mitra Square",
+      "url": "https://en.wikipedia.org/wiki/Santosh_Mitra_Square"
+     }
+    ]
+   }
+  ],
   "sources": [
+   {
+    "title": "The Federal: Kolkata Durga Puja 2026 top 10 theme pandals (7 Oct 2026)",
+    "url": "https://thefederal.com/category/features/top-10-theme-pandals-kolkata-durga-puja-2026-258758"
+   },
    {
     "title": "Wikipedia, Santosh Mitra Square",
     "url": "https://en.wikipedia.org/wiki/Santosh_Mitra_Square"
    }
   ],
-  "lastVerified": "2026-10-09"
+  "lastVerified": "2026-10-16"
  },
  {
   "id": "barisha-club",
@@ -1479,9 +1511,11 @@
  {
   "id": "sreebhumi-sporting-club",
   "name": "Sreebhumi Sporting Club",
+  "name_bn": "শ্রীভূমি স্পোর্টিং ক্লাব",
   "country": "IN",
   "city": "Kolkata",
   "area": "Lake Town",
+  "area_bn": "লেক টাউন",
   "lat": 22.605,
   "lng": 88.405,
   "pin": "area",
@@ -1499,9 +1533,11 @@
  {
   "id": "ekdalia-evergreen",
   "name": "Ekdalia Evergreen Club",
+  "name_bn": "একডালিয়া এভারগ্রিন ক্লাব",
   "country": "IN",
   "city": "Kolkata",
   "area": "Ballygunge",
+  "area_bn": "বালিগঞ্জ",
   "lat": 22.529,
   "lng": 88.362,
   "pin": "area",
@@ -1519,9 +1555,11 @@
  {
   "id": "ballygunge-samaj-sebi-sangha",
   "name": "Ballygunge Samaj Sebi Sangha",
+  "name_bn": "বালিগঞ্জ সমাজ সেবী সংঘ",
   "country": "IN",
   "city": "Kolkata",
   "area": "Ballygunge",
+  "area_bn": "বালিগঞ্জ",
   "lat": 22.529,
   "lng": 88.362,
   "pin": "area",
@@ -1539,9 +1577,11 @@
  {
   "id": "kumartuli-park",
   "name": "Kumartuli Park Sarbojanin",
+  "name_bn": "কুমোরটুলি পার্ক সর্বজনীন",
   "country": "IN",
   "city": "Kolkata",
   "area": "Kumartuli",
+  "area_bn": "কুমোরটুলি",
   "lat": 22.6,
   "lng": 88.3614,
   "pin": "area",
@@ -1559,9 +1599,11 @@
  {
   "id": "jagat-mukherjee-park",
   "name": "Jagat Mukherjee Park",
+  "name_bn": "জগৎ মুখার্জি পার্ক",
   "country": "IN",
   "city": "Kolkata",
   "area": "Jatindra Mohan Avenue, Sovabazar",
+  "area_bn": "যতীন্দ্রমোহন অ্যাভিনিউ, শোভাবাজার",
   "lat": 22.6,
   "lng": 88.3614,
   "pin": "area",
@@ -1579,9 +1621,11 @@
  {
   "id": "shibmandir-sarbojanin",
   "name": "Shibmandir Sarbojanin Durgotsav",
+  "name_bn": "শিবমন্দির সর্বজনীন দুর্গোৎসব",
   "country": "IN",
   "city": "Kolkata",
   "area": "Near Rabindra Sarobar",
+  "area_bn": "রবীন্দ্র সরোবরের কাছে",
   "lat": 22.511,
   "lng": 88.36,
   "pin": "area",
@@ -1599,9 +1643,11 @@
  {
   "id": "chorebagan-sarbojanin",
   "name": "Chorebagan Sarbojanin",
+  "name_bn": "চোরবাগান সর্বজনীন",
   "country": "IN",
   "city": "Kolkata",
   "area": "North Kolkata",
+  "area_bn": "উত্তর কলকাতা",
   "year": 2026,
   "status": "confirmed",
   "theme": "Akal Bodhon",
@@ -1615,9 +1661,11 @@
  {
   "id": "chaltabagan-lohapatty",
   "name": "Chaltabagan Lohapatty Durga Puja",
+  "name_bn": "চালতাবাগান লোহাপট্টি দুর্গাপুজো",
   "country": "IN",
   "city": "Kolkata",
   "area": "Manicktala",
+  "area_bn": "মানিকতলা",
   "lat": 22.585,
   "lng": 88.375,
   "pin": "area",

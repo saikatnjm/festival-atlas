@@ -4,7 +4,7 @@ import { playStrings } from "@/components/play/strings";
 import PostcardMaker, { type PostcardPandal } from "@/components/postcard/PostcardMaker";
 import { getDict } from "@/data/i18n";
 import { fun } from "@/data/i18n/fun";
-import { cityName, pandals, placeLabel, sortPandals } from "@/data/pandals";
+import { areaOf, cityName, nameOf, pandals, placeLabel, sortPandals } from "@/data/pandals";
 import { LANGS, withLang, type Lang } from "@/lib/i18n";
 import JsonLd, { abs, breadcrumbs } from "@/lib/jsonld";
 import { langOf } from "@/lib/route";
@@ -22,14 +22,17 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
 /** The picker only needs names, places and pins, in both scripts for search. */
 function pickerItems(lang: Lang): PostcardPandal[] {
-  return sortPandals(pandals).map((p) => ({
-    id: p.id,
-    name: p.name,
-    place: p.area ? `${p.area} · ${cityName(p.city, lang)}` : placeLabel(p, lang),
-    lat: p.lat,
-    lng: p.lng,
-    search: [p.name, p.area, p.city, cityName(p.city, "bn")].filter(Boolean).join(" ").toLowerCase(),
-  }));
+  return sortPandals(pandals).map((p) => {
+    const area = areaOf(p, lang);
+    return {
+      id: p.id,
+      name: nameOf(p, lang),
+      place: area ? `${area} · ${cityName(p.city, lang)}` : placeLabel(p, lang),
+      lat: p.lat,
+      lng: p.lng,
+      search: [p.name, p.name_bn, p.area, p.area_bn, p.city, cityName(p.city, "bn")].filter(Boolean).join(" ").toLowerCase(),
+    };
+  });
 }
 
 /** Photo → postcard page: the visitor's pandal photo with name, map, tithi and brand, shared from the phone. */

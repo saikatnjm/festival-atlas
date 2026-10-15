@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BRAND } from "./brand";
-import { LANGS, OG_LOCALE, type Lang, withLang } from "./i18n";
+import { LANGS, ogLocale, type Lang, withLang } from "./i18n";
 
 /**
  * Public origin of the site, or undefined if none is configured. Resolved at build time in
@@ -33,9 +33,10 @@ export function languageAlternates(path: string): Record<string, string> {
 /**
  * Page metadata for one language of one page. `path` has no language prefix ("/puja", "/" for home).
  * Canonical, hreflang and og:url are only emitted when a site origin is configured, because a
- * relative canonical without a known origin would be wrong.
+ * relative canonical without a known origin would be wrong. `region: "wb"` switches og:locale to the
+ * Indian locales (bn_IN / en_IN); everything else uses bn_BD / en_US.
  */
-export function pageMeta(opts: { lang: Lang; title: string; description: string; path: string; absoluteTitle?: boolean }): Metadata {
+export function pageMeta(opts: { lang: Lang; title: string; description: string; path: string; absoluteTitle?: boolean; region?: "wb" | "bd" | null }): Metadata {
   const configured = Boolean(siteUrl());
   const self = withLang(opts.lang, opts.path);
   const other: Lang = opts.lang === "en" ? "bn" : "en";
@@ -48,8 +49,8 @@ export function pageMeta(opts: { lang: Lang; title: string; description: string;
       description: opts.description,
       siteName: BRAND.name,
       type: "website",
-      locale: OG_LOCALE[opts.lang],
-      alternateLocale: [OG_LOCALE[other]],
+      locale: ogLocale(opts.lang, opts.region),
+      alternateLocale: [ogLocale(other, opts.region)],
       url: configured ? self : undefined,
     },
     twitter: { card: "summary_large_image", title: opts.title, description: opts.description },

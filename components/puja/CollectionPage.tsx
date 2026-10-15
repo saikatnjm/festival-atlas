@@ -6,8 +6,9 @@ import StatusBadge from "@/components/puja/StatusBadge";
 import { getDict } from "@/data/i18n";
 import { events } from "@/data/events/events";
 import { regionInfo, ui as localUi } from "@/data/local/content";
-import { cityName, countryName, pandals, sortPandals, themeOf, type Pandal } from "@/data/pandals";
+import { areaOf, cityName, countryName, nameOf, pandals, sortPandals, themeOf, type Pandal } from "@/data/pandals";
 import { collections, getCollection } from "@/data/pandals/collections";
+import { collectionCounts } from "@/data/pandals/counts";
 import { fmt } from "@/lib/format";
 import { num, withLang, type Lang } from "@/lib/i18n";
 import JsonLd, { abs, breadcrumbs } from "@/lib/jsonld";
@@ -25,18 +26,27 @@ const T = {
   unknownArea: { bn: "অন্যান্য", en: "Other areas" },
   edition: { bn: "{year} সংস্করণ", en: "Edition {year}" },
   listed: { bn: "{n}টি তালিকায়, {m}টি ম্যাপে", en: "{n} listed, {m} on the map" },
+  split: { bn: "{city}-এ {n}টি · অন্যত্র {e}টি · ম্যাপে {m}টি", en: "{n} in {city} · {e} elsewhere · {m} on the map" },
 };
 
 export function collectionMetadata(lang: Lang, slug: string): Metadata {
   const c = getCollection(slug);
   if (!c) return {};
-  return pageMeta({ lang, title: c.title[lang], description: c.description[lang], path: `/puja/${c.slug}` });
+  return pageMeta({ lang, title: c.title[lang], description: c.description[lang], path: `/puja/${c.slug}`, region: c.region });
 }
 
+/** Grouping key: always the English area, so entries with and without a Bangla spelling land in one group. */
 function groupKey(p: Pandal, by: "area" | "city" | "country", lang: Lang): string {
   if (by === "country") return countryName(p.country, lang);
   if (by === "city") return cityName(p.city, lang);
   return p.area?.split(/[,(]/)[0].trim() || "";
+}
+
+/** Heading for an area group: the Bangla spelling of its first member that has one, else the key itself. */
+function groupLabel(key: string, items: Pandal[], by: "area" | "city" | "country", lang: Lang): string {
+  if (by !== "area" || lang !== "bn") return key;
+  const withBn = items.find((p) => p.area_bn);
+  return withBn ? (areaOf(withBn, lang)?.split(/[,(]/)[0].trim() ?? key) : key;
 }
 
 /** A static landing page for one slice of the directory: intro, sourced 2026 highlights, the list, FAQ. */
@@ -45,13 +55,23 @@ export default function CollectionPage({ lang, slug }: { lang: Lang; slug: strin
   if (!c) notFound();
   const t = getDict(lang);
   const list = sortPandals(pandals.filter(c.match));
-  const pinned = list.filter((p) => typeof p.lat === "number").length;
+  const counts = collectionCounts(c);
+  // With a primary city and area grouping, the rest of the region (Siliguri, Khardaha…) forms one trailing group.
+  const splitOthers = Boolean(c.primaryCity && c.othersLabel && c.groupBy !== "city");
   const groups = new Map<string, Pandal[]>();
+  const others: Pandal[] = [];
   for (const p of list) {
+    if (splitOthers && p.city !== c.primaryCity) {
+      others.push(p);
+      continue;
+    }
     const k = groupKey(p, c.groupBy, lang) || T.unknownArea[lang];
     groups.set(k, [...(groups.get(k) ?? []), p]);
   }
-  const grouped = [...groups.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+  const grouped: [string, Pandal[]][] = [...groups.entries()]
+    .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
+    .map(([key, items]) => [groupLabel(key, items, c.groupBy, lang), items]);
+  if (others.length && c.othersLabel) grouped.push([c.othersLabel[lang], others]);
   const regionEvents = c.region ? events.filter((e) => e.region === c.region) : [];
   const path = `/puja/${c.slug}`;
   const url = abs(withLang(lang, path));
@@ -81,7 +101,7 @@ export default function CollectionPage({ lang, slug }: { lang: Lang; slug: strin
               "@type": "ItemList",
               name: c.h1[lang],
               numberOfItems: list.length,
-              itemListElement: list.map((p, i) => ({ "@type": "ListItem", position: i + 1, name: p.name, url: abs(withLang(lang, `/puja/${p.id}`)) })),
+              itemListElement: list.map((p, i) => ({ "@type": "ListItem", position: i + 1, name: nameOf(p, lang), url: abs(withLang(lang, `/puja/${p.id}`)) })),
             },
             {
               "@context": "https://schema.org",
@@ -97,7 +117,11 @@ export default function CollectionPage({ lang, slug }: { lang: Lang; slug: strin
       <h1>{c.h1[lang]}</h1>
       <p className="lead">{c.lead[lang]}</p>
       <ul className="stat-row" aria-label={t.site.name}>
-        <li>{fmt(T.listed[lang], { n: list.length, m: pinned }, lang)}</li>
+        <li>
+          {c.primaryCity && counts.elsewhere > 0
+            ? fmt(T.split[lang], { city: cityName(c.primaryCity, lang), n: counts.primary, e: counts.elsewhere, m: counts.pinned }, lang)
+            : fmt(T.listed[lang], { n: counts.total, m: counts.pinned }, lang)}
+        </li>
         <li>{t.home.statSources}</li>
       </ul>
       <p className="cta-row">
@@ -138,8 +162,9 @@ export default function CollectionPage({ lang, slug }: { lang: Lang; slug: strin
                 const theme = themeOf(p, lang);
                 return (
                   <li key={p.id}>
-                    <Link href={withLang(lang, `/puja/${p.id}`)}>{p.name}</Link>
+                    <Link href={withLang(lang, `/puja/${p.id}`)}>{nameOf(p, lang)}</Link>
                     <span className="col-meta">
+                      {splitOthers && p.city !== c.primaryCity ? <span className="col-city">{cityName(p.city, lang)}</span> : null}
                       <StatusBadge status={p.status} label={t.puja.statusLabel[p.status]} />
                       {p.year ? <span className="year-badge">{fmt(T.edition[lang], { year: p.year }, lang)}</span> : null}
                       {theme ? <span className="col-theme">{p.themeYear ? fmt(t.puja.themeYear, { theme, year: p.themeYear }, lang) : theme}</span> : null}
