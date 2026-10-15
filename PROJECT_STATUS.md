@@ -1,6 +1,15 @@
 # Festival Atlas — Project Status
 
-## Community layer: results, leaderboard, activity feed (latest, 2026-10-15)
+## Near me, crowd heat layer, queue waits, anjali/bhog timings (latest, 2026-10-15)
+Ideas 1–4 from the engagement list. **Owner step: re-run `supabase/schema.sql` in the SQL Editor** (it widens `signals` checks for the `wait` kind, drops and recreates `live_board()` with `wait_n`/`wait_med`, and adds the `timings` table + `timings_today()`).
+- **Near me** (`components/live/useNearMe.ts`, `lib/geo.ts`): a "📍 কাছের পুজো" chip on the map/explorer asks the browser for location once; the position stays in memory (never stored or sent). Pinned pandals sort by distance with "৮০০ মি / 2.4 km" badges; a near-bar names the nearest pandal and offers "I'm here" only within 800 m. Positions outside the Kolkata/Dhaka box (lat 20–27, lng 86–93) show "no pins near you" instead of sorting nonsense.
+- **Heat layer** (`PujaMap` props `user`, `heat`, `userLabel`): soft green/orange/red circles from the live board's crowd level, radius grows with check-ins; a blue dot for the visitor. Pandal-level counts only, no positions stored.
+- **Queue wait** (`signals.kind = 'wait'`, value 1–4 ≈ 5/15/30/60+ min, hourly bucket per device): four chips on the pandal page; median over 90 min shown as "⏳ Queue: ~15 min" / "15–30 min" on the pandal page, list rows and the home board.
+- **Anjali/bhog timings** (`timings` table, one row per device/pandal/kind/Kolkata-day): `<input type="time">` + "জানাও"; `timings_today()` returns the most common 15-minute slot and count ("অঞ্জলি: সকাল ৯:০০ · ৩ জন জানিয়েছে").
+- Review fixes: wait line no longer hidden behind a crowd report; `wait_med` typed `double precision` (what `percentile_cont` returns; `numeric` would fail the SQL-function return check); `minutes` must be a JSON number; distance rounding never prints "1000 m"/"10.0 km".
+- Not run here; CI runs it. Tests: `waitLabel`, `fmtClock`, `kolkataDay`, `distanceM`, `fmtDistance`, `inServiceArea`. Next candidates (owner to pick): theme quiz, squad live map, meeting-point card, Puja Wrapped, diaspora pins, dhak game, photo wall, push notifications.
+
+## Community layer: results, leaderboard, activity feed (2026-10-15)
 Supabase `plays` table (`supabase/schema.sql`, second section; re-run the whole file, it is idempotent) + `lib/community*.ts` + `/api/community` (GET edge-cached 60 s; POST validated: real game, real result id, passport score ≤ directory size, nickname cleaned to 24 chars) + `components/community/*`:
 - **Quiz result stats**: a player's own result is recorded anonymously (device id + result id, once per session) and the card shows "তোমার মতো {title} হয়েছে আরও ১২ জন (৩৪%)". Hidden without a database.
 - **Passport leaderboard** (`/passport`): opt-in "🏆 লিডারবোর্ডে আমার নাম তোলো" with a nickname (prefilled from the profile, editable); score = pandals ticked; best score per device; top 20 with 🥇🥈🥉; "update my score" after more ticks.

@@ -10,9 +10,9 @@
 create table if not exists public.signals (
   device     text        not null,
   pandal_id  text        not null,
-  kind       text        not null check (kind in ('crowd', 'here', 'love')),
-  -- crowd: 1 = quiet, 2 = busy, 3 = packed. here/love: always 1.
-  value      smallint    not null default 1 check (value between 1 and 3),
+  kind       text        not null check (kind in ('crowd', 'here', 'love', 'wait')),
+  -- crowd: 1 = quiet, 2 = busy, 3 = packed. wait (queue): 1 ≈ 5 min, 2 ≈ 15, 3 ≈ 30, 4 = 60+. here/love: 1.
+  value      smallint    not null default 1 check (value between 1 and 4),
   -- One row per device + pandal + kind + bucket. The site sends the bucket: the current hour
   -- for crowd/here (reports expire), the Kolkata calendar day for love (one vote a day).
   bucket     text        not null,
@@ -24,6 +24,12 @@ create table if not exists public.signals (
 );
 
 create index if not exists signals_recent on public.signals (created_at desc);
+
+-- Existing installs: widen the checks to allow queue-wait reports (no-ops on a fresh install).
+alter table public.signals drop constraint if exists signals_kind_check;
+alter table public.signals add constraint signals_kind_check check (kind in ('crowd', 'here', 'love', 'wait'));
+alter table public.signals drop constraint if exists signals_value_check;
+alter table public.signals add constraint signals_value_check check (value between 1 and 4);
 
 alter table public.signals enable row level security;
 
@@ -41,13 +47,16 @@ create policy "anon can report" on public.signals
 -- No UPDATE/DELETE/SELECT policies for anon: a browser can add a report, never change or read raw
 -- rows. A second report in the same bucket is ignored (first one wins). Reads go through live_board().
 
+drop function if exists public.live_board();
 create or replace function public.live_board()
 returns table (
   pandal_id    text,
   crowd_n      integer,   -- crowd reports in the last 60 minutes
   crowd_avg    numeric,   -- their average level (1 quiet … 3 packed)
   here_n       integer,   -- check-ins in the last 45 minutes
-  love_today   integer    -- love votes today (Kolkata day)
+  love_today   integer,   -- love votes today (Kolkata day)
+  wait_n       integer,   -- queue-wait reports in the last 90 minutes
+  wait_med     double precision -- their median bucket (1 ≈ 5 min, 2 ≈ 15, 3 ≈ 30, 4 = 60+); percentile_cont's own type
 )
 language sql
 security definer
@@ -59,11 +68,50 @@ as $$
     count(*) filter (where s.kind = 'crowd' and s.created_at > now() - interval '60 minutes')::int,
     round(avg(s.value) filter (where s.kind = 'crowd' and s.created_at > now() - interval '60 minutes'), 2),
     count(*) filter (where s.kind = 'here'  and s.created_at > now() - interval '45 minutes')::int,
-    count(*) filter (where s.kind = 'love'  and s.bucket = to_char(now() at time zone 'Asia/Kolkata', 'YYYY-MM-DD'))::int
+    count(*) filter (where s.kind = 'love'  and s.bucket = to_char(now() at time zone 'Asia/Kolkata', 'YYYY-MM-DD'))::int,
+    count(*) filter (where s.kind = 'wait'  and s.created_at > now() - interval '90 minutes')::int,
+    percentile_cont(0.5) within group (order by s.value) filter (where s.kind = 'wait' and s.created_at > now() - interval '90 minutes')
   from public.signals s
   where s.created_at > now() - interval '36 hours'
   group by s.pandal_id
 $$;
+
+-- ---------------------------------------------------------------------------------------------
+-- Timings: "অঞ্জলি কটায়? ভোগ কটায়?" reported by visitors, one per device/pandal/kind/day.
+-- ---------------------------------------------------------------------------------------------
+
+create table if not exists public.timings (
+  device     text        not null check (char_length(device) between 16 and 64),
+  pandal_id  text        not null check (pandal_id ~ '^[a-z0-9-]{3,80}$'),
+  kind       text        not null check (kind in ('anjali', 'bhog')),
+  minutes    smallint    not null check (minutes between 0 and 1439),   -- minutes after midnight
+  day        text        not null check (day ~ '^\d{4}-\d{2}-\d{2}$'),  -- Kolkata calendar day
+  created_at timestamptz not null default now(),
+  primary key (device, pandal_id, kind, day)
+);
+
+alter table public.timings enable row level security;
+revoke all on public.timings from anon, authenticated;
+grant insert (device, pandal_id, kind, minutes, day) on public.timings to anon;
+
+drop policy if exists "anon can report a timing" on public.timings;
+create policy "anon can report a timing" on public.timings
+  for insert to anon with check (true);
+
+-- Today's most-reported time per pandal and kind, rounded to 15 minutes, with the number of reports.
+create or replace function public.timings_today()
+returns table (pandal_id text, kind text, minutes integer, n integer)
+language sql security definer set search_path = public stable as $$
+  select t.pandal_id, t.kind,
+         (mode() within group (order by (t.minutes / 15) * 15))::int,
+         count(*)::int
+  from public.timings t
+  where t.day = to_char(now() at time zone 'Asia/Kolkata', 'YYYY-MM-DD')
+  group by t.pandal_id, t.kind
+$$;
+
+revoke all on function public.timings_today() from public;
+grant execute on function public.timings_today() to anon, authenticated;
 
 revoke all on function public.live_board() from public;
 grant execute on function public.live_board() to anon, authenticated;

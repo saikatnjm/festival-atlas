@@ -12,7 +12,8 @@ import { pujaPhase, inPujaMode, PUJA_2026, PUJA_MODE_WINDOW } from "../lib/puja-
 import { autoTheme, THEME_BOOT_SCRIPT } from "../lib/theme.ts";
 import { collections, getCollection } from "../data/pandals/collections.ts";
 import { toVisits, toggleVisit, visitsFromQuery, visitsToQuery, VISITS_MAX } from "../lib/visits.ts";
-import { bucketFor, crowdLevel, isDevice, isPandalId, rankBoard } from "../lib/live-shared.ts";
+import { bucketFor, crowdLevel, isDevice, isPandalId, rankBoard, waitLabel, fmtClock, kolkataDay } from "../lib/live-shared.ts";
+import { distanceM, fmtDistance, inServiceArea } from "../lib/geo.ts";
 import { GREETINGS, getGreeting, greetingForPhase } from "../data/play/greetings.ts";
 import { cleanNick, resultShare, isGame, NICK_MAX } from "../lib/community-shared.ts";
 import { fmtDate, fmtDateWithDay } from "../lib/dates.ts";
@@ -240,6 +241,27 @@ test("greeting cards: every day bilingual with lines, and today's pick follows t
   assert.equal(greetingForPhase(pujaPhase(new Date("2026-10-22T06:00:00Z"), "wb")), "bijoya");
   assert.equal(greetingForPhase(pujaPhase(new Date("2026-11-05T06:00:00Z"), "wb")), "anytime");
   assert.equal(greetingForPhase(pujaPhase(new Date("2026-10-12T06:00:00Z"), "wb")), "anytime");
+});
+
+test("queue waits, clock times, Kolkata day and distances", () => {
+  assert.equal(waitLabel(null), null);
+  assert.equal(waitLabel(1), "~5");
+  assert.equal(waitLabel(2.5), "15–30");
+  assert.equal(waitLabel(4), "60+");
+  assert.equal(fmtClock(540, "en"), "9:00 am");
+  assert.equal(fmtClock(0, "en"), "12:00 am");
+  assert.equal(fmtClock(765, "en"), "12:45 pm");
+  assert.equal(fmtClock(540, "bn"), "সকাল ৯:০০");
+  assert.equal(fmtClock(1125, "bn"), "সন্ধে ৬:৪৫");
+  assert.equal(kolkataDay(new Date("2026-10-18T20:00:00Z")), "2026-10-19");
+  // Sreebhumi (Lake Town) to Santosh Mitra Square (Sealdah): roughly 6 km.
+  const d = distanceM({ lat: 22.605, lng: 88.405 }, { lat: 22.565877, lng: 88.365564 });
+  assert.ok(d > 5000 && d < 7000, `distance ${d}`);
+  assert.equal(fmtDistance(60, "en"), "100 m");
+  assert.equal(fmtDistance(840, "bn"), "৮০০ মি");
+  assert.equal(fmtDistance(2440, "en"), "2.4 km");
+  assert.equal(fmtDistance(12400, "en"), "12 km");
+  assert.ok(inServiceArea({ lat: 22.57, lng: 88.36 }) && inServiceArea({ lat: 23.72, lng: 90.39 }) && !inServiceArea({ lat: 51.5, lng: -0.1 }));
 });
 
 test("community helpers: nickname cleaning and result share", () => {

@@ -12,8 +12,16 @@ import { applyFilters, filtersFromSearch, hasFilters, NO_FILTERS, searchFromFilt
 import StatusBadge from "./StatusBadge";
 import LiveBadge from "@/components/live/LiveBadge";
 import { useLive } from "@/components/live/useLive";
+import { useNearMe } from "@/components/live/useNearMe";
+import { fun } from "@/data/i18n/fun";
+import { distanceM, fmtDistance, inServiceArea } from "@/lib/geo";
+import { crowdLevel } from "@/lib/live-shared";
+import type { Heat } from "./PujaMap";
 
 /** One-tap city picks shown above the filters; "All" clears them. */
+/** Radius for the near-me "I'm here" check-in; pins are area-level, so this is generous. */
+const HERE_RADIUS_M = 800;
+
 const QUICK = [
   { city: "Kolkata", bn: "কলকাতা", icon: "🥁" },
   { city: "Dhaka", bn: "ঢাকা", icon: "🛕" },
@@ -71,8 +79,33 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
     window.history.replaceState(null, "", `${window.location.pathname}${searchFromFilters(filters)}${hash}`);
   }, [ready, filters, selectedId]);
 
-  const visible = useMemo(() => applyFilters(items, filters), [items, filters]);
+  const near = useNearMe();
+  const me = near.pos && inServiceArea(near.pos) ? near.pos : null;
+  const [nearMsg, setNearMsg] = useState("");
+  const visible = useMemo(() => {
+    const list = applyFilters(items, filters);
+    if (!me) return list;
+    // Near me: pinned pandals by distance, then the rest (list-only entries) in their usual order.
+    const d = (p: PandalItem) => (isPin(p) ? distanceM(me, p) : Infinity);
+    return [...list].sort((a, b) => d(a) - d(b));
+  }, [items, filters, me]);
   const pins = useMemo(() => visible.filter(isPin), [visible]);
+  const distanceOf = (p: PandalItem): string | null => (me && isPin(p) ? fmtDistance(distanceM(me, p), lang) : null);
+  // Heat layer for the map from the live board.
+  const heat = useMemo(() => {
+    const out: Record<string, Heat> = {};
+    for (const [id, s] of Object.entries(live.board)) out[id] = { level: crowdLevel(s.crowd_avg), here: s.here_n };
+    return out;
+  }, [live.board]);
+  const nearest = me ? pins[0] : undefined;
+  // "I'm here" only when the nearest pin is actually close; pins are area-level, so allow a generous radius.
+  const canCheckIn = !!me && !!nearest && distanceM(me, nearest) <= HERE_RADIUS_M;
+
+  const onHereNearest = async () => {
+    if (!nearest || !canCheckIn) return;
+    const outcome = await live.send(nearest.id, "here");
+    setNearMsg(outcome === "ok" ? fun.live.thanks[lang] : outcome === "already" ? fun.live.already[lang] : fun.live.failed[lang]);
+  };
   const selected = selectedId ? (items.find((i) => i.id === selectedId) ?? null) : null;
 
   const set = (k: keyof Filters) => (e: { target: { value: string } }) => setFilters((f) => ({ ...f, [k]: e.target.value }));
@@ -100,7 +133,31 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
             </button>
           );
         })}
+        <button
+          type="button"
+          className="chip chip-near"
+          aria-pressed={near.state === "on"}
+          disabled={near.state === "asking"}
+          onClick={() => (near.state === "on" ? near.off() : near.ask())}
+        >
+          {near.state === "asking" ? fun.near.asking[lang] : near.state === "on" ? fun.near.on[lang] : fun.near.chip[lang]}
+        </button>
       </div>
+      {near.state === "denied" || near.state === "unsupported" ? <p className="fineprint">{fun.near.denied[lang]}</p> : null}
+      {near.state === "on" && !me ? <p className="fineprint">{fun.near.far[lang]}</p> : null}
+      {me && nearest ? (
+        <p className="near-bar" role="status">
+          <span>
+            {fun.near.nearest[lang]} <b>{nearest.name}</b> · {distanceOf(nearest)}
+          </span>
+          {canCheckIn ? (
+            <button type="button" className="button button-light" onClick={onHereNearest}>
+              {fun.live.here[lang]}
+            </button>
+          ) : null}
+          {nearMsg ? <span className="fineprint">{nearMsg}</span> : null}
+        </p>
+      ) : null}
       <form className="filters" role="search" onSubmit={(e) => e.preventDefault()}>
         <label className="field field-wide">
           <span>{t.search}</span>
@@ -211,6 +268,7 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
                   <p className="entry-meta">
                     {p.place}
                     {p.area ? ` · ${p.area}` : ""}
+                    {distanceOf(p) ? <span className="entry-dist"> · 📍 {distanceOf(p)}</span> : null}
                   </p>
                   <p className="entry-badges">
                     <StatusBadge status={p.status} label={t.statusLabel[p.status]} />
@@ -236,7 +294,7 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
         </div>
 
         <div className="explorer-map" data-active={view === "map"}>
-          <PujaMap pins={pins} selectedId={selectedId} onSelect={onSelect} label={t.mapAria} loading={t.mapLoading} />
+          <PujaMap pins={pins} selectedId={selectedId} onSelect={onSelect} label={t.mapAria} loading={t.mapLoading} user={me} heat={heat} userLabel={fun.near.you[lang]} />
           {selected && (
             <div className="map-panel" role="region" aria-label={`${t.selected}: ${selected.name}`}>
               <button type="button" className="close" onClick={() => setSelectedId(null)} aria-label={t.close}>
