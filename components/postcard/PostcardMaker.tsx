@@ -5,7 +5,7 @@ import { deviceId } from "@/components/live/useLive";
 import { useNearMe } from "@/components/live/useNearMe";
 import type { PlayStrings } from "@/components/play/strings";
 import { fun } from "@/data/i18n/fun";
-import { GREETINGS, getGreeting, greetingForPhase } from "@/data/play/greetings";
+import { GREETINGS, anotherLine, getGreeting, greetingForPhase, linesFor, type GreetingDay } from "@/data/play/greetings";
 import { fill } from "@/data/play/personal";
 import { logActivity } from "@/lib/activity";
 import { track } from "@/lib/analytics";
@@ -17,6 +17,7 @@ import { POSTCARD_EXT, POSTCARD_THEMES, POSTCARD_TYPE, loadPhoto, releasePhoto, 
 import { PLACE_NAME_MAX } from "@/lib/places-shared";
 import { NAME_MAX, cleanName } from "@/lib/profile";
 import { localDate, pujaPhase } from "@/lib/puja-dates";
+import { guessRegion, type Region } from "@/lib/region";
 import { CARD_FORMATS, canShareImage, copyText, downloadBlob, shareImage, shareLink, type CardFormat } from "@/lib/share";
 import { useHost } from "@/lib/use-host";
 import { useProfile } from "@/lib/use-profile";
@@ -42,13 +43,16 @@ const CUSTOM_ID = "custom";
 const CITY_GUESS_M = 60_000;
 
 type Source = "exif" | "near" | "pick";
-type Region = "wb" | "bd";
+type Fit = "auto" | "cover" | "contain";
 
 /** A photo's GPS fix or the phone's position must be within this of a pin to pick it automatically. */
 const MATCH_M = 1500;
 const TAGS = "#PujoGuide #DurgaPuja2026 #PandalHopping";
 const PLACEHOLDER_DATE = new Date("2026-10-01T00:00:00Z");
-const isRegion = (v: unknown): v is Region => v === "wb" || v === "bd";
+/** Width ÷ height of each card format, to pick the one closest to the photo's shape. */
+const FORMAT_RATIO: Record<CardFormat, number> = { story: 1080 / 1920, portrait: 1080 / 1350, square: 1 };
+/** How many caption chips show at once; "shuffle" rotates through the rest. */
+const CAPTION_WINDOW = 4;
 
 function nearestPin(items: readonly PostcardPandal[], p: LatLng, within = MATCH_M): PostcardPandal | null {
   let best: PostcardPandal | null = null;
@@ -86,10 +90,14 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
   const [addToMap, setAddToMap] = useState(true);
   const [q, setQ] = useState("");
   const [region, setRegion] = useState<Region>("wb");
+  const [dayId, setDayId] = useState<GreetingDay | null>(null); // a day picked by hand; null = today's
   const [line, setLine] = useState(0);
+  const [captionFrom, setCaptionFrom] = useState(0); // first chip of the visible caption window
   const [custom, setCustom] = useState("");
   const [name, setName] = useState("");
   const [format, setFormat] = useState<CardFormat>("story");
+  const [formatTouched, setFormatTouched] = useState(false);
+  const [fit, setFit] = useState<Fit>("auto");
   const [themeId, setThemeId] = useState(POSTCARD_THEMES[0].id);
   const [blob, setBlob] = useState<Blob | null>(null);
   const [preview, setPreview] = useState("");
@@ -102,9 +110,8 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
   // Saved region, a pandal handed over from its page (?p=), and whether files can be shared: once.
   useEffect(() => {
     setNow(new Date());
+    setRegion(guessRegion()); // saved choice, else the phone's time zone (Asia/Dhaka → Bangladesh)
     try {
-      const r = window.localStorage.getItem("fa:region");
-      if (isRegion(r)) setRegion(r);
       // Start from the site palette the visitor picked (classic → marigold), or their last postcard colour.
       const saved = window.localStorage.getItem("fa:postcard:theme");
       const site = window.localStorage.getItem("fa:theme");
@@ -143,12 +150,23 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
     return () => URL.revokeObjectURL(url);
   }, [blob]);
 
-  // Until mounted, a fixed date keeps server and client markup identical.
+  // Until mounted, a fixed date keeps server and client markup identical. A hand-picked day wins over today's.
   const phase = useMemo(() => pujaPhase(now ?? PLACEHOLDER_DATE, region), [now, region]);
-  const g = getGreeting(greetingForPhase(phase)) ?? GREETINGS[GREETINGS.length - 1];
-  const stamp = phase.kind === "during" ? phase.day[lang] : g.id === "anytime" ? P.season[lang] : g.name[lang];
-  const captions = g.lines.map((l) => l[lang]);
+  const g = getGreeting(dayId ?? greetingForPhase(phase)) ?? GREETINGS[GREETINGS.length - 1];
+  const stamp = g.id === "anytime" ? P.season[lang] : g.name[lang];
+  const captions = useMemo(() => linesFor(g).map((l) => l[lang]), [g, lang]);
   const caption = custom.trim() ? custom.trim().slice(0, 80) : captions[line % captions.length];
+  // The visible caption chips: a window that starts at `captionFrom` and always includes the chosen line.
+  const captionChips = useMemo(() => {
+    const idx: number[] = [];
+    for (let i = 0; i < Math.min(CAPTION_WINDOW, captions.length); i++) idx.push((captionFrom + i) % captions.length);
+    const chosen = line % captions.length;
+    if (!custom.trim() && !idx.includes(chosen)) idx[0] = chosen;
+    return idx;
+  }, [captions, captionFrom, line, custom]);
+  // Fill the frame when the photo's shape is close to the format's; otherwise show the whole photo.
+  const photoRatio = photo ? (photo.naturalWidth || 1) / (photo.naturalHeight || 1) : null;
+  const effectiveFit: "cover" | "contain" = fit !== "auto" ? fit : photoRatio && Math.abs(photoRatio - FORMAT_RATIO[format]) / FORMAT_RATIO[format] > 0.12 ? "contain" : "cover";
   // A typed name wins over the list. Its pin: the photo's GPS first, else the phone's position, else none.
   const typed = customName.replace(/\s+/g, " ").trim().slice(0, PLACE_NAME_MAX);
   const customPos = photoGps ?? near.pos ?? null;
@@ -179,6 +197,7 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
     if (!file) return;
     setMsg("");
     setBlob(null);
+    setFit("auto"); // a new photo decides its own fit again
     try {
       // EXIF sits at the start of a JPEG; a quarter megabyte is plenty.
       const gps = readExifGps(await file.slice(0, 256 * 1024).arrayBuffer());
@@ -187,6 +206,12 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
         releasePhoto(old);
         return img;
       });
+      // Unless the visitor picked a format, use the one closest to the photo's shape (3:4 → portrait, tall → story).
+      if (!formatTouched && img.naturalWidth && img.naturalHeight) {
+        const r = img.naturalWidth / img.naturalHeight;
+        const best = (Object.keys(FORMAT_RATIO) as CardFormat[]).reduce((a, b) => (Math.abs(FORMAT_RATIO[b] - r) < Math.abs(FORMAT_RATIO[a] - r) ? b : a));
+        setFormat(best);
+      }
       setPhotoGps(gps && inServiceArea(gps) ? gps : null);
       if (gps && inServiceArea(gps)) {
         const hit = nearestPin(items, gps);
@@ -262,6 +287,7 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
         format,
         attribution: P.attribution,
         theme: themeById(themeId),
+        fit: effectiveFit,
       });
       setBlob(out);
       setMsg(ticked ? fill(P.ticked[lang], { name: pandal.name }) : "");
@@ -272,7 +298,7 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
       } else {
         logActivity({ kind: "postcard", id: pandal.id, label: stamp });
       }
-      track("postcard", { pandal: pandal.id, format, theme: themeId, source: isCustom ? "typed" : (source ?? "pick") });
+      track("postcard", { pandal: pandal.id, format, fit: effectiveFit, day: g.id, theme: themeId, source: isCustom ? "typed" : (source ?? "pick") });
     } catch {
       setMsg(s.share.imageFailed);
     }
@@ -386,10 +412,28 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
         <h2 id="pc-caption" className="cx-h2">
           {P.captionLabel[lang]} · {g.icon} {stamp}
         </h2>
-        <div className="cx-chips">
-          {captions.map((c, i) => (
+        {/* Day chips: today's tithi is picked for the saved region; pick another when your para runs a day apart. */}
+        <div className="cx-chips" role="group" aria-label={fun.greet.pickDay[lang]}>
+          {GREETINGS.map((x) => (
             <button
-              key={c}
+              key={x.id}
+              type="button"
+              className="cx-chip"
+              aria-pressed={g.id === x.id}
+              onClick={() => {
+                setDayId(x.id);
+                setLine(0);
+                setCaptionFrom(0);
+              }}
+            >
+              {x.icon} {x.name[lang]}
+            </button>
+          ))}
+        </div>
+        <div className="cx-chips">
+          {captionChips.map((i) => (
+            <button
+              key={i}
               type="button"
               className="cx-chip"
               aria-pressed={!custom.trim() && i === line % captions.length}
@@ -398,9 +442,21 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
                 setCustom("");
               }}
             >
-              {c}
+              {captions[i]}
             </button>
           ))}
+          <button
+            type="button"
+            className="cx-chip"
+            onClick={() => {
+              // Rotate the window and land on a random line that isn't the current one.
+              setCaptionFrom((f) => (f + CAPTION_WINDOW) % captions.length);
+              setLine((n) => anotherLine(captions.length, n % captions.length));
+              setCustom("");
+            }}
+          >
+            {fun.greet.anotherLine[lang]}
+          </button>
         </div>
         <div className="greet-fields">
           <label className="cx-field">
@@ -414,10 +470,27 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
         </div>
         <div className="cx-chips" role="group" aria-label={P.formatLabel[lang]}>
           {CARD_FORMATS.map((f) => (
-            <button key={f} type="button" className="cx-chip" aria-pressed={format === f} onClick={() => setFormat(f)}>
+            <button
+              key={f}
+              type="button"
+              className="cx-chip"
+              aria-pressed={format === f}
+              onClick={() => {
+                setFormat(f);
+                setFormatTouched(true);
+              }}
+            >
               {fun.card[f][lang]}
             </button>
           ))}
+        </div>
+        <div className="cx-chips" role="group" aria-label={P.fitLabel[lang]}>
+          <button type="button" className="cx-chip" aria-pressed={effectiveFit === "contain"} onClick={() => setFit("contain")}>
+            {P.fitWhole[lang]}
+          </button>
+          <button type="button" className="cx-chip" aria-pressed={effectiveFit === "cover"} onClick={() => setFit("cover")}>
+            {P.fitFill[lang]}
+          </button>
         </div>
         <div className="cx-chips" role="group" aria-label={P.themeLabel[lang]}>
           {POSTCARD_THEMES.map((th) => (

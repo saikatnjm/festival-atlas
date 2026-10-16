@@ -6,6 +6,7 @@ import { fill } from "@/data/play/personal";
 import { num, type Lang } from "@/lib/i18n";
 import { cleanName } from "@/lib/profile";
 import { pujaPhase, type PujaPhase } from "@/lib/puja-dates";
+import { guessRegion } from "@/lib/region";
 import { useProfile } from "@/lib/use-profile";
 
 const T = {
@@ -19,22 +20,14 @@ const T = {
   region: { wb: { bn: "কলকাতা", en: "Kolkata" }, bd: { bn: "বাংলাদেশ", en: "Bangladesh" } },
 };
 
-const isRegion = (v: unknown): v is Region => v === "wb" || v === "bd";
-
-/** Live countdown pill: days to Shashthi, today's Puja day, or Bijoya. Region follows the Local page choice. */
+/** Live countdown pill: days to Shashthi, today's Puja day, or Bijoya. Region: the Local page choice, else the phone's time zone. */
 export default function Countdown({ lang }: { lang: Lang }) {
   const [state, setState] = useState<{ phase: PujaPhase; region: Region } | null>(null);
   const { profile } = useProfile();
   const name = cleanName(profile.name);
 
   useEffect(() => {
-    let region: Region = "wb";
-    try {
-      const saved = localStorage.getItem("fa:region");
-      if (isRegion(saved)) region = saved;
-    } catch {
-      // ignore
-    }
+    const region: Region = guessRegion();
     const tick = () => setState({ phase: pujaPhase(new Date(), region), region });
     tick();
     const id = window.setInterval(tick, 60 * 60 * 1000);

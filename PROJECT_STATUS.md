@@ -2,6 +2,12 @@
 
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 
+## Greeting variety, whole-photo postcards, region by time zone (2026-10-16, evening)
+- **Greeting lines**: 8–10 per day (82 total) + `COMMON_LINES` (12 pandal-hopping lines) appended via `linesFor(g)`; "🎲 Another line" is now `anotherLine()` (random, never the current one). Share-link `l` indexes stay stable (own lines first, pool after). Postcard captions show 4 chips + the same shuffle button.
+- **Whole photo**: `renderPostcard({ fit })`: "contain" draws the full photo framed (rounded, cream border) between the brand line and a reserved `textZone`, over a blurred copy of itself (tiny-canvas upscale, works on old iOS). Auto when the photo's shape is >12% off the format; "🖼️ Whole photo / ⤢ Fill the frame" chips override. The format itself defaults to the one closest to the photo's shape until the visitor picks one.
+- **Region**: `lib/region.ts` `guessRegion()` = saved choice → phone time zone (Asia/Dhaka → bd, Asia/Kolkata → wb) → wb; used by the postcard, greeting maker, countdown and `/me`. The postcard got the greetings page's day chips (pick ষষ্ঠী/সপ্তমী by hand); the stamp follows the chosen day.
+- Tests: line counts/lengths/uniqueness, `anotherLine`, `regionFromTimeZone`.
+
 ## Postcard for unlisted pandals (2026-10-16, after the SEO batch)
 - `/postcard`: "✏️ Not in the list? Write it" opens one field (the name). The pin comes from the photo's GPS, else "my location", else none (card without the map inset; `renderPostcard` now skips the inset and widens the text when `pin` is null). City/country are guessed from the nearest listed pin within 60 km (else the region's main city) — nothing else is asked. A checkbox (on by default, shown only when there is a pin) sends name + pin to the `places` queue with note "via postcard" for approval on `/admin`; once per name per session. Typed cards don't tick the passport; they log to `/me` as "📸 name · tithi"; share link points at `/postcard`. "Use the pandal near me" with nothing listed nearby now opens the name field instead of dead-ending.
 

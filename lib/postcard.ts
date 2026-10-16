@@ -24,6 +24,8 @@ export interface PostcardInput {
   /** Drawn under the map inset when real tiles were used. */
   attribution: string;
   theme?: PostcardTheme;
+  /** "cover" fills the frame (crops); "contain" shows the whole photo in a frame over a blurred copy of itself. */
+  fit?: "cover" | "contain";
 }
 
 export const POSTCARD_TYPE = "image/jpeg";
@@ -62,12 +64,14 @@ interface Layout {
   name: number; // pandal name font size
   caption: number;
   stamp: number; // postmark radius
+  /** Height kept for the text block (and inset) at the bottom when the whole photo is framed above it. */
+  textZone: number;
 }
 
 const LAYOUT: Record<CardFormat, Layout> = {
-  portrait: { safeTop: 0, safeBottom: 0, inset: 250, name: 66, caption: 36, stamp: 84 },
-  square: { safeTop: 0, safeBottom: 0, inset: 210, name: 56, caption: 32, stamp: 74 },
-  story: { safeTop: 150, safeBottom: 170, inset: 280, name: 74, caption: 40, stamp: 92 },
+  portrait: { safeTop: 0, safeBottom: 0, inset: 250, name: 66, caption: 36, stamp: 84, textZone: 500 },
+  square: { safeTop: 0, safeBottom: 0, inset: 210, name: 56, caption: 32, stamp: 74, textZone: 450 },
+  story: { safeTop: 150, safeBottom: 170, inset: 280, name: 74, caption: 40, stamp: 92, textZone: 520 },
 };
 
 const display = (s: number) => `800 ${s}px ${DISPLAY}`;
@@ -82,6 +86,46 @@ function drawCover(ctx: CanvasRenderingContext2D, img: HTMLImageElement, w: numb
   const dw = iw * s;
   const dh = ih * s;
   ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+}
+
+/**
+ * A soft, blurred copy of the photo filling the frame: drawn tiny, then scaled back up with smoothing.
+ * Works everywhere (no canvas `filter`, which older iOS lacks).
+ */
+function drawBlurredCover(ctx: CanvasRenderingContext2D, img: HTMLImageElement, w: number, h: number) {
+  const small = document.createElement("canvas");
+  small.width = Math.max(8, Math.round(w / 16));
+  small.height = Math.max(8, Math.round(h / 16));
+  const sctx = small.getContext("2d");
+  if (!sctx) return drawCover(ctx, img, w, h);
+  sctx.imageSmoothingEnabled = true;
+  drawCover(sctx, img, small.width, small.height);
+  ctx.save();
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(small, 0, 0, w, h);
+  ctx.restore();
+}
+
+/** The whole photo, as large as fits inside the box, centred, with rounded corners and a light frame. */
+function drawFramed(ctx: CanvasRenderingContext2D, img: HTMLImageElement, box: { x: number; y: number; w: number; h: number }, border: string) {
+  const iw = img.naturalWidth || img.width;
+  const ih = img.naturalHeight || img.height;
+  if (!iw || !ih) return;
+  const s = Math.min(box.w / iw, box.h / ih);
+  const dw = Math.round(iw * s);
+  const dh = Math.round(ih * s);
+  const dx = Math.round(box.x + (box.w - dw) / 2);
+  const dy = Math.round(box.y + (box.h - dh) / 2);
+  ctx.save();
+  roundedRect(ctx, dx, dy, dw, dh, 24);
+  ctx.clip();
+  ctx.drawImage(img, dx, dy, dw, dh);
+  ctx.restore();
+  roundedRect(ctx, dx, dy, dw, dh, 24);
+  ctx.strokeStyle = border;
+  ctx.lineWidth = 6;
+  ctx.stroke();
 }
 
 function loadTile(z: number, x: number, y: number): Promise<HTMLImageElement> {
@@ -191,10 +235,17 @@ export async function renderPostcard(input: PostcardInput): Promise<Blob> {
   const brandName = input.lang === "bn" ? "পুজো গাইড" : BRAND.name;
   await loadFonts([input.name, input.place, input.stamp, input.date, input.caption ?? "", input.byline ?? "", input.host, brandName, input.attribution, "0123456789"].join(" "));
 
-  // Photo, then soft dark bands so the text reads on any picture.
+  // Photo (filling the frame, or a blurred copy as the backdrop), then soft dark bands so the text reads anywhere.
+  const contain = input.fit === "contain";
   ctx.fillStyle = INK;
   ctx.fillRect(0, 0, W, H);
-  drawCover(ctx, input.photo, W, H);
+  if (contain) {
+    drawBlurredCover(ctx, input.photo, W, H);
+    ctx.fillStyle = `rgba(${T.band},0.45)`;
+    ctx.fillRect(0, 0, W, H);
+  } else {
+    drawCover(ctx, input.photo, W, H);
+  }
   const topBand = ctx.createLinearGradient(0, L.safeTop, 0, L.safeTop + 300);
   topBand.addColorStop(0, `rgba(${T.band},0.62)`);
   topBand.addColorStop(1, `rgba(${T.band},0)`);
@@ -209,6 +260,12 @@ export async function renderPostcard(input: PostcardInput): Promise<Blob> {
   if (L.safeBottom) {
     ctx.fillStyle = `rgba(${T.band},0.9)`;
     ctx.fillRect(0, H - L.safeBottom, W, L.safeBottom);
+  }
+  // Whole-photo mode: the picture sits framed between the brand line and the text zone; nothing covers it.
+  if (contain) {
+    const top = L.safeTop + 150;
+    const bottom = H - L.safeBottom - L.textZone;
+    drawFramed(ctx, input.photo, { x: 56, y: top, w: W - 112, h: bottom - top }, CREAM);
   }
 
   // Brand corner.

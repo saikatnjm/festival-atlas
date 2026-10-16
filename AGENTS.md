@@ -123,7 +123,8 @@ localStorage keys: `fa:me` profile, `fa:region`, `fa:visited`, `fa:plan`, `fa:de
 
 - Dates: `lib/puja-dates.ts` (`pujaPhase(now, region)`), `lib/dates.ts` for formatting, Kolkata day
   helpers in `lib/live-shared.ts`. Compute "today" in an effect or a handler, never during render of a
-  prerendered page.
+  prerendered page. The visitor's region comes from `guessRegion()` in `lib/region.ts` (saved choice →
+  phone time zone → West Bengal); never read `fa:region` directly in new code.
 - Cards: `lib/share.ts` (`cardToPngBlob`, `shareImage`, `downloadBlob`, formats portrait/square/story),
   `components/play/ShareBar.tsx`. Postcards: `lib/postcard.ts`. Fonts are bundled in `public/fonts`.
 - Map: OpenStreetMap tiles with attribution (light use only, no bulk fetching). Pins are area-level;

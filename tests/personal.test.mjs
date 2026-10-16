@@ -19,7 +19,8 @@ import { ACTIVITY_MAX, toActivity } from "../lib/activity.ts";
 import { checkCredentials, constantTimeEqual, makeSession, verifySession } from "../lib/admin-shared.ts";
 import { cleanContact, cleanMessage, cleanPage, cleanTopic } from "../lib/feedback-shared.ts";
 import { cleanPlace, toPlace } from "../lib/places-shared.ts";
-import { GREETINGS, getGreeting, greetingForPhase } from "../data/play/greetings.ts";
+import { COMMON_LINES, GREETINGS, anotherLine, getGreeting, greetingForPhase, linesFor } from "../data/play/greetings.ts";
+import { regionFromTimeZone } from "../lib/region.ts";
 import { cleanNick, resultShare, isGame, NICK_MAX } from "../lib/community-shared.ts";
 import { fmtDate, fmtDateWithDay } from "../lib/dates.ts";
 
@@ -230,6 +231,29 @@ test("live board helpers: buckets, validation, crowd level, ranking", () => {
     c: { crowd_n: 0, crowd_avg: null, here_n: 0, love_today: 0 },
   };
   assert.deepEqual(rankBoard(board).map((x) => x.id), ["b", "a"], "check-ins outrank crowd reports; empty rows drop out");
+});
+
+test("greeting lines: enough variety, shared pool appended, random pick never repeats the current line", () => {
+  for (const g of GREETINGS) {
+    assert.ok(g.lines.length >= 8, `${g.id} has ${g.lines.length} lines`);
+    const all = linesFor(g);
+    assert.equal(all.length, g.lines.length + COMMON_LINES.length);
+    assert.equal(new Set(all.map((x) => x.en)).size, all.length, `${g.id} duplicate lines`);
+    for (const x of all) assert.ok(x.bn.length <= 110 && x.en.length <= 120, `${g.id} line too long for the card: ${x.en}`);
+  }
+  assert.ok(COMMON_LINES.length >= 10 && COMMON_LINES.every((x) => x.bn && x.en));
+  for (let i = 0; i < 50; i++) assert.notEqual(anotherLine(12, 5), 5);
+  assert.equal(anotherLine(1, 0), 0);
+  assert.equal(anotherLine(3, 2, () => 0), 0, "a step of 1 wraps around");
+  assert.equal(anotherLine(3, 0, () => 0.99), 2);
+});
+
+test("region guess from the phone's time zone", () => {
+  assert.equal(regionFromTimeZone("Asia/Dhaka"), "bd");
+  assert.equal(regionFromTimeZone("Asia/Kolkata"), "wb");
+  assert.equal(regionFromTimeZone("Asia/Calcutta"), "wb");
+  assert.equal(regionFromTimeZone("Europe/London"), null);
+  assert.equal(regionFromTimeZone(undefined), null);
 });
 
 test("greeting cards: every day bilingual with lines, and today's pick follows the calendar", () => {

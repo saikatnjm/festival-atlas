@@ -13,6 +13,7 @@ import { distanceM } from "@/lib/geo";
 import { num, withLang, type Lang } from "@/lib/i18n";
 import { cleanName } from "@/lib/profile";
 import { PUJA_2026, PUJA_DAYS } from "@/lib/puja-dates";
+import { guessRegion, type Region } from "@/lib/region";
 import { copyText, type CardData } from "@/lib/share";
 import { useProfile } from "@/lib/use-profile";
 import { useVisits } from "@/lib/use-visits";
@@ -27,8 +28,6 @@ export interface MePandal {
   lng?: number;
 }
 
-type Region = "wb" | "bd";
-const isRegion = (v: unknown): v is Region => v === "wb" || v === "bd";
 const WHAT = fun.my.what;
 const isWhat = (v: unknown): v is keyof typeof WHAT => typeof v === "string" && Object.prototype.hasOwnProperty.call(WHAT, v);
 /** Legs longer than this are a train ride, not a hop, and don't count towards the walked distance. */
@@ -51,9 +50,8 @@ export default function MyPuja({ lang, items, s }: { lang: Lang; items: MePandal
   useEffect(() => {
     const sync = () => setLog(loadActivity());
     sync();
+    setRegion(guessRegion());
     try {
-      const r = window.localStorage.getItem("fa:region");
-      if (isRegion(r)) setRegion(r);
       setNick(cleanName(window.localStorage.getItem("fa:nick")));
     } catch {
       // ignore
