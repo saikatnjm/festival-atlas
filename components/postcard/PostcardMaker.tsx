@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
+import { deviceId } from "@/components/live/useLive";
 import { useNearMe } from "@/components/live/useNearMe";
 import type { PlayStrings } from "@/components/play/strings";
 import { fun } from "@/data/i18n/fun";
@@ -13,6 +14,7 @@ import { readExifGps } from "@/lib/exif";
 import { distanceM, inServiceArea, type LatLng } from "@/lib/geo";
 import { num, withLang, type Lang } from "@/lib/i18n";
 import { POSTCARD_EXT, POSTCARD_THEMES, POSTCARD_TYPE, loadPhoto, releasePhoto, renderPostcard, themeById } from "@/lib/postcard";
+import { PLACE_NAME_MAX } from "@/lib/places-shared";
 import { NAME_MAX, cleanName } from "@/lib/profile";
 import { localDate, pujaPhase } from "@/lib/puja-dates";
 import { CARD_FORMATS, canShareImage, copyText, downloadBlob, shareImage, shareLink, type CardFormat } from "@/lib/share";
@@ -26,11 +28,18 @@ export interface PostcardPandal {
   name: string;
   /** "Lake Town · Kolkata" */
   place: string;
+  city: string;
+  country: string;
   lat?: number;
   lng?: number;
   /** Lower-cased search text: name, area, city in both scripts. */
   search: string;
 }
+
+/** Id of the synthetic entry made from a typed name (never a real directory id). */
+const CUSTOM_ID = "custom";
+/** A typed pandal takes its city/country from the nearest listed pin within this distance. */
+const CITY_GUESS_M = 60_000;
 
 type Source = "exif" | "near" | "pick";
 type Region = "wb" | "bd";
@@ -41,7 +50,7 @@ const TAGS = "#PujoGuide #DurgaPuja2026 #PandalHopping";
 const PLACEHOLDER_DATE = new Date("2026-10-01T00:00:00Z");
 const isRegion = (v: unknown): v is Region => v === "wb" || v === "bd";
 
-function nearestPin(items: readonly PostcardPandal[], p: LatLng): PostcardPandal | null {
+function nearestPin(items: readonly PostcardPandal[], p: LatLng, within = MATCH_M): PostcardPandal | null {
   let best: PostcardPandal | null = null;
   let bestD = Infinity;
   for (const it of items) {
@@ -52,7 +61,7 @@ function nearestPin(items: readonly PostcardPandal[], p: LatLng): PostcardPandal
       best = it;
     }
   }
-  return best && bestD <= MATCH_M ? best : null;
+  return best && bestD <= within ? best : null;
 }
 
 /**
@@ -67,9 +76,14 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
   const near = useNearMe();
   const fileRef = useRef<HTMLInputElement>(null);
   const [photo, setPhoto] = useState<HTMLImageElement | null>(null);
+  const [photoGps, setPhotoGps] = useState<LatLng | null>(null);
   const [pandalId, setPandalId] = useState<string | null>(null);
   const [source, setSource] = useState<Source | null>(null);
   const [noMatch, setNoMatch] = useState(false);
+  // A pandal that isn't listed: one typed name; the pin comes from the photo or the phone, nothing else is asked.
+  const [customOpen, setCustomOpen] = useState(false);
+  const [customName, setCustomName] = useState("");
+  const [addToMap, setAddToMap] = useState(true);
   const [q, setQ] = useState("");
   const [region, setRegion] = useState<Region>("wb");
   const [line, setLine] = useState(0);
@@ -108,7 +122,8 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
   useEffect(() => {
     if (profileReady) setName((n) => n || profile.name || "");
   }, [profileReady, profile.name]);
-  // The phone's position (only after the visitor tapped the button) picks the nearest pandal.
+  // The phone's position (only after the visitor tapped the button) picks the nearest pandal; with
+  // nothing listed nearby it becomes the pin of a typed pandal instead.
   useEffect(() => {
     if (!near.pos) return;
     const hit = inServiceArea(near.pos) ? nearestPin(items, near.pos) : null;
@@ -118,6 +133,7 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
       setNoMatch(false);
     } else {
       setNoMatch(true);
+      setCustomOpen(true);
     }
   }, [near.pos, items]);
   useEffect(() => {
@@ -133,7 +149,24 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
   const stamp = phase.kind === "during" ? phase.day[lang] : g.id === "anytime" ? P.season[lang] : g.name[lang];
   const captions = g.lines.map((l) => l[lang]);
   const caption = custom.trim() ? custom.trim().slice(0, 80) : captions[line % captions.length];
-  const pandal = pandalId ? (items.find((i) => i.id === pandalId) ?? null) : null;
+  // A typed name wins over the list. Its pin: the photo's GPS first, else the phone's position, else none.
+  const typed = customName.replace(/\s+/g, " ").trim().slice(0, PLACE_NAME_MAX);
+  const customPos = photoGps ?? near.pos ?? null;
+  const cityGuess = customPos ? nearestPin(items, customPos, CITY_GUESS_M) : null;
+  const custom_: PostcardPandal | null = typed
+    ? {
+        id: CUSTOM_ID,
+        name: typed,
+        place: cityGuess ? cityGuess.place.split(" · ").pop() ?? P.customPlace[lang] : P.customPlace[lang],
+        city: cityGuess?.city ?? (region === "bd" ? "Dhaka" : "Kolkata"),
+        country: cityGuess?.country ?? (region === "bd" ? "BD" : "IN"),
+        lat: customPos?.lat,
+        lng: customPos?.lng,
+        search: "",
+      }
+    : null;
+  const pandal = custom_ ?? (pandalId ? (items.find((i) => i.id === pandalId) ?? null) : null);
+  const isCustom = pandal?.id === CUSTOM_ID;
   const results = useMemo(() => {
     const needle = q.trim().toLowerCase();
     return needle ? items.filter((i) => i.search.includes(needle)).slice(0, 8) : [];
@@ -154,6 +187,7 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
         releasePhoto(old);
         return img;
       });
+      setPhotoGps(gps && inServiceArea(gps) ? gps : null);
       if (gps && inServiceArea(gps)) {
         const hit = nearestPin(items, gps);
         if (hit) {
@@ -162,6 +196,7 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
           setNoMatch(false);
         } else if (!pandalId) {
           setNoMatch(true);
+          setCustomOpen(true);
         }
       }
     } catch {
@@ -173,7 +208,32 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
     setPandalId(id);
     setSource("pick");
     setNoMatch(false);
+    setCustomName("");
     setQ("");
+  };
+
+  // A typed pandal with a pin goes to the community map queue (owner approves on /admin), once per name.
+  const submitPlace = async (p: PostcardPandal) => {
+    if (typeof p.lat !== "number" || typeof p.lng !== "number" || p.name.length < 3) return;
+    const key = `fa:place:${p.name}`;
+    try {
+      if (window.sessionStorage.getItem(key)) return;
+    } catch {
+      // ignore
+    }
+    try {
+      const res = await fetch("/api/places", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ device: deviceId(), name: p.name, area: null, city: p.city, country: p.country, lat: p.lat, lng: p.lng, note: "via postcard", lang }),
+      });
+      if (res.ok) {
+        window.sessionStorage.setItem(key, "1");
+        track("place_added", { country: p.country, via: "postcard" });
+      }
+    } catch {
+      // The card is already made; a failed map submission is not worth an error.
+    }
   };
 
   const make = async () => {
@@ -182,12 +242,12 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
     setBusy(true);
     setMsg(s.share.making);
     try {
-      // The stamp number is the pandal's place in the passport, ticking it now when it is new.
-      const idx = visits.visits.findIndex((v) => v.id === pandal.id);
-      const ticked = idx < 0;
+      // Listed pandals get a passport tick and their stamp number; typed ones just the name.
+      const idx = isCustom ? -1 : visits.visits.findIndex((v) => v.id === pandal.id);
+      const ticked = !isCustom && idx < 0;
       if (ticked) visits.toggle(pandal.id);
       const n = ticked ? visits.visits.length + 1 : idx + 1;
-      const byline = [who ? fill(P.by[lang], { name: who }) : "", fill(P.stampNo[lang], { n: num(n, lang) })].filter(Boolean).join(" · ");
+      const byline = [who ? fill(P.by[lang], { name: who }) : "", isCustom ? "" : fill(P.stampNo[lang], { n: num(n, lang) })].filter(Boolean).join(" · ");
       const out = await renderPostcard({
         lang,
         photo,
@@ -205,8 +265,14 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
       });
       setBlob(out);
       setMsg(ticked ? fill(P.ticked[lang], { name: pandal.name }) : "");
-      logActivity({ kind: "postcard", id: pandal.id, label: stamp });
-      track("postcard", { pandal: pandal.id, format, theme: themeId, source: source ?? "pick" });
+      if (isCustom) {
+        logActivity({ kind: "postcard", label: `${pandal.name} · ${stamp}` });
+        // Only pins inside the Kolkata/Dhaka service area go to the map queue (a diaspora pin would get a wrong city).
+        if (addToMap && customPos && inServiceArea(customPos)) void submitPlace(pandal);
+      } else {
+        logActivity({ kind: "postcard", id: pandal.id, label: stamp });
+      }
+      track("postcard", { pandal: pandal.id, format, theme: themeId, source: isCustom ? "typed" : (source ?? "pick") });
     } catch {
       setMsg(s.share.imageFailed);
     }
@@ -215,7 +281,8 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
 
   const shareBits = () => {
     if (!pandal) return null;
-    const url = `${window.location.origin}${withLang(lang, `/puja/${pandal.id}`)}`;
+    // A typed pandal has no page of its own, so the link invites people to make their own postcard.
+    const url = `${window.location.origin}${withLang(lang, isCustom ? "/postcard" : `/puja/${pandal.id}`)}`;
     const text = `${fill(P.shareText[lang], { name: pandal.name, day: stamp })} ${TAGS}`;
     return { url, text, filename: `pujo-postcard-${pandal.id}.${POSTCARD_EXT}` };
   };
@@ -269,9 +336,9 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
             <b>{pandal.name}</b> <span className="fineprint">{pandal.place}</span>
           </p>
         ) : null}
-        {pandal && source === "exif" ? <p className="fineprint">{fill(P.autoExif[lang], { name: pandal.name })}</p> : null}
-        {pandal && source === "near" ? <p className="fineprint">{fill(P.autoNear[lang], { name: pandal.name })}</p> : null}
-        {!pandal && noMatch ? <p className="fineprint">{P.noMatch[lang]}</p> : null}
+        {pandal && !isCustom && source === "exif" ? <p className="fineprint">{fill(P.autoExif[lang], { name: pandal.name })}</p> : null}
+        {pandal && !isCustom && source === "near" ? <p className="fineprint">{fill(P.autoNear[lang], { name: pandal.name })}</p> : null}
+        {!pandal && noMatch ? <p className="fineprint">{P.noMatchWrite[lang]}</p> : null}
         <div className="postcard-find">
           <input className="cx-input" type="search" placeholder={P.pandalPh[lang]} value={q} onChange={(e) => setQ(e.target.value)} aria-label={P.pandalLabel[lang]} autoComplete="off" />
           <button type="button" className="cx-btn cx-btn-light" disabled={near.state === "asking"} onClick={near.ask}>
@@ -288,6 +355,31 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
             ))}
           </div>
         ) : null}
+        {/* Not listed: one typed name is all that's needed; the pin and city come from the photo/phone. */}
+        {customOpen ? (
+          <div className="postcard-custom">
+            <label className="cx-field">
+              <span>{P.customLabel[lang]}</span>
+              <input className="cx-input" type="text" maxLength={PLACE_NAME_MAX} placeholder={P.customPh[lang]} value={customName} onChange={(e) => setCustomName(e.target.value)} autoComplete="off" />
+            </label>
+            {typed ? (
+              <p className="fineprint">
+                {customPos ? P.customPinned[lang] : P.customNoPin[lang]}{" "}
+                {customPos ? (
+                  <label className="postcard-check">
+                    <input type="checkbox" checked={addToMap} onChange={(e) => setAddToMap(e.target.checked)} /> {P.addToMap[lang]}
+                  </label>
+                ) : null}
+              </p>
+            ) : null}
+          </div>
+        ) : (
+          <p className="fineprint">
+            <button type="button" className="cx-link-btn" onClick={() => setCustomOpen(true)}>
+              {P.notListed[lang]}
+            </button>
+          </p>
+        )}
       </section>
 
       <section className="postcard-block" aria-labelledby="pc-caption">

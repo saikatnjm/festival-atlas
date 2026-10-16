@@ -2,7 +2,10 @@
 
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 
-## SEO fixes batch (latest, 2026-10-16)
+## Postcard for unlisted pandals (2026-10-16, after the SEO batch)
+- `/postcard`: "✏️ Not in the list? Write it" opens one field (the name). The pin comes from the photo's GPS, else "my location", else none (card without the map inset; `renderPostcard` now skips the inset and widens the text when `pin` is null). City/country are guessed from the nearest listed pin within 60 km (else the region's main city) — nothing else is asked. A checkbox (on by default, shown only when there is a pin) sends name + pin to the `places` queue with note "via postcard" for approval on `/admin`; once per name per session. Typed cards don't tick the passport; they log to `/me` as "📸 name · tithi"; share link points at `/postcard`. "Use the pandal near me" with nothing listed nearby now opens the name field instead of dead-ending.
+
+## SEO fixes batch (2026-10-16)
 **Owner step:** add `NEXT_PUBLIC_GSC_VERIFICATION=<your Search Console token>` in Vercel (all environments) before/with this deploy; the token is no longer in the code, so without the variable the tag disappears and verification can lapse.
 - **GSC tag** from `NEXT_PUBLIC_GSC_VERIFICATION` only (`app/[lang]/layout.tsx`); old hardcoded token and its smoke line removed.
 - **2026 editions**: Santosh Mitra Square (150 years of ‘Vande Mataram’, first light-and-sound show) and Alipore Sarbojanin (‘Ramayana: An Epic Woven in Time’) updated to 2026 from The Federal (7 Oct 2026, already cited in `events.ts`); their 2025 themes moved into a new optional `history` field (shown as "Past themes" on the pandal page); `bn.json` updated; validator checks `history`, `name_bn`, `area_bn`.

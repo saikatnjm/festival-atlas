@@ -173,7 +173,8 @@ export default function MyPuja({ lang, items, s }: { lang: Lang; items: MePandal
       case "visit":
         return fill(M.rowVisit[lang], { name: nameOf(e.id) });
       case "postcard":
-        return fill(M.rowPostcard[lang], { name: nameOf(e.id), stamp: e.label ?? "" });
+        // Typed (unlisted) pandals carry "name · stamp" in the label and have no id.
+        return e.id ? fill(M.rowPostcard[lang], { name: nameOf(e.id), stamp: e.label ?? "" }) : `📸 ${e.label ?? ""}`;
       case "play":
         return fill(M.rowPlay[lang], { label: e.label ?? e.id ?? "" });
       case "report":

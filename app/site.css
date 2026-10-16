@@ -1793,6 +1793,15 @@ h3 {
   border: 2px solid var(--ink);
   vertical-align: -0.1em;
 }
+.postcard-custom {
+  margin-top: var(--space-2);
+}
+.postcard-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+}
 .postcard-preview {
   display: block;
   width: min(100%, 360px);

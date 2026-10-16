@@ -259,34 +259,35 @@ export async function renderPostcard(input: PostcardInput): Promise<Blob> {
   ctx.fillText(input.date, 0, st.size * 0.3 + R * 0.4, R * 2 - 56);
   ctx.restore();
 
-  // Map inset, bottom-right, clipped to a rounded square.
-  const S = L.inset;
-  const mx = W - 56 - S;
-  const my = H - L.safeBottom - 56 - S;
-  let usedTiles = false;
-  ctx.save();
-  roundedRect(ctx, mx, my, S, S, 28);
-  ctx.clip();
-  if (input.pin) usedTiles = await drawTiles(ctx, input.pin, mx, my, S);
-  if (!usedTiles) drawMapFallback(ctx, mx, my, S);
-  drawPin(ctx, mx + S / 2, my + S / 2, T.pin);
-  if (usedTiles) {
-    ctx.fillStyle = "rgba(255,248,236,0.85)";
-    ctx.fillRect(mx, my + S - 26, S, 26);
-    ctx.fillStyle = INK;
-    ctx.textAlign = "right";
-    ctx.font = body(400)(17);
-    ctx.fillText(input.attribution, mx + S - 8, my + S - 8, S - 16);
+  // Map inset, bottom-right, clipped to a rounded square. No pin (a typed pandal without a location): no inset.
+  const S = input.pin ? L.inset : 0;
+  if (input.pin) {
+    const mx = W - 56 - S;
+    const my = H - L.safeBottom - 56 - S;
+    ctx.save();
+    roundedRect(ctx, mx, my, S, S, 28);
+    ctx.clip();
+    const usedTiles = await drawTiles(ctx, input.pin, mx, my, S);
+    if (!usedTiles) drawMapFallback(ctx, mx, my, S);
+    drawPin(ctx, mx + S / 2, my + S / 2, T.pin);
+    if (usedTiles) {
+      ctx.fillStyle = "rgba(255,248,236,0.85)";
+      ctx.fillRect(mx, my + S - 26, S, 26);
+      ctx.fillStyle = INK;
+      ctx.textAlign = "right";
+      ctx.font = body(400)(17);
+      ctx.fillText(input.attribution, mx + S - 8, my + S - 8, S - 16);
+    }
+    ctx.restore();
+    roundedRect(ctx, mx, my, S, S, 28);
+    ctx.strokeStyle = CREAM;
+    ctx.lineWidth = 6;
+    ctx.stroke();
   }
-  ctx.restore();
-  roundedRect(ctx, mx, my, S, S, 28);
-  ctx.strokeStyle = CREAM;
-  ctx.lineWidth = 6;
-  ctx.stroke();
 
   // Text block, bottom-left, laid out from the bottom up.
   const tx = 56;
-  const textW = W - S - 144;
+  const textW = S ? W - S - 144 : W - 112;
   let yb = H - L.safeBottom - 56;
   ctx.textAlign = "left";
   if (input.byline) {

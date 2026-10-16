@@ -28,6 +28,8 @@ function pickerItems(lang: Lang): PostcardPandal[] {
       id: p.id,
       name: nameOf(p, lang),
       place: area ? `${area} · ${cityName(p.city, lang)}` : placeLabel(p, lang),
+      city: p.city,
+      country: p.country,
       lat: p.lat,
       lng: p.lng,
       search: [p.name, p.name_bn, p.area, p.area_bn, p.city, cityName(p.city, "bn")].filter(Boolean).join(" ").toLowerCase(),
