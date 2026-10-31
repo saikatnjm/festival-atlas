@@ -30,6 +30,7 @@ import { CALENDAR_2027 } from "../data/festivals/calendar-2027.ts";
 import { DOL_2027 } from "../data/festivals/dol-2027.ts";
 import { BENGALI_CALENDAR_1433, bdBanglaDate, banglaDateLabel } from "../data/festivals/bengali-calendar-1433.ts";
 import { DURGA_2027 } from "../data/festivals/durga-2027.ts";
+import { JANMASHTAMI_2027, LAKSHMI_2027, RATH_2027 } from "../data/festivals/mid-2027.ts";
 import { RASH_2026 } from "../data/festivals/rash-2026.ts";
 import { POUSH_SANKRANTI_2027 } from "../data/festivals/poush-sankranti-2027.ts";
 import { UPCOMING, daysUntil as daysTo, nextUp } from "../data/festivals/upcoming.ts";
@@ -328,7 +329,7 @@ test("spring 2027 cards follow the festival pages' sourced dates", () => {
 });
 
 test("festival pages: bilingual, sourced rows, titles and descriptions within limits", () => {
-  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027, AMAVASYA_2027, RASH_2026, POUSH_SANKRANTI_2027, BENGALI_CALENDAR_1433]) {
+  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027, AMAVASYA_2027, RASH_2026, POUSH_SANKRANTI_2027, BENGALI_CALENDAR_1433, RATH_2027, JANMASHTAMI_2027, LAKSHMI_2027]) {
     for (const k of ["title", "description", "h1", "lead"]) assert.ok(f[k].bn && f[k].en, `${f.path} ${k}`);
     assert.ok(f.title.en.length <= 60, `${f.path} title ${f.title.en.length}`);
     assert.ok(f.description.en.length <= 160 && f.description.bn.length <= 170, `${f.path} description`);

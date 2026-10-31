@@ -3,6 +3,12 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## Rath Yatra, Janmashtami, Lakshmi Puja 2027 + three more stories (2026-10-31, night)
+- **`/rath-yatra-2027`** (Mon 5 Jul; Dwitiya tithi Kolkata/Dhaka; Mahesh since 1396, Dhamrai), **`/janmashtami-2027`** (Wed 25 Aug for Smarta and ISKCON alike; Ashtami, Rohini, Nishita puja 11:16 pm–12:01 am Kolkata, parana by practice; Dhaka times), **`/lakshmi-puja-2027`** (Kojagori, Thu 14 Oct; Nishita 10:58–11:47 pm Kolkata; Purnima tithi; moonrise). All from Drik's festival pages for Kolkata and Dhaka (`data/festivals/mid-2027.ts`); calendar rows, "Coming up" and the Pujo menu now link to them.
+- `/durga-puja-2027`: Mahalaya Amavasya tithi and tarpan Kutup muhurat for Kolkata (11:03–11:51 am) and Dhaka (Drik Amavasya Shraddha page).
+- Stories: Mahishasura Mardini (the Mahalaya radio programme), Kumartuli, Durga Puja's UNESCO listing (Dec 2021, decision 16.COM 8.B.15). 21 articles in total. Home hero shows today's Bangla date (Bangladesh calendar) under the countdown.
+- Verified in the scratch copy (Node 24): 57/57 tests, build (435 pages), typecheck, smoke 282/282.
+
 ## Bengali calendar 1433 + llms-full.txt (2026-10-31, evening)
 - **`/bengali-calendar-1433`** ("আজ বাংলা কত তারিখ"): today's date in Bangladesh's revised calendar (client widget, Dhaka date, read off the fixed month starts: Boishakh 14 Apr … Chaitra 15 Mar, Falgun 29/30; Wikipedia "Bengali calendars", 2019– column; `bdBanglaDate()` tested against known days), the Bangladesh month table, and West Bengal's 12 Sankranti dates and times for 1433 as Drik prints them for Kolkata. Drik prints no first-day dates for West Bengal months (only Pohela Boishakh 1433 = 15 Apr 2026), so none are derived; the page says to check the panjika. `FestivalPage` now takes children (rendered under the lead).
 - **`/llms-full.txt`**: the key answers of every festival page and article (leads, date/time rows with sources, FAQs) as plain text for AI assistants; linked from `/llms.txt`.

@@ -7,6 +7,7 @@ import { cityName } from "@/data/pandals";
 import { topCities } from "@/data/pandals/counts";
 import Character from "@/components/play/art/Character";
 import CastStrip from "@/components/home/CastStrip";
+import BanglaDateChip from "@/components/home/BanglaDateChip";
 import ComingUp from "@/components/home/ComingUp";
 import Countdown from "@/components/home/Countdown";
 import HeroCard from "@/components/home/HeroCard";
@@ -89,6 +90,7 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
       <section className="home-hero" aria-labelledby="home-h1">
         <div className="home-hero-text">
           <Countdown lang={lang} />
+          <BanglaDateChip lang={lang} />
           <h1 id="home-h1">{f.h1[lang]}</h1>
           <p className="lead">{f.lead[lang]}</p>
           <p className="cta-row">

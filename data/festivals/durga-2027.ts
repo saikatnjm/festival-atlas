@@ -10,11 +10,14 @@ const l = (bn: string, en: string): L => ({ bn, en });
 const DURGA = (geo: string) => `https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2027&geoname-id=${geo}`;
 const DURGA_KOL = { title: "Drik Panchang, Durga Puja 2027 calendar (Kolkata)", url: DURGA("1275004") };
 const DURGA_DHAKA = { title: "Drik Panchang, Durga Puja 2027 calendar (Dhaka)", url: DURGA("1185241") };
+const SHRADDHA = (geo: string, city: string) => ({ title: `Drik Panchang, Amavasya Shraddha 2027 (${city})`, url: `https://www.drikpanchang.com/shraddha/tithi/amavasya-shraddha-date-time.html?geoname-id=${geo}&year=2027` });
 const BENGALI_KOL = { title: "Drik Panchang, Bengali calendar 2027 (Kolkata)", url: "https://www.drikpanchang.com/bengali/calendar/bengali-calendar.html?geoname-id=1275004&year=2027" };
 
 type Src = { title: string; url: string };
-const days = (src: Src) => [
+const days = (src: Src, tarpan: { amavasya: L; kutup: L; source: Src }) => [
   { day: l("বুধ ২৯ সেপ্টেম্বর", "Wed 29 Sep"), what: l("মহালয়া", "Mahalaya"), when: l("ভাদ্র কৃষ্ণা অমাবস্যা", "Bhadro, Krishna Amavasya"), source: BENGALI_KOL },
+  { day: l("২৯–৩০ সেপ্টেম্বর", "29–30 Sep"), what: l("অমাবস্যা তিথি", "Amavasya tithi"), when: tarpan.amavasya, source: tarpan.source },
+  { day: l("বুধ ২৯ সেপ্টেম্বর", "Wed 29 Sep"), what: l("তর্পণ: কুতুপ মুহূর্ত", "Tarpan: Kutup muhurat"), when: tarpan.kutup, source: tarpan.source },
   { day: l("মঙ্গল ৫ অক্টোবর", "Tue 5 Oct"), what: l("ষষ্ঠী", "Shashthi"), when: l("বিল্বনিমন্ত্রণ, কল্পারম্ভ, অকালবোধন, আমন্ত্রণ ও অধিবাস", "Bilva Nimantran, Kalparambha, Akal Bodhon, Amantran and Adhivas"), source: src },
   { day: l("বুধ ৬ অক্টোবর", "Wed 6 Oct"), what: l("সপ্তমী", "Saptami"), when: l("নবপত্রিকা (কলাবউ) পুজো", "Kolabou (Navapatrika) Puja"), source: src },
   { day: l("বৃহস্পতি ৭ অক্টোবর", "Thu 7 Oct"), what: l("অষ্টমী", "Ashtami"), when: l("দুর্গাষ্টমী, কুমারী পুজো", "Durga Ashtami, Kumari Puja"), source: src },
@@ -41,7 +44,10 @@ export const DURGA_2027: FestivalPage = {
       "তিথির ঘড়ির সময় (সন্ধিপুজো, অঞ্জলি) এখনও বেরোয়নি; পঞ্জিকা প্রকাশ হলে যোগ হবে।",
       "Clock times (Sandhi Puja, anjali) aren't out yet; they'll be added when the panjikas publish them.",
     ),
-    rows: { wb: days(DURGA_KOL), bd: days(DURGA_DHAKA) },
+    rows: {
+      wb: days(DURGA_KOL, { amavasya: l("২৯ সেপ্টেম্বর সকাল ১০:৫৪ থেকে ৩০ সেপ্টেম্বর সকাল ৮:০৫", "29 Sep 10:54 am to 30 Sep 8:05 am"), kutup: l("সকাল ১১:০৩ থেকে ১১:৫১", "11:03 am to 11:51 am"), source: SHRADDHA("1275004", "Kolkata") }),
+      bd: days(DURGA_DHAKA, { amavasya: l("২৯ সেপ্টেম্বর সকাল ১১:২৪ থেকে ৩০ সেপ্টেম্বর সকাল ৮:৩৫", "29 Sep 11:24 am to 30 Sep 8:35 am"), kutup: l("সকাল ১১:২৫ থেকে দুপুর ১২:১৩", "11:25 am to 12:13 pm"), source: SHRADDHA("1185241", "Dhaka") }),
+    },
     note: l(
       "বাংলাদেশে ২০২৭-এর সরকারি ছুটির তালিকা ৩১ অক্টোবর ২০২৬ পর্যন্ত বেরোয়নি। বিশুদ্ধ সিদ্ধান্ত আর গুপ্তপ্রেস পঞ্জিকায় কোনো দিন আলাদা হলে এখানে দুটোই দেখাব।",
       "Bangladesh's 2027 government holiday list had not been published as of 31 October 2026. If the Bishuddha Siddhanta and Gupta Press panjikas differ on any day, both will be shown here.",

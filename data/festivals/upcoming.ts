@@ -27,11 +27,11 @@ export const UPCOMING: Upcoming[] = [
   { date: "2027-03-06", icon: "🔱", name: l("শিবরাত্রি", "Shivratri"), href: "/shivratri-2027" },
   { date: "2027-03-22", icon: "🎨", name: l("দোল", "Dol"), href: "/dol-purnima-2027" },
   { date: "2027-04-15", icon: "🎉", name: l("পয়লা বৈশাখ", "Poila Boishakh"), href: "/poila-boishakh-2027" },
-  { date: "2027-07-05", icon: "🛕", name: l("রথযাত্রা", "Rath Yatra"), href: "/calendar-2027" },
-  { date: "2027-08-25", icon: "🪈", name: l("জন্মাষ্টমী", "Janmashtami"), href: "/calendar-2027" },
+  { date: "2027-07-05", icon: "🛕", name: l("রথযাত্রা", "Rath Yatra"), href: "/rath-yatra-2027" },
+  { date: "2027-08-25", icon: "🪈", name: l("জন্মাষ্টমী", "Janmashtami"), href: "/janmashtami-2027" },
   { date: "2027-09-29", icon: "🌅", name: l("মহালয়া", "Mahalaya"), href: "/durga-puja-2027" },
   { date: "2027-10-05", end: "2027-10-10", icon: "🥁", name: l("দুর্গাপুজো", "Durga Puja"), href: "/durga-puja-2027" },
-  { date: "2027-10-14", icon: "🪷", name: l("কোজাগরী লক্ষ্মীপুজো", "Kojagori Lakshmi Puja"), href: "/calendar-2027" },
+  { date: "2027-10-14", icon: "🪷", name: l("কোজাগরী লক্ষ্মীপুজো", "Kojagori Lakshmi Puja"), href: "/lakshmi-puja-2027" },
   { date: "2027-10-28", icon: "🌑", name: l("কালীপুজো", "Kali Puja"), href: "/calendar-2027" },
 ];
 
