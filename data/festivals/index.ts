@@ -7,16 +7,20 @@ import { DURGA_2027 } from "./durga-2027";
 import { JAGADDHATRI_2026 } from "./jagaddhatri-2026";
 import { EKADASHI_2027, PURNIMA_2027 } from "./lunar-2027";
 import { POILA_BOISHAKH_2027 } from "./poila-boishakh-2027";
+import { POUSH_SANKRANTI_2027 } from "./poush-sankranti-2027";
+import { RASH_2026 } from "./rash-2026";
 import { SARASWATI_2027 } from "./saraswati-2027";
 import { SHIVRATRI_2027 } from "./shivratri-2027";
 import type { FestivalPage } from "./types";
 
 export const FESTIVAL_PAGES: FestivalPage[] = [
   JAGADDHATRI_2026,
+  RASH_2026,
   DURGA_2027,
   CALENDAR_2027,
   EKADASHI_2027,
   PURNIMA_2027,
+  POUSH_SANKRANTI_2027,
   SARASWATI_2027,
   SHIVRATRI_2027,
   DOL_2027,

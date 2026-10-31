@@ -256,6 +256,7 @@ const PURNIMA_NAMES: Record<string, L> = {
 
 /** Festivals that fall on a Purnima, from Drik's Bengali calendar 2027 (Kolkata), with our page when there is one. */
 const PURNIMA_FESTIVAL: Record<string, { text: L; href?: string }> = {
+  "2026-11-24": { text: l("রাস পূর্ণিমা", "Rash Purnima"), href: "/rash-purnima-2026" },
   "2027-03-22": { text: l("দোলপূর্ণিমা", "Dol Purnima"), href: "/dol-purnima-2027" },
   "2027-08-17": { text: l("রাখিবন্ধন (১৭ আগস্ট)", "Raksha Bandhan (17 Aug)") },
   "2027-10-15": { text: l("কোজাগরী লক্ষ্মীপুজো বৃহস্পতি ১৪ অক্টোবর", "Kojagori Lakshmi Puja on Thu 14 Oct") },

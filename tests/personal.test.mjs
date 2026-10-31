@@ -29,6 +29,8 @@ import { JAGADDHATRI_2026 } from "../data/festivals/jagaddhatri-2026.ts";
 import { CALENDAR_2027 } from "../data/festivals/calendar-2027.ts";
 import { DOL_2027 } from "../data/festivals/dol-2027.ts";
 import { DURGA_2027 } from "../data/festivals/durga-2027.ts";
+import { RASH_2026 } from "../data/festivals/rash-2026.ts";
+import { POUSH_SANKRANTI_2027 } from "../data/festivals/poush-sankranti-2027.ts";
 import { UPCOMING, daysUntil as daysTo, nextUp } from "../data/festivals/upcoming.ts";
 import { LUNAR_UPCOMING } from "../data/festivals/lunar-2027.ts";
 import { regionFromTimeZone } from "../lib/region.ts";
@@ -299,7 +301,8 @@ test("Kali Puja week cards follow the sourced dates", () => {
   assert.equal(at("2026-11-11"), "bhaiphota");
   assert.equal(at("2026-11-12"), "jagaddhatri");
   assert.equal(at("2026-11-20"), "jagaddhatri");
-  assert.equal(at("2026-11-21"), "anytime");
+  assert.equal(at("2026-11-21"), "rash");
+  assert.equal(at("2026-11-26"), "anytime");
   assert.equal(at("2026-10-19"), "ashtami");
   assert.ok(getGreeting("kali").stamp && getGreeting("diwali").pool === false);
 });
@@ -314,13 +317,15 @@ test("spring 2027 cards follow the festival pages' sourced dates", () => {
   assert.equal(at("2027-02-11"), "saraswati");
   assert.equal(at("2027-03-06"), "shivratri");
   assert.equal(at("2027-03-22"), "dol");
+  assert.equal(at("2027-01-15"), "poush");
+  assert.equal(at("2026-11-24"), "rash");
   assert.equal(at("2027-04-14"), "noboborsho");
   assert.equal(at("2027-04-15"), "noboborsho");
-  assert.equal(at("2027-01-10"), "anytime");
+  assert.equal(at("2027-01-05"), "anytime");
 });
 
 test("festival pages: bilingual, sourced rows, titles and descriptions within limits", () => {
-  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027]) {
+  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027, RASH_2026, POUSH_SANKRANTI_2027]) {
     for (const k of ["title", "description", "h1", "lead"]) assert.ok(f[k].bn && f[k].en, `${f.path} ${k}`);
     assert.ok(f.title.en.length <= 60, `${f.path} title ${f.title.en.length}`);
     assert.ok(f.description.en.length <= 160 && f.description.bn.length <= 170, `${f.path} description`);

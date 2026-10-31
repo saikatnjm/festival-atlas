@@ -11,6 +11,7 @@ const l = (bn: string, en: string): L => ({ bn, en });
 const BENGALI_KOL = { title: "Drik Panchang, Bengali calendar 2027 (Kolkata)", url: "https://www.drikpanchang.com/bengali/calendar/bengali-calendar.html?geoname-id=1275004&year=2027" };
 const AUGUST_KOL = { title: "Drik Panchang, August 2027 festivals (Kolkata)", url: "https://www.drikpanchang.com/festivals/month/festivals-august.html?year=2027&geoname-id=1275004" };
 const DURGA_KOL = { title: "Drik Panchang, Durga Puja 2027 calendar (Kolkata)", url: "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2027&geoname-id=1275004" };
+const SANKRANTI_KOL = { title: "Drik Panchang, Makar Sankranti 2027 (Kolkata)", url: "https://www.drikpanchang.com/sankranti/makar-sankranti-date-time.html?geoname-id=1275004&year=2027" };
 const WIKI_PB = { title: "Wikipedia, Pohela Boishakh", url: "https://en.wikipedia.org/wiki/Pohela_Boishakh" };
 
 const row = (name: L, date: L, tithi: L, source = BENGALI_KOL, href?: string) => ({ cells: [name, date, tithi], source, ...(href ? { href } : {}) });
@@ -34,6 +35,7 @@ export const CALENDAR_2027: FestivalPage = {
       caption: l("পশ্চিমবঙ্গ (কলকাতা) · ২০২৭", "West Bengal (Kolkata) · 2027"),
       columns: [l("উৎসব", "Festival"), l("তারিখ", "Date"), l("তিথি", "Tithi")],
       rows: [
+        row(l("পৌষ সংক্রান্তি (মকর সংক্রান্তি)", "Poush Sankranti (Makar Sankranti)"), l("শুক্র ১৫ জানুয়ারি", "Fri 15 Jan"), l("সূর্যের মকরে প্রবেশ, ১৪ জানুয়ারি রাতে", "Sun enters Makara, night of 14 Jan"), SANKRANTI_KOL, "/poush-sankranti-2027"),
         row(l("সরস্বতী পুজো", "Saraswati Puja"), l("বৃহস্পতি ১১ ফেব্রুয়ারি", "Thu 11 Feb"), l("মাঘ শুক্লা পঞ্চমী", "Magh, Shukla Panchami"), BENGALI_KOL, "/saraswati-puja-2027"),
         row(l("শিবরাত্রি", "Maha Shivratri"), l("শনি ৬ মার্চ", "Sat 6 Mar"), l("মাঘ কৃষ্ণা চতুর্দশী", "Magh, Krishna Chaturdashi"), BENGALI_KOL, "/shivratri-2027"),
         row(l("দোলপূর্ণিমা", "Dol Purnima"), l("সোম ২২ মার্চ", "Mon 22 Mar"), l("ফাল্গুন শুক্লা পূর্ণিমা", "Falgun, Shukla Purnima"), BENGALI_KOL, "/dol-purnima-2027"),

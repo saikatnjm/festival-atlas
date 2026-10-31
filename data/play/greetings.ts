@@ -24,15 +24,17 @@ export type GreetingDay =
   | "saraswati"
   | "shivratri"
   | "noboborsho"
-  | "dol";
+  | "dol"
+  | "rash"
+  | "poush";
 
 export type GreetingSeason = "durga" | "kali" | "spring";
 
 /** Chip groups, current season first. */
 export const GREETING_SEASONS: { id: GreetingSeason; name: L }[] = [
-  { id: "kali", name: l("কালীপুজো থেকে জগদ্ধাত্রী", "Kali Puja to Jagaddhatri") },
+  { id: "kali", name: l("কালীপুজো থেকে রাস", "Kali Puja to Rash") },
   { id: "durga", name: l("দুর্গাপুজো", "Durga Puja") },
-  { id: "spring", name: l("সরস্বতী পুজো থেকে নববর্ষ", "Saraswati Puja to New Year") },
+  { id: "spring", name: l("পৌষ সংক্রান্তি থেকে নববর্ষ", "Poush Sankranti to New Year") },
 ];
 
 export interface Greeting {
@@ -325,6 +327,27 @@ export const GREETINGS: Greeting[] = [
     tags: ["ShubhoJagaddhatriPuja", "JagaddhatriPuja2026", "Chandannagar"],
   },
   {
+    id: "rash",
+    icon: "🪷",
+    name: l("রাস পূর্ণিমা", "Rash Purnima"),
+    headline: l("শুভ রাস পূর্ণিমা!", "Shubho Rash Purnima!"),
+    char: "gopal",
+    mood: "wow",
+    season: "kali",
+    pool: false,
+    lines: [
+      l("কার্তিকের পূর্ণিমা, রাধাকৃষ্ণের রাস, আর চাঁদের আলোয় ভাসা রাত। শুভ রাস পূর্ণিমা!", "Kartik's full moon, Radha and Krishna's Rash, a night washed in moonlight. Shubho Rash Purnima!"),
+      l("নবদ্বীপের আকাশছোঁয়া প্রতিমা আর শান্তিপুরের কীর্তন: রাস মানে দুই শহরের উৎসব।", "Nabadwip's towering idols and Shantipur's kirtan: Rash is two towns' festival."),
+      l("পূর্ণিমার চাঁদের মতো আলো থাকুক তোমার ঘরে। শুভ রাস পূর্ণিমা!", "May your home glow like the full moon. Shubho Rash Purnima!"),
+      l("আড়ংয়ের রাতে ঢাকের বাজনা আর আলোর মিছিল। শুভ রাস!", "Dhak and a procession of lights on Arong night. Shubho Rash!"),
+      l("রাধাকৃষ্ণের প্রেম ছুঁয়ে যাক সবার মন। শুভ রাস পূর্ণিমা!", "May Radha and Krishna's love touch every heart. Shubho Rash Purnima!"),
+      l("কোচবিহারের রাসমেলা থেকে নবদ্বীপের শাক্ত রাস, সবখানে আজ উৎসব।", "From the Cooch Behar Rash Mela to Nabadwip's Shakta Rash, it's festival time everywhere."),
+      l("শীতের শুরু, পূর্ণিমার রাত, আর মেলার নাগরদোলা। শুভ রাস!", "Winter setting in, a full-moon night, and the fair's Ferris wheel. Shubho Rash!"),
+      l("হরিনামে মন ভরুক, চাঁদের আলোয় পথ চলুক। শুভ রাস পূর্ণিমা!", "May the heart fill with Harinaam and moonlight light the way. Shubho Rash Purnima!"),
+    ],
+    tags: ["ShubhoRashPurnima", "RashPurnima2026", "Nabadwip"],
+  },
+  {
     id: "saraswati",
     icon: "📚",
     name: l("সরস্বতী পুজো", "Saraswati Puja"),
@@ -344,6 +367,27 @@ export const GREETINGS: Greeting[] = [
       l("বীণাপাণি মায়ের আশীর্বাদে বিদ্যা, বুদ্ধি আর সুর থাকুক সারা বছর।", "With the blessings of the goddess of the veena, may learning, wisdom and music stay all year."),
     ],
     tags: ["ShubhoSaraswatiPuja", "SaraswatiPuja2027", "VasantPanchami"],
+  },
+  {
+    id: "poush",
+    icon: "🍘",
+    name: l("পৌষ সংক্রান্তি", "Poush Sankranti"),
+    headline: l("শুভ পৌষ সংক্রান্তি!", "Happy Poush Sankranti!"),
+    char: "bhog",
+    mood: "happy",
+    season: "spring",
+    pool: false,
+    lines: [
+      l("পাটিসাপটা, পুলি আর নলেন গুড়: পৌষ পার্বণের শুভেচ্ছা!", "Patishapta, puli and nolen gur: happy Poush Parbon!"),
+      l("শীতের সকাল, পিঠের গন্ধ আর মায়ের হাতের রান্না। শুভ পৌষ সংক্রান্তি!", "A winter morning, the smell of pithe and Ma's cooking. Happy Poush Sankranti!"),
+      l("আজ ডায়েটের ছুটি, পিঠের দিন। শুভ মকর সংক্রান্তি!", "The diet is on leave today; it's pithe day. Happy Makar Sankranti!"),
+      l("ঘুড়ির সুতোয় টান, ছাদে ছাদে সাকরাইন। শুভ পৌষ সংক্রান্তি!", "A tug on the kite string, Shakrain on every rooftop. Happy Poush Sankranti!"),
+      l("নতুন ধান, নতুন গুড়, নতুন বছরের প্রথম পার্বণ। শুভেচ্ছা নিও!", "New rice, new jaggery, the first festival of the new year. Warm wishes!"),
+      l("গঙ্গাসাগরে পুণ্যস্নান হোক বা বাড়িতে পিঠে, দিনটা ভালো কাটুক।", "Whether it's a holy dip at Gangasagar or pithe at home, have a lovely day."),
+      l("দুধপুলির মতো মিষ্টি হোক তোমার বছর। শুভ পৌষ সংক্রান্তি!", "May your year be as sweet as dudh puli. Happy Poush Sankranti!"),
+      l("পৌষ মাসের শেষ দিনে সবার ঘরে আসুক লক্ষ্মী আর পিঠের থালা।", "On the last day of Poush, may Lakshmi and a plate of pithe come to every home."),
+    ],
+    tags: ["PoushSankranti", "MakarSankranti2027", "PithePuli"],
   },
   {
     id: "shivratri",
@@ -434,6 +478,8 @@ export const GREETING_PAGES: Record<GreetingDay, string> = {
   shivratri: "/shivratri-2027",
   dol: "/dol-purnima-2027",
   noboborsho: "/poila-boishakh-2027",
+  rash: "/rash-purnima-2026",
+  poush: "/poush-sankranti-2027",
 };
 
 /** Lines that fit any day (pandal-hopping life); appended to every day's own lines. */
@@ -486,8 +532,9 @@ export const KALI_WEEK_2026 = { from: "2026-11-01", kali: "2026-11-08", kaliEnd:
  * Puja Thu 11 Feb, Maha Shivratri Sat 6 Mar, Dol Purnima Mon 22 Mar, Poila Boishakh 15 Apr in West Bengal (14 Apr in Bangladesh).
  * Each card shows from about a week before until the day after.
  */
-export const SPRING_2027 = { saraswati: "2027-02-11", shivratri: "2027-03-06", dol: "2027-03-22", noboborshoBd: "2027-04-14", noboborsho: "2027-04-15" } as const;
+export const SPRING_2027 = { poush: "2027-01-15", saraswati: "2027-02-11", shivratri: "2027-03-06", dol: "2027-03-22", noboborshoBd: "2027-04-14", noboborsho: "2027-04-15" } as const;
 const SPRING_WINDOWS: [GreetingDay, string, string][] = [
+  ["poush", "2027-01-10", "2027-01-16"],
   ["saraswati", "2027-02-05", "2027-02-12"],
   ["shivratri", "2027-03-01", "2027-03-07"],
   ["dol", "2027-03-16", "2027-03-23"],
@@ -500,6 +547,7 @@ export function greetingFor(today: string, phase: Parameters<typeof greetingForP
   if (today >= k.from && today <= k.kaliEnd) return "kali";
   if (today > k.kaliEnd && today <= k.bhaiPhota) return "bhaiphota";
   if (today > k.bhaiPhota && today <= k.jagaddhatriEnd) return "jagaddhatri";
+  if (today > k.jagaddhatriEnd && today <= "2026-11-25") return "rash";
   for (const [id, from, to] of SPRING_WINDOWS) if (today >= from && today <= to) return id;
   return greetingForPhase(phase);
 }
