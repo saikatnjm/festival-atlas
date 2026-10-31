@@ -3,7 +3,8 @@ import type { Article, ArticleSource } from "@/data/blog/types";
 import { getDict } from "@/data/i18n";
 import { fmtDate } from "@/lib/dates";
 import { num, withLang, type L, type Lang } from "@/lib/i18n";
-import JsonLd, { abs, breadcrumbs } from "@/lib/jsonld";
+import JsonLd, { abs, breadcrumbs, orgRef } from "@/lib/jsonld";
+import SharePage from "@/components/festival/SharePage";
 
 export const BLOG_TEXT = {
   name: { bn: "পুজোর কথা", en: "Puja stories" },
@@ -54,8 +55,8 @@ export default function ArticlePage({ lang, a }: { lang: Lang; a: Article }) {
               datePublished: a.published,
               dateModified: a.updated,
               mainEntityOfPage: url,
-              author: { "@type": "Organization", name: "Pujo Guide" },
-              publisher: { "@type": "Organization", name: "Pujo Guide" },
+              author: orgRef(),
+              publisher: orgRef(),
             },
             {
               "@context": "https://schema.org",
@@ -71,7 +72,8 @@ export default function ArticlePage({ lang, a }: { lang: Lang; a: Article }) {
       <h1>{a.h1[lang]}</h1>
       <p className="lead">{a.lead[lang]}</p>
       <p className="fineprint">
-        {BLOG_TEXT.updated[lang]}: {dateLabel(a.updated, lang)}
+        {BLOG_TEXT.updated[lang]}: <time dateTime={a.updated}>{dateLabel(a.updated, lang)}</time> · {a.sources.length}{" "}
+        {BLOG_TEXT.sources[lang].toLowerCase()}
       </p>
 
       {a.body.map((b, i) => {
@@ -104,6 +106,8 @@ export default function ArticlePage({ lang, a }: { lang: Lang; a: Article }) {
           </p>
         );
       })}
+
+      <SharePage lang={lang} title={a.title[lang]} text={a.h1[lang]} />
 
       <section className="home-section" aria-labelledby="blog-faq">
         <h2 id="blog-faq">{BLOG_TEXT.faqH2[lang]}</h2>

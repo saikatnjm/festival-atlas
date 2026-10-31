@@ -7,7 +7,8 @@ import type { FestivalPage as Festival, FestivalSource } from "@/data/festivals/
 import { TIMINGS_TEXT } from "@/data/puja-timings";
 import { num, withLang, type L, type Lang } from "@/lib/i18n";
 import { fmtDate } from "@/lib/dates";
-import JsonLd, { abs, breadcrumbs } from "@/lib/jsonld";
+import JsonLd, { abs, breadcrumbs, orgRef } from "@/lib/jsonld";
+import SharePage from "./SharePage";
 
 const T = {
   source: { bn: "সূত্র", en: "Source" },
@@ -38,10 +39,21 @@ export default function FestivalPage({ lang, f }: { lang: Lang; f: Festival }) {
     { name: t.nav.home, path: withLang(lang, "/") },
     { name: f.h1[lang], path: withLang(lang, f.path) },
   ]);
+  const checked = `${fmtDate(f.lastChecked, lang)} ${num(Number(f.lastChecked.slice(0, 4)), lang)}`;
   const list = f.pandals ? sortPandals(pandals.filter((p) => p.puja === f.pandals?.puja)) : [];
   const cities = [...new Set(list.map((p) => p.city))];
   const ld = url
     ? [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: f.title[lang],
+          description: f.description[lang],
+          url,
+          inLanguage: lang,
+          dateModified: f.lastChecked,
+          publisher: orgRef(),
+        },
         ...f.events.map((e) => ({
           "@context": "https://schema.org",
           "@type": "Event",
@@ -86,6 +98,9 @@ export default function FestivalPage({ lang, f }: { lang: Lang; f: Festival }) {
       </p>
       <h1>{f.h1[lang]}</h1>
       <p className="lead">{f.lead[lang]}</p>
+      <p className="fineprint">
+        {T.checked[lang]}: <time dateTime={f.lastChecked}>{checked}</time>
+      </p>
 
       {f.timings ? (
       <section className="home-section" aria-labelledby="fest-timings">
@@ -232,15 +247,13 @@ export default function FestivalPage({ lang, f }: { lang: Lang; f: Festival }) {
         </dl>
       </section>
 
+      <SharePage lang={lang} title={f.title[lang]} text={f.h1[lang]} />
       <p className="cta-row">
         {f.links.map((x) => (
           <Link key={x.href} className={x.primary ? "button" : "button button-light"} href={withLang(lang, x.href)}>
             {x.label[lang]}
           </Link>
         ))}
-      </p>
-      <p className="fineprint">
-        {T.checked[lang]}: {fmtDate(f.lastChecked, lang)} {num(Number(f.lastChecked.slice(0, 4)), lang)}
       </p>
     </article>
   );

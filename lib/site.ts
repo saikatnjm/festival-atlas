@@ -53,7 +53,16 @@ export function clampText(text: string, max: number): string {
  * and the description is trimmed to snippet length. Share images come from each route's
  * opengraph-image file (setting `images` here would override those files, so it is left out).
  */
-export function pageMeta(opts: { lang: Lang; title: string; description: string; path: string; absoluteTitle?: boolean; region?: "wb" | "bd" | null }): Metadata {
+export function pageMeta(opts: {
+  lang: Lang;
+  title: string;
+  description: string;
+  path: string;
+  absoluteTitle?: boolean;
+  region?: "wb" | "bd" | null;
+  /** Articles and dated guides: og:type "article" with published/modified times. */
+  article?: { published: string; modified: string };
+}): Metadata {
   const configured = Boolean(siteUrl());
   const self = withLang(opts.lang, opts.path);
   const other: Lang = opts.lang === "en" ? "bn" : "en";
@@ -68,7 +77,7 @@ export function pageMeta(opts: { lang: Lang; title: string; description: string;
       title: opts.title,
       description,
       siteName: BRAND.name,
-      type: "website",
+      ...(opts.article ? { type: "article" as const, publishedTime: opts.article.published, modifiedTime: opts.article.modified } : { type: "website" as const }),
       locale: ogLocale(opts.lang, opts.region),
       alternateLocale: [ogLocale(other, opts.region)],
       url: configured ? self : undefined,

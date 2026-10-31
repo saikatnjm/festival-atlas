@@ -11,6 +11,7 @@ import { siteUrl } from "@/lib/site";
 import { THEME_BOOT_SCRIPT } from "@/lib/theme";
 import InstallHint from "@/components/InstallHint";
 import Analytics from "@/components/Analytics";
+import JsonLd, { orgLd } from "@/lib/jsonld";
 
 export const dynamicParams = false;
 
@@ -48,6 +49,7 @@ export default async function LangLayout({ children, params }: { children: React
   const { lang } = await params;
   if (!isLang(lang)) notFound();
   const t = getDict(lang);
+  const org = orgLd();
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
@@ -65,6 +67,7 @@ export default async function LangLayout({ children, params }: { children: React
           </LangProvider>
         </main>
         <SiteFooter lang={lang} t={t} />
+        {org ? <JsonLd data={org} /> : null}
         <InstallHint lang={lang} />
         <Analytics />
       </body>

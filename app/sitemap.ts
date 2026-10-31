@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { activities } from "@/data/play";
 import { ARTICLES } from "@/data/blog";
+import { FESTIVAL_PAGES } from "@/data/festivals/index";
 import { GREETINGS } from "@/data/play/greetings";
 import { pandals } from "@/data/pandals";
 import { collections } from "@/data/pandals/collections";
@@ -16,15 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/", priority: 1, changeFrequency: "daily" },
     { path: "/durga-puja-2026", priority: 0.95, changeFrequency: "daily" },
     { path: "/kali-puja-2026", priority: 0.95, changeFrequency: "daily" },
-    { path: "/jagaddhatri-puja-2026", priority: 0.95, changeFrequency: "daily" },
-    { path: "/durga-puja-2027", priority: 0.95, changeFrequency: "weekly" },
-    { path: "/calendar-2027", priority: 0.9, changeFrequency: "weekly" },
-    { path: "/ekadashi-2027", priority: 0.9, changeFrequency: "weekly" },
-    { path: "/purnima-2027", priority: 0.85, changeFrequency: "weekly" },
-    { path: "/saraswati-puja-2027", priority: 0.85, changeFrequency: "weekly" },
-    { path: "/shivratri-2027", priority: 0.85, changeFrequency: "weekly" },
-    { path: "/dol-purnima-2027", priority: 0.85, changeFrequency: "weekly" },
-    { path: "/poila-boishakh-2027", priority: 0.85, changeFrequency: "weekly" },
+    ...FESTIVAL_PAGES.map((f) => ({ path: f.path, priority: 0.9, changeFrequency: "weekly" as const, lastModified: f.lastChecked })),
     { path: "/local", priority: 0.9, changeFrequency: "daily" },
     { path: "/puja", priority: 0.9, changeFrequency: "weekly" },
     ...collections.map((c) => ({ path: `/puja/${c.slug}`, priority: 0.9, changeFrequency: "weekly" as const })),

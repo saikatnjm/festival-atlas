@@ -23,7 +23,7 @@ import { LUNAR_UPCOMING } from "@/data/festivals/lunar-2027";
 import { UPCOMING } from "@/data/festivals/upcoming";
 import { fun } from "@/data/i18n/fun";
 import { REGIONS, regionInfo, ui } from "@/data/local/content";
-import JsonLd, { abs } from "@/lib/jsonld";
+import JsonLd, { abs, orgRef } from "@/lib/jsonld";
 import { num, withLang } from "@/lib/i18n";
 import { langOf } from "@/lib/route";
 import { pageMeta } from "@/lib/site";
@@ -74,6 +74,7 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
             url,
             inLanguage: lang,
             description: t.meta.home.description,
+            publisher: orgRef(),
             // Sitelinks search box: the directory's ?q= search.
             potentialAction: {
               "@type": "SearchAction",

@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const lang = langOf(l);
   const a = getArticle(slug);
   if (!a) return {};
-  return pageMeta({ lang, title: a.title[lang], description: a.description[lang], path: `/blog/${slug}` });
+  return pageMeta({ lang, title: a.title[lang], description: a.description[lang], path: `/blog/${slug}`, article: { published: a.published, modified: a.updated } });
 }
 
 /** A blog article. */
