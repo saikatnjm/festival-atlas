@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return pageMeta({
     lang,
     // Titles carry the edition year for current pujas ("… Durga Puja 2026 in Kolkata, India").
-    title: p.year && p.year >= 2025 ? fmt(t.detailTitleYear, { name, year: p.year, place: placeLabel(p, lang) }, lang) : fmt(t.detailTitle, { name, place: placeLabel(p, lang) }, lang),
+    title: p.year && p.year >= 2025 ? fmt(t.detailTitleYear, { name, year: p.year, place: cityName(p.city, lang) }, lang) : fmt(t.detailTitle, { name, place: cityName(p.city, lang) }, lang),
     description,
     path: `/puja/${id}`,
     region: p.country === "IN" ? "wb" : p.country === "BD" ? "bd" : null,

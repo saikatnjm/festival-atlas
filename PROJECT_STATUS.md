@@ -3,6 +3,14 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## SEO pass, both languages (2026-10-31, later)
+Audited all 267 built pages (title/description length, one h1, canonical, hreflang, og/twitter image, JSON-LD, duplicates).
+- **Share images**: 8 indexed pages had none (`pageMeta` sets `openGraph`, which drops the parent's image). Added `opengraph-image.tsx` to `/local`, `/play`, `/passport`, `/postcard`, `/add-pandal`, `/feedback`, `/about`, `/me`. Don't put `images` in `pageMeta`: in this Next version config images override route image files.
+- **Titles**: `pageMeta` drops the " · Pujo Guide" suffix when the title would pass 60 characters; pandal titles use the city without the country. Overlong titles 175 → 41 (the rest are long pandal/result names).
+- **Descriptions**: `clampText()` trims meta/og/twitter descriptions to 160 characters at a word boundary. Overlong 119 → 1 (admin, noindex).
+- Kali Puja title shortened. Smoke: og:image on `/en/about`, twitter:image on `/bn/passport`, description length on a pandal page; image checks for `/en/about`, `/bn/play`.
+- Verified in the scratch copy (Node 24): build, typecheck, 50/50 tests, smoke 161/161.
+
 ## Roadmap + Kali Puja 2026 hub (2026-10-31)
 - **`docs/ROADMAP.md`**: calendar-ordered pipeline (Kali Puja → crackers → cards → Bhai Phota → Kali pandals → crowd safety → Jagaddhatri → Wrapped → … → Durga Puja 2027), with the sourced dates that drive it.
 - **`/kali-puja-2026`** (`app/[lang]/kali-puja-2026/page.tsx` + `opengraph-image.tsx`, data in `data/kali-puja.ts`): Sun 8 Nov; Amavasya and Nishita kaal for Kolkata (10:55–11:46 pm) and Dhaka (11:16 pm–12:08 am) from Drik Panchang; "what comes next" (Bhai Phota Wed 11 Nov per Drik via HinduTone; Jagaddhatri Navami Thu 19 Nov in Kolkata, Delhi listings say 18); firecracker rules (2026 order not out as of 25 Oct, 2025's 8–10 pm green-only shown as last year's); Naihati Boro Maa no-VIP-gate note (UNI, 25 Oct) + crowd tips; BD Shyama Puja holiday marked unconfirmed; FAQ + Event JSON-LD. Sitemap entry.

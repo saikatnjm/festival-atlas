@@ -39,6 +39,9 @@ no search-volume data was available beyond that, so the order below follows the 
 | 14 | **Safety-first route planner** for Durga Puja 2027: off-peak hours from wait/crowd data, rain advice | Queued | before Durga Puja 2027 |
 | 15 | **Push notifications** (free tier only) for the live board and saved pandals | Queued | before Durga Puja 2027 |
 
+## Done
+- 31 Oct: SEO pass on all pages, both languages (share images, title/description lengths); see PROJECT_STATUS.md.
+
 ## Housekeeping
 - Kojagori Lakshmi Puja (the October full moon after Dashami) has passed; removed from the Pujo menu with item 1.
 - Owner step still open from the SEO batch: `NEXT_PUBLIC_GSC_VERIFICATION` in Vercel.

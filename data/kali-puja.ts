@@ -94,7 +94,7 @@ export const CROWD = {
 };
 
 export const KALI_TEXT = {
-  title: l("কালীপুজো ২০২৬: তারিখ, অমাবস্যা ও নিশীথ কালের সময় (কলকাতা ও বাংলাদেশ)", "Kali Puja 2026: Date, Amavasya & Nishita Time (Kolkata & Bangladesh)"),
+  title: l("কালীপুজো ২০২৬: তারিখ ও নিশীথ কাল, কলকাতা ও বাংলাদেশ", "Kali Puja 2026: Date & Nishita Time, Kolkata & Bangladesh"),
   description: l(
     "কালীপুজো ২০২৬ রবিবার ৮ নভেম্বর। কলকাতায় নিশীথ কাল রাত ১০:৫৫–১১:৪৬, ঢাকায় ১১:১৬–১২:০৮। অমাবস্যার সময়, ভাইফোঁটা, বাজির নিয়ম, ভিড়ের খবর, সূত্রসহ।",
     "Kali Puja 2026 is Sunday 8 November. Nishita kaal: Kolkata 10:55–11:46 pm, Dhaka 11:16 pm–12:08 am. Amavasya times, Bhai Phota, firecracker rules and crowd news, with sources.",

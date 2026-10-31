@@ -72,6 +72,10 @@ const pages = [
   ["/sitemap.xml", 200, `${O}/en/durga-puja-2026`],
   ["/sitemap.xml", 200, `${O}/bn/durga-puja-2026`],
   ["/robots.txt", 200, "Allow: /"],
+  // Every indexed page has a share image and a snippet-length description.
+  ["/en/about", 200, 'property="og:image"'],
+  ["/bn/passport", 200, 'name="twitter:image"'],
+  ["/en/puja/santosh-mitra-square", 200, /<meta name="description" content="[^"]{60,170}"/],
   // Data: 2026 editions with history, Bangla names on /bn, Siliguri grouped outside Kolkata.
   ["/en/puja/santosh-mitra-square", 200, "Vande Mataram"],
   ["/en/puja/santosh-mitra-square", 200, "Past themes"],
@@ -165,6 +169,8 @@ const imagePages = [
   "/en/play/pandal-challenge/r/dead-phone",
   "/en/durga-puja-2026",
   "/en/kali-puja-2026",
+  "/en/about",
+  "/bn/play",
   "/en/puja/kolkata",
 ];
 // Icons: the SVG favicon and the generated home-screen PNG (app/apple-icon.tsx; the URL has no extension).
