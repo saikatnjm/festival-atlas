@@ -78,7 +78,7 @@ export const BHOOT_CHATURDASHI: Article = {
     {
       kind: "p",
       text: l(
-        "নামে ভূত থাকলেও মূল ভাবনাটা ভয়ের নয়। কথিত আছে, অন্ধকার রাতের আগের সন্ধ্যায় প্রয়াতদের আত্মা পৃথিবীতে প্রিয়জনদের দেখতে নেমে আসে।",
+        "নামে ভূত থাকলেও মূল ভাবনাটা ভয়ের নয়। কথিত আছে, অন্ধকার রাতের আগের সন্ধেয় প্রয়াতদের আত্মা পৃথিবীতে প্রিয়জনদের দেখতে নেমে আসে।",
         "Despite the name, the idea is not really about fear. The belief is that on the eve of the dark night the souls of the deceased come down to earth to visit their dear ones.",
       ),
       source: WIKI_BHOOT,

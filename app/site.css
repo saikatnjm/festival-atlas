@@ -2428,7 +2428,8 @@ h3 {
   border-radius: var(--radius);
   box-shadow: 4px 4px 0 var(--teal);
 }
-.blog-card h2 {
+.blog-card h2,
+.blog-card h3 {
   margin: 0 0 var(--space-1);
   font-size: 1.2rem;
 }

@@ -20,6 +20,7 @@ import EventList from "@/components/local/EventList";
 import { playStrings } from "@/components/play/strings";
 import { events } from "@/data/events/events";
 import { LUNAR_UPCOMING } from "@/data/festivals/lunar-2027";
+import { ARTICLES } from "@/data/blog";
 import { UPCOMING } from "@/data/festivals/upcoming";
 import { fun } from "@/data/i18n/fun";
 import { REGIONS, regionInfo, ui } from "@/data/local/content";
@@ -115,6 +116,25 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
         <ComingUp lang={lang} items={[...UPCOMING, ...LUNAR_UPCOMING].sort((a, b) => a.date.localeCompare(b.date))} />
         <p>
           <Link href={withLang(lang, "/calendar-2027")}>{lang === "bn" ? "📅 পুরো ক্যালেন্ডার ২০২৭ →" : "📅 The full 2027 calendar →"}</Link>
+        </p>
+      </section>
+
+      <section className="home-section" aria-labelledby="home-stories">
+        <h2 id="home-stories">{lang === "bn" ? "📖 পুজোর কথা" : "📖 Puja stories"}</h2>
+        <ul className="blog-list">
+          {ARTICLES.slice(0, 3).map((a) => (
+            <li key={a.slug} className="blog-card">
+              <h3>
+                <Link href={withLang(lang, `/blog/${a.slug}`)}>
+                  {a.icon} {a.h1[lang]}
+                </Link>
+              </h3>
+              <p>{a.description[lang]}</p>
+            </li>
+          ))}
+        </ul>
+        <p>
+          <Link href={withLang(lang, "/blog")}>{lang === "bn" ? "সব গল্প →" : "All stories →"}</Link>
         </p>
       </section>
 

@@ -4,6 +4,7 @@ import { getDict } from "@/data/i18n";
 import type { Region } from "@/data/events/events";
 import { CRACKERS, CROWD, KALI_2026, KALI_PANDALS_TEXT as KP, KALI_TEXT as T, KALI_TIMINGS, KALI_WEEK } from "@/data/kali-puja";
 import { areaOf, cityName, nameOf, pandals, pujaOf, sortPandals } from "@/data/pandals";
+import { getArticle } from "@/data/blog";
 import { regionInfo } from "@/data/local/content";
 import { TIMINGS_TEXT } from "@/data/puja-timings";
 import { LANGS, withLang } from "@/lib/i18n";
@@ -17,6 +18,7 @@ export const dynamicParams = false;
 export const generateStaticParams = () => LANGS.map((lang) => ({ lang }));
 
 const PATH = "/kali-puja-2026";
+const KALI_STORIES = ["bhoot-chaturdashi-2026", "kali-puja-and-diwali", "naihati-boro-maa-kali-puja", "tarapith-kali-puja", "shyama-puja-bangladesh", "bhai-phota-rituals"];
 const REGIONS: Region[] = ["wb", "bd"];
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
@@ -216,15 +218,22 @@ export default async function KaliPujaPage({ params }: { params: Promise<Params>
         </dl>
       </section>
 
+      <section className="home-section" aria-labelledby="kali-stories">
+        <h2 id="kali-stories">{lang === "bn" ? "📖 কালীপুজোর গল্প" : "📖 Kali Puja stories"}</h2>
+        <ul className="link-list">
+          {KALI_STORIES.map((slug) => getArticle(slug))
+            .filter((a) => a !== undefined)
+            .map((a) => (
+              <li key={a.slug}>
+                <Link href={withLang(lang, `/blog/${a.slug}`)}>{a.h1[lang]}</Link>
+              </li>
+            ))}
+        </ul>
+      </section>
+
       <p className="cta-row">
         <Link className="button" href={withLang(lang, "/greetings/kali")}>
           🪔 {lang === "bn" ? "কালীপুজোর শুভেচ্ছা কার্ড বানাও" : "Make a Kali Puja greeting card"}
-        </Link>
-        <Link className="button button-light" href={withLang(lang, "/blog/kali-puja-and-diwali")}>
-          📖 {lang === "bn" ? "কালীপুজো আর দীপাবলি: গল্প" : "Kali Puja and Diwali: the story"}
-        </Link>
-        <Link className="button button-light" href={withLang(lang, "/blog/naihati-boro-maa-kali-puja")}>
-          📖 {lang === "bn" ? "নৈহাটির বড়মা" : "Naihati's Boro Maa"}
         </Link>
         <Link className="button button-light" href={withLang(lang, "/jagaddhatri-puja-2026")}>
           🏮 {lang === "bn" ? "জগদ্ধাত্রী পুজো ২০২৬" : "Jagaddhatri Puja 2026"}

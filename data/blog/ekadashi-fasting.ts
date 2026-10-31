@@ -6,7 +6,7 @@ import type { L } from "@/lib/i18n";
 const l = (bn: string, en: string): L => ({ bn, en });
 
 const WIKI = { title: "Wikipedia, Ekadashi", url: "https://en.wikipedia.org/wiki/Ekadashi" };
-const DRIK = { title: "Drik Panchang, Ekadashi dates for Smarthas (2027, Kolkata)", url: "https://www.drikpanchang.com/vrats/ekadashidates.html?year=2027&geoname-id=1275004" };
+const DRIK = { title: "Drik Panchang, Ekadashi dates for Smartas (2027, Kolkata)", url: "https://www.drikpanchang.com/vrats/ekadashidates.html?year=2027&geoname-id=1275004" };
 
 export const EKADASHI_FASTING: Article = {
   slug: "ekadashi-fasting-rules",
@@ -62,8 +62,8 @@ export const EKADASHI_FASTING: Article = {
     {
       kind: "tip",
       text: l(
-        "ডায়াবেটিস, প্রেশার, গর্ভাবস্থা বা অন্য কোনও শারীরিক সমস্যা থাকলে, বা ওষুধ খেলে, উপবাসের আগে ডাক্তারের পরামর্শ নাও। বাচ্চা আর বয়স্কদের জন্য কড়া উপবাস ঠিক নয়। শরীর খারাপ লাগলে থেমে যাও।",
-        "If you have a health condition, are pregnant or take medicines, check with a doctor before fasting. Strict fasts are not meant for children or the elderly. If you feel unwell, stop.",
+        "ডায়াবেটিস, প্রেশার, গর্ভাবস্থা বা অন্য কোনও শারীরিক সমস্যা থাকলে, বা ওষুধ খেলে, উপবাসের আগে ডাক্তারের পরামর্শ নাও। শরীর খারাপ লাগলে থেমে যাও।",
+        "If you have a health condition, are pregnant or take medicines, check with a doctor before fasting. If you feel unwell, stop.",
       ),
     },
     { kind: "h2", text: l("পারণ: উপবাস ভাঙা", "Parana: breaking the fast") },
@@ -88,7 +88,7 @@ export const EKADASHI_FASTING: Article = {
       kind: "p",
       text: l(
         "দ্রিক পঞ্চাঙ্গের এই পাতা স্মার্তদের জন্য একাদশীর তালিকা। বৈষ্ণবদের জন্য আলাদা তালিকা আছে, আর তাদের উপবাসের দিন স্মার্তদের একদিন পরে পড়তে পারে। কারণ হিসেবে পাতাটি শুধু এটুকু বলে যে পঞ্চাঙ্গে দিন শুরু আর শেষ হয় সূর্যোদয়ে, বিস্তারিত ব্যাখ্যা দেয়নি।",
-        "This Drik Panchang page lists Ekadashi days for Smarthas. Vaishnavas have a separate list, and their fasting day might fall one day after the Smartha day. On why, the page only says that in Panchang a day starts and ends with sunrise; it gives no fuller explanation.",
+        "This Drik Panchang page lists Ekadashi days for Smartas. Vaishnavas have a separate list, and their fasting day might fall one day after the Smarta day. On why, the page only says that in Panchang a day starts and ends with sunrise; it gives no fuller explanation.",
       ),
       source: DRIK,
     },
@@ -119,7 +119,7 @@ export const EKADASHI_FASTING: Article = {
     },
     {
       q: l("স্মার্ত আর বৈষ্ণব একাদশী কি আলাদা দিনে পড়ে?", "Are Smarta and Vaishnava Ekadashi on different days?"),
-      a: l("কখনও কখনও। বৈষ্ণবদের উপবাসের দিন স্মার্তদের একদিন পরে হতে পারে।", "Sometimes. The Vaishnava fasting day might be one day after the Smartha day."),
+      a: l("কখনও কখনও। বৈষ্ণবদের উপবাসের দিন স্মার্তদের একদিন পরে হতে পারে।", "Sometimes. The Vaishnava fasting day might be one day after the Smarta day."),
     },
   ],
   related: [

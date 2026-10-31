@@ -3,6 +3,11 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## Blog batches 4–5, Kali page stories, home stories (2026-10-31, evening)
+- New sourced articles (drafted by cheap-model agents, Bangla-reviewed by another, checked by hand): Tarapith on Kali Puja night, Shyama Puja in Bangladesh (Dhakeshwari, Ramna; holiday status marked unconfirmed), Nabanna, Chhath Puja 2026 in Kolkata (Sun 15 Nov; Drik sunrise/sunset arghya times; no ghat list without a dated source), Poush Mela Shantiniketan (2025: 23–28 Dec; 2026 not announced), Kolkata Book Fair 2027 (50th, 22 Jan–3 Feb per UNI 7 Sep 2026). 15 articles in total. Removed unverifiable details (Bamakhepa's dates conflict on Wikipedia; an unclear food name; an unsourced health line).
+- Kali Puja page: "Kali Puja stories" list (6 articles) and two new FAQ answers (same day as Diwali; Bhoot Chaturdashi Sat 7 Nov). Home: "Puja stories" section with the latest three. "Coming up" now includes Chhath Puja and the Book Fair.
+- Verified in the scratch copy (Node 24): 56/56 tests, build (408 pages), typecheck, smoke 260/260.
+
 ## AI visibility, Rash Purnima 2026, Poush Sankranti 2027 (2026-10-31, afternoon)
 - **AI/search visibility** (from a cheap-model audit): `/llms.txt` (generated from the festival registry, articles and greetings; `app/llms.txt/route.ts`), explicit allow rules for AI crawlers in `app/robots.ts` (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended…; admin/API still blocked), Organization JSON-LD on every page (`orgLd`, logo = `/apple-icon`) referenced by articles and the home WebSite, WebPage node with `dateModified` and a visible `<time>` "last checked" under the lead on festival pages, `og:type=article` on blog posts, festival pages in the sitemap with `lastModified` via `data/festivals/index.ts` (import it as `@/data/festivals/index`: an older `data/festivals.ts` shadows the folder).
 - **IndexNow** (Bing, Yandex…): key file `public/880f85be5d1a7f2a9a6bf0deec30bb06.txt`, `npm run indexnow` (or `node scripts/indexnow.mjs [paths]`) after a deploy pings every sitemap URL. **Owner step:** run it once after this deploy is live; also add the site to Bing Webmaster Tools (`NEXT_PUBLIC_BING_SITE_VERIFICATION`).

@@ -131,6 +131,14 @@ export const KALI_TEXT = {
       a: l("কলকাতায় ৮ নভেম্বর সকাল ১১:২৭ থেকে ৯ নভেম্বর দুপুর ১২:৩১; ঢাকায় ৮ নভেম্বর সকাল ১১:৫৭ থেকে ৯ নভেম্বর দুপুর ১:০১।", "Kolkata: 8 Nov 11:27 am to 9 Nov 12:31 pm. Dhaka: 8 Nov 11:57 am to 9 Nov 1:01 pm."),
     },
     {
+      q: l("কালীপুজো আর দীপাবলি কি একই দিনে?", "Are Kali Puja and Diwali on the same day in 2026?"),
+      a: l("হ্যাঁ, ২০২৬-এ দুটোই রবিবার ৮ নভেম্বর, কার্তিক অমাবস্যার রাতে (দ্রিক পঞ্চাঙ্গ)।", "Yes: in 2026 both fall on Sunday 8 November, the Kartik new-moon night (Drik Panchang)."),
+    },
+    {
+      q: l("২০২৬-এ ভূত চতুর্দশী কবে?", "When is Bhoot Chaturdashi in 2026?"),
+      a: l("শনিবার ৭ নভেম্বর, কালীপুজোর আগের দিন; কলকাতায় চতুর্দশী তিথি ৭ নভেম্বর সকাল ১০:৪৭ থেকে ৮ নভেম্বর সকাল ১১:২৭ (দ্রিক পঞ্চাঙ্গ, কালী চৌদশ)।", "Saturday 7 November, the day before Kali Puja; in Kolkata the Chaturdashi tithi runs from 7 Nov 10:47 am to 8 Nov 11:27 am (Drik Panchang, Kali Chaudas)."),
+    },
+    {
       q: l("২০২৬-এ ভাইফোঁটা কবে?", "When is Bhai Phota in 2026?"),
       a: l("বুধবার ১১ নভেম্বর, দ্রিক পঞ্চাঙ্গ অনুযায়ী। কোনো কোনো পঞ্জিকায় দিন আলাদা হতে পারে।", "Wednesday 11 November, per Drik Panchang. Some panjikas may differ."),
     },

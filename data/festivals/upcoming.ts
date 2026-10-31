@@ -18,9 +18,11 @@ const l = (bn: string, en: string): L => ({ bn, en });
 export const UPCOMING: Upcoming[] = [
   { date: "2026-11-08", icon: "🌑", name: l("কালীপুজো", "Kali Puja"), href: "/kali-puja-2026" },
   { date: "2026-11-11", icon: "🧿", name: l("ভাইফোঁটা", "Bhai Phota"), href: "/greetings/bhaiphota" },
+  { date: "2026-11-15", icon: "🌅", name: l("ছট পুজো", "Chhath Puja"), href: "/blog/chhath-puja-2026-kolkata" },
   { date: "2026-11-19", icon: "🏮", name: l("জগদ্ধাত্রী পুজো", "Jagaddhatri Puja"), href: "/jagaddhatri-puja-2026" },
   { date: "2026-11-24", icon: "🪷", name: l("রাস পূর্ণিমা", "Rash Purnima"), href: "/rash-purnima-2026" },
   { date: "2027-01-15", icon: "🍘", name: l("পৌষ সংক্রান্তি", "Poush Sankranti"), href: "/poush-sankranti-2027" },
+  { date: "2027-01-22", end: "2027-02-03", icon: "📖", name: l("কলকাতা বইমেলা", "Kolkata Book Fair"), href: "/blog/kolkata-book-fair-2027" },
   { date: "2027-02-11", icon: "📚", name: l("সরস্বতী পুজো", "Saraswati Puja"), href: "/saraswati-puja-2027" },
   { date: "2027-03-06", icon: "🔱", name: l("শিবরাত্রি", "Shivratri"), href: "/shivratri-2027" },
   { date: "2027-03-22", icon: "🎨", name: l("দোল", "Dol"), href: "/dol-purnima-2027" },
