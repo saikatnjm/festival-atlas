@@ -24,7 +24,7 @@ import { KALI_2026 } from "../data/kali-puja.ts";
 import { SARASWATI_2027 } from "../data/festivals/saraswati-2027.ts";
 import { SHIVRATRI_2027 } from "../data/festivals/shivratri-2027.ts";
 import { POILA_BOISHAKH_2027 } from "../data/festivals/poila-boishakh-2027.ts";
-import { EKADASHI_2027, EKADASHI_ROWS, PURNIMA_2027, PURNIMA_ROWS, dayLabel, timeLabel } from "../data/festivals/lunar-2027.ts";
+import { AMAVASYA_2027, AMAVASYA_ROWS, EKADASHI_2027, EKADASHI_ROWS, PURNIMA_2027, PURNIMA_ROWS, dayLabel, timeLabel } from "../data/festivals/lunar-2027.ts";
 import { JAGADDHATRI_2026 } from "../data/festivals/jagaddhatri-2026.ts";
 import { CALENDAR_2027 } from "../data/festivals/calendar-2027.ts";
 import { DOL_2027 } from "../data/festivals/dol-2027.ts";
@@ -318,6 +318,8 @@ test("spring 2027 cards follow the festival pages' sourced dates", () => {
   assert.equal(at("2027-03-06"), "shivratri");
   assert.equal(at("2027-03-22"), "dol");
   assert.equal(at("2027-01-15"), "poush");
+  assert.equal(at("2026-12-25"), "barodin");
+  assert.equal(at("2027-01-01"), "newyear");
   assert.equal(at("2026-11-24"), "rash");
   assert.equal(at("2027-04-14"), "noboborsho");
   assert.equal(at("2027-04-15"), "noboborsho");
@@ -325,7 +327,7 @@ test("spring 2027 cards follow the festival pages' sourced dates", () => {
 });
 
 test("festival pages: bilingual, sourced rows, titles and descriptions within limits", () => {
-  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027, RASH_2026, POUSH_SANKRANTI_2027]) {
+  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027, AMAVASYA_2027, RASH_2026, POUSH_SANKRANTI_2027]) {
     for (const k of ["title", "description", "h1", "lead"]) assert.ok(f[k].bn && f[k].en, `${f.path} ${k}`);
     assert.ok(f.title.en.length <= 60, `${f.path} title ${f.title.en.length}`);
     assert.ok(f.description.en.length <= 160 && f.description.bn.length <= 170, `${f.path} description`);
@@ -349,6 +351,9 @@ test("Ekadashi list: ordered, well-formed, labels formatted without computing da
   const pd = PURNIMA_ROWS.map((r) => r[1]);
   assert.deepEqual([...pd].sort(), pd, "Purnima rows in date order");
   assert.equal(PURNIMA_ROWS.filter((r) => r[1].startsWith("2027")).length, 12);
+  const ad = AMAVASYA_ROWS.map((r) => r[1]);
+  assert.deepEqual([...ad].sort(), ad, "Amavasya rows in date order");
+  for (const [, date, darsha, ks, ke, ds, de] of AMAVASYA_ROWS) assert.ok(ks < ke && ds < de && (darsha === "" || darsha < date));
   for (const [, date, vrat, ks, ke, ds, de] of PURNIMA_ROWS) {
     assert.ok(ks < ke && ds < de && (vrat === "" || vrat < date));
   }

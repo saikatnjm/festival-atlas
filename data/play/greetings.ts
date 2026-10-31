@@ -26,13 +26,16 @@ export type GreetingDay =
   | "noboborsho"
   | "dol"
   | "rash"
-  | "poush";
+  | "poush"
+  | "barodin"
+  | "newyear";
 
-export type GreetingSeason = "durga" | "kali" | "spring";
+export type GreetingSeason = "durga" | "kali" | "winter" | "spring";
 
 /** Chip groups, current season first. */
 export const GREETING_SEASONS: { id: GreetingSeason; name: L }[] = [
   { id: "kali", name: l("কালীপুজো থেকে রাস", "Kali Puja to Rash") },
+  { id: "winter", name: l("বড়দিন ও নতুন বছর", "Christmas & New Year") },
   { id: "durga", name: l("দুর্গাপুজো", "Durga Puja") },
   { id: "spring", name: l("পৌষ সংক্রান্তি থেকে নববর্ষ", "Poush Sankranti to New Year") },
 ];
@@ -348,6 +351,48 @@ export const GREETINGS: Greeting[] = [
     tags: ["ShubhoRashPurnima", "RashPurnima2026", "Nabadwip"],
   },
   {
+    id: "barodin",
+    icon: "🎄",
+    name: l("বড়দিন", "Christmas"),
+    headline: l("শুভ বড়দিন!", "Merry Christmas!"),
+    char: "selfie",
+    mood: "happy",
+    season: "winter",
+    pool: false,
+    lines: [
+      l("পার্ক স্ট্রিটের আলো, প্লাম কেক আর শীতের রোদ। শুভ বড়দিন!", "Park Street lights, a slice of plum cake and winter sun. Merry Christmas!"),
+      l("কমলালেবু, জয়নগরের মোয়া আর প্লাম কেক: কলকাতার বড়দিন এটাই।", "Oranges, Joynagar moa and plum cake: that's a Kolkata Christmas."),
+      l("ভালোবাসা, শান্তি আর একটু বেশি কেক। শুভ বড়দিন!", "Love, peace and a little extra cake. Merry Christmas!"),
+      l("শীতের রাতে তারা-জ্বলা গাছ, মন ভরা খুশি। শুভ বড়দিন!", "A tree full of stars on a winter night, a heart full of joy. Merry Christmas!"),
+      l("এ বছরের সব না-পাওয়া উপহার এক এক করে তোমার কাছে আসুক।", "May every gift you missed this year find its way to you."),
+      l("চিড়িয়াখানা, পিকনিক আর রোদে বসে কমলালেবু। শুভ বড়দিন!", "The zoo, a picnic and oranges in the sun. Merry Christmas!"),
+      l("উষ্ণ কম্বল, গরম চা আর প্রিয় মানুষ পাশে। শুভ বড়দিন!", "A warm blanket, hot tea and your favourite people. Merry Christmas!"),
+      l("আলোয় ভরে উঠুক তোমার ঘর আর মন। শুভ বড়দিন!", "May light fill your home and your heart. Merry Christmas!"),
+    ],
+    tags: ["MerryChristmas", "ShubhoBorodin", "KolkataChristmas"],
+  },
+  {
+    id: "newyear",
+    icon: "🎆",
+    name: l("নতুন বছর", "New Year"),
+    headline: l("শুভ নববর্ষ ২০২৭!", "Happy New Year 2027!"),
+    char: "hansjaru",
+    mood: "wow",
+    season: "winter",
+    pool: false,
+    lines: [
+      l("নতুন ক্যালেন্ডার, নতুন স্বপ্ন, পুরোনো বন্ধুরা পাশে। হ্যাপি নিউ ইয়ার!", "A new calendar, new dreams, old friends by your side. Happy New Year!"),
+      l("২০২৭ হোক হাসির, সুস্থতার আর অনেক পুজো-পার্বণের বছর।", "May 2027 be a year of laughter, good health and many festivals."),
+      l("রেজোলিউশন: এবার পুজোয় সব প্যান্ডেল ঘোরা। শুভ নববর্ষ!", "Resolution: see every pandal this Puja. Happy New Year!"),
+      l("মাঝরাতের আতশবাজি আর তোমার জন্য অনেক শুভেচ্ছা।", "Midnight fireworks, and lots of good wishes for you."),
+      l("পুরোনো বছরের মনখারাপ ফেলে, নতুন বছরে শুধু আলো।", "Leave last year's blues behind; only light in the new one."),
+      l("নতুন বছরে নতুন রাস্তা, আর পুরোনো পাড়ার আড্ডা। শুভ নববর্ষ!", "New roads in the new year, and the same old para adda. Happy New Year!"),
+      l("বারো মাসে তেরো পার্বণ, আর প্রতিটায় তোমায় পাশে চাই।", "Thirteen festivals in twelve months, and you by my side for each."),
+      l("ক্যালেন্ডার বদলাল, ভালোবাসা একই রইল। হ্যাপি নিউ ইয়ার!", "The calendar changed; the love stayed the same. Happy New Year!"),
+    ],
+    tags: ["HappyNewYear2027", "ShubhoNoboborsho", "NewYear"],
+  },
+  {
     id: "saraswati",
     icon: "📚",
     name: l("সরস্বতী পুজো", "Saraswati Puja"),
@@ -479,6 +524,8 @@ export const GREETING_PAGES: Record<GreetingDay, string> = {
   dol: "/dol-purnima-2027",
   noboborsho: "/poila-boishakh-2027",
   rash: "/rash-purnima-2026",
+  barodin: "/calendar-2027",
+  newyear: "/calendar-2027",
   poush: "/poush-sankranti-2027",
 };
 
@@ -548,6 +595,8 @@ export function greetingFor(today: string, phase: Parameters<typeof greetingForP
   if (today > k.kaliEnd && today <= k.bhaiPhota) return "bhaiphota";
   if (today > k.bhaiPhota && today <= k.jagaddhatriEnd) return "jagaddhatri";
   if (today > k.jagaddhatriEnd && today <= "2026-11-25") return "rash";
+  if (today >= "2026-12-20" && today <= "2026-12-26") return "barodin";
+  if (today >= "2026-12-27" && today <= "2027-01-02") return "newyear";
   for (const [id, from, to] of SPRING_WINDOWS) if (today >= from && today <= to) return id;
   return greetingForPhase(phase);
 }

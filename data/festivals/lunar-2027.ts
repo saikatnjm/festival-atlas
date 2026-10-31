@@ -222,6 +222,7 @@ export const EKADASHI_2027: FestivalPage = {
   events: [],
   links: [
     { href: "/purnima-2027", label: l("🌕 পূর্ণিমা ২০২৭", "🌕 Purnima 2027"), primary: true },
+    { href: "/amavasya-2027", label: l("🌑 অমাবস্যা ২০২৭", "🌑 Amavasya 2027") },
     { href: "/saraswati-puja-2027", label: l("সরস্বতী পুজো ২০২৭", "Saraswati Puja 2027") },
     { href: "/shivratri-2027", label: l("শিবরাত্রি ২০২৭", "Shivratri 2027") },
     { href: "/jagaddhatri-puja-2026", label: l("জগদ্ধাত্রী পুজো ২০২৬", "Jagaddhatri Puja 2026") },
@@ -359,7 +360,131 @@ export const PURNIMA_2027: FestivalPage = {
   events: [],
   links: [
     { href: "/ekadashi-2027", label: l("🪔 একাদশী ২০২৭", "🪔 Ekadashi 2027"), primary: true },
+    { href: "/amavasya-2027", label: l("🌑 অমাবস্যা ২০২৭", "🌑 Amavasya 2027") },
     { href: "/dol-purnima-2027", label: l("দোলযাত্রা ২০২৭", "Dol Purnima 2027") },
+    { href: "/calendar-2027", label: l("📅 পুজোর ক্যালেন্ডার ২০২৭", "📅 Festival calendar 2027") },
+  ],
+  lastChecked: "2026-10-31",
+};
+
+// ---- Amavasya (/amavasya-2027) ----
+// Drik Panchang's yearly Amavasya pages for Kolkata and Dhaka (fetched 31 Oct 2026, re-checked twice). Where
+// Drik prints a "Darsha Amavasya" a day before the named-month Amavasya, both days are shown.
+
+const AMAVASYA_KOL = (y: number) => ({ title: `Drik Panchang, ${y} Amavasya dates for Kolkata`, url: `https://www.drikpanchang.com/vrats/amavasyadates.html?year=${y}&geoname-id=1275004` });
+const AMAVASYA_DHAKA = (y: number) => ({ title: `Drik Panchang, ${y} Amavasya dates for Dhaka`, url: `https://www.drikpanchang.com/vrats/amavasyadates.html?year=${y}&geoname-id=1185241` });
+
+const AMAVASYA_NAMES: Record<string, L> = {
+  kartika: l("কার্তিক অমাবস্যা", "Kartika Amavasya"),
+  margashirsha: l("অগ্রহায়ণ (মার্গশীর্ষ) অমাবস্যা", "Margashirsha Amavasya"),
+  pausha: l("পৌষ অমাবস্যা", "Pausha Amavasya"),
+  magha: l("মাঘ অমাবস্যা", "Magha Amavasya"),
+  phalguna: l("ফাল্গুন অমাবস্যা", "Phalguna Amavasya"),
+  chaitra: l("চৈত্র অমাবস্যা", "Chaitra Amavasya"),
+  vaishakha: l("বৈশাখ অমাবস্যা", "Vaishakha Amavasya"),
+  jyeshtha: l("জ্যৈষ্ঠ অমাবস্যা", "Jyeshtha Amavasya"),
+  ashadha: l("আষাঢ় অমাবস্যা", "Ashadha Amavasya"),
+  shravana: l("শ্রাবণ অমাবস্যা", "Shravana Amavasya"),
+  bhadrapada: l("ভাদ্র অমাবস্যা", "Bhadrapada Amavasya"),
+  ashwina: l("আশ্বিন অমাবস্যা", "Ashwina Amavasya"),
+};
+
+/** Festivals on or around an Amavasya (from our sourced festival pages and the 2027 Bengali calendar). */
+const AMAVASYA_NOTE: Record<string, { text: L; href?: string }> = {
+  "2026-11-09": { text: l("কালীপুজো রবি ৮ নভেম্বর", "Kali Puja Sun 8 Nov"), href: "/kali-puja-2026" },
+  "2027-04-06": { text: l("ঢাকার পাতায় চৈত্র অমাবস্যা বুধ ৭ এপ্রিল", "Dhaka's page lists Chaitra Amavasya on Wed 7 Apr") },
+  "2027-09-30": { text: l("মহালয়া বুধ ২৯ সেপ্টেম্বর", "Mahalaya Wed 29 Sep"), href: "/durga-puja-2027" },
+  "2027-10-29": { text: l("কালীপুজো বৃহস্পতি ২৮ অক্টোবর", "Kali Puja Thu 28 Oct"), href: "/calendar-2027" },
+};
+
+/** [name, main date, Darsha date ("" = none printed), Kolkata start, end, Dhaka start, end]. */
+type AmavasyaRow = [keyof typeof AMAVASYA_NAMES, string, string, string, string, string, string];
+export const AMAVASYA_ROWS: AmavasyaRow[] = [
+  ["kartika", "2026-11-09", "2026-11-08", "2026-11-08 11:27", "2026-11-09 12:31", "2026-11-08 11:57", "2026-11-09 13:01"],
+  ["margashirsha", "2026-12-08", "", "2026-12-08 04:12", "2026-12-09 06:21", "2026-12-08 04:42", "2026-12-09 06:51"],
+  ["pausha", "2027-01-07", "", "2027-01-06 23:13", "2027-01-08 01:53", "2027-01-06 23:43", "2027-01-08 02:23"],
+  ["magha", "2027-02-06", "", "2027-02-05 19:05", "2027-02-06 21:25", "2027-02-05 19:35", "2027-02-06 21:55"],
+  ["phalguna", "2027-03-08", "", "2027-03-07 13:46", "2027-03-08 14:58", "2027-03-07 14:16", "2027-03-08 15:28"],
+  ["chaitra", "2027-04-06", "", "2027-04-06 05:40", "2027-04-07 05:20", "2027-04-06 06:10", "2027-04-07 05:50"],
+  ["vaishakha", "2027-05-06", "", "2027-05-05 18:16", "2027-05-06 16:27", "2027-05-05 18:46", "2027-05-06 16:57"],
+  ["jyeshtha", "2027-06-04", "", "2027-06-04 04:05", "2027-06-05 01:09", "2027-06-04 04:35", "2027-06-05 01:39"],
+  ["ashadha", "2027-07-04", "2027-07-03", "2027-07-03 12:05", "2027-07-04 08:31", "2027-07-03 12:35", "2027-07-04 09:01"],
+  ["shravana", "2027-08-02", "", "2027-08-01 19:19", "2027-08-02 15:34", "2027-08-01 19:49", "2027-08-02 16:04"],
+  ["bhadrapada", "2027-08-31", "", "2027-08-31 02:40", "2027-08-31 23:10", "2027-08-31 03:10", "2027-08-31 23:40"],
+  ["ashwina", "2027-09-30", "2027-09-29", "2027-09-29 10:54", "2027-09-30 08:05", "2027-09-29 11:24", "2027-09-30 08:35"],
+  ["kartika", "2027-10-29", "", "2027-10-28 20:47", "2027-10-29 19:05", "2027-10-28 21:17", "2027-10-29 19:35"],
+  ["margashirsha", "2027-11-28", "2027-11-27", "2027-11-27 09:07", "2027-11-28 08:53", "2027-11-27 09:37", "2027-11-28 09:23"],
+  ["pausha", "2027-12-27", "", "2027-12-27 00:22", "2027-12-28 01:41", "2027-12-27 00:52", "2027-12-28 02:11"],
+];
+
+const amavasyaTable = (from: string, to: string, id: string, h2: L, year: number): FestivalTable => ({
+  id,
+  h2,
+  caption: l(`অমাবস্যা ${bnNum(String(year))}: কলকাতা (IST) আর ঢাকা (BST)`, `Amavasya ${year}: Kolkata (IST) and Dhaka (BST)`),
+  columns: [l("অমাবস্যা", "Amavasya"), l("তারিখ", "Date"), l("তিথি, কলকাতা", "Tithi, Kolkata"), l("তিথি, ঢাকা", "Tithi, Dhaka"), l("দর্শ / উৎসব", "Darsha / festival")],
+  rows: AMAVASYA_ROWS.filter((r) => r[1] >= from && r[1] <= to).map(([name, date, darsha, ks, ke, ds, de]) => {
+    const note = AMAVASYA_NOTE[date];
+    const notes: L[] = [];
+    if (darsha) notes.push({ bn: `দর্শ অমাবস্যা ${dayLabel(darsha, "bn", false)}`, en: `Darsha Amavasya ${dayLabel(darsha, "en", false)}` });
+    if (note) notes.push(note.text);
+    return {
+      cells: [AMAVASYA_NAMES[name], day(date), range(ks, ke), range(ds, de), notes.length ? { bn: notes.map((n) => n.bn).join(" · "), en: notes.map((n) => n.en).join(" · ") } : l("—", "—")],
+      source: AMAVASYA_KOL(year),
+      ...(note?.href ? { href: note.href } : {}),
+    };
+  }),
+});
+
+export const AMAVASYA_2027: FestivalPage = {
+  path: "/amavasya-2027",
+  title: l("অমাবস্যা ২০২৭: সব তারিখ ও তিথির সময়, কলকাতা ও ঢাকা", "Amavasya 2027 Dates: New Moon List for Kolkata & Dhaka"),
+  description: l(
+    "২০২৭-এর প্রতিটা অমাবস্যা (আর নভেম্বর-ডিসেম্বর ২০২৬-এর): তারিখ, বার, কলকাতা আর ঢাকার তিথি শুরু-শেষ, দর্শ অমাবস্যা, মহালয়া আর কালীপুজো। সূত্রসহ।",
+    "Every Amavasya of 2027 (and Nov–Dec 2026): date, weekday, tithi times for Kolkata and Dhaka, Darsha days, Mahalaya and Kali Puja. Sourced.",
+  ),
+  h1: l("অমাবস্যা ২০২৭: সব তারিখ, কলকাতা আর ঢাকা", "Amavasya 2027: every new moon for Kolkata and Dhaka"),
+  lead: l(
+    "মাসে একটা অমাবস্যা: পিতৃতর্পণ, ব্রত আর মহালয়া, কালীপুজোর মতো বড় দিন। নভেম্বর ২০২৬ থেকে ডিসেম্বর ২০২৭ পর্যন্ত প্রতিটা, দুই শহরের তিথির সময়সহ।",
+    "One new moon a month: for tarpan, vrats and big days like Mahalaya and Kali Puja. Every one from November 2026 to December 2027, with tithi times for both cities.",
+  ),
+  tables: [
+    { ...amavasyaTable("2027-01-01", "2027-12-31", "amavasya-2027", l("অমাবস্যা ২০২৭: পুরো তালিকা", "Amavasya 2027: the full list"), 2027), note: l("‘দর্শ অমাবস্যা’: দ্রিক পঞ্চাঙ্গ যেখানে মূল দিনের আগের দিনটাকে দর্শ অমাবস্যা লেখে, সেটা আলাদা দেখানো হয়েছে। ঢাকার তিথি দ্রিকের ঢাকা পাতা থেকে।", "'Darsha Amavasya': where Drik Panchang marks the day before the main day as Darsha Amavasya, it is shown separately. Dhaka times are from Drik's Dhaka page.") },
+    amavasyaTable("2026-11-01", "2026-12-31", "amavasya-2026", l("নভেম্বর-ডিসেম্বর ২০২৬", "November–December 2026"), 2026),
+  ],
+  sections: [
+    {
+      id: "sources",
+      h2: l("সূত্র", "Sources"),
+      paras: [
+        { text: l("২০২৭, ঢাকা।", "2027, Dhaka."), source: AMAVASYA_DHAKA(2027) },
+        { text: l("২০২৬, ঢাকা।", "2026, Dhaka."), source: AMAVASYA_DHAKA(2026) },
+        { text: l("মহালয়া আর কালীপুজোর দিন।", "The days of Mahalaya and Kali Puja."), source: BENGALI_2027 },
+        { text: l("বাড়ির পঞ্জিকা মানলে মিলিয়ে নিও; কোনো কোনো অমাবস্যায় দিন আলাদা হতে পারে।", "If you go by a printed panjika, check it: some Amavasyas may fall on a different day.") },
+      ],
+    },
+  ],
+  faq: [
+    {
+      q: l("২০২৭-এ মহালয়া অমাবস্যা কবে?", "When is Mahalaya Amavasya in 2027?"),
+      a: l("মহালয়া বুধবার ২৯ সেপ্টেম্বর ২০২৭; কলকাতায় অমাবস্যা তিথি ২৯ সেপ্টেম্বর সকাল ১০:৫৪ থেকে ৩০ সেপ্টেম্বর সকাল ৮:০৫।", "Mahalaya is Wednesday 29 September 2027; in Kolkata the Amavasya tithi runs from 29 Sep 10:54 am to 30 Sep 8:05 am."),
+    },
+    {
+      q: l("২০২৭-এ কালীপুজোর অমাবস্যা কখন?", "When is the Kali Puja Amavasya in 2027?"),
+      a: l("কালীপুজো বৃহস্পতিবার ২৮ অক্টোবর; কলকাতায় অমাবস্যা তিথি ২৮ অক্টোবর রাত ৮:৪৭ থেকে ২৯ অক্টোবর সন্ধে ৭:০৫।", "Kali Puja is Thursday 28 October; in Kolkata the Amavasya tithi runs from 28 Oct 8:47 pm to 29 Oct 7:05 pm."),
+    },
+    {
+      q: l("দর্শ অমাবস্যা কী?", "What is Darsha Amavasya?"),
+      a: l("দ্রিক পঞ্চাঙ্গের তালিকায় কিছু মাসে মূল অমাবস্যার আগের দিনটাকে ‘দর্শ অমাবস্যা’ লেখা থাকে; আমরা দুটো দিনই দেখাই।", "In some months Drik Panchang's list marks the day before the main Amavasya as 'Darsha Amavasya'; we show both days."),
+    },
+    {
+      q: l("ঢাকায় অমাবস্যার তারিখ কি কলকাতার মতোই?", "Are Amavasya dates in Dhaka the same as in Kolkata?"),
+      a: l("প্রায় সবসময়; তিথির সময় ঢাকায় আধ ঘণ্টা পরে। এপ্রিল ২০২৭-এ দ্রিকের ঢাকা পাতা চৈত্র অমাবস্যা ৭ এপ্রিল দেখায়, কলকাতার পাতা শুধু ৬ এপ্রিল।", "Almost always; Dhaka's tithi times run half an hour later. In April 2027 Drik's Dhaka page lists Chaitra Amavasya on 7 April, while the Kolkata page shows only 6 April."),
+    },
+  ],
+  events: [],
+  links: [
+    { href: "/purnima-2027", label: l("🌕 পূর্ণিমা ২০২৭", "🌕 Purnima 2027"), primary: true },
+    { href: "/ekadashi-2027", label: l("🪔 একাদশী ২০২৭", "🪔 Ekadashi 2027") },
     { href: "/calendar-2027", label: l("📅 পুজোর ক্যালেন্ডার ২০২৭", "📅 Festival calendar 2027") },
   ],
   lastChecked: "2026-10-31",

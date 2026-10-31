@@ -3,6 +3,13 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## Amavasya 2027, temple guides, Christmas/New Year wishes (2026-10-31, evening)
+- **`/amavasya-2027`**: 15 rows (Nov 2026–Dec 2027), Kolkata and Dhaka tithi times (Dhaka +30 min everywhere), Drik's "Darsha Amavasya" day shown where printed (Nov 2026, Jul, Sep, Nov 2027), Mahalaya / Kali Puja notes; April 2027 difference shown as printed (Dhaka lists Chaitra Amavasya on 7 Apr, Kolkata only Darsha on 6 Apr). Re-verified by a second agent fetch; linked from the Purnima and Ekadashi pages, menu, sitemap, llms.txt.
+- **Temple guides** (evergreen "timings / how to reach" searches): Dakshineswar (hours 6:30 am–12:30 pm, 3:30–7:30 pm, checked by hand against dakshineswarkalitemple.org), Belur Math (6:30–11:30 am; evening 4–9 pm Apr–Sep, 3:30–8:30 pm Oct–Mar, checked against belurmath.org), Kalighat (no official hours online, so none given). Linked from the Kali Puja stories list.
+- **Wishes**: "শুভ বড়দিন / Merry Christmas" and "Happy New Year 2027" cards and pages (auto 20–26 Dec and 27 Dec–2 Jan) in a new "Christmas & New Year" group.
+- Every article now ends with "More stories" (next four articles), so all 18 articles link to each other.
+- Verified in the scratch copy (Node 24): 56/56 tests, build (420 pages), typecheck, smoke 269/269.
+
 ## Blog batches 4–5, Kali page stories, home stories (2026-10-31, evening)
 - New sourced articles (drafted by cheap-model agents, Bangla-reviewed by another, checked by hand): Tarapith on Kali Puja night, Shyama Puja in Bangladesh (Dhakeshwari, Ramna; holiday status marked unconfirmed), Nabanna, Chhath Puja 2026 in Kolkata (Sun 15 Nov; Drik sunrise/sunset arghya times; no ghat list without a dated source), Poush Mela Shantiniketan (2025: 23–28 Dec; 2026 not announced), Kolkata Book Fair 2027 (50th, 22 Jan–3 Feb per UNI 7 Sep 2026). 15 articles in total. Removed unverifiable details (Bamakhepa's dates conflict on Wikipedia; an unclear food name; an unsourced health line).
 - Kali Puja page: "Kali Puja stories" list (6 articles) and two new FAQ answers (same day as Diwali; Bhoot Chaturdashi Sat 7 Nov). Home: "Puja stories" section with the latest three. "Coming up" now includes Chhath Puja and the Book Fair.

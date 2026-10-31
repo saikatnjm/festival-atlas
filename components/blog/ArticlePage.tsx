@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ARTICLES } from "@/data/blog";
 import type { Article, ArticleSource } from "@/data/blog/types";
 import { getDict } from "@/data/i18n";
 import { fmtDate } from "@/lib/dates";
@@ -12,6 +13,7 @@ export const BLOG_TEXT = {
   sources: { bn: "সূত্র", en: "Sources" },
   faqH2: { bn: "প্রশ্নোত্তর", en: "Questions" },
   related: { bn: "আরও দেখো", en: "See also" },
+  more: { bn: "আরও গল্প", en: "More stories" },
   updated: { bn: "শেষ যাচাই", en: "Last checked" },
 } satisfies Record<string, L>;
 
@@ -34,6 +36,9 @@ function Src({ source, lang }: { source: ArticleSource; lang: Lang }) {
 export default function ArticlePage({ lang, a }: { lang: Lang; a: Article }) {
   const t = getDict(lang);
   const path = `/blog/${a.slug}`;
+  // The next four articles after this one in the list (wrapping), so every article links to others.
+  const at = ARTICLES.findIndex((x) => x.slug === a.slug);
+  const more = Array.from({ length: Math.min(4, ARTICLES.length - 1) }, (_, i) => ARTICLES[(at + 1 + i) % ARTICLES.length]);
   const url = abs(withLang(lang, path));
   const crumbs = breadcrumbs([
     { name: t.nav.home, path: withLang(lang, "/") },
@@ -130,6 +135,19 @@ export default function ArticlePage({ lang, a }: { lang: Lang; a: Article }) {
             </Link>
           ))}
         </p>
+      </section>
+
+      <section className="home-section" aria-labelledby="blog-more">
+        <h2 id="blog-more">{BLOG_TEXT.more[lang]}</h2>
+        <ul className="link-list">
+          {more.map((m) => (
+            <li key={m.slug}>
+              <Link href={withLang(lang, `/blog/${m.slug}`)}>
+                {m.icon} {m.h1[lang]}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="about" aria-labelledby="blog-src">

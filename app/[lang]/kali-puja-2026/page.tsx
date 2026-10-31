@@ -18,7 +18,7 @@ export const dynamicParams = false;
 export const generateStaticParams = () => LANGS.map((lang) => ({ lang }));
 
 const PATH = "/kali-puja-2026";
-const KALI_STORIES = ["bhoot-chaturdashi-2026", "kali-puja-and-diwali", "naihati-boro-maa-kali-puja", "tarapith-kali-puja", "shyama-puja-bangladesh", "bhai-phota-rituals"];
+const KALI_STORIES = ["bhoot-chaturdashi-2026", "kali-puja-and-diwali", "naihati-boro-maa-kali-puja", "tarapith-kali-puja", "dakshineswar-kali-temple-guide", "kalighat-kali-temple-guide", "shyama-puja-bangladesh", "bhai-phota-rituals"];
 const REGIONS: Region[] = ["wb", "bd"];
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
