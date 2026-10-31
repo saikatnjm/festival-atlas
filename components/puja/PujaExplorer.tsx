@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Facets, PandalStatus } from "@/data/pandals";
 import type { PandalItem } from "@/data/pandals/view";
+import { OTHER_PUJAS, OTHER_PUJA_IDS } from "@/data/pandals/pujas";
 import type { Dict } from "@/data/i18n";
 import { fmt } from "@/lib/format";
 import { num, type Lang } from "@/lib/i18n";
@@ -164,6 +165,11 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
             </button>
           );
         })}
+        {OTHER_PUJA_IDS.filter((k) => items.some((i) => i.puja === k)).map((k) => (
+          <button key={k} type="button" className="chip" aria-pressed={filters.puja === k} onClick={() => setFilters((f) => ({ ...f, puja: f.puja === k ? "" : k }))}>
+            {`${OTHER_PUJAS[k].icon} ${t.pujaName[k]}`}
+          </button>
+        ))}
         <button
           type="button"
           className="chip chip-near"
@@ -305,6 +311,7 @@ export default function PujaExplorer({ lang, items, facets, t }: Props) {
                     {distanceOf(p) ? <span className="entry-dist"> · 📍 {distanceOf(p)}</span> : null}
                   </p>
                   <p className="entry-badges">
+                    {p.puja !== "durga" ? <span className="puja-badge">{`${OTHER_PUJAS[p.puja].icon} ${t.pujaName[p.puja]}`}</span> : null}
                     <StatusBadge status={p.status} label={t.statusLabel[p.status]} />
                     <span className="year-badge">{p.year ? fmt(t.edition, { year: p.year }, lang) : t.yearUnknown}</span>
                   </p>

@@ -51,18 +51,20 @@ export const KALI_TIMINGS: Record<Region, TimingRow[]> = {
 };
 
 /** The festivals right after Kali Puja, with the date each source gives. */
-export const KALI_WEEK: { what: L; when: L; note?: L; source: { title: string; url: string } }[] = [
+export const KALI_WEEK: { what: L; when: L; note?: L; source: { title: string; url: string }; href?: string }[] = [
   {
     what: l("ভাইফোঁটা", "Bhai Phota"),
     when: l("বুধবার ১১ নভেম্বর", "Wednesday 11 November"),
     note: l("দ্রিক পঞ্চাঙ্গ অনুযায়ী; কোনো কোনো পঞ্জিকায় দিন আলাদা হতে পারে, বাড়ির পঞ্জিকা মিলিয়ে নাও।", "Per Drik Panchang; some panjikas may differ, so check the one at home."),
     source: HT_PHONTA,
+    href: "/greetings?d=bhaiphota",
   },
   {
     what: l("জগদ্ধাত্রী পুজো (নবমী)", "Jagaddhatri Puja (Navami)"),
     when: l("বৃহস্পতিবার ১৯ নভেম্বর (কলকাতা)", "Thursday 19 November (Kolkata)"),
     note: l("নবমী তিথি ১৮ নভেম্বর সকাল ৬:০৪ থেকে ১৯ নভেম্বর সকাল ৭:০৫। দিল্লির হিসেবে ১৮ নভেম্বর দেখায়।", "Navami tithi 18 Nov 6:04 am to 19 Nov 7:05 am. Listings set to Delhi show 18 November."),
     source: DRIK_JAGA,
+    href: "/jagaddhatri-puja-2026",
   },
 ];
 
@@ -138,4 +140,15 @@ export const KALI_TEXT = {
     },
   ],
   sources: l("সূত্র", "Source"),
+};
+
+/** The Kali Puja pandal list on /kali-puja-2026 (entries are `puja: "kali"` in data/pandals/entries.json). */
+export const KALI_PANDALS_TEXT = {
+  h2: l("কালীপুজোর প্যান্ডেল ২০২৬: কলকাতা, বারাসত, নৈহাটি", "Kali Puja pandals 2026: Kolkata, Barasat, Naihati"),
+  lead: l(
+    "প্রতিটা পুজোর পাতায় সূত্র, ম্যাপ, ভিড়ের খবর আর পাসপোর্টের টিক। ২০২৬-এর থিম এখনও ঘোষণা হয়নি; যেখানে আছে, সেটা ২০২৫-এর থিম।",
+    "Each puja's page has its sources, a map pin, live crowd reports and a passport tick. 2026 themes aren't announced yet; where a theme is shown, it is 2025's.",
+  ),
+  theme2025: l("২০২৫-এর থিম", "2025 theme"),
+  map: l("🗺️ ম্যাপে কালীপুজোর প্যান্ডেল", "🗺️ Kali Puja pandals on the map"),
 };

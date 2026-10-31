@@ -1041,6 +1041,16 @@ h3 {
   border-color: var(--color-border);
   font-weight: 700;
 }
+.puja-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.05rem 0.6rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
 .status-confirmed { color: var(--st-confirmed); }
 .status-historical { color: var(--st-historical); }
 .status-pending { color: var(--st-pending); }

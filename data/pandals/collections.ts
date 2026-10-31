@@ -8,6 +8,9 @@ import type { Pandal } from "./index";
 
 const l = (bn: string, en: string): L => ({ bn, en });
 
+/** These pages are about Durga Puja; other pujas' listings are shown on their own hub pages instead. */
+const durga = (p: Pandal): boolean => !p.puja;
+
 export type CollectionSlug = "kolkata" | "dhaka" | "abroad";
 
 export interface Collection {
@@ -37,8 +40,8 @@ export const collections: Collection[] = [
   {
     slug: "kolkata",
     region: "wb",
-    match: (p) => p.country === "IN",
-    mapQuery: "?country=IN",
+    match: (p) => durga(p) && p.country === "IN",
+    mapQuery: "?country=IN&puja=durga",
     primaryCity: "Kolkata",
     othersLabel: l("পশ্চিমবঙ্গের অন্যত্র", "Elsewhere in West Bengal"),
     title: l("কলকাতার দুর্গাপুজো ২০২৬: প্যান্ডেল, থিম ও ম্যাপ", "Kolkata Durga Puja 2026: Pandals, Themes & Map"),
@@ -93,8 +96,8 @@ export const collections: Collection[] = [
   {
     slug: "dhaka",
     region: "bd",
-    match: (p) => p.country === "BD",
-    mapQuery: "?country=BD",
+    match: (p) => durga(p) && p.country === "BD",
+    mapQuery: "?country=BD&puja=durga",
     // Counts only: the page keeps its per-city groups (groupBy "city"), so no trailing group is needed.
     primaryCity: "Dhaka",
     title: l("ঢাকা ও বাংলাদেশের দুর্গাপুজো ২০২৬: মণ্ডপ, ঢাকেশ্বরী ও ছুটি", "Dhaka & Bangladesh Durga Puja 2026: Mandaps, Dhakeshwari & Holidays"),
@@ -141,7 +144,7 @@ export const collections: Collection[] = [
   },
   {
     slug: "abroad",
-    match: (p) => p.country !== "IN" && p.country !== "BD",
+    match: (p) => durga(p) && p.country !== "IN" && p.country !== "BD",
     mapQuery: "?all=1",
     title: l("প্রবাসে দুর্গাপুজো ২০২৬: লন্ডন, নিউ ইয়র্ক, টরন্টো, সিডনি, দুবাই", "Durga Puja Abroad 2026: London, New York, Toronto, Sydney, Dubai"),
     h1: l("প্রবাসে দুর্গাপুজো: বিশ্বজুড়ে বাঙালির পুজো", "Durga Puja abroad: Bengali pujas around the world"),

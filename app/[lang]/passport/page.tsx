@@ -6,8 +6,9 @@ import { getDict } from "@/data/i18n";
 import { fun } from "@/data/i18n/fun";
 import { regionInfo } from "@/data/local/content";
 import { stopsFor } from "@/data/local/stops";
+import { OTHER_PUJAS, OTHER_PUJA_IDS } from "@/data/pandals";
 import { toItems } from "@/data/pandals/view";
-import { LANGS, withLang, type Lang } from "@/lib/i18n";
+import { LANGS, num, withLang, type Lang } from "@/lib/i18n";
 import JsonLd, { breadcrumbs } from "@/lib/jsonld";
 import { langOf } from "@/lib/route";
 import { pageMeta } from "@/lib/site";
@@ -22,17 +23,25 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return pageMeta({ lang, title: fun.passport.metaTitle[lang], description: fun.passport.metaDesc[lang], path: "/passport" });
 }
 
-/** Kolkata, Dhaka, then every other listing (Siliguri, Satkhira, abroad…) so any pandal can be ticked. */
+/** Kolkata, Dhaka, the other pujas (Kali, Jagaddhatri), then every other listing (Siliguri, Satkhira, abroad…) so any pandal can be ticked. */
 function passportGroups(lang: Lang): PassportGroup[] {
   const wb = stopsFor("wb", lang);
   const bd = stopsFor("bd", lang);
   const seen = new Set([...wb, ...bd].map((x) => x.id));
-  const more = toItems(lang)
-    .filter((p) => !seen.has(p.id))
-    .map((p) => ({ id: p.id, name: p.name, place: p.place, href: p.href }));
+  const rest = toItems(lang).filter((p) => !seen.has(p.id));
+  const t = getDict(lang).puja;
+  // One group per other puja (Kali, Jagaddhatri), placed before "Elsewhere".
+  const others: PassportGroup[] = OTHER_PUJA_IDS.map((k) => ({
+    key: k,
+    icon: OTHER_PUJAS[k].icon,
+    title: `${t.pujaName[k]} ${num(2026, lang)}`,
+    stops: rest.filter((p) => p.puja === k).map((p) => ({ id: p.id, name: p.name, place: p.area ? `${p.area} · ${p.place}` : p.place, href: p.href })),
+  })).filter((g) => g.stops.length > 0);
+  const more = rest.filter((p) => p.puja === "durga").map((p) => ({ id: p.id, name: p.name, place: p.place, href: p.href }));
   return [
     { key: "wb", icon: regionInfo.wb.icon, title: regionInfo.wb.name[lang], stops: wb },
     { key: "bd", icon: regionInfo.bd.icon, title: regionInfo.bd.name[lang], stops: bd },
+    ...others,
     { key: "more", icon: "🌍", title: lang === "bn" ? "অন্যান্য জায়গা" : "Elsewhere", stops: more },
   ];
 }

@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import StatusBadge from "@/components/puja/StatusBadge";
 import VisitButton from "@/components/puja/VisitButton";
 import CrowdMeter from "@/components/live/CrowdMeter";
-import { areaOf, cityName, countryName, descriptionOf, getPandal, hasPin, nameOf, pandals, placeLabel, sortPandals, themeOf } from "@/data/pandals";
+import { OTHER_PUJAS, areaOf, cityName, countryName, descriptionOf, getPandal, hasPin, nameOf, pandals, placeLabel, pujaOf, sortPandals, themeOf } from "@/data/pandals";
 import { collections } from "@/data/pandals/collections";
 import { getDict } from "@/data/i18n";
+import { KALI_2026 } from "@/data/kali-puja";
 import { fun } from "@/data/i18n/fun";
 import { fmt } from "@/lib/format";
 import { LANGS, num, withLang } from "@/lib/i18n";
@@ -33,10 +34,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     ? fmt(t.detailMeta, { description: descriptionOf(p, lang), year: p.year }, lang)
     : fmt(t.detailMetaNoYear, { description: descriptionOf(p, lang) }, lang);
   const name = nameOf(p, lang);
+  const puja = t.pujaName[pujaOf(p)];
   return pageMeta({
     lang,
     // Titles carry the edition year for current pujas ("… Durga Puja 2026 in Kolkata, India").
-    title: p.year && p.year >= 2025 ? fmt(t.detailTitleYear, { name, year: p.year, place: cityName(p.city, lang) }, lang) : fmt(t.detailTitle, { name, place: cityName(p.city, lang) }, lang),
+    title:
+      p.year && p.year >= 2025
+        ? fmt(t.detailTitleYear, { name, puja, year: p.year, place: cityName(p.city, lang) }, lang)
+        : fmt(t.detailTitle, { name, puja, place: cityName(p.city, lang) }, lang),
     description,
     path: `/puja/${id}`,
     region: p.country === "IN" ? "wb" : p.country === "BD" ? "bd" : null,
@@ -53,26 +58,31 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
   const name = nameOf(p, lang);
   const area = areaOf(p, lang);
   const theme = themeOf(p, lang);
-  const related = sortPandals(pandals.filter((x) => x.city === p.city && x.id !== p.id)).slice(0, 6);
+  const related = sortPandals(pandals.filter((x) => x.city === p.city && x.id !== p.id && pujaOf(x) === pujaOf(p))).slice(0, 6);
+  // Other pujas' listings sit under their hub page (/kali-puja-2026…) instead of a Durga Puja collection.
+  const hub = p.puja ? { name: `${t.pujaName[p.puja]} ${num(2026, lang)}`, path: withLang(lang, OTHER_PUJAS[p.puja].hub) } : null;
   const collection = collections.find((c) => c.match(p));
+  const parent = hub ?? (collection ? { name: collection.h1[lang], path: withLang(lang, `/puja/${collection.slug}`) } : null);
   const crumbs = breadcrumbs([
     { name: d.nav.home, path: withLang(lang, "/") },
     { name: d.nav.puja, path: withLang(lang, "/puja") },
-    ...(collection ? [{ name: collection.h1[lang], path: withLang(lang, `/puja/${collection.slug}`) }] : []),
+    ...(parent ? [parent] : []),
     { name, path: withLang(lang, `/puja/${p.id}`) },
   ]);
   const pinText = p.pin ? fmt(t.pinApprox, { kind: t.pinKind[p.pin] }, lang) : undefined;
   const pageUrl = abs(withLang(lang, `/puja/${p.id}`));
-  // Event rich result for this year's confirmed pujas in Kolkata/Bangladesh (dates from the regional calendar).
+  // Event rich result for this year's confirmed pujas in Kolkata/Bangladesh (dates from the regional calendar;
+  // Kali Puja is the night of 8 Nov and Jagaddhatri Navami 19 Nov, per data/kali-puja.ts).
   const region = p.country === "IN" ? "wb" : p.country === "BD" ? "bd" : null;
+  const oneDay = p.puja === "kali" ? KALI_2026.kali : p.puja === "jagaddhatri" ? KALI_2026.jagaddhatriNavami : null;
   const eventLd =
     pageUrl && region && p.status === "confirmed" && p.year === 2026
       ? {
           "@context": "https://schema.org",
           "@type": "Event",
-          name: `${name}: Durga Puja 2026`,
-          startDate: PUJA_2026[region].shashthi,
-          endDate: PUJA_2026[region].dashami,
+          name: `${name}: ${getDict("en").puja.pujaName[pujaOf(p)]} 2026`,
+          startDate: oneDay ?? PUJA_2026[region].shashthi,
+          endDate: oneDay ?? PUJA_2026[region].dashami,
           eventStatus: "https://schema.org/EventScheduled",
           eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
           isAccessibleForFree: true,
@@ -127,7 +137,7 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
           data={{
             "@context": "https://schema.org",
             "@type": "WebPage",
-            name: fmt(t.detailTitle, { name, place: placeLabel(p, lang) }, lang),
+            name: fmt(t.detailTitle, { name, puja: t.pujaName[pujaOf(p)], place: placeLabel(p, lang) }, lang),
             url: abs(withLang(lang, `/puja/${p.id}`)),
             inLanguage: lang,
             description: descriptionOf(p, lang),
@@ -137,14 +147,15 @@ export default async function PandalPage({ params }: { params: Promise<Params> }
       ) : null}
       <p className="breadcrumb">
         <Link href={withLang(lang, "/puja")}>{t.breadcrumb}</Link> /{" "}
-        {collection ? (
+        {parent ? (
           <>
-            <Link href={withLang(lang, `/puja/${collection.slug}`)}>{collection.h1[lang]}</Link> /
+            <Link href={parent.path}>{parent.name}</Link> /
           </>
         ) : null}
       </p>
       <h1>{name}</h1>
       <p className="entry-badges">
+        {p.puja ? <span className="puja-badge">{`${OTHER_PUJAS[p.puja].icon} ${t.pujaName[p.puja]}`}</span> : null}
         <StatusBadge status={p.status} label={t.statusLabel[p.status]} />
         <span className="year-badge">{p.year ? fmt(t.edition, { year: p.year }, lang) : t.yearUnknown}</span>
       </p>

@@ -13,12 +13,15 @@ export function summary(): { total: number; countries: number } {
   return { total: countWhere(), countries: new Set(pandals.map((p) => p.country)).size };
 }
 
-/** Listings in one city, by the data's city field (so "Kolkata" excludes Siliguri and Khardaha). */
-export const cityCount = (city: string): number => countWhere((p) => p.city === city);
+/**
+ * Durga Puja listings in one city, by the data's city field (so "Kolkata" excludes Siliguri and Khardaha).
+ * Other pujas' listings (Kali, Jagaddhatri) are left out so the home chips match the (Durga Puja) collection pages.
+ */
+export const cityCount = (city: string): number => countWhere((p) => p.city === city && !p.puja);
 
-/** Cities with the most listings, for the home page's "browse by place" chips. */
+/** Cities with the most Durga Puja listings, for the home page's "browse by place" chips. */
 export function topCities(limit: number): { city: string; n: number }[] {
-  const cities = [...new Set(pandals.map((p) => p.city))];
+  const cities = [...new Set(pandals.filter((p) => !p.puja).map((p) => p.city))];
   return cities
     .map((city) => ({ city, n: cityCount(city) }))
     .sort((a, b) => b.n - a.n || a.city.localeCompare(b.city))

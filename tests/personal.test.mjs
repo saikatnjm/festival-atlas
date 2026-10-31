@@ -19,8 +19,16 @@ import { ACTIVITY_MAX, toActivity } from "../lib/activity.ts";
 import { checkCredentials, constantTimeEqual, makeSession, verifySession } from "../lib/admin-shared.ts";
 import { cleanContact, cleanMessage, cleanPage, cleanTopic } from "../lib/feedback-shared.ts";
 import { cleanPlace, toPlace } from "../lib/places-shared.ts";
-import { COMMON_LINES, DEFAULT_GREETING, GREETINGS, GREETING_SEASONS, KALI_WEEK_2026, anotherLine, getGreeting, greetingFor, greetingForPhase, linesFor, seasonOf } from "../data/play/greetings.ts";
+import { COMMON_LINES, DEFAULT_GREETING, GREETINGS, GREETING_SEASONS, KALI_WEEK_2026, SPRING_2027, anotherLine, getGreeting, greetingFor, greetingForPhase, linesFor, seasonOf } from "../data/play/greetings.ts";
 import { KALI_2026 } from "../data/kali-puja.ts";
+import { SARASWATI_2027 } from "../data/festivals/saraswati-2027.ts";
+import { SHIVRATRI_2027 } from "../data/festivals/shivratri-2027.ts";
+import { POILA_BOISHAKH_2027 } from "../data/festivals/poila-boishakh-2027.ts";
+import { EKADASHI_2027, EKADASHI_ROWS, dayLabel, timeLabel } from "../data/festivals/ekadashi-2027.ts";
+import { JAGADDHATRI_2026 } from "../data/festivals/jagaddhatri-2026.ts";
+import { CALENDAR_2027 } from "../data/festivals/calendar-2027.ts";
+import { DOL_2027 } from "../data/festivals/dol-2027.ts";
+import { DURGA_2027 } from "../data/festivals/durga-2027.ts";
 import { regionFromTimeZone } from "../lib/region.ts";
 import { cleanNick, resultShare, isGame, NICK_MAX } from "../lib/community-shared.ts";
 import { fmtDate, fmtDateWithDay } from "../lib/dates.ts";
@@ -183,11 +191,11 @@ test("puja phase and Puja-mode theme follow the calendar", () => {
   assert.ok(THEME_BOOT_SCRIPT.includes("data-theme") && !THEME_BOOT_SCRIPT.includes("</script"));
 });
 
-test("landing-page collections cover every listing exactly once, in both languages", () => {
+test("landing-page collections cover every Durga Puja listing exactly once (Kali Puja listings none), in both languages", () => {
   const entries = JSON.parse(readFileSync(new URL("../data/pandals/entries.json", import.meta.url), "utf8"));
   for (const p of entries) {
     const hits = collections.filter((c) => c.match(p)).map((c) => c.slug);
-    assert.deepEqual(hits.length, 1, `${p.id} belongs to exactly one collection (${hits.join(",")})`);
+    assert.deepEqual(hits.length, p.puja ? 0 : 1, `${p.id} belongs to ${p.puja ? "no" : "exactly one"} collection (${hits.join(",")})`);
   }
   for (const c of collections) {
     for (const k of ["title", "h1", "lead", "description"]) assert.ok(c[k].bn && c[k].en, `${c.slug}.${k}`);
@@ -279,6 +287,7 @@ test("greeting cards: every day bilingual with lines, and today's pick follows t
 test("Kali Puja week cards follow the sourced dates", () => {
   assert.equal(KALI_WEEK_2026.kali, KALI_2026.kali);
   assert.equal(KALI_WEEK_2026.bhaiPhota, KALI_2026.bhaiPhota);
+  assert.equal(KALI_WEEK_2026.jagaddhatri, KALI_2026.jagaddhatriNavami);
   const at = (day) => greetingFor(day, pujaPhase(new Date(`${day}T06:00:00Z`), "wb"));
   assert.equal(at("2026-10-31"), "bijoya");
   assert.equal(at("2026-11-01"), "kali");
@@ -286,9 +295,55 @@ test("Kali Puja week cards follow the sourced dates", () => {
   assert.equal(at("2026-11-09"), "kali");
   assert.equal(at("2026-11-10"), "bhaiphota");
   assert.equal(at("2026-11-11"), "bhaiphota");
-  assert.equal(at("2026-11-12"), "anytime");
+  assert.equal(at("2026-11-12"), "jagaddhatri");
+  assert.equal(at("2026-11-20"), "jagaddhatri");
+  assert.equal(at("2026-11-21"), "anytime");
   assert.equal(at("2026-10-19"), "ashtami");
   assert.ok(getGreeting("kali").stamp && getGreeting("diwali").pool === false);
+});
+
+test("spring 2027 cards follow the festival pages' sourced dates", () => {
+  assert.equal(SPRING_2027.saraswati, SARASWATI_2027.events[0].start);
+  assert.equal(SPRING_2027.shivratri, SHIVRATRI_2027.events[0].start);
+  assert.equal(SPRING_2027.dol, DOL_2027.events[0].start);
+  assert.equal(SPRING_2027.noboborsho, POILA_BOISHAKH_2027.events[0].start);
+  assert.equal(SPRING_2027.noboborshoBd, POILA_BOISHAKH_2027.events[1].start);
+  const at = (day) => greetingFor(day, pujaPhase(new Date(`${day}T06:00:00Z`), "wb"));
+  assert.equal(at("2027-02-11"), "saraswati");
+  assert.equal(at("2027-03-06"), "shivratri");
+  assert.equal(at("2027-03-22"), "dol");
+  assert.equal(at("2027-04-14"), "noboborsho");
+  assert.equal(at("2027-04-15"), "noboborsho");
+  assert.equal(at("2027-01-10"), "anytime");
+});
+
+test("festival pages: bilingual, sourced rows, titles and descriptions within limits", () => {
+  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027]) {
+    for (const k of ["title", "description", "h1", "lead"]) assert.ok(f[k].bn && f[k].en, `${f.path} ${k}`);
+    assert.ok(f.title.en.length <= 60, `${f.path} title ${f.title.en.length}`);
+    assert.ok(f.description.en.length <= 160 && f.description.bn.length <= 170, `${f.path} description`);
+    assert.ok(f.faq.length >= 3 && f.faq.every((q) => q.q.bn && q.q.en && q.a.bn && q.a.en), `${f.path} faq`);
+    for (const rows of Object.values(f.timings?.rows ?? {})) for (const r of rows) assert.match(r.source.url, /^https:\/\//);
+    for (const t of f.tables ?? []) for (const r of t.rows) assert.ok(r.cells.length === t.columns.length && /^https:\/\//.test(r.source.url), `${f.path} ${t.id} row`);
+    for (const e of f.events) assert.match(e.start, /^\d{4}-\d{2}-\d{2}$/);
+    for (const x of f.links) assert.ok(x.href.startsWith("/") && x.label.bn && x.label.en, `${f.path} link`);
+  }
+});
+
+test("Ekadashi list: ordered, well-formed, labels formatted without computing dates", () => {
+  const dates = EKADASHI_ROWS.map((r) => r[1]);
+  assert.deepEqual([...dates].sort(), dates, "rows in date order");
+  assert.equal(EKADASHI_ROWS.filter((r) => r[1].startsWith("2027")).length, 25);
+  for (const [, , ks, ke, ds, de, isk] of EKADASHI_ROWS) {
+    for (const t of [ks, ke, ds, de]) assert.match(t, /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/);
+    assert.ok(ks < ke && ds < de);
+    assert.ok(isk === "" || isk === "?" || /^\d{4}-\d{2}-\d{2}$/.test(isk));
+  }
+  assert.equal(dayLabel("2027-01-03", "en"), "Sun 3 Jan 2027");
+  assert.equal(dayLabel("2027-06-14", "bn", false), "সোম ১৪ জুন");
+  assert.equal(timeLabel("2027-01-02 14:24", "en"), "2 Jan 2:24 pm");
+  assert.equal(timeLabel("2026-12-05 00:14", "en"), "5 Dec 12:14 am");
+  assert.equal(timeLabel("2027-03-03 04:44", "bn"), "৩ মার্চ ভোর ৪:৪৪");
 });
 
 test("queue waits, clock times, Kolkata day and distances", () => {

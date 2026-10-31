@@ -18,6 +18,11 @@ test("facet filters combine, and an impossible combination is empty", () => {
   assert.deepEqual(applyFilters(list, { ...NO_FILTERS, country: "IN", status: "confirmed" }).map((x) => x.id), ["a"]);
   assert.deepEqual(applyFilters(list, { ...NO_FILTERS, year: "2023" }).map((x) => x.id), ["b"]);
   assert.equal(applyFilters(list, { ...NO_FILTERS, country: "IN", status: "historical" }).length, 0);
+  const mixed = [{ id: "d", search: "", country: "IN", city: "Kolkata", status: "confirmed" }, { id: "k", search: "", country: "IN", city: "Barasat", status: "confirmed", puja: "kali" }];
+  assert.deepEqual(applyFilters(mixed, { ...NO_FILTERS, puja: "kali" }).map((x) => x.id), ["k"]);
+  assert.deepEqual(applyFilters(mixed, { ...NO_FILTERS, puja: "durga" }).map((x) => x.id), ["d"], "no puja field means Durga Puja");
+  assert.equal(applyFilters(mixed, NO_FILTERS).length, 2);
+  assert.equal(applyFilters([...mixed, { id: "j", search: "", country: "IN", city: "Chandannagar", status: "pending", puja: "jagaddhatri" }], { ...NO_FILTERS, puja: "jagaddhatri" })[0].id, "j");
 });
 
 test("filters round-trip through the URL query", () => {

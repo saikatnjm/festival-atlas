@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getDict } from "@/data/i18n";
 import type { Region } from "@/data/events/events";
-import { CRACKERS, CROWD, KALI_2026, KALI_TEXT as T, KALI_TIMINGS, KALI_WEEK } from "@/data/kali-puja";
+import { CRACKERS, CROWD, KALI_2026, KALI_PANDALS_TEXT as KP, KALI_TEXT as T, KALI_TIMINGS, KALI_WEEK } from "@/data/kali-puja";
+import { areaOf, cityName, nameOf, pandals, pujaOf, sortPandals } from "@/data/pandals";
 import { regionInfo } from "@/data/local/content";
 import { TIMINGS_TEXT } from "@/data/puja-timings";
 import { LANGS, withLang } from "@/lib/i18n";
@@ -61,6 +62,9 @@ export default async function KaliPujaPage({ params }: { params: Promise<Params>
     description: T.description[lang],
   });
 
+  const kaliPandals = sortPandals(pandals.filter((p) => pujaOf(p) === "kali"));
+  const kaliCities = [...new Set(kaliPandals.map((p) => p.city))];
+
   return (
     <article>
       {crumbs ? <JsonLd data={crumbs} /> : null}
@@ -69,6 +73,16 @@ export default async function KaliPujaPage({ params }: { params: Promise<Params>
           data={[
             event("wb"),
             event("bd"),
+            ...(kaliPandals.length
+              ? [
+                  {
+                    "@context": "https://schema.org",
+                    "@type": "ItemList",
+                    name: KP.h2[lang],
+                    itemListElement: kaliPandals.map((p, i) => ({ "@type": "ListItem", position: i + 1, name: nameOf(p, lang), url: abs(withLang(lang, `/puja/${p.id}`)) })),
+                  },
+                ]
+              : []),
             {
               "@context": "https://schema.org",
               "@type": "FAQPage",
@@ -116,13 +130,50 @@ export default async function KaliPujaPage({ params }: { params: Promise<Params>
         <p className="fineprint">{T.bdHoliday[lang]}</p>
       </section>
 
+      {kaliPandals.length ? (
+        <section className="home-section" aria-labelledby="kali-pandals">
+          <h2 id="kali-pandals">{KP.h2[lang]}</h2>
+          <p className="section-lead">{KP.lead[lang]}</p>
+          {kaliCities.map((city) => (
+            <div key={city}>
+              <h3>{cityName(city, lang)}</h3>
+              <ul className="link-list">
+                {kaliPandals
+                  .filter((p) => p.city === city)
+                  .map((p) => {
+                    const past = p.history?.find((h) => h.year === 2025 && h.theme);
+                    const area = areaOf(p, lang);
+                    return (
+                      <li key={p.id}>
+                        <Link href={withLang(lang, `/puja/${p.id}`)}>{nameOf(p, lang)}</Link>
+                        {area ? <span className="fineprint"> · {area}</span> : null}
+                        {past ? (
+                          <span className="fineprint">
+                            {" "}
+                            · {KP.theme2025[lang]}: {past.theme}
+                          </span>
+                        ) : null}
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+          ))}
+          <p className="cta-row">
+            <Link className="button button-light" href={`${withLang(lang, "/puja")}?puja=kali`}>
+              {KP.map[lang]}
+            </Link>
+          </p>
+        </section>
+      ) : null}
+
       <section className="home-section" aria-labelledby="kali-week">
         <h2 id="kali-week">{T.weekH2[lang]}</h2>
         <dl className="faq">
           {KALI_WEEK.map((w) => (
             <div key={w.what.en}>
               <dt>
-                {w.what[lang]}: {w.when[lang]}
+                {w.href ? <Link href={withLang(lang, w.href)}>{w.what[lang]}</Link> : w.what[lang]}: {w.when[lang]}
               </dt>
               <dd>
                 {w.note ? `${w.note[lang]} ` : null}
@@ -168,6 +219,9 @@ export default async function KaliPujaPage({ params }: { params: Promise<Params>
       <p className="cta-row">
         <Link className="button" href={`${withLang(lang, "/greetings")}?d=kali`}>
           🪔 {lang === "bn" ? "কালীপুজোর শুভেচ্ছা কার্ড বানাও" : "Make a Kali Puja greeting card"}
+        </Link>
+        <Link className="button button-light" href={withLang(lang, "/jagaddhatri-puja-2026")}>
+          🏮 {lang === "bn" ? "জগদ্ধাত্রী পুজো ২০২৬" : "Jagaddhatri Puja 2026"}
         </Link>
         <Link className="button button-light" href={withLang(lang, "/durga-puja-2026")}>
           {lang === "bn" ? "দুর্গাপুজো ২০২৬-এর তারিখ" : "Durga Puja 2026 dates"}

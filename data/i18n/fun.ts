@@ -70,7 +70,7 @@ export const fun = {
     friendsP: l("দলের রোল কার্ড বানাও, বা যেকোনো খেলার ফল পাঠিয়ে বন্ধুকে চ্যালেঞ্জ করো। অ্যাকাউন্ট লাগে না।", "Make a squad role card, or send any result to challenge a friend. No accounts needed."),
   },
   greet: {
-    metaTitle: l("কালীপুজো, দীপাবলি, ভাইফোঁটার শুভেচ্ছা কার্ড ২০২৬: নাম দিয়ে", "Kali Puja, Diwali & Bhai Phota Greeting Cards 2026 with Name"),
+    metaTitle: l("কালীপুজো, ভাইফোঁটা, জগদ্ধাত্রী পুজোর শুভেচ্ছা কার্ড ২০২৬", "Kali Puja, Bhai Phota & Jagaddhatri Greeting Cards 2026"),
     metaDesc: l(
       "শুভ কালীপুজো, শুভ দীপাবলি, শুভ ভাইফোঁটা আর দুর্গাপুজোর প্রতিটা দিনের শুভেচ্ছা কার্ড, তোমার আর প্রিয়জনের নাম সহ। মজার বাংলা লাইন, এক ট্যাপে WhatsApp-এ পাঠাও।",
       "Shubho Kali Puja, Happy Diwali, Bhai Phota and every Durga Puja day: greeting cards with your name and your loved one's. Witty Bengali lines, one tap to WhatsApp.",

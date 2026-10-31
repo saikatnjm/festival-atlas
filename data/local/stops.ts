@@ -21,7 +21,8 @@ export function stopsFor(region: Region, lang: Lang): Stop[] {
   // temple 300 km away would make no sense in a night's route.
   const cities = region === "wb" ? ["Kolkata", "Khardaha"] : ["Dhaka", "Narayanganj"];
   const fromDirectory: Stop[] = toItems(lang)
-    .filter((p) => p.country === regionInfo[region].country && cities.includes(p.city))
+    // Durga Puja only: other pujas' pandals get their own passport groups and hub pages.
+    .filter((p) => p.country === regionInfo[region].country && cities.includes(p.city) && p.puja === "durga")
     .map((p) => {
       const h = byPandal.get(p.id);
       const year = p.year ? num(p.year, lang) : "";

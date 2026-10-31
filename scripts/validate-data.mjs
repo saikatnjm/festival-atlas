@@ -21,6 +21,7 @@ for (const e of entries) {
   if (!Array.isArray(e.sources) || e.sources.length === 0) errors.push(`${w}: needs at least one source`);
   else for (const s of e.sources) if (!s.title || !isUrl(s.url)) errors.push(`${w}: bad source ${JSON.stringify(s)}`);
   if (e.website !== undefined && !isUrl(e.website)) errors.push(`${w}: bad website`);
+  if (e.puja !== undefined && !["kali", "jagaddhatri"].includes(e.puja)) errors.push(`${w}: puja must be "kali" or "jagaddhatri" when present (Durga Puja is the default)`);
   if (e.status === "historical" && !(e.year <= 2024)) errors.push(`${w}: historical entries need year <= 2024`);
   if (e.status === "confirmed" && !(e.year >= 2025)) errors.push(`${w}: confirmed entries need a recent year`);
   const has = e.lat !== undefined || e.lng !== undefined;

@@ -11,7 +11,9 @@ import {
   sortPandals,
   themeOf,
   pandals,
+  pujaOf,
   type PandalStatus,
+  type PujaKind,
   type PinKind,
 } from "./index";
 
@@ -25,6 +27,7 @@ export interface PandalItem {
   area?: string;
   year?: number;
   status: PandalStatus;
+  puja: PujaKind;
   theme?: string;
   themeKey?: string;
   description: string;
@@ -45,6 +48,7 @@ export function toItems(lang: Lang): PandalItem[] {
     area: areaOf(p, lang),
     year: p.year,
     status: p.status,
+    puja: pujaOf(p),
     theme: themeOf(p, lang),
     themeKey: p.theme,
     description: descriptionOf(p, lang),

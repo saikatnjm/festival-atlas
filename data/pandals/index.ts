@@ -2,9 +2,11 @@ import type { Lang } from "@/lib/i18n";
 import raw from "./entries.json";
 import bnRaw from "./bn.json";
 import geoBn from "./geo-bn.json";
+import type { OtherPuja, PujaKind } from "./pujas";
 
 export type PandalStatus = "confirmed" | "historical" | "pending";
 export type PinKind = "area" | "city";
+export { OTHER_PUJAS, OTHER_PUJA_IDS, type OtherPuja, type PujaKind } from "./pujas";
 
 export interface Source {
   title: string;
@@ -44,6 +46,8 @@ export interface Pandal {
   address?: string;
   dates?: string;
   website?: string;
+  /** Set only for non-Durga listings (Kali Puja, Jagaddhatri Puja). */
+  puja?: OtherPuja;
   /** English description, written in our own words. */
   description: string;
   sources: Source[];
@@ -63,6 +67,7 @@ const bnText = bnRaw as Record<string, BnText>;
 const geo = geoBn as { countries: Record<string, string>; cities: Record<string, string> };
 
 export const getPandal = (id: string): Pandal | undefined => pandals.find((p) => p.id === id);
+export const pujaOf = (p: Pick<Pandal, "puja">): PujaKind => p.puja ?? "durga";
 export const hasPin = (p: Pandal): p is Located => typeof p.lat === "number" && typeof p.lng === "number";
 
 /** English names for the countries that appear in the data (Intl.DisplayNames is avoided to stay deterministic). */

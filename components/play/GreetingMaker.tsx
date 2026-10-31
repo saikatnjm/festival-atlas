@@ -117,7 +117,7 @@ export default function GreetingMaker({ lang, s }: { lang: Lang; s: PlayStrings 
         </label>
         <label className="cx-field">
           <span>{G.toLabel[lang]}</span>
-          <input className="cx-input" type="text" maxLength={NAME_MAX * 3} placeholder={G.toPh[lang]} value={to} onChange={(e) => setTo(e.target.value)} />
+          <input className="cx-input" type="text" maxLength={NAME_MAX * 3} placeholder={(g.toPh ?? G.toPh)[lang]} value={to} onChange={(e) => setTo(e.target.value)} />
         </label>
       </div>
       <section className="cx-result" aria-label={G.cardAria[lang]}>

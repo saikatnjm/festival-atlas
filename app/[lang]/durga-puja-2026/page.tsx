@@ -143,6 +143,10 @@ export default async function DatesPage({ params }: { params: Promise<Params> })
       <Countdown lang={lang} />
       <h1>{T.h1[lang]}</h1>
       <p className="lead">{T.lead[lang]}</p>
+      <p className="section-lead">
+        {lang === "bn" ? "পরের পুজো: " : "Next year: "}
+        <Link href={withLang(lang, "/durga-puja-2027")}>{lang === "bn" ? "দুর্গাপুজো ২০২৭, ষষ্ঠী ৫ অক্টোবর → দশমী ১০ অক্টোবর" : "Durga Puja 2027, Shashthi 5 Oct → Dashami 10 Oct"}</Link>
+      </p>
 
       <section className="home-section" aria-labelledby="dates-table">
         <h2 id="dates-table">{T.tableH2[lang]}</h2>
@@ -247,6 +251,9 @@ export default async function DatesPage({ params }: { params: Promise<Params> })
         </Link>
         <Link className="button button-light" href={withLang(lang, "/local")}>
           {t.nav.local}
+        </Link>
+        <Link className="button button-light" href={withLang(lang, "/durga-puja-2027")}>
+          {lang === "bn" ? "দুর্গাপুজো ২০২৭" : "Durga Puja 2027"}
         </Link>
       </p>
     </article>

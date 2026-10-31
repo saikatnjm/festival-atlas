@@ -8,9 +8,11 @@ export interface Filters {
   /** "" or the (English) theme text. */
   theme: string;
   status: string;
+  /** "" (all), "durga", "kali" or "jagaddhatri". */
+  puja: string;
 }
 
-export const NO_FILTERS: Filters = { q: "", country: "", city: "", year: "", theme: "", status: "" };
+export const NO_FILTERS: Filters = { q: "", country: "", city: "", year: "", theme: "", status: "", puja: "" };
 
 export interface Filterable {
   /** Lower-case text to search in (names in both languages). */
@@ -20,6 +22,8 @@ export interface Filterable {
   year?: number;
   themeKey?: string;
   status: string;
+  /** Missing means Durga Puja. */
+  puja?: string;
 }
 
 export const hasFilters = (f: Filters): boolean => Object.values(f).some((v) => v !== "");
@@ -33,7 +37,8 @@ export function applyFilters<T extends Filterable>(list: readonly T[], f: Filter
       (!f.city || p.city === f.city) &&
       (!f.year || String(p.year ?? "") === f.year) &&
       (!f.theme || p.themeKey === f.theme) &&
-      (!f.status || p.status === f.status),
+      (!f.status || p.status === f.status) &&
+      (!f.puja || (p.puja ?? "durga") === f.puja),
   );
 }
 

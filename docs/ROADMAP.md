@@ -25,10 +25,10 @@ no search-volume data was available beyond that, so the order below follows the 
 | 1 | **Kali Puja 2026 hub** `/kali-puja-2026`: sourced dates and Nishita times (Kolkata + Dhaka), the week ahead (Bhai Phota, Jagaddhatri), cracker rules (2026 notice pending, 2025 pattern shown as last year's), Naihati Boro Maa crowd note, FAQ + Event JSON-LD; Pujo menu chip goes live | **Review** (built 31 Oct; owner pushes) | before 8 Nov |
 | 2 | **Cracker notice update**: replace the "awaiting 2026 notice" row with the Kolkata Police / WBPCB 2026 order as soon as it is published | Queued (watch news) | 4–8 Nov |
 | 3 | **Kali/Diwali greeting cards + postcard stamp**: add Kali Puja, Diwali and Bhai Phota days to `data/play/greetings.ts`; postcard postmark for Shyama Puja | **Review** (built 31 Oct; owner pushes) | before 8 Nov |
-| 4 | **Bhai Phota card**: phonta card ("to my brother/sister"), the rhyme, both dates if panjikas differ | Card + rhyme shipped with item 3; recipient wording left |  before 11 Nov |
-| 5 | **Kali Puja pandals**: sourced entries (Barasat, Naihati, Madhyamgram, Kolkata) in the directory with `puja: "kali"`, so map, passport, crowd meter work | Queued (needs sources per pandal) | before 8 Nov if sources exist |
+| 4 | **Bhai Phota card**: phonta card ("to my brother/sister"), the rhyme, both dates if panjikas differ | **Review** (sibling placeholder added 31 Oct) |  before 11 Nov |
+| 5 | **Kali Puja pandals**: sourced entries (Barasat, Naihati, Madhyamgram, Kolkata) in the directory with `puja: "kali"`, so map, passport, crowd meter work | **Review** (14 entries built 31 Oct; add 2026 themes when announced ~3–7 Nov) | before 8 Nov if sources exist |
 | 6 | **Crowd-safety layer**: "very crowded, try later" nudge from the crowd meter, an "unsafe crowd" report kind, official helplines (sourced). Context: Chorbagan crush, 17 Oct 2026 ([The Quint](https://www.thequint.com/news/breaking-news/kolkata-durga-puja-pandal-stampede-investigation-updates)) | Queued | November |
-| 7 | **Jagaddhatri Puja hub** `/jagaddhatri-puja-2026`: Chandannagar + Krishnanagar, lighting, trains from Howrah, dates per panjika | Queued | before 16 Nov |
+| 7 | **Jagaddhatri Puja hub** `/jagaddhatri-puja-2026`: Chandannagar + Krishnanagar, lighting, trains from Howrah, dates per panjika | **Review** (built 31 Oct; add 2026 procession/trains when announced) | before 16 Nov |
 | 8 | **Puja Wrapped 2026**: end-of-season recap card from `/me` (pandals, days, postcards, km) | Queued | November |
 | 9 | **Updates opt-in**: a WhatsApp channel / Telegram link for "tell me when the notice is out" (no numbers stored) | Queued | November |
 | 10 | **Festival calendar 2027** `/calendar-2027`: every Bengali puja with WB and BD dates, sourced | Queued | December |
@@ -37,6 +37,49 @@ no search-volume data was available beyond that, so the order below follows the 
 | 13 | **Theme archive**: per-pandal year history for "[pandal] 2027 theme" searches | Queued | mid-2027 |
 | 14 | **Safety-first route planner** for Durga Puja 2027: off-peak hours from wait/crowd data, rain advice | Queued | before Durga Puja 2027 |
 | 15 | **Push notifications** (free tier only) for the live board and saved pandals | Queued | before Durga Puja 2027 |
+
+## Calendar landing pages (panjika SEO) — plan, 31 Oct 2026
+
+Goal: pages that people land on from Google for "when is X" questions (Ekadashi, Purnima, Amavasya,
+festival dates, Bengali calendar), in Bangla and English, with WB and Bangladesh side by side.
+
+**What the research found** (agent report, 31 Oct): no search-volume numbers are available to us
+(no Trends/Keyword Planner access); demand is inferred from how many sites serve each query. Drik
+Panchang dominates "today's panchang"/choghadiya (don't compete there). Bangla-language results for
+"একাদশী কবে", "পঞ্জিকা ২০২৭" are thin; nobody shows Kolkata and Dhaka together; neither Drik nor
+bangladatetoday.com has a visible FAQ. Real numbers: read Search Console (`NEXT_PUBLIC_GSC_VERIFICATION`)
+after a few weeks and reorder.
+
+**Data rule** (AGENTS.md rule 1): every date is hand-entered from a cited per-festival page
+(Drik Panchang Kolkata/Dhaka pages, ISKCON lists for Vaishnava Ekadashi, Bangladesh holiday gazette,
+panjika readings reported in news), with `{title, url, date}`; Smarta and Vaishnava Ekadashi are kept
+separate, never merged; a date with no source shows "to be confirmed". No bulk copying of Drik tables
+(their footer claims copyright on data): one festival = one cited row. Computing tithis ourselves
+(astronomy-engine, MIT) is parked: it may differ from printed panjikas by a day, so at most a labelled
+"computed" cross-check later, never the shown date.
+
+**Structure** (same slug style as `/durga-puja-2026`, `/kali-puja-2026`; both languages; one
+reusable `FestivalPage` renderer + `data/calendar/*.ts`, so later pages are data-only):
+- Hero answer first: date, weekday, tithi window for Kolkata (IST) and Dhaka (BST), source links.
+- "Why panjikas differ" note where they do; rituals/what to do in 2–3 short paras (own words).
+- FAQ (4–6, visible) → FAQPage JSON-LD; Event JSON-LD only for sourced dates; BreadcrumbList.
+- Related-dates strip (previous/next festival) + link to `/calendar-2027` hub; greeting card and
+  postcard CTAs where the festival has them (shareable = backlinks).
+- Titles: "<Festival> 2027: তারিখ, তিথি ও সময়" / "<Festival> 2027: Date, Tithi & Time" (≤60 chars),
+  sitemap entries, smoke strings, OG image per page.
+
+**Order** (calendar-first; each ships ~1–3 weeks before its date):
+| # | Page | Why now |
+|---|---|---|
+| C1 | `/jagaddhatri-puja-2026` (roadmap 7): Chandannagar + Krishnanagar, dates, trains, lighting, pandals | **Review** (built 31 Oct) |
+| C2 | `/ekadashi-2027`: every Ekadashi Nov 2026 → Dec 2027, Smarta vs ISKCON columns, Kolkata + Dhaka | **Review** (built 31 Oct) |
+| C3 | `/purnima-amavasya-2027`: full/new moon dates and tithi windows | Parked: Drik shows separate vrat and main days for some Purnimas; decide which to show |
+| C4 | `/calendar-2027` (roadmap 10): every Bengali puja/festival, links to C-pages | **Review** (built 31 Oct; WB dates; BD only for Poila Boishakh) |
+| C5 | `/saraswati-puja-2027` (roadmap 12) | **Review** (built 31 Oct) |
+| C6 | `/shivratri-2027`, `/dol-purnima-2027` | **Review** (built 31 Oct; Dol from Drik's Bengali calendar, 22 Mar) |
+| C7 | `/poila-boishakh-2027` (1434): WB vs BD dates | **Review** (built 31 Oct) |
+| C8 | `/durga-puja-2027` **Review** (built 31 Oct, days only; add times when panjikas publish). Later: Rath Yatra, Janmashtami, Lokkhi Puja 2027 pages (dates already on `/calendar-2027`) | mid-2027 |
+Not planned: daily "today's tithi" pages, wedding/annaprashan dates (no open sourced data; high competition).
 
 ## Done
 - 31 Oct: Next.js 16.4.0 → 16.4.3 security upgrade (`npm audit` clean).

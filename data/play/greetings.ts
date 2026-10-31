@@ -19,14 +19,20 @@ export type GreetingDay =
   | "anytime"
   | "kali"
   | "diwali"
-  | "bhaiphota";
+  | "bhaiphota"
+  | "jagaddhatri"
+  | "saraswati"
+  | "shivratri"
+  | "noboborsho"
+  | "dol";
 
-export type GreetingSeason = "durga" | "kali";
+export type GreetingSeason = "durga" | "kali" | "spring";
 
 /** Chip groups, current season first. */
 export const GREETING_SEASONS: { id: GreetingSeason; name: L }[] = [
-  { id: "kali", name: l("কালীপুজো ও ভাইফোঁটা", "Kali Puja & Bhai Phota") },
+  { id: "kali", name: l("কালীপুজো থেকে জগদ্ধাত্রী", "Kali Puja to Jagaddhatri") },
   { id: "durga", name: l("দুর্গাপুজো", "Durga Puja") },
+  { id: "spring", name: l("সরস্বতী পুজো থেকে নববর্ষ", "Saraswati Puja to New Year") },
 ];
 
 export interface Greeting {
@@ -47,6 +53,8 @@ export interface Greeting {
   stamp?: L;
   /** false: don't append the Durga pandal-hopping pool (COMMON_LINES). */
   pool?: boolean;
+  /** Placeholder for the "to whom?" field when the default one doesn't fit (Bhai Phota: siblings). */
+  toPh?: L;
 }
 
 export const GREETINGS: Greeting[] = [
@@ -283,6 +291,7 @@ export const GREETINGS: Greeting[] = [
     mood: "happy",
     season: "kali",
     pool: false,
+    toPh: l("যেমন: দাদা, ভাই, দিদি, বোন", "e.g. Dada, Bhai, Didi, my sister"),
     lines: [
       l("ভাইয়ের কপালে দিলাম ফোঁটা, যমের দুয়ারে পড়ল কাঁটা। শুভ ভাইফোঁটা!", "A phota on my brother's forehead, thorns at Yama's door. Shubho Bhai Phota!"),
       l("চন্দন, দই, কাজলের ফোঁটা, ধান-দূর্বার আশীর্বাদ, আর থালাভরা মিষ্টি।", "A phota of sandalwood, curd and kajal, blessings of paddy and durba, and a plate of sweets."),
@@ -294,6 +303,110 @@ export const GREETINGS: Greeting[] = [
       l("যত বড়ই হই, আজকের দিনে আবার ছোট ভাইবোন। শুভ ভাইফোঁটা!", "However grown-up we are, today we're the little siblings again. Shubho Bhai Phota!"),
     ],
     tags: ["ShubhoBhaiPhota", "BhaiPhota2026", "BhaiDooj"],
+  },
+  {
+    id: "jagaddhatri",
+    icon: "🏮",
+    name: l("জগদ্ধাত্রী পুজো", "Jagaddhatri Puja"),
+    headline: l("শুভ জগদ্ধাত্রী পুজো!", "Shubho Jagaddhatri Puja!"),
+    char: "bagha",
+    mood: "proud",
+    season: "kali",
+    lines: [
+      l("সিংহবাহিনী মা এলেন, চন্দননগর আলোয় ভাসল। শুভ জগদ্ধাত্রী পুজো!", "Maa arrives on her lion and Chandannagar floats in light. Shubho Jagaddhatri Puja!"),
+      l("দুর্গাপুজো গেল, কালীপুজো গেল, তবু পুজো ফুরোয়নি: এবার জগদ্ধাত্রী।", "Durga Puja done, Kali Puja done, and still more Puja: now Jagaddhatri."),
+      l("ব্যান্ডেল লোকালে ভিড়, চোখে আলোর গেট, মনে মা। শুভ জগদ্ধাত্রী পুজো!", "A packed Bandel local, gates of light, Maa in the heart. Shubho Jagaddhatri Puja!"),
+      l("জগতের ধাত্রী মা সবাইকে ধরে রাখুন, ভালো রাখুন। শুভ জগদ্ধাত্রী পুজো!", "May the Mother who holds the world hold us all and keep us well. Shubho Jagaddhatri Puja!"),
+      l("কৃষ্ণনগরের বুড়িমা, চন্দননগরের আলো: এক রাতে দুটো হবে না, বেছে নাও!", "Krishnanagar's Burima or Chandannagar's lights: you can't do both in one night, pick one!"),
+      l("আকাশছোঁয়া প্রতিমা, আলোর ময়ূর, আর গঙ্গার হাওয়া। শুভ জগদ্ধাত্রী পুজো!", "Sky-high idols, peacocks made of light, and the breeze off the Ganga. Shubho Jagaddhatri Puja!"),
+      l("শীত পড়ার আগে শেষ বড় পুজো; জামাটা গায়ে চাপিয়েই বেরিয়ে পড়ো।", "The last big puja before winter; throw on a jacket and go."),
+      l("নবমীর সকালে অঞ্জলি, রাতে আলোর শহর। শুভ জগদ্ধাত্রী পুজো!", "Anjali on Navami morning, a city of lights by night. Shubho Jagaddhatri Puja!"),
+    ],
+    tags: ["ShubhoJagaddhatriPuja", "JagaddhatriPuja2026", "Chandannagar"],
+  },
+  {
+    id: "saraswati",
+    icon: "📚",
+    name: l("সরস্বতী পুজো", "Saraswati Puja"),
+    headline: l("শুভ সরস্বতী পুজো!", "Shubho Saraswati Puja!"),
+    char: "detective",
+    mood: "happy",
+    season: "spring",
+    pool: false,
+    lines: [
+      l("হলুদ শাড়ি, হলুদ পাঞ্জাবি, আর মায়ের পায়ে খাতা-পেন। শুভ সরস্বতী পুজো!", "Yellow saris, yellow panjabis, and books and pens at Maa's feet. Shubho Saraswati Puja!"),
+      l("আজ পড়াশোনা ছুটিতে, বইগুলো মায়ের কাছে। কাল থেকে আবার!", "Studies are on leave today; the books are with Maa. Back to it tomorrow!"),
+      l("অঞ্জলির পর খিচুড়ি, তারপর স্কুল থেকে স্কুলে ঘোরা। শুভ সরস্বতী পুজো!", "Khichuri after anjali, then hopping from school to school. Shubho Saraswati Puja!"),
+      l("মা সরস্বতী তোমার পরীক্ষা, গান, লেখা, সব ভালো করুন।", "May Maa Saraswati bless your exams, your songs and your writing."),
+      l("ছোটবেলার প্রথম হাতেখড়ি মনে পড়ে? আজ সেই দিন। শুভ সরস্বতী পুজো!", "Remember your first letters as a child? Today is that day. Shubho Saraswati Puja!"),
+      l("কুল খাওয়া আজ থেকে শুরু, মায়ের পুজোর পর। শুভ সরস্বতী পুজো!", "Today the kul berries are finally allowed, after the puja. Shubho Saraswati Puja!"),
+      l("শীতের শেষ, বসন্তের শুরু, আর মনে একটু প্রেম প্রেম ভাব। শুভ বসন্ত পঞ্চমী!", "Winter ending, spring beginning, and a little romance in the air. Happy Vasant Panchami!"),
+      l("বীণাপাণি মায়ের আশীর্বাদে বিদ্যা, বুদ্ধি আর সুর থাকুক সারা বছর।", "With the blessings of the goddess of the veena, may learning, wisdom and music stay all year."),
+    ],
+    tags: ["ShubhoSaraswatiPuja", "SaraswatiPuja2027", "VasantPanchami"],
+  },
+  {
+    id: "shivratri",
+    icon: "🔱",
+    name: l("শিবরাত্রি", "Shivratri"),
+    headline: l("শুভ শিবরাত্রি!", "Happy Maha Shivratri!"),
+    char: "sleepy",
+    mood: "wow",
+    season: "spring",
+    pool: false,
+    lines: [
+      l("রাতভর জাগরণ, মাথায় জল, হাতে বেলপাতা। শুভ শিবরাত্রি!", "A night-long vigil, water on the lingam, bel leaves in hand. Happy Maha Shivratri!"),
+      l("উপোসের পেট, ভক্তির মন, আর চার প্রহরের পুজো। হর হর মহাদেব!", "An empty stomach, a full heart, and four prahars of puja. Har Har Mahadev!"),
+      l("ভোলা মহেশ্বর সবার মঙ্গল করুন। শুভ শিবরাত্রি!", "May Bhola Maheshwar bless everyone. Happy Maha Shivratri!"),
+      l("আজ রাতে ঘুম নেই, শুধু ‘ওঁ নমঃ শিবায়’। শুভ শিবরাত্রি!", "No sleep tonight, only 'Om Namah Shivaya'. Happy Maha Shivratri!"),
+      l("মন্দিরের লাইনে দাঁড়িয়ে ভোর হয়ে গেল, তবু মনে শান্তি।", "Dawn broke while I stood in the temple queue, and still the heart is at peace."),
+      l("শিবের মতো শান্ত থাকো, আর দরকারে তাণ্ডবটাও জেনো।", "Stay calm like Shiva, and know the tandava for when it's needed."),
+      l("দুধ, জল, মধু আর বেলপাতা: সরল পুজো, গভীর ভক্তি। শুভ শিবরাত্রি!", "Milk, water, honey and bel leaves: a simple puja, a deep devotion. Happy Maha Shivratri!"),
+      l("কাল সকালে পারণ, আজ রাতে মহাদেব। শুভ শিবরাত্রি!", "Tomorrow morning the fast ends; tonight is for Mahadev. Happy Maha Shivratri!"),
+    ],
+    tags: ["MahaShivratri", "Shivratri2027", "HarHarMahadev"],
+  },
+  {
+    id: "dol",
+    icon: "🎨",
+    name: l("দোল", "Dol"),
+    headline: l("শুভ দোলযাত্রা!", "Happy Dol Jatra!"),
+    char: "selfie",
+    mood: "happy",
+    season: "spring",
+    pool: false,
+    lines: [
+      l("আবিরে লাল গাল, পিচকারিতে সবুজ জামা। শুভ দোলযাত্রা!", "Cheeks red with abir, a shirt gone green from the pichkari. Happy Dol Jatra!"),
+      l("রাধাকৃষ্ণের দোলনা দুলছে, আমাদের মন রঙে রঙিন। শুভ দোল!", "Radha and Krishna's swing is rocking, and our hearts are full of colour. Happy Dol!"),
+      l("ওরে গৃহবাসী, খোল দ্বার খোল, লাগল যে দোল! শুভ বসন্ত উৎসব।", "Open the doors, the Dol has come! Happy Basanta Utsav."),
+      l("মালপোয়া, ঠান্ডাই আর এক মুঠো আবির। শুভ দোলযাত্রা!", "Malpua, thandai and a fistful of abir. Happy Dol Jatra!"),
+      l("রং যত গাঢ়, বন্ধুত্ব তত পাকা। শুভ দোল!", "The deeper the colour, the stronger the friendship. Happy Dol!"),
+      l("পুরোনো মনখারাপ রঙে ধুয়ে যাক। শুভ দোলপূর্ণিমা!", "May the colours wash the old sadness away. Happy Dol Purnima!"),
+      l("শুকনো আবির, নরম হাত, আর অনেক হাসি: এভাবেই দোল খেলো।", "Dry abir, gentle hands and lots of laughter: that's how to play Dol."),
+      l("আজ মহাপ্রভুর জন্মতিথিও; হরিনাম আর রঙে ভরে উঠুক দিন। শুভ দোল!", "It's Mahaprabhu's birth anniversary too; may the day fill with Harinaam and colour. Happy Dol!"),
+    ],
+    tags: ["HappyDol", "DolJatra2027", "HappyHoli"],
+  },
+  {
+    id: "noboborsho",
+    icon: "🎉",
+    name: l("পয়লা বৈশাখ", "Poila Boishakh"),
+    headline: l("শুভ নববর্ষ!", "Shubho Noboborsho!"),
+    char: "gopal",
+    mood: "happy",
+    season: "spring",
+    pool: false,
+    lines: [
+      l("নতুন বছর, নতুন জামা, নতুন হালখাতা। শুভ নববর্ষ ১৪৩৪!", "A new year, new clothes, a new ledger. Shubho Noboborsho 1434!"),
+      l("পুরোনো দুঃখ ধুয়ে যাক, নতুন বছরে আসুক আলো। শুভ নববর্ষ!", "May the old sorrows wash away and the new year bring light. Shubho Noboborsho!"),
+      l("দোকানে মিষ্টির বাক্স, ক্যালেন্ডার, আর ‘আবার আসবেন’। শুভ নববর্ষ!", "A box of sweets at the shop, a calendar, and 'come again'. Shubho Noboborsho!"),
+      l("ভোরে প্রভাতফেরি, দুপুরে ভাত-মাছ-মিষ্টি, সন্ধেয় আড্ডা। শুভ নববর্ষ!", "Prabhat pheri at dawn, rice-fish-sweets at noon, adda in the evening. Shubho Noboborsho!"),
+      l("এসো হে বৈশাখ, এসো এসো! তোমার জন্য শুভকামনা।", "Esho he Boishakh, esho esho! Every good wish to you."),
+      l("দুই বাংলায় দুই দিন, কিন্তু শুভেচ্ছা একটাই। শুভ নববর্ষ!", "Two Bengals, two days, one wish. Shubho Noboborsho!"),
+      l("পান্তা-ইলিশ না হোক, ভালোবাসাটা যেন থাকে। শুভ নববর্ষ!", "Panta-ilish or not, may the love stay. Shubho Noboborsho!"),
+      l("নতুন বছরে নতুন স্বপ্ন, পুরোনো বন্ধুরা পাশে। শুভ নববর্ষ!", "New dreams for a new year, old friends by your side. Shubho Noboborsho!"),
+    ],
+    tags: ["ShubhoNoboborsho", "PoilaBoishakh", "BengaliNewYear1434"],
   },
 ];
 
@@ -342,14 +455,30 @@ export function greetingForPhase(phase: { kind: "before"; days: number } | { kin
 
 /**
  * Kali Puja week (same dates as data/kali-puja.ts KALI_2026, from Drik Panchang; a test keeps them equal):
- * Kali Puja Sun 8 Nov (Amavasya runs into 9 Nov), Bhai Phota Wed 11 Nov.
+ * Kali Puja Sun 8 Nov (Amavasya runs into 9 Nov), Bhai Phota Wed 11 Nov, Jagaddhatri Puja (Navami) Thu 19 Nov;
+ * the Jagaddhatri card shows from the day after Bhai Phota until the day after Navami.
  */
-export const KALI_WEEK_2026 = { from: "2026-11-01", kali: "2026-11-08", kaliEnd: "2026-11-09", bhaiPhota: "2026-11-11" } as const;
+export const KALI_WEEK_2026 = { from: "2026-11-01", kali: "2026-11-08", kaliEnd: "2026-11-09", bhaiPhota: "2026-11-11", jagaddhatri: "2026-11-19", jagaddhatriEnd: "2026-11-20" } as const;
 
-/** Today's card from the local date (YYYY-MM-DD): Kali Puja week first, else the Durga Puja calendar. */
+/**
+ * Spring 2027 (same dates as data/festivals/*-2027.ts, from Drik Panchang; a test keeps them equal): Saraswati
+ * Puja Thu 11 Feb, Maha Shivratri Sat 6 Mar, Dol Purnima Mon 22 Mar, Poila Boishakh 15 Apr in West Bengal (14 Apr in Bangladesh).
+ * Each card shows from about a week before until the day after.
+ */
+export const SPRING_2027 = { saraswati: "2027-02-11", shivratri: "2027-03-06", dol: "2027-03-22", noboborshoBd: "2027-04-14", noboborsho: "2027-04-15" } as const;
+const SPRING_WINDOWS: [GreetingDay, string, string][] = [
+  ["saraswati", "2027-02-05", "2027-02-12"],
+  ["shivratri", "2027-03-01", "2027-03-07"],
+  ["dol", "2027-03-16", "2027-03-23"],
+  ["noboborsho", "2027-04-08", "2027-04-16"],
+];
+
+/** Today's card from the local date (YYYY-MM-DD): Kali Puja week, spring festivals, else the Durga Puja calendar. */
 export function greetingFor(today: string, phase: Parameters<typeof greetingForPhase>[0]): GreetingDay {
   const k = KALI_WEEK_2026;
   if (today >= k.from && today <= k.kaliEnd) return "kali";
   if (today > k.kaliEnd && today <= k.bhaiPhota) return "bhaiphota";
+  if (today > k.bhaiPhota && today <= k.jagaddhatriEnd) return "jagaddhatri";
+  for (const [id, from, to] of SPRING_WINDOWS) if (today >= from && today <= to) return id;
   return greetingForPhase(phase);
 }

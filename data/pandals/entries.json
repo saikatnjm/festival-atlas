@@ -1931,5 +1931,589 @@
    { "title": "The Daily Star: 7 historic Bangladesh temples to visit this Durga Puja season (11 Oct 2026)", "url": "https://www.thedailystar.net/life-living/travel/news/7-historic-bangladesh-temples-visit-durga-puja-season-4295891" }
   ],
   "lastVerified": "2026-10-12"
+ },
+ {
+  "id": "naihati-boro-maa",
+  "name": "Naihati Boro Maa Kali Puja",
+  "name_bn": "নৈহাটির বড়মা",
+  "country": "IN",
+  "city": "Naihati",
+  "area": "Boro Maa Kali Temple",
+  "area_bn": "বড়মা কালী মন্দির",
+  "lat": 22.8885984,
+  "lng": 88.4143351,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Boro_Maa_Kali_Temple,_Naihati",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "Naihati's Boro Maa: a Kali idol over 20 feet tall, worshipped since 1923 and now housed in a permanent temple. For 2026 the state decided there will be no VIP gate, and lakhs of visitors are expected. Its 2026 theme had not been announced as of 31 October.",
+  "sources": [
+   {
+    "title": "UNI, no VIP gate at Naihati Boro Maa (25 Oct 2026)",
+    "url": "https://www.uniindia.com/east-india/security-wb-boro-maa-vip-gate/225195"
+   },
+   {
+    "title": "Wikipedia, Boro Maa Kali Temple, Naihati",
+    "url": "https://en.wikipedia.org/wiki/Boro_Maa_Kali_Temple,_Naihati"
+   },
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "fatakesto-kali-puja",
+  "name": "Fatakesto Kali Puja (Naba Yubak Sangha)",
+  "name_bn": "ফাটাকেষ্টর কালীপুজো (নবযুবক সংঘ)",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Amherst Street",
+  "area_bn": "আমহার্স্ট স্ট্রিট",
+  "lat": 22.5791049,
+  "lng": 88.369807,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Raja_Rammohan_Roy_Sarani",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "committee": "Naba Yubak Sangha",
+  "description": "One of north Kolkata's best-known Kali pujas, held off Amherst Street since 1957, with a Shyama idol of about 16.5 feet. It is known for not doing themes and draws lakhs over the festival. Its 2026 theme had not been announced as of 31 October.",
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, Raja Rammohan Roy Sarani (Amherst Street)",
+    "url": "https://en.wikipedia.org/wiki/Raja_Rammohan_Roy_Sarani"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "somen-mitra-kali-puja",
+  "name": "Somen Mitra's Kali Puja",
+  "name_bn": "সোমেন মিত্রের কালীপুজো",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Amherst Street",
+  "area_bn": "আমহার্স্ট স্ট্রিট",
+  "lat": 22.5791049,
+  "lng": 88.369807,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Raja_Rammohan_Roy_Sarani",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "A well-known Amherst Street Kali puja started by the late Congress leader Somen Mitra, a short walk from Sealdah and MG Road Metro. Its 2026 theme had not been announced as of 31 October.",
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, Raja Rammohan Roy Sarani (Amherst Street)",
+    "url": "https://en.wikipedia.org/wiki/Raja_Rammohan_Roy_Sarani"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "naba-rabin-sangha",
+  "name": "Naba Rabin Sangha",
+  "name_bn": "নবরবীন সংঘ",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Patuatola Lane, off Surya Sen Street",
+  "area_bn": "পটুয়াটোলা লেন, সূর্য সেন স্ট্রিট",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "A north Kolkata Kali puja on Patuatola Lane since 1959, long seen as Fatakesto's neighbourhood rival. Its 2026 theme had not been announced as of 31 October.",
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "pathuriaghata-byayam-samity",
+  "name": "Pathuriaghata Byayam Samity (Boro Kali)",
+  "name_bn": "পাথুরিয়াঘাটা ব্যায়াম সমিতি (বড় কালী)",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Pathuriaghata",
+  "area_bn": "পাথুরিয়াঘাটা",
+  "lat": 22.5895,
+  "lng": 88.3548,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Pathuriaghata",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "One of the oldest Kali pujas in the city, known for its 'Boro Kali': an idol of about 31 feet wearing close to 100 kg of ornaments. Its 2026 theme had not been announced as of 31 October.",
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, Pathuriaghata",
+    "url": "https://en.wikipedia.org/wiki/Pathuriaghata"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "janbazar-sammilita-kali-puja",
+  "name": "Janbazar Sammilita Kali Puja Samity",
+  "name_bn": "জানবাজার সম্মিলিত কালীপুজো সমিতি",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Janbazar",
+  "area_bn": "জানবাজার",
+  "lat": 22.55833,
+  "lng": 88.35806,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Janbazar",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "A central Kolkata puja in its 58th year in 2026, where Kali is worshipped in ten forms. Its 2026 theme had not been announced as of 31 October.",
+  "history": [
+   {
+    "year": 2025,
+    "theme": "A pandal modelled on a Jaipur palace",
+    "sources": [
+     {
+      "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+      "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+     }
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, Janbazar",
+    "url": "https://en.wikipedia.org/wiki/Janbazar"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "haowa-shokal-baranagar",
+  "name": "Haowa Shokal",
+  "country": "IN",
+  "city": "Baranagar",
+  "area": "Near Dakshineswar",
+  "area_bn": "দক্ষিণেশ্বরের কাছে",
+  "lat": 22.64,
+  "lng": 88.37,
+  "pin": "city",
+  "coordSource": "https://en.wikipedia.org/wiki/Baranagar",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "A Baranagar Kali puja near Dakshineswar that stages a new live show every year. Its 2026 theme had not been announced as of 31 October.",
+  "history": [
+   {
+    "year": 2025,
+    "theme": "Human puppets of Kali and Shiva, performed live",
+    "sources": [
+     {
+      "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+      "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+     }
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, Baranagar",
+    "url": "https://en.wikipedia.org/wiki/Baranagar"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "barisha-shanti-sangha",
+  "name": "Barisha Shanti Sangha",
+  "name_bn": "বড়িশা শান্তি সংঘ",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Barisha, Behala",
+  "area_bn": "বড়িশা, বেহালা",
+  "lat": 22.484847,
+  "lng": 88.313686,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Barisha,_Kolkata",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "A Behala theme Kali puja in its 77th year in 2026, about 250 m from Sakherbazar Metro. Its 2026 theme had not been announced as of 31 October.",
+  "history": [
+   {
+    "year": 2025,
+    "theme": "Parampara (tradition)",
+    "sources": [
+     {
+      "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+      "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+     }
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, Barisha, Kolkata",
+    "url": "https://en.wikipedia.org/wiki/Barisha,_Kolkata"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "shyamapally-shyama-sangha",
+  "name": "Shyamapally Shyama Sangha",
+  "name_bn": "শ্যামাপল্লী শ্যামা সংঘ",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Jadavpur",
+  "area_bn": "যাদবপুর",
+  "lat": 22.502513,
+  "lng": 88.3676051,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Jadavpur",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "A Jadavpur club known for theme pujas for both Kali and Durga. Its 2026 theme had not been announced as of 31 October.",
+  "history": [
+   {
+    "year": 2025,
+    "theme": "Made in our own country, for our own country (looking back to 1934)",
+    "sources": [
+     {
+      "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+      "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+     }
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, Jadavpur",
+    "url": "https://en.wikipedia.org/wiki/Jadavpur"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "mainak-club-regent-estate",
+  "name": "Mainak Club",
+  "name_bn": "মৈনাক ক্লাব",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Sree Colony, Regent Estate",
+  "area_bn": "শ্রী কলোনি, রিজেন্ট এস্টেট",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "A south Kolkata theme Kali puja that performs its theme as a live show. Its 2026 theme had not been announced as of 31 October.",
+  "history": [
+   {
+    "year": 2025,
+    "theme": "Parakram (valour), with a live show",
+    "sources": [
+     {
+      "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+      "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+     }
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "keoratala-mahashmashan-kali-puja",
+  "name": "Keoratala Mahashmashan Kali Puja",
+  "name_bn": "কেওড়াতলা মহাশ্মশানের কালীপুজো",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Keoratala, Kalighat",
+  "area_bn": "কেওড়াতলা, কালীঘাট",
+  "lat": 22.518,
+  "lng": 88.346,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Kalighat",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "A Kali puja at the Keoratala crematorium going back to 1870, with a black two-armed idol and rituals at midnight. Not a good stop with small children. Its 2026 theme had not been announced as of 31 October.",
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, Kalighat",
+    "url": "https://en.wikipedia.org/wiki/Kalighat"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "abs-sporting-new-alipore",
+  "name": "ABS Sporting",
+  "name_bn": "এবিএস স্পোর্টিং",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "New Alipore",
+  "area_bn": "নিউ আলিপুর",
+  "lat": 22.51,
+  "lng": 88.32,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/New_Alipore",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "A New Alipore puja known for its Chamunda Kali, about 30 feet tall. Its 2026 theme had not been announced as of 31 October.",
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, New Alipore",
+    "url": "https://en.wikipedia.org/wiki/New_Alipore"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "nabapally-association-barasat",
+  "name": "Nabapally Association",
+  "name_bn": "নবপল্লী অ্যাসোসিয়েশন",
+  "country": "IN",
+  "city": "Barasat",
+  "area": "Nabapally",
+  "area_bn": "নবপল্লী",
+  "lat": 22.72,
+  "lng": 88.48,
+  "pin": "city",
+  "coordSource": "https://en.wikipedia.org/wiki/Barasat",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "One of Barasat's big theme Kali pujas, on the circuit that draws crowds from all over North 24 Parganas. Its 2026 theme had not been announced as of 31 October.",
+  "history": [
+   {
+    "year": 2018,
+    "theme": "FIFA World Cup, with a St Basil's Cathedral replica",
+    "sources": [
+     {
+      "title": "The Quint, Nabapally Association Kali Puja pandal (11 Nov 2018)",
+      "url": "https://thequint.com/news/india/kali-puja-mother-mary-nabapally-association-fifa-world-cup-pandal"
+     }
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, Barasat",
+    "url": "https://en.wikipedia.org/wiki/Barasat"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "girish-park-five-star-sporting-club",
+  "name": "Girish Park Five Star Sporting Club",
+  "name_bn": "গিরিশ পার্ক ফাইভ স্টার স্পোর্টিং ক্লাব",
+  "country": "IN",
+  "city": "Kolkata",
+  "area": "Girish Park",
+  "area_bn": "গিরিশ পার্ক",
+  "lat": 22.586461,
+  "lng": 88.362151,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Girish_Park",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "A north Kolkata Kali puja known for its Annakut offering, next to Girish Park Metro. Its 2026 theme had not been announced as of 31 October.",
+  "sources": [
+   {
+    "title": "Kolkata Khoj, Best Kali Puja Pandals in Kolkata 2026 (checked 27 Oct 2026; themes listed are 2025's)",
+    "url": "https://kolkatakhoj.com/adda/best-kali-puja-pandals-kolkata-2026/"
+   },
+   {
+    "title": "Wikipedia, Girish Park",
+    "url": "https://en.wikipedia.org/wiki/Girish_Park"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "kanailal-pally-chandannagar",
+  "name": "Kanailal Pally",
+  "name_bn": "কানাইলাল পল্লী",
+  "country": "IN",
+  "city": "Chandannagar",
+  "lat": 22.87,
+  "lng": 88.38,
+  "pin": "city",
+  "coordSource": "https://en.wikipedia.org/wiki/Chandannagar",
+  "year": 2025,
+  "status": "confirmed",
+  "puja": "jagaddhatri",
+  "description": "A Chandannagar Jagaddhatri puja that had the town's tallest idol in 2025, 75 feet, in its 52nd year. Its 2026 details had not been announced as of 31 October.",
+  "sources": [
+   {
+    "title": "ETV Bharat, Chandannagar set to worship tallest Jagadhatri idol (26 Oct 2025)",
+    "url": "https://www.etvbharat.com/en/state/bengals-chandannagar-set-to-worship-tallest-jagadhatri-idol-enn25102603013"
+   },
+   {
+    "title": "Wikipedia, Chandannagar",
+    "url": "https://en.wikipedia.org/wiki/Chandannagar"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "helapukur-chandannagar",
+  "name": "Helapukur Jagaddhatri Puja Committee",
+  "name_bn": "হেলাপুকুর জগদ্ধাত্রী পুজো কমিটি",
+  "country": "IN",
+  "city": "Chandannagar",
+  "area": "Helapukur",
+  "area_bn": "হেলাপুকুর",
+  "lat": 22.87,
+  "lng": 88.38,
+  "pin": "city",
+  "coordSource": "https://en.wikipedia.org/wiki/Chandannagar",
+  "year": 2025,
+  "status": "confirmed",
+  "puja": "jagaddhatri",
+  "description": "A long-running Chandannagar Jagaddhatri puja, in its 56th year in 2025. Its 2026 details had not been announced as of 31 October.",
+  "sources": [
+   {
+    "title": "ETV Bharat, Chandannagar set to worship tallest Jagadhatri idol (26 Oct 2025)",
+    "url": "https://www.etvbharat.com/en/state/bengals-chandannagar-set-to-worship-tallest-jagadhatri-idol-enn25102603013"
+   },
+   {
+    "title": "Wikipedia, Chandannagar",
+    "url": "https://en.wikipedia.org/wiki/Chandannagar"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "bagbazar-sarbojanin-chandannagar",
+  "name": "Bagbazar Sarbojanin",
+  "name_bn": "বাগবাজার সর্বজনীন",
+  "country": "IN",
+  "city": "Chandannagar",
+  "area": "Bagbazar",
+  "area_bn": "বাগবাজার",
+  "lat": 22.87,
+  "lng": 88.38,
+  "pin": "city",
+  "coordSource": "https://en.wikipedia.org/wiki/Chandannagar",
+  "year": 2024,
+  "status": "historical",
+  "puja": "jagaddhatri",
+  "description": "The Chandannagar committee that first brought string bulbs to the town's Jagaddhatri lighting, as reported in 2024.",
+  "sources": [
+   {
+    "title": "ETV Bharat, Chandannagar Jagaddhatri Puja lighting (9 Nov 2024)",
+    "url": "https://www.etvbharat.com/en/!state/west-bengal-chandannagar-jagaddhatri-puja-lighting-puja-pandal-enn24110901801"
+   },
+   {
+    "title": "Wikipedia, Chandannagar",
+    "url": "https://en.wikipedia.org/wiki/Chandannagar"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "chaulpatty-lakshmiganj-chandannagar",
+  "name": "Lakshmiganj Chaulpatty Jagaddhatri Puja",
+  "name_bn": "লক্ষ্মীগঞ্জ চাউলপট্টির জগদ্ধাত্রী পুজো",
+  "country": "IN",
+  "city": "Chandannagar",
+  "area": "Lakshmiganj",
+  "area_bn": "লক্ষ্মীগঞ্জ",
+  "lat": 22.87,
+  "lng": 88.38,
+  "pin": "city",
+  "coordSource": "https://en.wikipedia.org/wiki/Chandannagar",
+  "status": "pending",
+  "puja": "jagaddhatri",
+  "description": "The Chaulpatty puja in Lakshmiganj, thought to be one of Chandannagar's earliest community Jagaddhatri pujas. No recent edition is documented in our sources yet.",
+  "sources": [
+   {
+    "title": "Wikipedia, Chandannagar",
+    "url": "https://en.wikipedia.org/wiki/Chandannagar"
+   }
+  ],
+  "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "chashapara-burima-krishnanagar",
+  "name": "Chashapara Burima",
+  "name_bn": "চাষাপাড়ার বুড়িমা",
+  "country": "IN",
+  "city": "Krishnanagar",
+  "area": "Chashapara",
+  "area_bn": "চাষাপাড়া",
+  "lat": 23.4,
+  "lng": 88.5,
+  "pin": "city",
+  "coordSource": "https://en.wikipedia.org/wiki/Krishnanagar,_Nadia",
+  "status": "pending",
+  "puja": "jagaddhatri",
+  "description": "Krishnanagar's most popular Jagaddhatri puja, the 'Burima' of Chashapara, said to date from 1772. No recent edition is documented in our sources yet.",
+  "sources": [
+   {
+    "title": "Wikipedia, Jagaddhatri Puja",
+    "url": "https://en.wikipedia.org/wiki/Jagaddhatri_Puja"
+   },
+   {
+    "title": "Wikipedia, Krishnanagar, Nadia",
+    "url": "https://en.wikipedia.org/wiki/Krishnanagar,_Nadia"
+   }
+  ],
+  "lastVerified": "2026-10-31"
  }
 ]
