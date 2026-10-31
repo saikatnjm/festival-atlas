@@ -28,6 +28,7 @@ import { AMAVASYA_2027, AMAVASYA_ROWS, EKADASHI_2027, EKADASHI_ROWS, PURNIMA_202
 import { JAGADDHATRI_2026 } from "../data/festivals/jagaddhatri-2026.ts";
 import { CALENDAR_2027 } from "../data/festivals/calendar-2027.ts";
 import { DOL_2027 } from "../data/festivals/dol-2027.ts";
+import { BENGALI_CALENDAR_1433, bdBanglaDate, banglaDateLabel } from "../data/festivals/bengali-calendar-1433.ts";
 import { DURGA_2027 } from "../data/festivals/durga-2027.ts";
 import { RASH_2026 } from "../data/festivals/rash-2026.ts";
 import { POUSH_SANKRANTI_2027 } from "../data/festivals/poush-sankranti-2027.ts";
@@ -327,7 +328,7 @@ test("spring 2027 cards follow the festival pages' sourced dates", () => {
 });
 
 test("festival pages: bilingual, sourced rows, titles and descriptions within limits", () => {
-  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027, AMAVASYA_2027, RASH_2026, POUSH_SANKRANTI_2027]) {
+  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027, AMAVASYA_2027, RASH_2026, POUSH_SANKRANTI_2027, BENGALI_CALENDAR_1433]) {
     for (const k of ["title", "description", "h1", "lead"]) assert.ok(f[k].bn && f[k].en, `${f.path} ${k}`);
     assert.ok(f.title.en.length <= 60, `${f.path} title ${f.title.en.length}`);
     assert.ok(f.description.en.length <= 160 && f.description.bn.length <= 170, `${f.path} description`);
@@ -574,4 +575,16 @@ test("coming up: sorted sourced dates, next entries and day counts", () => {
   assert.equal(nextUp(UPCOMING, "2027-10-07", 1)[0].name.en, "Durga Puja", "multi-day festival stays until its end");
   assert.equal(daysTo("2026-10-31", "2026-11-08"), 8);
   assert.equal(nextUp(UPCOMING, "2030-01-01", 3).length, 0);
+});
+
+test("Bangladesh revised Bangla calendar: fixed month starts give the right day", () => {
+  assert.deepEqual(bdBanglaDate("2026-04-14"), { day: 1, month: 0, year: 1433 });
+  assert.deepEqual(bdBanglaDate("2026-04-13"), { day: 30, month: 11, year: 1432 }, "Chaitra (30 days) ran 15 Mar–13 Apr 2026");
+  assert.deepEqual(bdBanglaDate("2026-10-31"), { day: 15, month: 6, year: 1433 }, "Kartik starts 17 Oct");
+  assert.deepEqual(bdBanglaDate("2026-12-16"), { day: 1, month: 8, year: 1433 });
+  assert.deepEqual(bdBanglaDate("2027-01-15"), { day: 1, month: 9, year: 1433 });
+  assert.deepEqual(bdBanglaDate("2027-03-14"), { day: 29, month: 10, year: 1433 }, "Falgun 1433 has 29 days (2027 not a leap year)");
+  assert.deepEqual(bdBanglaDate("2027-04-14"), { day: 1, month: 0, year: 1434 });
+  assert.equal(banglaDateLabel(bdBanglaDate("2026-10-31"), "bn"), "১৫ কার্তিক ১৪৩৩");
+  assert.equal(banglaDateLabel(bdBanglaDate("2026-10-31"), "en"), "15 Kartik 1433");
 });

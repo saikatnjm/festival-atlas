@@ -32,7 +32,7 @@ function Src({ source, lang }: { source: FestivalSource; lang: Lang }) {
 }
 
 /** A festival landing page: sourced date/tithi table for Kolkata and Dhaka, sections, pandals, FAQ, JSON-LD. */
-export default function FestivalPage({ lang, f }: { lang: Lang; f: Festival }) {
+export default function FestivalPage({ lang, f, children }: { lang: Lang; f: Festival; children?: React.ReactNode }) {
   const t = getDict(lang);
   const url = abs(withLang(lang, f.path));
   const crumbs = breadcrumbs([
@@ -101,6 +101,7 @@ export default function FestivalPage({ lang, f }: { lang: Lang; f: Festival }) {
       <p className="fineprint">
         {T.checked[lang]}: <time dateTime={f.lastChecked}>{checked}</time>
       </p>
+      {children}
 
       {f.timings ? (
       <section className="home-section" aria-labelledby="fest-timings">

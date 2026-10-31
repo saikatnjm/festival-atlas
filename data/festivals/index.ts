@@ -1,6 +1,7 @@
 // Every festival landing page built on FestivalPage, for the sitemap and /llms.txt. (Kali Puja 2026 and
 // Durga Puja 2026 have their own page code and are listed there separately.)
 
+import { BENGALI_CALENDAR_1433 } from "./bengali-calendar-1433";
 import { CALENDAR_2027 } from "./calendar-2027";
 import { DOL_2027 } from "./dol-2027";
 import { DURGA_2027 } from "./durga-2027";
@@ -18,6 +19,7 @@ export const FESTIVAL_PAGES: FestivalPage[] = [
   RASH_2026,
   DURGA_2027,
   CALENDAR_2027,
+  BENGALI_CALENDAR_1433,
   EKADASHI_2027,
   PURNIMA_2027,
   AMAVASYA_2027,

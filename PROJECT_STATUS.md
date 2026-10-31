@@ -3,6 +3,11 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## Bengali calendar 1433 + llms-full.txt (2026-10-31, evening)
+- **`/bengali-calendar-1433`** ("আজ বাংলা কত তারিখ"): today's date in Bangladesh's revised calendar (client widget, Dhaka date, read off the fixed month starts: Boishakh 14 Apr … Chaitra 15 Mar, Falgun 29/30; Wikipedia "Bengali calendars", 2019– column; `bdBanglaDate()` tested against known days), the Bangladesh month table, and West Bengal's 12 Sankranti dates and times for 1433 as Drik prints them for Kolkata. Drik prints no first-day dates for West Bengal months (only Pohela Boishakh 1433 = 15 Apr 2026), so none are derived; the page says to check the panjika. `FestivalPage` now takes children (rendered under the lead).
+- **`/llms-full.txt`**: the key answers of every festival page and article (leads, date/time rows with sources, FAQs) as plain text for AI assistants; linked from `/llms.txt`.
+- Verified in the scratch copy (Node 24): 57/57 tests, build (423 pages), typecheck, smoke 274/274.
+
 ## Amavasya 2027, temple guides, Christmas/New Year wishes (2026-10-31, evening)
 - **`/amavasya-2027`**: 15 rows (Nov 2026–Dec 2027), Kolkata and Dhaka tithi times (Dhaka +30 min everywhere), Drik's "Darsha Amavasya" day shown where printed (Nov 2026, Jul, Sep, Nov 2027), Mahalaya / Kali Puja notes; April 2027 difference shown as printed (Dhaka lists Chaitra Amavasya on 7 Apr, Kolkata only Darsha on 6 Apr). Re-verified by a second agent fetch; linked from the Purnima and Ekadashi pages, menu, sitemap, llms.txt.
 - **Temple guides** (evergreen "timings / how to reach" searches): Dakshineswar (hours 6:30 am–12:30 pm, 3:30–7:30 pm, checked by hand against dakshineswarkalitemple.org), Belur Math (6:30–11:30 am; evening 4–9 pm Apr–Sep, 3:30–8:30 pm Oct–Mar, checked against belurmath.org), Kalighat (no official hours online, so none given). Linked from the Kali Puja stories list.

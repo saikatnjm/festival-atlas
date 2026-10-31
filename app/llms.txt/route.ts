@@ -34,6 +34,7 @@ export function GET(): Response {
     "## Optional",
     `- [About Pujo Guide and how sources are used](${en("/about")})`,
     `- [Bangla edition](${o}/bn)`,
+    `- [Full text: key answers and FAQs](${o}/llms-full.txt)`,
     `- [Sitemap](${o}/sitemap.xml)`,
     "",
   ];

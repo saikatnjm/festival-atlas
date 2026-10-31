@@ -19,6 +19,7 @@ export interface PujaEntry {
 export const UPCOMING_PUJAS: readonly PujaEntry[] = [
   { id: "kali", icon: "🕯️", name: l("কালীপুজো ও দীপাবলি", "Kali Puja & Diwali"), when: l("কার্তিক অমাবস্যা, নভেম্বর", "Kartik new moon, November"), href: "/kali-puja-2026" },
   { id: "jagaddhatri", icon: "🏮", name: l("জগদ্ধাত্রী পুজো", "Jagaddhatri Puja"), when: l("কার্তিক শুক্লা নবমী, নভেম্বর", "Kartik shukla Navami, November"), href: "/jagaddhatri-puja-2026" },
+  { id: "bangla-date", icon: "🗓️", name: l("আজ বাংলা কত তারিখ", "Today's Bangla date"), when: l("বাংলা ক্যালেন্ডার ১৪৩৩", "Bengali calendar 1433"), href: "/bengali-calendar-1433" },
   { id: "calendar", icon: "📅", name: l("পুজোর ক্যালেন্ডার ২০২৭", "Festival calendar 2027"), when: l("সারা বছর", "All year"), href: "/calendar-2027" },
   { id: "rash", icon: "🪷", name: l("রাস পূর্ণিমা", "Rash Purnima"), when: l("কার্তিক পূর্ণিমা, নভেম্বর", "Kartik full moon, November"), href: "/rash-purnima-2026" },
   { id: "poush", icon: "🍘", name: l("পৌষ সংক্রান্তি", "Poush Sankranti"), when: l("মধ্য জানুয়ারি", "Mid-January"), href: "/poush-sankranti-2027" },

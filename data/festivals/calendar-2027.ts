@@ -107,6 +107,7 @@ export const CALENDAR_2027: FestivalPage = {
   links: [
     { href: "/durga-puja-2027", label: l("🥁 দুর্গাপুজো ২০২৭", "🥁 Durga Puja 2027"), primary: true },
     { href: "/ekadashi-2027", label: l("🪔 একাদশী ২০২৭", "🪔 Ekadashi 2027") },
+    { href: "/bengali-calendar-1433", label: l("🗓️ বাংলা ক্যালেন্ডার ১৪৩৩", "🗓️ Bengali calendar 1433") },
     { href: "/greetings", label: l("শুভেচ্ছা কার্ড", "Greeting cards") },
     { href: "/durga-puja-2026", label: l("দুর্গাপুজো ২০২৬", "Durga Puja 2026") },
   ],
