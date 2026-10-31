@@ -28,7 +28,8 @@ export type GreetingDay =
   | "rash"
   | "poush"
   | "barodin"
-  | "newyear";
+  | "newyear"
+  | "jamai";
 
 export type GreetingSeason = "durga" | "kali" | "winter" | "spring";
 
@@ -497,6 +498,27 @@ export const GREETINGS: Greeting[] = [
     ],
     tags: ["ShubhoNoboborsho", "PoilaBoishakh", "BengaliNewYear1434"],
   },
+  {
+    id: "jamai",
+    icon: "🥭",
+    name: l("জামাইষষ্ঠী", "Jamai Shashthi"),
+    headline: l("শুভ জামাইষষ্ঠী!", "Happy Jamai Shashthi!"),
+    char: "bhog",
+    mood: "happy",
+    season: "spring",
+    pool: false,
+    lines: [
+      l("আম, লিচু, ইলিশ আর শাশুড়িমায়ের আদর: আজ জামাইয়ের দিন। শুভ জামাইষষ্ঠী!", "Mangoes, lychees, hilsa and a mother-in-law's love: today belongs to the son-in-law. Happy Jamai Shashthi!"),
+      l("আজ ডায়েট বলে কিছু নেই, শুধু পাত পেড়ে খাওয়া। শুভ জামাইষষ্ঠী!", "No such thing as a diet today, only a full plate. Happy Jamai Shashthi!"),
+      l("ষষ্ঠীর পাখার হাওয়া আর মায়ের আশীর্বাদ, সারা বছর থাকুক।", "The breeze of the Shashthi fan and a mother's blessing: may both stay all year."),
+      l("জামাইবাবু, আজ কিন্তু মিষ্টির হাঁড়ি নিয়ে আসতেই হবে!", "Jamaibabu, today you have to bring the pot of sweets!"),
+      l("শ্বশুরবাড়ির ভূরিভোজের পর একটা লম্বা ঘুম, এটাই আসল রীতি।", "A long nap after the in-laws' feast: that's the real tradition."),
+      l("মেয়ে-জামাই সুখে থাকুক, ঘর ভরে থাকুক হাসিতে। শুভ জামাইষষ্ঠী!", "May the daughter and son-in-law be happy and the home full of laughter. Happy Jamai Shashthi!"),
+      l("জ্যৈষ্ঠের গরমে ঠান্ডা দই আর আমের রস: শুভ জামাইষষ্ঠী!", "Cool curd and mango juice in the Jyeshtha heat: happy Jamai Shashthi!"),
+      l("এক থালায় চোদ্দ পদ, তবু শাশুড়িমা বলবেন ‘কিছুই তো খেলে না’।", "Fourteen dishes on one plate, and still mother-in-law says 'you've eaten nothing'."),
+    ],
+    tags: ["JamaiShashthi", "JamaiSasthi2027", "BengaliFood"],
+  },
 ];
 
 /** The everyday card; also the fallback for an unknown id. */
@@ -526,6 +548,7 @@ export const GREETING_PAGES: Record<GreetingDay, string> = {
   rash: "/rash-purnima-2026",
   barodin: "/calendar-2027",
   newyear: "/calendar-2027",
+  jamai: "/jamai-shashthi-2027",
   poush: "/poush-sankranti-2027",
 };
 
@@ -579,13 +602,14 @@ export const KALI_WEEK_2026 = { from: "2026-11-01", kali: "2026-11-08", kaliEnd:
  * Puja Thu 11 Feb, Maha Shivratri Sat 6 Mar, Dol Purnima Mon 22 Mar, Poila Boishakh 15 Apr in West Bengal (14 Apr in Bangladesh).
  * Each card shows from about a week before until the day after.
  */
-export const SPRING_2027 = { poush: "2027-01-15", saraswati: "2027-02-11", shivratri: "2027-03-06", dol: "2027-03-22", noboborshoBd: "2027-04-14", noboborsho: "2027-04-15" } as const;
+export const SPRING_2027 = { jamai: "2027-06-10", poush: "2027-01-15", saraswati: "2027-02-11", shivratri: "2027-03-06", dol: "2027-03-22", noboborshoBd: "2027-04-14", noboborsho: "2027-04-15" } as const;
 const SPRING_WINDOWS: [GreetingDay, string, string][] = [
   ["poush", "2027-01-10", "2027-01-16"],
   ["saraswati", "2027-02-05", "2027-02-12"],
   ["shivratri", "2027-03-01", "2027-03-07"],
   ["dol", "2027-03-16", "2027-03-23"],
   ["noboborsho", "2027-04-08", "2027-04-16"],
+  ["jamai", "2027-06-05", "2027-06-11"],
 ];
 
 /** Today's card from the local date (YYYY-MM-DD): Kali Puja week, spring festivals, else the Durga Puja calendar. */

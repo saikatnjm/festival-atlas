@@ -3,6 +3,11 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## Jamai Shashthi + Ram Navami 2027, review fixes (2026-10-31, night)
+- **`/jamai-shashthi-2027`** (Thu 10 Jun; Shashthi tithi Kolkata 9 Jun 9:35 am → 10 Jun 7:11 am, Dhaka +30 min; Drik) + "Happy Jamai Shashthi" card (auto 5–11 Jun). **`/ram-navami-2027`** (Thu 15 Apr; Madhyahna muhurat Kolkata 10:21 am–12:53 pm; Annapurna Ashtami 14 Apr with Sandhi Puja 2:59–3:47 pm; Mesha/Chaitra Sankranti 14 Apr 3:33 pm). Drik prints no "Basanti Puja", "Annapurna Puja" or "Charak" rows, so those aren't given as dates; the page says to check the panjika. Calendar hub rows, menu, "Coming up".
+- Cheap-model review of the newer festival pages: 8 wording fixes (no dates/times changed).
+- Verified in the scratch copy (Node 24): 57/57 tests, build (441 pages), typecheck, smoke 286/286.
+
 ## Rath Yatra, Janmashtami, Lakshmi Puja 2027 + three more stories (2026-10-31, night)
 - **`/rath-yatra-2027`** (Mon 5 Jul; Dwitiya tithi Kolkata/Dhaka; Mahesh since 1396, Dhamrai), **`/janmashtami-2027`** (Wed 25 Aug for Smarta and ISKCON alike; Ashtami, Rohini, Nishita puja 11:16 pm–12:01 am Kolkata, parana by practice; Dhaka times), **`/lakshmi-puja-2027`** (Kojagori, Thu 14 Oct; Nishita 10:58–11:47 pm Kolkata; Purnima tithi; moonrise). All from Drik's festival pages for Kolkata and Dhaka (`data/festivals/mid-2027.ts`); calendar rows, "Coming up" and the Pujo menu now link to them.
 - `/durga-puja-2027`: Mahalaya Amavasya tithi and tarpan Kutup muhurat for Kolkata (11:03–11:51 am) and Dhaka (Drik Amavasya Shraddha page).

@@ -89,7 +89,7 @@ export const JANMASHTAMI_2027: FestivalPage = {
         { day: l("বৃহস্পতি ২৬ আগস্ট", "Thu 26 Aug"), what: l("পারণ (প্রচলিত রীতি)", "Parana (modern practice)"), when: l("রাত ১২:০১-এর পর", "after 12:01 am"), source: JANMA(KOL, "Kolkata") },
       ],
       bd: [
-        { day: l("২৪–২৫ আগস্ট", "24–25 Aug"), what: l("অষ্টমী তিথি", "Ashtami tithi"), when: l("২৪ আগস্ট রাত ৮:৫৪ থেকে ২৫ আগস্ট সন্ধে ৭:৪৯", "24 Aug 8:54 pm to 25 Aug 7:49 pm"), source: JANMA(DHAKA, "Dhaka") },
+        { day: l("২৪–২৫ আগস্ট", "24–25 Aug"), what: l("অষ্টমী তিথি", "Ashtami tithi"), when: l("২৪ আগস্ট রাত ৮:৫৪ থেকে ২৫ আগস্ট রাত ৭:৪৯", "24 Aug 8:54 pm to 25 Aug 7:49 pm"), source: JANMA(DHAKA, "Dhaka") },
         { day: l("বুধ ২৫ আগস্ট রাত", "Wed 25 Aug night"), what: l("নিশীথ পুজো", "Nishita puja"), when: l("রাত ১১:৩৮ থেকে ১২:২৩", "11:38 pm to 12:23 am"), source: JANMA(DHAKA, "Dhaka") },
         { day: l("বৃহস্পতি ২৬ আগস্ট", "Thu 26 Aug"), what: l("পারণ (ধর্মশাস্ত্র মতে / ইসকন)", "Parana (Dharma Shastra / ISKCON)"), when: l("দুপুর ১২:১২-এর পর", "after 12:12 pm"), source: JANMA(DHAKA, "Dhaka") },
       ],
@@ -131,7 +131,7 @@ export const LAKSHMI_2027: FestivalPage = {
   ),
   h1: l("কোজাগরী লক্ষ্মীপুজো ২০২৭: কবে, কখন", "Kojagori Lakshmi Puja 2027: when and what time"),
   lead: l(
-    "দুর্গাপুজোর পাঁচ দিন পরে আশ্বিন পূর্ণিমায় বাঙালির ঘরে ঘরে লক্ষ্মীপুজো; ২০২৭-এ বৃহস্পতিবার ১৪ অক্টোবর, কলকাতা আর ঢাকায়।",
+    "বিজয়া দশমীর পাঁচ দিন পরে আশ্বিন পূর্ণিমায় বাঙালির ঘরে ঘরে লক্ষ্মীপুজো; ২০২৭-এ বৃহস্পতিবার ১৪ অক্টোবর, কলকাতা আর ঢাকায়।",
     "Five days after Vijaya Dashami, on the Ashwin full moon, Bengali homes worship Lakshmi; in 2027 that is Thursday 14 October, in Kolkata and Dhaka.",
   ),
   timings: {
@@ -145,7 +145,7 @@ export const LAKSHMI_2027: FestivalPage = {
       ],
       bd: [
         { day: l("বৃহস্পতি ১৪ অক্টোবর", "Thu 14 Oct"), what: l("কোজাগরী পুজোর নিশীথ কাল", "Kojagara Nishita time"), when: l("রাত ১১:২০ থেকে ১২:০৯", "11:20 pm to 12:09 am"), source: KOJA(DHAKA, "Dhaka") },
-        { day: l("১৪–১৫ অক্টোবর", "14–15 Oct"), what: l("পূর্ণিমা তিথি", "Purnima tithi"), when: l("১৪ অক্টোবর সন্ধে ৭:১৯ থেকে ১৫ অক্টোবর সন্ধে ৭:৪৬", "14 Oct 7:19 pm to 15 Oct 7:46 pm"), source: KOJA(DHAKA, "Dhaka") },
+        { day: l("১৪–১৫ অক্টোবর", "14–15 Oct"), what: l("পূর্ণিমা তিথি", "Purnima tithi"), when: l("১৪ অক্টোবর সন্ধে ৭:১৯ থেকে ১৫ অক্টোবর রাত ৭:৪৬", "14 Oct 7:19 pm to 15 Oct 7:46 pm"), source: KOJA(DHAKA, "Dhaka") },
         { day: l("বৃহস্পতি ১৪ অক্টোবর", "Thu 14 Oct"), what: l("চাঁদ ওঠা", "Moonrise"), when: l("বিকেল ৪:৪০", "4:40 pm"), source: KOJA(DHAKA, "Dhaka") },
       ],
     },
@@ -176,5 +176,116 @@ export const LAKSHMI_2027: FestivalPage = {
   ],
   events: [{ name: l("কোজাগরী লক্ষ্মীপুজো ২০২৭", "Kojagori Lakshmi Puja 2027"), start: "2027-10-14", place: { name: "Kolkata", locality: "Kolkata", region: "West Bengal", country: "IN" } }],
   links: [{ href: "/durga-puja-2027", label: l("🥁 দুর্গাপুজো ২০২৭", "🥁 Durga Puja 2027"), primary: true }, CAL, { href: "/purnima-2027", label: l("🌕 পূর্ণিমা ২০২৭", "🌕 Purnima 2027") }],
+  lastChecked: "2026-10-31",
+};
+
+const JAMAI = (g: string, city: string) => ({ title: `Drik Panchang, Jamai Shashti 2027 (${city})`, url: drik("festivals/jamai-shashti/jamai-shashti-date-time.html", g) });
+const RAMNAV = (g: string, city: string) => ({ title: `Drik Panchang, Rama Navami 2027 (${city})`, url: drik("dashavatara/rama-navami/rama-navami-date-time.html", g) });
+const NAVRATRI = (g: string, city: string) => ({ title: `Drik Panchang, Chaitra Navratri 2027 (${city})`, url: drik("navratri/chaitra-vasant-navratri-dates.html", g) });
+const WIKI_JAMAI = { title: "Wikipedia, Jamai Sasthi", url: "https://en.wikipedia.org/wiki/Jamai_Sasthi" };
+const WIKI_CHAITRA = { title: "Wikipedia, Chaitra", url: "https://en.wikipedia.org/wiki/Chaitra" };
+
+export const JAMAI_2027: FestivalPage = {
+  path: "/jamai-shashthi-2027",
+  title: l("জামাইষষ্ঠী ২০২৭: তারিখ আর ষষ্ঠী তিথির সময়", "Jamai Shashthi 2027: Date and Shashthi Tithi Time"),
+  description: l(
+    "জামাইষষ্ঠী ২০২৭ বৃহস্পতিবার ১০ জুন। কলকাতা আর ঢাকার ষষ্ঠী তিথির সময়, রীতি আর জামাইষষ্ঠীর শুভেচ্ছা কার্ড, সূত্রসহ।",
+    "Jamai Shashthi 2027 is Thursday 10 June. Shashthi tithi times for Kolkata and Dhaka, the customs, and a Jamai Shashthi greeting card, sourced.",
+  ),
+  h1: l("জামাইষষ্ঠী ২০২৭: কবে, কখন", "Jamai Shashthi 2027: when and what time"),
+  lead: l(
+    "জ্যৈষ্ঠের শুক্লা ষষ্ঠীতে জামাইষষ্ঠী; ২০২৭-এ বৃহস্পতিবার ১০ জুন, কলকাতা আর ঢাকায়। শাশুড়ির ষষ্ঠীপুজো আর জামাইয়ের ভূরিভোজ।",
+    "Jamai Shashthi falls on the bright Shashthi of Jyeshtha; in 2027 that is Thursday 10 June, in Kolkata and Dhaka. The mother-in-law's Shashthi puja, and a feast for the son-in-law.",
+  ),
+  timings: {
+    h2: l("তারিখ আর ষষ্ঠী তিথি", "Date and Shashthi tithi"),
+    lead: l("কলকাতার সময় IST, ঢাকার সময় BST।", "Kolkata times are IST, Dhaka times BST."),
+    rows: {
+      wb: [{ day: l("৯–১০ জুন", "9–10 Jun"), what: l("ষষ্ঠী তিথি", "Shashthi tithi"), when: l("৯ জুন সকাল ৯:৩৫ থেকে ১০ জুন সকাল ৭:১১", "9 Jun 9:35 am to 10 Jun 7:11 am"), source: JAMAI(KOL, "Kolkata") }],
+      bd: [{ day: l("৯–১০ জুন", "9–10 Jun"), what: l("ষষ্ঠী তিথি", "Shashthi tithi"), when: l("৯ জুন সকাল ১০:০৫ থেকে ১০ জুন সকাল ৭:৪১", "9 Jun 10:05 am to 10 Jun 7:41 am"), source: JAMAI(DHAKA, "Dhaka") }],
+    },
+    note: l("দ্রিক পঞ্চাঙ্গ দুই শহরেই জামাইষষ্ঠী বৃহস্পতিবার ১০ জুন দেখায়।", "Drik Panchang lists Jamai Shashthi on Thursday 10 June for both cities."),
+  },
+  sections: [
+    {
+      id: "custom",
+      h2: l("জামাইষষ্ঠীর রীতি", "The custom"),
+      paras: [
+        {
+          text: l(
+            "জ্যৈষ্ঠ মাসের শুক্লপক্ষের ষষ্ঠী তিথিতে শাশুড়ি দেবী ষষ্ঠীর পুজো করেন; জামাইকে নেমন্তন্ন করে খাওয়ানো হয় ভূরিভোজ।",
+            "On the Shashthi tithi of the bright fortnight of Jyeshtha, the mother-in-law performs a puja to the goddess Shashthi, and the son-in-law is invited home for a lavish feast.",
+          ),
+          source: WIKI_JAMAI,
+        },
+      ],
+      tips: [l("আম, লিচু, ইলিশ আর মিষ্টি: পাতে কী থাকবে, বাড়ির রীতি অনুযায়ী।", "Mangoes, lychees, hilsa and sweets: what goes on the plate depends on the family.")],
+    },
+  ],
+  faq: [
+    { q: l("২০২৭-এ জামাইষষ্ঠী কবে?", "When is Jamai Shashthi in 2027?"), a: l("বৃহস্পতিবার ১০ জুন ২০২৭, কলকাতা আর ঢাকায় (দ্রিক পঞ্চাঙ্গ)।", "Thursday 10 June 2027, in Kolkata and Dhaka (Drik Panchang).") },
+    { q: l("জামাইষষ্ঠীর ষষ্ঠী তিথি কখন?", "When is the Shashthi tithi for Jamai Shashthi 2027?"), a: l("কলকাতায় ৯ জুন সকাল ৯:৩৫ থেকে ১০ জুন সকাল ৭:১১; ঢাকায় ৯ জুন সকাল ১০:০৫ থেকে ১০ জুন সকাল ৭:৪১।", "Kolkata: 9 Jun 9:35 am to 10 Jun 7:11 am. Dhaka: 9 Jun 10:05 am to 10 Jun 7:41 am.") },
+    { q: l("জামাইষষ্ঠী কেন পালন করা হয়?", "Why is Jamai Shashthi celebrated?"), a: l("শাশুড়ি দেবী ষষ্ঠীর পুজো করে জামাইয়ের মঙ্গল কামনা করেন, তারপর জামাইকে আপ্যায়ন।", "The mother-in-law worships the goddess Shashthi for her son-in-law's wellbeing and then hosts him for a feast.") },
+  ],
+  events: [{ name: l("জামাইষষ্ঠী ২০২৭", "Jamai Shashthi 2027"), start: "2027-06-10", place: { name: "Kolkata", locality: "Kolkata", region: "West Bengal", country: "IN" } }],
+  links: [{ href: "/greetings/jamai", label: l("🥭 জামাইষষ্ঠীর শুভেচ্ছা", "🥭 Jamai Shashthi wishes"), primary: true }, CAL, { href: "/rath-yatra-2027", label: l("রথযাত্রা ২০২৭", "Rath Yatra 2027") }],
+  lastChecked: "2026-10-31",
+};
+
+export const RAM_NAVAMI_2027: FestivalPage = {
+  path: "/ram-navami-2027",
+  title: l("রামনবমী ২০২৭: তারিখ, মধ্যাহ্ন মুহূর্ত, অন্নপূর্ণা অষ্টমী", "Ram Navami 2027: Date, Madhyahna Muhurat, Annapurna Ashtami"),
+  description: l(
+    "রামনবমী ২০২৭ বৃহস্পতিবার ১৫ এপ্রিল; কলকাতায় মধ্যাহ্ন মুহূর্ত সকাল ১০:২১ থেকে দুপুর ১২:৫৩। আগের দিন অন্নপূর্ণা অষ্টমী আর সন্ধিপুজো, ঢাকার সময়ও।",
+    "Ram Navami 2027 is Thu 15 April; Kolkata Madhyahna muhurat 10:21 am to 12:53 pm. Annapurna Ashtami and Sandhi Puja the day before, Dhaka times too.",
+  ),
+  h1: l("রামনবমী ২০২৭: কবে, কখন", "Ram Navami 2027: when and what time"),
+  lead: l(
+    "চৈত্রের শুক্লা নবমীতে রামনবমী; ২০২৭-এ বৃহস্পতিবার ১৫ এপ্রিল, কলকাতা আর ঢাকায়। আগের দিন বুধবার ১৪ এপ্রিল অন্নপূর্ণা অষ্টমী, আর সেদিনই চৈত্র সংক্রান্তি; পরদিন পয়লা বৈশাখ।",
+    "Ram Navami falls on the bright Navami of Chaitra; in 2027 that is Thursday 15 April, in Kolkata and Dhaka. The day before, Wednesday 14 April, is Annapurna Ashtami and also the Chaitra (Mesha) Sankranti; Pohela Boishakh follows.",
+  ),
+  timings: {
+    h2: l("নবমী তিথি, মধ্যাহ্ন মুহূর্ত, অষ্টমীর সন্ধিপুজো", "Navami tithi, Madhyahna muhurat, Ashtami's Sandhi Puja"),
+    lead: l("কলকাতার সময় IST, ঢাকার সময় BST।", "Kolkata times are IST, Dhaka times BST."),
+    rows: {
+      wb: [
+        { day: l("বুধ ১৪ এপ্রিল", "Wed 14 Apr"), what: l("অন্নপূর্ণা অষ্টমী: সন্ধিপুজো", "Annapurna Ashtami: Sandhi Puja"), when: l("দুপুর ২:৫৯ থেকে বিকেল ৩:৪৭", "2:59 pm to 3:47 pm"), source: NAVRATRI(KOL, "Kolkata") },
+        { day: l("১৪–১৫ এপ্রিল", "14–15 Apr"), what: l("নবমী তিথি", "Navami tithi"), when: l("১৪ এপ্রিল বিকেল ৩:২৩ থেকে ১৫ এপ্রিল দুপুর ১:২০", "14 Apr 3:23 pm to 15 Apr 1:20 pm"), source: RAMNAV(KOL, "Kolkata") },
+        { day: l("বৃহস্পতি ১৫ এপ্রিল", "Thu 15 Apr"), what: l("মধ্যাহ্ন মুহূর্ত", "Madhyahna muhurat"), when: l("সকাল ১০:২১ থেকে দুপুর ১২:৫৩", "10:21 am to 12:53 pm"), source: RAMNAV(KOL, "Kolkata") },
+      ],
+      bd: [
+        { day: l("বুধ ১৪ এপ্রিল", "Wed 14 Apr"), what: l("অন্নপূর্ণা অষ্টমী: সন্ধিপুজো", "Annapurna Ashtami: Sandhi Puja"), when: l("বিকেল ৩:২৯ থেকে ৪:১৭", "3:29 pm to 4:17 pm"), source: NAVRATRI(DHAKA, "Dhaka") },
+        { day: l("১৪–১৫ এপ্রিল", "14–15 Apr"), what: l("নবমী তিথি", "Navami tithi"), when: l("১৪ এপ্রিল বিকেল ৩:৫৩ থেকে ১৫ এপ্রিল দুপুর ১:৫০", "14 Apr 3:53 pm to 15 Apr 1:50 pm"), source: RAMNAV(DHAKA, "Dhaka") },
+        { day: l("বৃহস্পতি ১৫ এপ্রিল", "Thu 15 Apr"), what: l("মধ্যাহ্ন মুহূর্ত", "Madhyahna muhurat"), when: l("সকাল ১০:৪২ থেকে দুপুর ১:১৫", "10:42 am to 1:15 pm"), source: RAMNAV(DHAKA, "Dhaka") },
+      ],
+    },
+    note: l(
+      "দ্রিকের চৈত্র নবরাত্রির পাতায় ‘বাসন্তী পুজো’ নামে আলাদা দিন নেই; বাসন্তী পুজোর দিন পাড়ার বা বাড়ির পঞ্জিকা মিলিয়ে নিও।",
+      "Drik's Chaitra Navratri page has no separate 'Basanti Puja' listing; check your para's or family's panjika for the Basanti Puja days.",
+    ),
+  },
+  sections: [
+    {
+      id: "chaitra",
+      h2: l("চৈত্রের শেষ সপ্তাহ", "The last week of Chaitra"),
+      paras: [
+        {
+          text: l(
+            "পশ্চিমবঙ্গে চৈত্র মাসে পরপর হয় বাসন্তী পুজো, অন্নপূর্ণা পুজো, রামনবমী, নীলপুজো আর চড়ক পুজো, পয়লা বৈশাখে নতুন বছর শুরুর আগে।",
+            "In West Bengal, Basanti Puja, Annapurna Puja, Ram Navami, Neel Puja and Charak Puja follow one another in Chaitra, before the new year begins on Poila Boishakh.",
+          ),
+          source: WIKI_CHAITRA,
+        },
+      ],
+    },
+  ],
+  faq: [
+    { q: l("২০২৭-এ রামনবমী কবে?", "When is Ram Navami in 2027?"), a: l("বৃহস্পতিবার ১৫ এপ্রিল ২০২৭, কলকাতা আর ঢাকায় (দ্রিক পঞ্চাঙ্গ)।", "Thursday 15 April 2027, in Kolkata and Dhaka (Drik Panchang).") },
+    { q: l("রামনবমীর পুজোর সময় কখন?", "What is the Ram Navami 2027 puja muhurat?"), a: l("কলকাতায় মধ্যাহ্ন মুহূর্ত সকাল ১০:২১ থেকে দুপুর ১২:৫৩; ঢাকায় সকাল ১০:৪২ থেকে দুপুর ১:১৫।", "Kolkata Madhyahna muhurat 10:21 am to 12:53 pm; Dhaka 10:42 am to 1:15 pm.") },
+    { q: l("২০২৭-এ অন্নপূর্ণা পুজো কবে?", "When is Annapurna Puja in 2027?"), a: l("দ্রিক পঞ্চাঙ্গে অন্নপূর্ণা অষ্টমী বুধবার ১৪ এপ্রিল ২০২৭; কলকাতায় সন্ধিপুজো দুপুর ২:৫৯ থেকে বিকেল ৩:৪৭।", "Drik Panchang lists Annapurna Ashtami on Wednesday 14 April 2027; Sandhi Puja in Kolkata runs 2:59 pm to 3:47 pm.") },
+    { q: l("২০২৭-এ চৈত্র সংক্রান্তি কবে?", "When is Chaitra Sankranti in 2027?"), a: l("মেষ সংক্রান্তি বুধবার ১৪ এপ্রিল ২০২৭ (কলকাতায় বিকেল ৩:৩৩), পরদিন পয়লা বৈশাখ।", "Mesha Sankranti is Wednesday 14 April 2027 (3:33 pm in Kolkata), with Poila Boishakh the next day.") },
+  ],
+  events: [{ name: l("রামনবমী ২০২৭", "Ram Navami 2027"), start: "2027-04-15", place: { name: "Kolkata", locality: "Kolkata", region: "West Bengal", country: "IN" } }],
+  links: [{ href: "/poila-boishakh-2027", label: l("🎉 পয়লা বৈশাখ ১৪৩৪", "🎉 Poila Boishakh 1434"), primary: true }, CAL, { href: "/dol-purnima-2027", label: l("দোলযাত্রা ২০২৭", "Dol Purnima 2027") }],
   lastChecked: "2026-10-31",
 };

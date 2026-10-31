@@ -58,7 +58,7 @@ export const RASH_2026: FestivalPage = {
         },
         {
           text: l(
-            "শুরুটা চৈতন্যের সময়ের বৈষ্ণব রাসযাত্রা থেকে। শাক্তরা প্রথমে আঁকা পটে পুজো করতেন, তাই রাস পূর্ণিমাকে বলা হত ‘পট পূর্ণিমা’; পরে মহারাজা কৃষ্ণচন্দ্রের পৃষ্ঠপোষকতায় কুমোররা নবদ্বীপে বসতি করলে মাটির প্রতিমা আসে।",
+            "শুরুটা চৈতন্যের সময়ের বৈষ্ণব রাসযাত্রা থেকে। শাক্তরা প্রথমে আঁকা পটে পুজো করতেন, তাই রাস পূর্ণিমাকে বলা হত ‘পট পূর্ণিমা’; পরে মহারাজা কৃষ্ণচন্দ্রের পৃষ্ঠপোষকতায় কুমোররা নবদ্বীপে বসতি গড়লে মাটির প্রতিমা আসে।",
             "It grew out of the Vaishnava Rash Yatra of Chaitanya's time. Shaktas first worshipped painted scrolls, so Raas Purnima was known as 'Pot Purnima'; clay idols came later, when potters settled in Nabadwip under Maharaja Krishnachandra's patronage.",
           ),
           source: WIKI_SHAKTA,

@@ -18,7 +18,7 @@ export const POUSH_SANKRANTI_2027: FestivalPage = {
   path: "/poush-sankranti-2027",
   title: l("পৌষ সংক্রান্তি ২০২৭: মকর সংক্রান্তি কবে, পুণ্যকাল", "Poush Sankranti 2027: Makar Sankranti Date & Punya Kaal"),
   description: l(
-    "পৌষ সংক্রান্তি (মকর সংক্রান্তি) ২০২৭ শুক্রবার ১৫ জানুয়ারি। সংক্রান্তির মুহূর্ত, পুণ্যকাল, পিঠে-পুলি, ঢাকার সাকরাইন আর গঙ্গাসাগর মেলা, সূত্রসহ।",
+    "পৌষ সংক্রান্তি (মকর সংক্রান্তি) ২০২৭ শুক্রবার ১৫ জানুয়ারি। সংক্রান্তির মুহূর্ত, পুণ্যকাল, পিঠে-পুলি, পুরান ঢাকার সাকরাইন আর গঙ্গাসাগর মেলা, সূত্রসহ।",
     "Poush Sankranti (Makar Sankranti) 2027 is Fri 15 Jan. Sankranti moment, punya kaal, pithe-puli, Old Dhaka's Shakrain and the Gangasagar Mela, sourced.",
   ),
   h1: l("পৌষ সংক্রান্তি ২০২৭: কবে, কখন", "Poush Sankranti 2027: when and what time"),

@@ -29,6 +29,8 @@ export const UPCOMING_PUJAS: readonly PujaEntry[] = [
   { id: "saraswati", icon: "📚", name: l("সরস্বতী পুজো", "Saraswati Puja"), when: l("মাঘ শুক্লা পঞ্চমী, ফেব্রুয়ারি", "Magh shukla Panchami, February"), href: "/saraswati-puja-2027" },
   { id: "shivratri", icon: "🔱", name: l("শিবরাত্রি", "Shivratri"), when: l("ফাল্গুন, মার্চ", "Phalgun, March"), href: "/shivratri-2027" },
   { id: "dol", icon: "🎨", name: l("দোলযাত্রা", "Dol Jatra"), when: l("ফাল্গুনী পূর্ণিমা, মার্চ", "Falgun full moon, March"), href: "/dol-purnima-2027" },
+  { id: "ramnavami", icon: "🏹", name: l("রামনবমী ২০২৭", "Ram Navami 2027"), when: l("চৈত্র, এপ্রিল", "Chaitra, April"), href: "/ram-navami-2027" },
+  { id: "jamai", icon: "🥭", name: l("জামাইষষ্ঠী ২০২৭", "Jamai Shashthi 2027"), when: l("জ্যৈষ্ঠ, জুন", "Jyeshtha, June"), href: "/jamai-shashthi-2027" },
   { id: "rath", icon: "🛕", name: l("রথযাত্রা ২০২৭", "Rath Yatra 2027"), when: l("আষাঢ়, জুলাই", "Asharh, July"), href: "/rath-yatra-2027" },
   { id: "janmashtami", icon: "🪈", name: l("জন্মাষ্টমী ২০২৭", "Janmashtami 2027"), when: l("ভাদ্র, আগস্ট", "Bhadra, August"), href: "/janmashtami-2027" },
   { id: "lakshmi", icon: "🪷", name: l("লক্ষ্মীপুজো ২০২৭", "Lakshmi Puja 2027"), when: l("আশ্বিন পূর্ণিমা, অক্টোবর", "Ashwin full moon, October"), href: "/lakshmi-puja-2027" },

@@ -12,6 +12,7 @@ const BENGALI_KOL = { title: "Drik Panchang, Bengali calendar 2027 (Kolkata)", u
 const AUGUST_KOL = { title: "Drik Panchang, August 2027 festivals (Kolkata)", url: "https://www.drikpanchang.com/festivals/month/festivals-august.html?year=2027&geoname-id=1275004" };
 const DURGA_KOL = { title: "Drik Panchang, Durga Puja 2027 calendar (Kolkata)", url: "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2027&geoname-id=1275004" };
 const SANKRANTI_KOL = { title: "Drik Panchang, Makar Sankranti 2027 (Kolkata)", url: "https://www.drikpanchang.com/sankranti/makar-sankranti-date-time.html?geoname-id=1275004&year=2027" };
+const NAVRATRI_KOL = { title: "Drik Panchang, Chaitra Navratri 2027 (Kolkata)", url: "https://www.drikpanchang.com/navratri/chaitra-vasant-navratri-dates.html?geoname-id=1275004&year=2027" };
 const WIKI_PB = { title: "Wikipedia, Pohela Boishakh", url: "https://en.wikipedia.org/wiki/Pohela_Boishakh" };
 
 const row = (name: L, date: L, tithi: L, source = BENGALI_KOL, href?: string) => ({ cells: [name, date, tithi], source, ...(href ? { href } : {}) });
@@ -40,6 +41,9 @@ export const CALENDAR_2027: FestivalPage = {
         row(l("শিবরাত্রি", "Maha Shivratri"), l("শনি ৬ মার্চ", "Sat 6 Mar"), l("মাঘ কৃষ্ণা চতুর্দশী", "Magh, Krishna Chaturdashi"), BENGALI_KOL, "/shivratri-2027"),
         row(l("দোলপূর্ণিমা", "Dol Purnima"), l("সোম ২২ মার্চ", "Mon 22 Mar"), l("ফাল্গুন শুক্লা পূর্ণিমা", "Falgun, Shukla Purnima"), BENGALI_KOL, "/dol-purnima-2027"),
         row(l("পয়লা বৈশাখ ১৪৩৪", "Poila Boishakh 1434"), l("বৃহস্পতি ১৫ এপ্রিল", "Thu 15 Apr"), l("বাংলা বছরের প্রথম দিন", "First day of the Bengali year"), BENGALI_KOL, "/poila-boishakh-2027"),
+        row(l("অন্নপূর্ণা অষ্টমী", "Annapurna Ashtami"), l("বুধ ১৪ এপ্রিল", "Wed 14 Apr"), l("চৈত্র শুক্লা অষ্টমী", "Chaitra, Shukla Ashtami"), NAVRATRI_KOL, "/ram-navami-2027"),
+        row(l("রামনবমী", "Ram Navami"), l("বৃহস্পতি ১৫ এপ্রিল", "Thu 15 Apr"), l("চৈত্র শুক্লা নবমী", "Choitro, Shukla Nabami"), BENGALI_KOL, "/ram-navami-2027"),
+        row(l("জামাইষষ্ঠী", "Jamai Shashthi"), l("বৃহস্পতি ১০ জুন", "Thu 10 Jun"), l("জ্যৈষ্ঠ শুক্লা ষষ্ঠী", "Joishtho, Shukla Shashthi"), BENGALI_KOL, "/jamai-shashthi-2027"),
         row(l("রথযাত্রা", "Rath Yatra"), l("সোম ৫ জুলাই", "Mon 5 Jul"), l("আষাঢ় শুক্লা দ্বিতীয়া", "Asharh, Shukla Dwitiya"), BENGALI_KOL, "/rath-yatra-2027"),
         row(l("রাখিবন্ধন", "Raksha Bandhan"), l("মঙ্গল ১৭ আগস্ট", "Tue 17 Aug"), l("শ্রাবণ শুক্লা পূর্ণিমা", "Shravana, Shukla Purnima"), AUGUST_KOL),
         row(l("জন্মাষ্টমী", "Janmashtami"), l("বুধ ২৫ আগস্ট", "Wed 25 Aug"), l("শ্রাবণ কৃষ্ণা অষ্টমী", "Srabon, Krishna Ashtami"), BENGALI_KOL, "/janmashtami-2027"),

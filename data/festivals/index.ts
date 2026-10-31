@@ -5,7 +5,7 @@ import { BENGALI_CALENDAR_1433 } from "./bengali-calendar-1433";
 import { CALENDAR_2027 } from "./calendar-2027";
 import { DOL_2027 } from "./dol-2027";
 import { DURGA_2027 } from "./durga-2027";
-import { JANMASHTAMI_2027, LAKSHMI_2027, RATH_2027 } from "./mid-2027";
+import { JAMAI_2027, JANMASHTAMI_2027, LAKSHMI_2027, RAM_NAVAMI_2027, RATH_2027 } from "./mid-2027";
 import { JAGADDHATRI_2026 } from "./jagaddhatri-2026";
 import { AMAVASYA_2027, EKADASHI_2027, PURNIMA_2027 } from "./lunar-2027";
 import { POILA_BOISHAKH_2027 } from "./poila-boishakh-2027";
@@ -28,6 +28,8 @@ export const FESTIVAL_PAGES: FestivalPage[] = [
   SARASWATI_2027,
   SHIVRATRI_2027,
   DOL_2027,
+  RAM_NAVAMI_2027,
+  JAMAI_2027,
   RATH_2027,
   JANMASHTAMI_2027,
   LAKSHMI_2027,
