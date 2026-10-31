@@ -51,6 +51,13 @@ const pages = [
   ["/en/feedback", 200, "Your feedback"],
   ["/bn/feedback", 200, "তোমার মতামত"],
   ["/en", 200, "More pujas, coming up"],
+  ["/en/kali-puja-2026", 200, "Kali Puja 2026: when and what time"],
+  ["/bn/kali-puja-2026", 200, "কালীপুজো ২০২৬: কবে, কখন"],
+  ["/en/kali-puja-2026", 200, "10:55 pm to 11:46 pm"],
+  ["/en/kali-puja-2026", 200, '"@type":"FAQPage"'],
+  ["/bn/kali-puja-2026", 200, alt("en", `${O}/en/kali-puja-2026`)],
+  ["/sitemap.xml", 200, `${O}/bn/kali-puja-2026`],
+  ["/en", 200, 'href="/en/kali-puja-2026"'],
   // SEO shell: hreflang on landing pages, sitemap coverage, crawling allowed.
   ["/en/puja/kolkata", 200, alt("bn", `${O}/bn/puja/kolkata`)],
   ["/bn/puja/kolkata", 200, alt("en", `${O}/en/puja/kolkata`)],
@@ -157,6 +164,7 @@ const imagePages = [
   "/bn/play/puja-personality/r/bhog-samrat",
   "/en/play/pandal-challenge/r/dead-phone",
   "/en/durga-puja-2026",
+  "/en/kali-puja-2026",
   "/en/puja/kolkata",
 ];
 // Icons: the SVG favicon and the generated home-screen PNG (app/apple-icon.tsx; the URL has no extension).

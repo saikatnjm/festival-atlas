@@ -8,7 +8,7 @@ import { UPCOMING_PUJAS, type PujaEntry } from "@/data/pujas";
 import { track } from "@/lib/analytics";
 import { withLang, type Lang } from "@/lib/i18n";
 
-/** Durga Puja (live) plus the planned pujas; a planned one opens a "coming soon" dialog with a feedback link. */
+/** Durga Puja and pujas with their own page (live) plus the planned ones; a planned one opens a "coming soon" dialog with a feedback link. */
 export default function PujaMenu({ lang }: { lang: Lang }) {
   const M = fun.pujas;
   const ref = useRef<HTMLDialogElement>(null);
@@ -35,9 +35,15 @@ export default function PujaMenu({ lang }: { lang: Lang }) {
         </li>
         {UPCOMING_PUJAS.map((p) => (
           <li key={p.id}>
-            <button type="button" className="chip chip-soon" aria-haspopup="dialog" onClick={() => show(p)}>
-              {p.icon} {p.name[lang]} <span className="puja-menu-tag">{M.soon[lang]}</span>
-            </button>
+            {p.href ? (
+              <Link className="chip chip-live" href={withLang(lang, p.href)} onClick={() => track("puja_menu", { puja: p.id })}>
+                {p.icon} {p.name[lang]} <span className="puja-menu-tag">{M.live[lang]}</span>
+              </Link>
+            ) : (
+              <button type="button" className="chip chip-soon" aria-haspopup="dialog" onClick={() => show(p)}>
+                {p.icon} {p.name[lang]} <span className="puja-menu-tag">{M.soon[lang]}</span>
+              </button>
+            )}
           </li>
         ))}
       </ul>

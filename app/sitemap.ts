@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: Entry[] = [
     { path: "/", priority: 1, changeFrequency: "daily" },
     { path: "/durga-puja-2026", priority: 0.95, changeFrequency: "daily" },
+    { path: "/kali-puja-2026", priority: 0.95, changeFrequency: "daily" },
     { path: "/local", priority: 0.9, changeFrequency: "daily" },
     { path: "/puja", priority: 0.9, changeFrequency: "weekly" },
     ...collections.map((c) => ({ path: `/puja/${c.slug}`, priority: 0.9, changeFrequency: "weekly" as const })),

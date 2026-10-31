@@ -1,6 +1,15 @@
 # Festival Atlas — Project Status
 
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
+The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
+
+## Roadmap + Kali Puja 2026 hub (2026-10-31)
+- **`docs/ROADMAP.md`**: calendar-ordered pipeline (Kali Puja → crackers → cards → Bhai Phota → Kali pandals → crowd safety → Jagaddhatri → Wrapped → … → Durga Puja 2027), with the sourced dates that drive it.
+- **`/kali-puja-2026`** (`app/[lang]/kali-puja-2026/page.tsx` + `opengraph-image.tsx`, data in `data/kali-puja.ts`): Sun 8 Nov; Amavasya and Nishita kaal for Kolkata (10:55–11:46 pm) and Dhaka (11:16 pm–12:08 am) from Drik Panchang; "what comes next" (Bhai Phota Wed 11 Nov per Drik via HinduTone; Jagaddhatri Navami Thu 19 Nov in Kolkata, Delhi listings say 18); firecracker rules (2026 order not out as of 25 Oct, 2025's 8–10 pm green-only shown as last year's); Naihati Boro Maa no-VIP-gate note (UNI, 25 Oct) + crowd tips; BD Shyama Puja holiday marked unconfirmed; FAQ + Event JSON-LD. Sitemap entry.
+- **Pujo menu**: `PujaEntry.href` makes an entry a live link; Kali Puja is live, Kojagori Lakshmi (passed) removed, Jagaddhatri added as "soon". Feedback topics follow the same list.
+- **Verified locally** in a scratch copy with Node 24: 50/50 unit tests, `next build`, `tsc --noEmit`, smoke 154/154 (7 new checks). The first `next build` stopped on a Next.js security notice; the retry built. `npm audit`: **next 16.4.0 is critical** (RCE advisories) → roadmap item 0.
+- Local machine note: `node_modules/` and `.next/` in the repo are root-owned (from Docker) and the system Node (22.22) has no TypeScript stripping, so `npm run verify` can't run in place.
+- Next: item 0 (Next.js upgrade) on the owner's OK, then item 2/3 (cracker notice, Kali/Diwali/Bhai Phota greeting cards).
 
 ## Greeting variety, whole-photo postcards, region by time zone (2026-10-16, evening)
 - **Greeting lines**: 8–10 per day (82 total) + `COMMON_LINES` (12 pandal-hopping lines) appended via `linesFor(g)`; "🎲 Another line" is now `anotherLine()` (random, never the current one). Share-link `l` indexes stay stable (own lines first, pool after). Postcard captions show 4 chips + the same shuffle button.
