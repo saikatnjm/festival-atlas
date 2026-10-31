@@ -10,6 +10,8 @@ export default function CopyLine({ text, label, done }: { text: string; label: s
     <button
       type="button"
       className="cx-chip"
+      aria-label={`${label}: ${text}`}
+      aria-live="polite"
       onClick={async () => {
         if (await copyText(text)) {
           setOk(true);

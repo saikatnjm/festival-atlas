@@ -71,8 +71,8 @@ export default async function WishesPage({ params }: { params: Promise<Params> }
           {G.wishListH2[lang]}
         </h2>
         <ol className="wish-list">
-          {lines.map((x) => (
-            <li key={x.en}>
+          {lines.map((x, i) => (
+            <li key={i}>
               <p className="wish-bn" lang="bn">
                 {x.bn}
               </p>

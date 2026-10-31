@@ -25,7 +25,10 @@ export default function SharePage({ lang, title, text }: { lang: Lang; title: st
         className="button"
         onClick={async () => {
           const out = await shareLink({ title, text, url: url() });
-          if (out === "copied") setMsg(T.copied[lang]);
+          if (out === "copied") {
+            setMsg(T.copied[lang]);
+            window.setTimeout(() => setMsg(""), 2500);
+          }
           track("share", { method: out, path: window.location.pathname });
         }}
       >
@@ -41,11 +44,9 @@ export default function SharePage({ lang, title, text }: { lang: Lang; title: st
       >
         {T.whatsapp[lang]}
       </button>
-      {msg ? (
-        <span className="fineprint" role="status">
-          {msg}
-        </span>
-      ) : null}
+      <span className="fineprint" role="status">
+        {msg}
+      </span>
     </p>
   );
 }
