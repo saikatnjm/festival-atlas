@@ -22,11 +22,10 @@ no search-volume data was available beyond that, so the order below follows the 
 
 | # | Item | Status | Window |
 |---|---|---|---|
-| 0 | **Next.js security upgrade**: `npm audit` (31 Oct) flags next 16.0.0–16.4.0 as critical (GHSA-2464-fhr4-w9xw, GHSA-p3m5-59mp-jv5r, GHSA-673q-mjm6-r5xr); bump to the patched release, rebuild, smoke | **Waiting for owner OK** | now |
 | 1 | **Kali Puja 2026 hub** `/kali-puja-2026`: sourced dates and Nishita times (Kolkata + Dhaka), the week ahead (Bhai Phota, Jagaddhatri), cracker rules (2026 notice pending, 2025 pattern shown as last year's), Naihati Boro Maa crowd note, FAQ + Event JSON-LD; Pujo menu chip goes live | **Review** (built 31 Oct; owner pushes) | before 8 Nov |
 | 2 | **Cracker notice update**: replace the "awaiting 2026 notice" row with the Kolkata Police / WBPCB 2026 order as soon as it is published | Queued (watch news) | 4–8 Nov |
-| 3 | **Kali/Diwali greeting cards + postcard stamp**: add Kali Puja, Diwali and Bhai Phota days to `data/play/greetings.ts`; postcard postmark for Shyama Puja | Queued | before 8 Nov |
-| 4 | **Bhai Phota card**: phonta card ("to my brother/sister"), the rhyme, both dates if panjikas differ | Queued | before 11 Nov |
+| 3 | **Kali/Diwali greeting cards + postcard stamp**: add Kali Puja, Diwali and Bhai Phota days to `data/play/greetings.ts`; postcard postmark for Shyama Puja | **Review** (built 31 Oct; owner pushes) | before 8 Nov |
+| 4 | **Bhai Phota card**: phonta card ("to my brother/sister"), the rhyme, both dates if panjikas differ | Card + rhyme shipped with item 3; recipient wording left |  before 11 Nov |
 | 5 | **Kali Puja pandals**: sourced entries (Barasat, Naihati, Madhyamgram, Kolkata) in the directory with `puja: "kali"`, so map, passport, crowd meter work | Queued (needs sources per pandal) | before 8 Nov if sources exist |
 | 6 | **Crowd-safety layer**: "very crowded, try later" nudge from the crowd meter, an "unsafe crowd" report kind, official helplines (sourced). Context: Chorbagan crush, 17 Oct 2026 ([The Quint](https://www.thequint.com/news/breaking-news/kolkata-durga-puja-pandal-stampede-investigation-updates)) | Queued | November |
 | 7 | **Jagaddhatri Puja hub** `/jagaddhatri-puja-2026`: Chandannagar + Krishnanagar, lighting, trains from Howrah, dates per panjika | Queued | before 16 Nov |
@@ -40,6 +39,7 @@ no search-volume data was available beyond that, so the order below follows the 
 | 15 | **Push notifications** (free tier only) for the live board and saved pandals | Queued | before Durga Puja 2027 |
 
 ## Done
+- 31 Oct: Next.js 16.4.0 → 16.4.3 security upgrade (`npm audit` clean).
 - 31 Oct: SEO pass on all pages, both languages (share images, title/description lengths); see PROJECT_STATUS.md.
 
 ## Housekeeping

@@ -19,7 +19,8 @@ import { ACTIVITY_MAX, toActivity } from "../lib/activity.ts";
 import { checkCredentials, constantTimeEqual, makeSession, verifySession } from "../lib/admin-shared.ts";
 import { cleanContact, cleanMessage, cleanPage, cleanTopic } from "../lib/feedback-shared.ts";
 import { cleanPlace, toPlace } from "../lib/places-shared.ts";
-import { COMMON_LINES, GREETINGS, anotherLine, getGreeting, greetingForPhase, linesFor } from "../data/play/greetings.ts";
+import { COMMON_LINES, DEFAULT_GREETING, GREETINGS, GREETING_SEASONS, KALI_WEEK_2026, anotherLine, getGreeting, greetingFor, greetingForPhase, linesFor, seasonOf } from "../data/play/greetings.ts";
+import { KALI_2026 } from "../data/kali-puja.ts";
 import { regionFromTimeZone } from "../lib/region.ts";
 import { cleanNick, resultShare, isGame, NICK_MAX } from "../lib/community-shared.ts";
 import { fmtDate, fmtDateWithDay } from "../lib/dates.ts";
@@ -237,7 +238,7 @@ test("greeting lines: enough variety, shared pool appended, random pick never re
   for (const g of GREETINGS) {
     assert.ok(g.lines.length >= 8, `${g.id} has ${g.lines.length} lines`);
     const all = linesFor(g);
-    assert.equal(all.length, g.lines.length + COMMON_LINES.length);
+    assert.equal(all.length, g.lines.length + (g.pool === false ? 0 : COMMON_LINES.length));
     assert.equal(new Set(all.map((x) => x.en)).size, all.length, `${g.id} duplicate lines`);
     for (const x of all) assert.ok(x.bn.length <= 110 && x.en.length <= 120, `${g.id} line too long for the card: ${x.en}`);
   }
@@ -271,6 +272,23 @@ test("greeting cards: every day bilingual with lines, and today's pick follows t
   assert.equal(greetingForPhase(pujaPhase(new Date("2026-10-22T06:00:00Z"), "wb")), "bijoya");
   assert.equal(greetingForPhase(pujaPhase(new Date("2026-11-05T06:00:00Z"), "wb")), "anytime");
   assert.equal(greetingForPhase(pujaPhase(new Date("2026-10-12T06:00:00Z"), "wb")), "anytime");
+  assert.equal(DEFAULT_GREETING.id, "anytime");
+  for (const g of GREETINGS) assert.ok(GREETING_SEASONS.some((s) => s.id === seasonOf(g)), `${g.id} season`);
+});
+
+test("Kali Puja week cards follow the sourced dates", () => {
+  assert.equal(KALI_WEEK_2026.kali, KALI_2026.kali);
+  assert.equal(KALI_WEEK_2026.bhaiPhota, KALI_2026.bhaiPhota);
+  const at = (day) => greetingFor(day, pujaPhase(new Date(`${day}T06:00:00Z`), "wb"));
+  assert.equal(at("2026-10-31"), "bijoya");
+  assert.equal(at("2026-11-01"), "kali");
+  assert.equal(at("2026-11-08"), "kali");
+  assert.equal(at("2026-11-09"), "kali");
+  assert.equal(at("2026-11-10"), "bhaiphota");
+  assert.equal(at("2026-11-11"), "bhaiphota");
+  assert.equal(at("2026-11-12"), "anytime");
+  assert.equal(at("2026-10-19"), "ashtami");
+  assert.ok(getGreeting("kali").stamp && getGreeting("diwali").pool === false);
 });
 
 test("queue waits, clock times, Kolkata day and distances", () => {

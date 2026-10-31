@@ -3,6 +3,19 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## Kali Puja, Diwali, Bhai Phota greeting cards + Shyama Puja postmark (2026-10-31, night)
+Roadmap item 3.
+- **Greetings** (`data/play/greetings.ts`): three new days, `kali` (stamp "শ্যামাপুজো / Shyama Puja"), `diwali`, `bhaiphota` (with the folk rhyme), 8–9 lines each. New optional fields: `season` (`durga` default, `kali`), `stamp`, `pool: false` (Diwali and Bhai Phota skip the Durga pandal-hopping pool). `DEFAULT_GREETING` replaces the "last item" fallback.
+- **Auto pick**: `greetingFor(today, phase)`: 1–9 Nov → Kali Puja, 10–11 Nov → Bhai Phota, else the Durga calendar (Bijoya runs to 31 Oct). Dates in `KALI_WEEK_2026` mirror `KALI_2026` in `data/kali-puja.ts` (Drik Panchang); a test keeps them equal. Diwali is chip-only.
+- **Chips** grouped by season (`components/play/GreetingDayChips.tsx`, `GREETING_SEASONS`, Kali season listed first; flip the order before Durga Puja 2027), used by `/greetings` and `/postcard`. Postcard hashtags follow the season (`#KaliPuja2026 …`).
+- `/greetings` title/description/OG alt now lead with Kali Puja, Diwali, Bhai Phota. `/kali-puja-2026` CTA opens `/greetings?d=kali`.
+- Verified in a scratch copy (Node 24.22): validate, 51/51 tests (new: Kali week dates), build, typecheck, smoke 164/164 (3 new, 1 changed).
+- Next: item 2 (cracker order, when published), item 4 remainder (Bhai Phota "to my brother/sister" wording; the card itself is done), item 5 (Kali pandals, needs sources).
+
+## Next.js security upgrade (2026-10-31, evening)
+- `next` 16.4.0 → **16.4.3** (`package.json` `^16.4.3` + lockfile). 16.0.0–16.4.0 were flagged critical by `npm audit` (GHSA-2464-fhr4-w9xw image-optimizer RCE with SVGs, GHSA-p3m5-59mp-jv5r server-action DoS, GHSA-673q-mjm6-r5xr `use cache` RCE); first patched release is 16.4.1. `npm audit` now: 0 vulnerabilities. npm also re-sorted dependency keys and synced the lockfile's stale name/engines.
+- Verified in the scratch copy (Node 24): validate, 50/50 tests, build (no security stop any more), typecheck, smoke 161/161.
+
 ## SEO pass, both languages (2026-10-31, later)
 Audited all 267 built pages (title/description length, one h1, canonical, hreflang, og/twitter image, JSON-LD, duplicates).
 - **Share images**: 8 indexed pages had none (`pageMeta` sets `openGraph`, which drops the parent's image). Added `opengraph-image.tsx` to `/local`, `/play`, `/passport`, `/postcard`, `/add-pandal`, `/feedback`, `/about`, `/me`. Don't put `images` in `pageMeta`: in this Next version config images override route image files.

@@ -3,9 +3,10 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { deviceId } from "@/components/live/useLive";
 import { useNearMe } from "@/components/live/useNearMe";
+import GreetingDayChips from "@/components/play/GreetingDayChips";
 import type { PlayStrings } from "@/components/play/strings";
 import { fun } from "@/data/i18n/fun";
-import { GREETINGS, anotherLine, getGreeting, greetingForPhase, linesFor, type GreetingDay } from "@/data/play/greetings";
+import { DEFAULT_GREETING, anotherLine, getGreeting, greetingFor, linesFor, seasonOf, type GreetingDay } from "@/data/play/greetings";
 import { fill } from "@/data/play/personal";
 import { logActivity } from "@/lib/activity";
 import { track } from "@/lib/analytics";
@@ -152,8 +153,8 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
 
   // Until mounted, a fixed date keeps server and client markup identical. A hand-picked day wins over today's.
   const phase = useMemo(() => pujaPhase(now ?? PLACEHOLDER_DATE, region), [now, region]);
-  const g = getGreeting(dayId ?? greetingForPhase(phase)) ?? GREETINGS[GREETINGS.length - 1];
-  const stamp = g.id === "anytime" ? P.season[lang] : g.name[lang];
+  const g = getGreeting(dayId ?? greetingFor(localDate(now ?? PLACEHOLDER_DATE, region), phase)) ?? DEFAULT_GREETING;
+  const stamp = g.id === "anytime" ? P.season[lang] : (g.stamp ?? g.name)[lang];
   const captions = useMemo(() => linesFor(g).map((l) => l[lang]), [g, lang]);
   const caption = custom.trim() ? custom.trim().slice(0, 80) : captions[line % captions.length];
   // The visible caption chips: a window that starts at `captionFrom` and always includes the chosen line.
@@ -309,7 +310,7 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
     if (!pandal) return null;
     // A typed pandal has no page of its own, so the link invites people to make their own postcard.
     const url = `${window.location.origin}${withLang(lang, isCustom ? "/postcard" : `/puja/${pandal.id}`)}`;
-    const text = `${fill(P.shareText[lang], { name: pandal.name, day: stamp })} ${TAGS}`;
+    const text = `${fill(P.shareText[lang], { name: pandal.name, day: stamp })} ${seasonOf(g) === "durga" ? TAGS : `#PujoGuide ${g.tags.map((t) => `#${t}`).join(" ")}`}`;
     return { url, text, filename: `pujo-postcard-${pandal.id}.${POSTCARD_EXT}` };
   };
 
@@ -413,23 +414,15 @@ export default function PostcardMaker({ lang, items, s }: { lang: Lang; items: P
           {P.captionLabel[lang]} · {g.icon} {stamp}
         </h2>
         {/* Day chips: today's tithi is picked for the saved region; pick another when your para runs a day apart. */}
-        <div className="cx-chips" role="group" aria-label={fun.greet.pickDay[lang]}>
-          {GREETINGS.map((x) => (
-            <button
-              key={x.id}
-              type="button"
-              className="cx-chip"
-              aria-pressed={g.id === x.id}
-              onClick={() => {
-                setDayId(x.id);
-                setLine(0);
-                setCaptionFrom(0);
-              }}
-            >
-              {x.icon} {x.name[lang]}
-            </button>
-          ))}
-        </div>
+        <GreetingDayChips
+          lang={lang}
+          value={g.id}
+          onPick={(d) => {
+            setDayId(d);
+            setLine(0);
+            setCaptionFrom(0);
+          }}
+        />
         <div className="cx-chips">
           {captionChips.map((i) => (
             <button

@@ -2,15 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fun } from "@/data/i18n/fun";
-import { GREETINGS, anotherLine, getGreeting, greetingForPhase, linesFor, type GreetingDay } from "@/data/play/greetings";
+import { DEFAULT_GREETING, GREETINGS, anotherLine, getGreeting, greetingFor, linesFor, type GreetingDay } from "@/data/play/greetings";
 import { fill } from "@/data/play/personal";
 import { track } from "@/lib/analytics";
 import { withLang, type Lang } from "@/lib/i18n";
 import { cleanName, NAME_MAX } from "@/lib/profile";
-import { pujaPhase } from "@/lib/puja-dates";
+import { localDate, pujaPhase } from "@/lib/puja-dates";
 import { guessRegion } from "@/lib/region";
 import type { CardData } from "@/lib/share";
 import { useProfile } from "@/lib/use-profile";
+import GreetingDayChips from "./GreetingDayChips";
 import ResultCard from "./ResultCard";
 import ShareBar from "./ShareBar";
 import type { PlayStrings } from "./strings";
@@ -48,7 +49,9 @@ export default function GreetingMaker({ lang, s }: { lang: Lang; s: PlayStrings 
       return;
     }
     // Saved region, else the phone's time zone (Asia/Dhaka → Bangladesh), else West Bengal.
-    setDay(greetingForPhase(pujaPhase(new Date(), guessRegion())));
+    const now = new Date();
+    const region = guessRegion();
+    setDay(greetingFor(localDate(now, region), pujaPhase(now, region)));
   }, []);
   // My own name from the profile once it has loaded, unless the link carried the sender's. (Not keyed on
   // `from`, so clearing the field doesn't refill it.)
@@ -56,7 +59,7 @@ export default function GreetingMaker({ lang, s }: { lang: Lang; s: PlayStrings 
     if (ready && !fromLink) setFrom((f) => f || profile.name || "");
   }, [ready, fromLink, profile.name]);
 
-  const g = getGreeting(day) ?? GREETINGS[GREETINGS.length - 1];
+  const g = getGreeting(day) ?? DEFAULT_GREETING;
   const lines = useMemo(() => linesFor(g), [g]);
   const li = line % lines.length;
   const sender = cleanName(from);
@@ -99,22 +102,14 @@ export default function GreetingMaker({ lang, s }: { lang: Lang; s: PlayStrings 
           </button>
         </p>
       ) : null}
-      <div className="cx-chips" role="group" aria-label={G.pickDay[lang]}>
-        {GREETINGS.map((x) => (
-          <button
-            key={x.id}
-            type="button"
-            className="cx-chip"
-            aria-pressed={day === x.id}
-            onClick={() => {
-              setDay(x.id);
-              setLine(0);
-            }}
-          >
-            {x.icon} {x.name[lang]}
-          </button>
-        ))}
-      </div>
+      <GreetingDayChips
+        lang={lang}
+        value={day}
+        onPick={(d) => {
+          setDay(d);
+          setLine(0);
+        }}
+      />
       <div className="greet-fields">
         <label className="cx-field">
           <span>{G.fromLabel[lang]}</span>

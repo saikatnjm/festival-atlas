@@ -70,10 +70,10 @@ export const fun = {
     friendsP: l("দলের রোল কার্ড বানাও, বা যেকোনো খেলার ফল পাঠিয়ে বন্ধুকে চ্যালেঞ্জ করো। অ্যাকাউন্ট লাগে না।", "Make a squad role card, or send any result to challenge a friend. No accounts needed."),
   },
   greet: {
-    metaTitle: l("শুভ বিজয়া ও পুজোর শুভেচ্ছা কার্ড ২০২৬: নাম দিয়ে বানাও", "Shubho Bijoya & Durga Puja 2026 Greeting Cards with Your Name"),
+    metaTitle: l("কালীপুজো, দীপাবলি, ভাইফোঁটার শুভেচ্ছা কার্ড ২০২৬: নাম দিয়ে", "Kali Puja, Diwali & Bhai Phota Greeting Cards 2026 with Name"),
     metaDesc: l(
-      "শুভ ষষ্ঠী, সপ্তমী, অষ্টমী, নবমী, দশমী আর শুভ বিজয়ার শুভেচ্ছা কার্ড, তোমার আর প্রিয়জনের নাম সহ। কার্টুন চরিত্র, মজার বাংলা লাইন, এক ট্যাপে WhatsApp-এ পাঠাও।",
-      "Shubho Shashthi, Saptami, Ashtami, Navami, Dashami and Shubho Bijoya greeting cards with your name and your loved one's. Cartoon characters, witty Bengali lines, one tap to WhatsApp.",
+      "শুভ কালীপুজো, শুভ দীপাবলি, শুভ ভাইফোঁটা আর দুর্গাপুজোর প্রতিটা দিনের শুভেচ্ছা কার্ড, তোমার আর প্রিয়জনের নাম সহ। মজার বাংলা লাইন, এক ট্যাপে WhatsApp-এ পাঠাও।",
+      "Shubho Kali Puja, Happy Diwali, Bhai Phota and every Durga Puja day: greeting cards with your name and your loved one's. Witty Bengali lines, one tap to WhatsApp.",
     ),
     h1: l("পুজোর শুভেচ্ছা কার্ড, তোমার নামে", "Puja greeting cards, with your name"),
     lead: l("আজকের তিথি নিজে থেকে বাছা। নাম লেখো, লাইন বদলাও, আর পরিবারের গ্রুপে পাঠিয়ে দাও।", "Today's tithi is picked for you. Add names, change the line, and send it to the family group."),

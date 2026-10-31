@@ -1,4 +1,4 @@
-// Greeting cards: one per Puja day (Mahalaya → Bijoya) plus a few everyday ones. Each day has a
+// Greeting cards: one per Puja day (Mahalaya → Bijoya), Kali Puja / Diwali / Bhai Phota, plus an everyday one. Each day has a
 // character, a headline and several lines (warm, funny, nostalgic) so the same day can be sent to
 // the family group and the friends' group with a different flavour. Only type imports (tested).
 
@@ -7,7 +7,27 @@ import type { CharId, Mood } from "./types";
 
 const l = (bn: string, en: string): L => ({ bn, en });
 
-export type GreetingDay = "mahalaya" | "panchami" | "shashthi" | "saptami" | "ashtami" | "navami" | "dashami" | "bijoya" | "anytime";
+export type GreetingDay =
+  | "mahalaya"
+  | "panchami"
+  | "shashthi"
+  | "saptami"
+  | "ashtami"
+  | "navami"
+  | "dashami"
+  | "bijoya"
+  | "anytime"
+  | "kali"
+  | "diwali"
+  | "bhaiphota";
+
+export type GreetingSeason = "durga" | "kali";
+
+/** Chip groups, current season first. */
+export const GREETING_SEASONS: { id: GreetingSeason; name: L }[] = [
+  { id: "kali", name: l("কালীপুজো ও ভাইফোঁটা", "Kali Puja & Bhai Phota") },
+  { id: "durga", name: l("দুর্গাপুজো", "Durga Puja") },
+];
 
 export interface Greeting {
   id: GreetingDay;
@@ -21,6 +41,12 @@ export interface Greeting {
   lines: L[];
   /** Short hashtag-style tags for the share text (Latin, so they work on every app). */
   tags: string[];
+  /** Defaults to "durga". */
+  season?: GreetingSeason;
+  /** Postcard postmark when it should differ from `name`. */
+  stamp?: L;
+  /** false: don't append the Durga pandal-hopping pool (COMMON_LINES). */
+  pool?: boolean;
 }
 
 export const GREETINGS: Greeting[] = [
@@ -205,7 +231,76 @@ export const GREETINGS: Greeting[] = [
     ],
     tags: ["ShubhoSharodiya", "DurgaPuja2026"],
   },
+  {
+    id: "kali",
+    icon: "🌑",
+    name: l("কালীপুজো", "Kali Puja"),
+    headline: l("শুভ কালীপুজো!", "Shubho Kali Puja!"),
+    stamp: l("শ্যামাপুজো", "Shyama Puja"),
+    char: "bagha",
+    mood: "wow",
+    season: "kali",
+    lines: [
+      l("অমাবস্যার রাত, প্রদীপের সারি, আর মায়ের জবাফুল। শুভ কালীপুজো!", "A moonless night, rows of lamps, and red hibiscus for Maa. Shubho Kali Puja!"),
+      l("নিশুতি রাতে পুজো, ভোরে খিচুড়ি: এই রাতটা জেগে থাকার জন্যই। শুভ কালীপুজো!", "Puja deep in the night, khichuri at dawn: a night made for staying up. Shubho Kali Puja!"),
+      l("মা কালী সব অন্ধকার দূর করুন, ঘরে আলো থাকুক সারা বছর।", "May Maa Kali chase away every darkness and keep the home lit all year."),
+      l("চোদ্দ প্রদীপ জ্বলল, চোদ্দ শাক খাওয়া হল, এবার অমাবস্যার রাত। শুভ কালীপুজো!", "Fourteen lamps lit, fourteen greens eaten, now the moonless night. Shubho Kali Puja!"),
+      l("ছাদে মোমবাতি, বারান্দায় প্রদীপ, পাড়ায় ঢাক। শুভ শ্যামাপুজো!", "Candles on the roof, lamps on the balcony, the dhak in the para. Shubho Shyama Puja!"),
+      l("বাজি পোড়াও নিয়ম মেনে, সময় মেনে; পাড়ার কুকুর-বেড়াল আর দাদু-দিদাও তোমার পাড়ার লোক।", "Crackers only by the rules and the hours; the para's dogs, cats and grandparents are neighbours too."),
+      l("মায়ের হাতে খাঁড়া, আমাদের হাতে প্রদীপ: আঁধার আজ হার মানবে। শুভ কালীপুজো!", "A sword in Maa's hand, a lamp in ours: the dark loses tonight. Shubho Kali Puja!"),
+      l("দুর্গাপুজোর ক্লান্তি কাটল, আবার প্যান্ডেলের ডাক। শুভ কালীপুজো!", "The Durga Puja tiredness has worn off, and the pandals are calling again. Shubho Kali Puja!"),
+      l("জয় মা কালী! ভয় দূর হোক, সাহস থাকুক, ঘর ভরে থাকুক।", "Jai Maa Kali! May fear go, courage stay, and the home stay full."),
+    ],
+    tags: ["ShubhoKaliPuja", "KaliPuja2026", "ShyamaPuja"],
+  },
+  {
+    id: "diwali",
+    icon: "🪔",
+    name: l("দীপাবলি", "Diwali"),
+    headline: l("শুভ দীপাবলি!", "Happy Diwali!"),
+    char: "selfie",
+    mood: "happy",
+    season: "kali",
+    pool: false,
+    lines: [
+      l("প্রদীপের আলো, মিষ্টির বাক্স আর প্রিয় মানুষগুলো পাশে। শুভ দীপাবলি!", "Lamplight, a box of sweets and your favourite people close by. Happy Diwali!"),
+      l("এক প্রদীপ থেকে আরেক প্রদীপ: আলো ভাগ করলে বাড়ে। শুভ দীপাবলি!", "One lamp lights the next: light grows when you share it. Happy Diwali!"),
+      l("ঘর ঝকঝকে, বারান্দায় আলপনা, জানলায় টুনি। শুভ দীপাবলি!", "A spotless home, alpana on the balcony, fairy lights in the window. Happy Diwali!"),
+      l("এবারের দীপাবলিতে কম ধোঁয়া, বেশি আলো, অনেক বেশি হাসি।", "This Diwali: less smoke, more light, a lot more laughter."),
+      l("তোমার ঘরে আলো, মনে শান্তি, পকেটে একটু বাড়তি মিষ্টি থাকুক। শুভ দীপাবলি!", "Light in your home, peace in your heart, and a few extra sweets in your pocket. Happy Diwali!"),
+      l("মোমবাতি গুনতে গুনতে রাত কাবার, ছবি তুলতে তুলতে চার্জ শেষ। শুভ দীপাবলি!", "Counting candles all night, the battery gone from all the photos. Happy Diwali!"),
+      l("দূরে থাকলেও ভিডিও কলে একটা প্রদীপ জ্বেলে দেখাও। শুভ দীপাবলি!", "Far away? Light one lamp on the video call. Happy Diwali!"),
+      l("আলোর উৎসবে তোমার জন্য অনেক শুভেচ্ছা, আর একটা কাজু বরফি।", "Lots of good wishes for the festival of lights, and one kaju barfi."),
+    ],
+    tags: ["HappyDiwali", "Diwali2026", "ShubhoDipaboli"],
+  },
+  {
+    id: "bhaiphota",
+    icon: "🧿",
+    name: l("ভাইফোঁটা", "Bhai Phota"),
+    headline: l("শুভ ভাইফোঁটা!", "Shubho Bhai Phota!"),
+    char: "bhog",
+    mood: "happy",
+    season: "kali",
+    pool: false,
+    lines: [
+      l("ভাইয়ের কপালে দিলাম ফোঁটা, যমের দুয়ারে পড়ল কাঁটা। শুভ ভাইফোঁটা!", "A phota on my brother's forehead, thorns at Yama's door. Shubho Bhai Phota!"),
+      l("চন্দন, দই, কাজলের ফোঁটা, ধান-দূর্বার আশীর্বাদ, আর থালাভরা মিষ্টি।", "A phota of sandalwood, curd and kajal, blessings of paddy and durba, and a plate of sweets."),
+      l("সারা বছর ঝগড়া, আজ একদিন ফোঁটা আর প্রণাম। শুভ ভাইফোঁটা!", "Fighting all year, and today a phota and a pronam. Shubho Bhai Phota!"),
+      l("উপহারটা এবার একটু বড় চাই, ভাই। শুভ ভাইফোঁটা!", "The gift had better be bigger this year, brother. Shubho Bhai Phota!"),
+      l("দিদির হাতের ফোঁটা, মায়ের হাতের রান্না: বছরের সেরা দুপুর।", "A phota from didi, lunch from Ma: the best afternoon of the year."),
+      l("দূরে আছি, তাই ফোনেই ফোঁটা দিলাম। ভালো থাকিস, ভাই।", "Too far away, so here's a phota over the phone. Take care, brother."),
+      l("ভাইফোঁটার থালা: প্রদীপ, ধান-দূর্বা, চন্দন, আর ভাইয়ের পছন্দের রসগোল্লা।", "The Bhai Phota plate: a lamp, paddy and durba, sandalwood, and his favourite rosogolla."),
+      l("যত বড়ই হই, আজকের দিনে আবার ছোট ভাইবোন। শুভ ভাইফোঁটা!", "However grown-up we are, today we're the little siblings again. Shubho Bhai Phota!"),
+    ],
+    tags: ["ShubhoBhaiPhota", "BhaiPhota2026", "BhaiDooj"],
+  },
 ];
+
+/** The everyday card; also the fallback for an unknown id. */
+export const DEFAULT_GREETING = GREETINGS.find((g) => g.id === "anytime") as Greeting;
+
+export const seasonOf = (g: Greeting): GreetingSeason => g.season ?? "durga";
 
 /** Lines that fit any day (pandal-hopping life); appended to every day's own lines. */
 export const COMMON_LINES: L[] = [
@@ -223,8 +318,8 @@ export const COMMON_LINES: L[] = [
   l("ঠাকুর দেখা শেষ, এবার পেটপুজো।", "Pandals done; now the puja of the stomach."),
 ];
 
-/** A day's own lines followed by the shared pool. Index positions are stable, so share links keep working. */
-export const linesFor = (g: Greeting): L[] => [...g.lines, ...COMMON_LINES];
+/** A day's own lines followed by the shared pool (unless `pool: false`). Index positions are stable, so share links keep working. */
+export const linesFor = (g: Greeting): L[] => (g.pool === false ? g.lines : [...g.lines, ...COMMON_LINES]);
 
 /** A random index into `linesFor(g)` that differs from `current` (when there is more than one line). */
 export function anotherLine(total: number, current: number, random = Math.random): number {
@@ -243,4 +338,18 @@ export function greetingForPhase(phase: { kind: "before"; days: number } | { kin
   }
   if (phase.kind === "after") return phase.days <= 10 ? "bijoya" : "anytime";
   return phase.days <= 1 ? "panchami" : "anytime";
+}
+
+/**
+ * Kali Puja week (same dates as data/kali-puja.ts KALI_2026, from Drik Panchang; a test keeps them equal):
+ * Kali Puja Sun 8 Nov (Amavasya runs into 9 Nov), Bhai Phota Wed 11 Nov.
+ */
+export const KALI_WEEK_2026 = { from: "2026-11-01", kali: "2026-11-08", kaliEnd: "2026-11-09", bhaiPhota: "2026-11-11" } as const;
+
+/** Today's card from the local date (YYYY-MM-DD): Kali Puja week first, else the Durga Puja calendar. */
+export function greetingFor(today: string, phase: Parameters<typeof greetingForPhase>[0]): GreetingDay {
+  const k = KALI_WEEK_2026;
+  if (today >= k.from && today <= k.kaliEnd) return "kali";
+  if (today > k.kaliEnd && today <= k.bhaiPhota) return "bhaiphota";
+  return greetingForPhase(phase);
 }

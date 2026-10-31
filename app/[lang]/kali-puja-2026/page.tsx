@@ -166,8 +166,8 @@ export default async function KaliPujaPage({ params }: { params: Promise<Params>
       </section>
 
       <p className="cta-row">
-        <Link className="button" href={withLang(lang, "/greetings")}>
-          🪔 {lang === "bn" ? "শুভেচ্ছা কার্ড বানাও" : "Make a greeting card"}
+        <Link className="button" href={`${withLang(lang, "/greetings")}?d=kali`}>
+          🪔 {lang === "bn" ? "কালীপুজোর শুভেচ্ছা কার্ড বানাও" : "Make a Kali Puja greeting card"}
         </Link>
         <Link className="button button-light" href={withLang(lang, "/durga-puja-2026")}>
           {lang === "bn" ? "দুর্গাপুজো ২০২৬-এর তারিখ" : "Durga Puja 2026 dates"}
