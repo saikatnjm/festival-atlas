@@ -24,11 +24,13 @@ import { KALI_2026 } from "../data/kali-puja.ts";
 import { SARASWATI_2027 } from "../data/festivals/saraswati-2027.ts";
 import { SHIVRATRI_2027 } from "../data/festivals/shivratri-2027.ts";
 import { POILA_BOISHAKH_2027 } from "../data/festivals/poila-boishakh-2027.ts";
-import { EKADASHI_2027, EKADASHI_ROWS, dayLabel, timeLabel } from "../data/festivals/ekadashi-2027.ts";
+import { EKADASHI_2027, EKADASHI_ROWS, PURNIMA_2027, PURNIMA_ROWS, dayLabel, timeLabel } from "../data/festivals/lunar-2027.ts";
 import { JAGADDHATRI_2026 } from "../data/festivals/jagaddhatri-2026.ts";
 import { CALENDAR_2027 } from "../data/festivals/calendar-2027.ts";
 import { DOL_2027 } from "../data/festivals/dol-2027.ts";
 import { DURGA_2027 } from "../data/festivals/durga-2027.ts";
+import { UPCOMING, daysUntil as daysTo, nextUp } from "../data/festivals/upcoming.ts";
+import { LUNAR_UPCOMING } from "../data/festivals/lunar-2027.ts";
 import { regionFromTimeZone } from "../lib/region.ts";
 import { cleanNick, resultShare, isGame, NICK_MAX } from "../lib/community-shared.ts";
 import { fmtDate, fmtDateWithDay } from "../lib/dates.ts";
@@ -318,7 +320,7 @@ test("spring 2027 cards follow the festival pages' sourced dates", () => {
 });
 
 test("festival pages: bilingual, sourced rows, titles and descriptions within limits", () => {
-  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027]) {
+  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027]) {
     for (const k of ["title", "description", "h1", "lead"]) assert.ok(f[k].bn && f[k].en, `${f.path} ${k}`);
     assert.ok(f.title.en.length <= 60, `${f.path} title ${f.title.en.length}`);
     assert.ok(f.description.en.length <= 160 && f.description.bn.length <= 170, `${f.path} description`);
@@ -338,6 +340,12 @@ test("Ekadashi list: ordered, well-formed, labels formatted without computing da
     for (const t of [ks, ke, ds, de]) assert.match(t, /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/);
     assert.ok(ks < ke && ds < de);
     assert.ok(isk === "" || isk === "?" || /^\d{4}-\d{2}-\d{2}$/.test(isk));
+  }
+  const pd = PURNIMA_ROWS.map((r) => r[1]);
+  assert.deepEqual([...pd].sort(), pd, "Purnima rows in date order");
+  assert.equal(PURNIMA_ROWS.filter((r) => r[1].startsWith("2027")).length, 12);
+  for (const [, date, vrat, ks, ke, ds, de] of PURNIMA_ROWS) {
+    assert.ok(ks < ke && ds < de && (vrat === "" || vrat < date));
   }
   assert.equal(dayLabel("2027-01-03", "en"), "Sun 3 Jan 2027");
   assert.equal(dayLabel("2027-06-14", "bn", false), "সোম ১৪ জুন");
@@ -524,4 +532,36 @@ test("every start × vibe gives a full route that starts near home", () => {
   assert.deepEqual(buildRoute("wb", "nowhere", "theme", wb), { stops: [], breaks: [] });
   const variants = new Set([0, 1, 2, 3, 4, 5].map((n) => buildRoute("wb", "behala", "theme", wb, n).stops.join()));
   assert.ok(variants.size > 1, "‘another route’ can change the route");
+});
+
+test("blog articles: lengths, sources listed, Bangla digits, unique slugs", async () => {
+  const { readdirSync } = await import("node:fs");
+  const files = readdirSync(new URL("../data/blog/", import.meta.url)).filter((f) => f.endsWith(".ts") && f !== "types.ts" && f !== "index.ts");
+  const slugs = new Set();
+  for (const f of files) {
+    const mod = await import(`../data/blog/${f}`);
+    const a = Object.values(mod).find((v) => v && typeof v === "object" && "slug" in v);
+    assert.ok(a, `${f} exports an article`);
+    assert.ok(!slugs.has(a.slug) && /^[a-z0-9-]+$/.test(a.slug), `${f} slug`);
+    slugs.add(a.slug);
+    assert.ok(a.title.en.length <= 60, `${a.slug} title ${a.title.en.length}`);
+    assert.ok(a.description.en.length <= 160, `${a.slug} description ${a.description.en.length}`);
+    assert.ok(a.faq.length >= 3 && a.body.length >= 6, `${a.slug} content`);
+    const listed = new Set(a.sources.map((s) => s.url));
+    for (const b of a.body) if ("source" in b && b.source) assert.ok(listed.has(b.source.url), `${a.slug}: ${b.source.url} missing from sources`);
+    const bnTexts = [a.title, a.description, a.h1, a.lead, ...a.faq.flatMap((q) => [q.q, q.a]), ...a.body.flatMap((b) => ("items" in b ? b.items : [b.text]))].map((x) => x.bn);
+    for (const t of bnTexts) assert.ok(!/[0-9]/.test(t), `${a.slug}: ASCII digit in Bangla text: ${t.slice(0, 60)}`);
+  }
+  assert.ok(slugs.size >= 3);
+});
+
+test("coming up: sorted sourced dates, next entries and day counts", () => {
+  const dates = UPCOMING.map((u) => u.date);
+  assert.deepEqual([...dates].sort(), dates, "UPCOMING in date order");
+  for (const u of [...UPCOMING, ...LUNAR_UPCOMING]) assert.ok(/^\d{4}-\d{2}-\d{2}$/.test(u.date) && u.href.startsWith("/") && u.name.bn && u.name.en);
+  assert.equal(nextUp(UPCOMING, "2026-11-08", 1)[0].name.en, "Kali Puja", "today's festival still counts");
+  assert.equal(nextUp(UPCOMING, "2026-11-09", 1)[0].name.en, "Bhai Phota");
+  assert.equal(nextUp(UPCOMING, "2027-10-07", 1)[0].name.en, "Durga Puja", "multi-day festival stays until its end");
+  assert.equal(daysTo("2026-10-31", "2026-11-08"), 8);
+  assert.equal(nextUp(UPCOMING, "2030-01-01", 3).length, 0);
 });

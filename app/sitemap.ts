@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 import { activities } from "@/data/play";
+import { ARTICLES } from "@/data/blog";
+import { GREETINGS } from "@/data/play/greetings";
 import { pandals } from "@/data/pandals";
 import { collections } from "@/data/pandals/collections";
 import { LANGS, withLang } from "@/lib/i18n";
@@ -18,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/durga-puja-2027", priority: 0.95, changeFrequency: "weekly" },
     { path: "/calendar-2027", priority: 0.9, changeFrequency: "weekly" },
     { path: "/ekadashi-2027", priority: 0.9, changeFrequency: "weekly" },
+    { path: "/purnima-2027", priority: 0.85, changeFrequency: "weekly" },
     { path: "/saraswati-puja-2027", priority: 0.85, changeFrequency: "weekly" },
     { path: "/shivratri-2027", priority: 0.85, changeFrequency: "weekly" },
     { path: "/dol-purnima-2027", priority: 0.85, changeFrequency: "weekly" },
@@ -28,6 +31,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/play", priority: 0.9, changeFrequency: "weekly" },
     { path: "/passport", priority: 0.6, changeFrequency: "weekly" },
     { path: "/greetings", priority: 0.9, changeFrequency: "daily" },
+    ...GREETINGS.map((g) => ({ path: `/greetings/${g.id}`, priority: 0.8, changeFrequency: "weekly" as const })),
+    { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
+    ...ARTICLES.map((a) => ({ path: `/blog/${a.slug}`, priority: 0.8, changeFrequency: "monthly" as const, lastModified: a.updated })),
     { path: "/postcard", priority: 0.9, changeFrequency: "weekly" },
     { path: "/add-pandal", priority: 0.6, changeFrequency: "monthly" },
     { path: "/feedback", priority: 0.3, changeFrequency: "monthly" },

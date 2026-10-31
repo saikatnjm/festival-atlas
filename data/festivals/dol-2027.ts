@@ -84,7 +84,7 @@ export const DOL_2027: FestivalPage = {
     { name: l("দোলযাত্রা ২০২৭, বাংলাদেশ", "Dol Purnima 2027, Bangladesh"), start: "2027-03-22", place: { name: "Dhaka", locality: "Dhaka", country: "BD" } },
   ],
   links: [
-    { href: "/greetings?d=dol", label: l("🎨 দোলের শুভেচ্ছা কার্ড", "🎨 Dol greeting card"), primary: true },
+    { href: "/greetings/dol", label: l("🎨 দোলের শুভেচ্ছা কার্ড", "🎨 Dol greeting card"), primary: true },
     { href: "/shivratri-2027", label: l("শিবরাত্রি ২০২৭", "Shivratri 2027") },
     { href: "/poila-boishakh-2027", label: l("পয়লা বৈশাখ ১৪৩৪", "Poila Boishakh 1434") },
     { href: "/calendar-2027", label: l("📅 পুজোর ক্যালেন্ডার ২০২৭", "📅 Festival calendar 2027") },

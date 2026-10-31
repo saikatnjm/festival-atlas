@@ -415,6 +415,27 @@ export const DEFAULT_GREETING = GREETINGS.find((g) => g.id === "anytime") as Gre
 
 export const seasonOf = (g: Greeting): GreetingSeason => g.season ?? "durga";
 
+/** The festival page each day's wishes page links to for dates and times. */
+export const GREETING_PAGES: Record<GreetingDay, string> = {
+  mahalaya: "/durga-puja-2027",
+  panchami: "/durga-puja-2027",
+  shashthi: "/durga-puja-2027",
+  saptami: "/durga-puja-2027",
+  ashtami: "/durga-puja-2027",
+  navami: "/durga-puja-2027",
+  dashami: "/durga-puja-2027",
+  bijoya: "/durga-puja-2027",
+  anytime: "/durga-puja-2027",
+  kali: "/kali-puja-2026",
+  diwali: "/kali-puja-2026",
+  bhaiphota: "/kali-puja-2026",
+  jagaddhatri: "/jagaddhatri-puja-2026",
+  saraswati: "/saraswati-puja-2027",
+  shivratri: "/shivratri-2027",
+  dol: "/dol-purnima-2027",
+  noboborsho: "/poila-boishakh-2027",
+};
+
 /** Lines that fit any day (pandal-hopping life); appended to every day's own lines. */
 export const COMMON_LINES: L[] = [
   l("‘আর একটা প্যান্ডেল দেখব না’ বলে আরও পাঁচটা দেখা হল।", "Swore off ‘one more pandal’ and saw five more."),

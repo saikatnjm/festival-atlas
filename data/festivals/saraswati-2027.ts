@@ -96,7 +96,8 @@ export const SARASWATI_2027: FestivalPage = {
     { name: l("সরস্বতী পুজো ২০২৭, বাংলাদেশ", "Saraswati Puja 2027, Bangladesh"), start: "2027-02-11", place: { name: "Dhaka", locality: "Dhaka", country: "BD" } },
   ],
   links: [
-    { href: "/greetings?d=saraswati", label: l("📚 সরস্বতী পুজোর শুভেচ্ছা কার্ড", "📚 Saraswati Puja greeting card"), primary: true },
+    { href: "/greetings/saraswati", label: l("📚 সরস্বতী পুজোর শুভেচ্ছা কার্ড", "📚 Saraswati Puja greeting card"), primary: true },
+    { href: "/blog/saraswati-puja-rituals", label: l("📖 সরস্বতী পুজোর রীতি", "📖 Saraswati Puja rituals") },
     { href: "/shivratri-2027", label: l("শিবরাত্রি ২০২৭", "Shivratri 2027") },
     { href: "/poila-boishakh-2027", label: l("পয়লা বৈশাখ ১৪৩৪", "Poila Boishakh 1434") },
     { href: "/calendar-2027", label: l("📅 পুজোর ক্যালেন্ডার ২০২৭", "📅 Festival calendar 2027") },

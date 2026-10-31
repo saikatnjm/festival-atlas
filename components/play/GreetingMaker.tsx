@@ -19,10 +19,11 @@ import type { PlayStrings } from "./strings";
 const isDay = (v: unknown): v is GreetingDay => typeof v === "string" && GREETINGS.some((g) => g.id === v);
 
 /** Daily Puja greeting cards with the sender's (and optionally the recipient's) name, ready to share. */
-export default function GreetingMaker({ lang, s }: { lang: Lang; s: PlayStrings }) {
+/** `initialDay` (a wishes page) fixes the starting day instead of picking today's. */
+export default function GreetingMaker({ lang, s, initialDay }: { lang: Lang; s: PlayStrings; initialDay?: GreetingDay }) {
   const G = fun.greet;
   const { profile, ready } = useProfile();
-  const [day, setDay] = useState<GreetingDay>("anytime");
+  const [day, setDay] = useState<GreetingDay>(initialDay ?? "anytime");
   const [line, setLine] = useState(0);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -48,11 +49,12 @@ export default function GreetingMaker({ lang, s }: { lang: Lang; s: PlayStrings 
       setTo(cleanName(q.get("to")));
       return;
     }
+    if (initialDay) return;
     // Saved region, else the phone's time zone (Asia/Dhaka → Bangladesh), else West Bengal.
     const now = new Date();
     const region = guessRegion();
     setDay(greetingFor(localDate(now, region), pujaPhase(now, region)));
-  }, []);
+  }, [initialDay]);
   // My own name from the profile once it has loaded, unless the link carried the sender's. (Not keyed on
   // `from`, so clearing the field doesn't refill it.)
   useEffect(() => {

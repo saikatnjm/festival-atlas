@@ -1,10 +1,11 @@
-// Ekadashi dates, November 2026 to December 2027 (/ekadashi-2027). Every date and tithi time is copied from
+// Ekadashi and Purnima dates, November 2026 to December 2027 (/ekadashi-2027, /purnima-2027). Every date and tithi time is copied from
 // Drik Panchang's yearly Ekadashi pages for Kolkata and Dhaka (Smarta) and its ISKCON lists for the same
 // cities (Vaishnava), fetched 31 Oct 2026; muhuratam.in's Kolkata 2027 list matches every Smarta date.
 // Times are written as "YYYY-MM-DD HH:MM" (24 h, local) and only formatted here, never computed.
 
 import type { L, Lang } from "@/lib/i18n";
 import type { FestivalPage, FestivalTable } from "./types";
+import type { Upcoming } from "./upcoming";
 
 const l = (bn: string, en: string): L => ({ bn, en });
 
@@ -220,10 +221,151 @@ export const EKADASHI_2027: FestivalPage = {
   ],
   events: [],
   links: [
-    { href: "/saraswati-puja-2027", label: l("সরস্বতী পুজো ২০২৭", "Saraswati Puja 2027"), primary: true },
+    { href: "/purnima-2027", label: l("🌕 পূর্ণিমা ২০২৭", "🌕 Purnima 2027"), primary: true },
+    { href: "/saraswati-puja-2027", label: l("সরস্বতী পুজো ২০২৭", "Saraswati Puja 2027") },
     { href: "/shivratri-2027", label: l("শিবরাত্রি ২০২৭", "Shivratri 2027") },
     { href: "/jagaddhatri-puja-2026", label: l("জগদ্ধাত্রী পুজো ২০২৬", "Jagaddhatri Puja 2026") },
     { href: "/calendar-2027", label: l("📅 পুজোর ক্যালেন্ডার ২০২৭", "📅 Festival calendar 2027") },
   ],
   lastChecked: "2026-10-31",
 };
+
+// ---- Purnima (/purnima-2027) ----
+// Drik Panchang's yearly Purnima pages for Kolkata and Dhaka (fetched 31 Oct 2026) print two headings a
+// month, "<Month> Purnima Vrat" and "<Month> Purnima"; they share one tithi window and usually one date.
+// Where the vrat (fasting) day is a day earlier, both are shown.
+
+const PURNIMA_KOL = (y: number) => ({ title: `Drik Panchang, ${y} Purnima dates for Kolkata`, url: `https://www.drikpanchang.com/vrats/purnimasidates.html?year=${y}&geoname-id=1275004` });
+const PURNIMA_DHAKA = (y: number) => ({ title: `Drik Panchang, ${y} Purnima dates for Dhaka`, url: `https://www.drikpanchang.com/vrats/purnimasidates.html?year=${y}&geoname-id=1185241` });
+const BENGALI_2027 = { title: "Drik Panchang, Bengali calendar 2027 (Kolkata)", url: "https://www.drikpanchang.com/bengali/calendar/bengali-calendar.html?geoname-id=1275004&year=2027" };
+
+const PURNIMA_NAMES: Record<string, L> = {
+  kartika: l("কার্তিক পূর্ণিমা", "Kartika Purnima"),
+  margashirsha: l("অগ্রহায়ণ (মার্গশীর্ষ) পূর্ণিমা", "Margashirsha Purnima"),
+  pausha: l("পৌষ পূর্ণিমা", "Pausha Purnima"),
+  magha: l("মাঘী পূর্ণিমা", "Magha Purnima"),
+  phalguna: l("ফাল্গুনী পূর্ণিমা", "Phalguna Purnima"),
+  chaitra: l("চৈত্র পূর্ণিমা", "Chaitra Purnima"),
+  vaishakha: l("বৈশাখী পূর্ণিমা", "Vaishakha Purnima"),
+  jyeshtha: l("জ্যৈষ্ঠ পূর্ণিমা", "Jyeshtha Purnima"),
+  ashadha: l("আষাঢ় পূর্ণিমা", "Ashadha Purnima"),
+  shravana: l("শ্রাবণ পূর্ণিমা", "Shravana Purnima"),
+  bhadrapada: l("ভাদ্র পূর্ণিমা", "Bhadrapada Purnima"),
+  ashwina: l("আশ্বিন পূর্ণিমা", "Ashwina Purnima"),
+};
+
+/** Festivals that fall on a Purnima, from Drik's Bengali calendar 2027 (Kolkata), with our page when there is one. */
+const PURNIMA_FESTIVAL: Record<string, { text: L; href?: string }> = {
+  "2027-03-22": { text: l("দোলপূর্ণিমা", "Dol Purnima"), href: "/dol-purnima-2027" },
+  "2027-08-17": { text: l("রাখিবন্ধন (১৭ আগস্ট)", "Raksha Bandhan (17 Aug)") },
+  "2027-10-15": { text: l("কোজাগরী লক্ষ্মীপুজো বৃহস্পতি ১৪ অক্টোবর", "Kojagori Lakshmi Puja on Thu 14 Oct") },
+};
+
+/** [name, main date, vrat date ("" = same day), Kolkata start, end, Dhaka start, end]. */
+type PurnimaRow = [keyof typeof PURNIMA_NAMES, string, string, string, string, string, string];
+export const PURNIMA_ROWS: PurnimaRow[] = [
+  ["kartika", "2026-11-24", "", "2026-11-23 23:42", "2026-11-24 20:23", "2026-11-24 00:12", "2026-11-24 20:53"],
+  ["margashirsha", "2026-12-24", "2026-12-23", "2026-12-23 10:47", "2026-12-24 06:57", "2026-12-23 11:17", "2026-12-24 07:27"],
+  ["pausha", "2027-01-22", "", "2027-01-21 21:29", "2027-01-22 17:46", "2027-01-21 21:59", "2027-01-22 18:16"],
+  ["magha", "2027-02-20", "", "2027-02-20 07:59", "2027-02-21 04:52", "2027-02-20 08:29", "2027-02-21 05:22"],
+  ["phalguna", "2027-03-22", "", "2027-03-21 18:21", "2027-03-22 16:13", "2027-03-21 18:51", "2027-03-22 16:43"],
+  ["chaitra", "2027-04-20", "", "2027-04-20 04:51", "2027-04-21 03:56", "2027-04-20 05:21", "2027-04-21 04:26"],
+  ["vaishakha", "2027-05-20", "", "2027-05-19 16:02", "2027-05-20 16:28", "2027-05-19 16:32", "2027-05-20 16:58"],
+  ["jyeshtha", "2027-06-18", "", "2027-06-18 04:34", "2027-06-19 06:13", "2027-06-18 05:04", "2027-06-19 06:43"],
+  ["ashadha", "2027-07-18", "", "2027-07-17 18:48", "2027-07-18 21:14", "2027-07-17 19:18", "2027-07-18 21:44"],
+  ["shravana", "2027-08-17", "2027-08-16", "2027-08-16 10:28", "2027-08-17 12:58", "2027-08-16 10:58", "2027-08-17 13:28"],
+  ["bhadrapada", "2027-09-15", "", "2027-09-15 02:48", "2027-09-16 04:32", "2027-09-15 03:18", "2027-09-16 05:02"],
+  ["ashwina", "2027-10-15", "", "2027-10-14 18:49", "2027-10-15 19:16", "2027-10-14 19:19", "2027-10-15 19:46"],
+  ["kartika", "2027-11-14", "2027-11-13", "2027-11-13 09:55", "2027-11-14 08:55", "2027-11-13 10:25", "2027-11-14 09:25"],
+  ["margashirsha", "2027-12-13", "", "2027-12-12 23:54", "2027-12-13 21:38", "2027-12-13 00:24", "2027-12-13 22:08"],
+];
+
+const purnimaTable = (from: string, to: string, id: string, h2: L, year: number): FestivalTable => ({
+  id,
+  h2,
+  caption: l(`পূর্ণিমা ${bnNum(String(year))}: কলকাতা (IST) আর ঢাকা (BST)`, `Purnima ${year}: Kolkata (IST) and Dhaka (BST)`),
+  columns: [l("পূর্ণিমা", "Purnima"), l("তারিখ", "Date"), l("তিথি, কলকাতা", "Tithi, Kolkata"), l("তিথি, ঢাকা", "Tithi, Dhaka"), l("ব্রত / উৎসব", "Vrat / festival")],
+  rows: PURNIMA_ROWS.filter((r) => r[1] >= from && r[1] <= to).map(([name, date, vrat, ks, ke, ds, de]) => {
+    const fest = PURNIMA_FESTIVAL[date];
+    const notes: L[] = [];
+    if (vrat) notes.push({ bn: `ব্রত ${dayLabel(vrat, "bn", false)}`, en: `Vrat ${dayLabel(vrat, "en", false)}` });
+    if (fest) notes.push(fest.text);
+    return {
+      cells: [PURNIMA_NAMES[name], day(date), range(ks, ke), range(ds, de), notes.length ? { bn: notes.map((n) => n.bn).join(" · "), en: notes.map((n) => n.en).join(" · ") } : l("—", "—")],
+      source: PURNIMA_KOL(year),
+      ...(fest?.href ? { href: fest.href } : {}),
+    };
+  }),
+});
+
+export const PURNIMA_2027: FestivalPage = {
+  path: "/purnima-2027",
+  title: l("পূর্ণিমা ২০২৭: সব তারিখ ও তিথির সময়, কলকাতা ও ঢাকা", "Purnima 2027 Dates: Full Moon List for Kolkata & Dhaka"),
+  description: l(
+    "২০২৭-এর প্রতিটা পূর্ণিমা (আর নভেম্বর-ডিসেম্বর ২০২৬-এর): তারিখ, বার, কলকাতা আর ঢাকার তিথি শুরু-শেষ, ব্রতের দিন আর দোল, কোজাগরী। সূত্রসহ।",
+    "Every Purnima of 2027 (and Nov–Dec 2026): date, weekday, tithi times for Kolkata and Dhaka, vrat days, plus Dol and Kojagori Lakshmi Puja. Sourced.",
+  ),
+  h1: l("পূর্ণিমা ২০২৭: সব তারিখ, কলকাতা আর ঢাকা", "Purnima 2027: every full moon for Kolkata and Dhaka"),
+  lead: l(
+    "মাসে একটা পূর্ণিমা: সত্যনারায়ণ পুজো, ব্রত আর দোল-কোজাগরীর মতো বড় উৎসব। নভেম্বর ২০২৬ থেকে ডিসেম্বর ২০২৭ পর্যন্ত প্রতিটা, দুই শহরের তিথির সময়সহ।",
+    "One full moon a month: for Satyanarayan puja, vrats and big festivals like Dol and Kojagori. Every one from November 2026 to December 2027, with tithi times for both cities.",
+  ),
+  tables: [
+    { ...purnimaTable("2027-01-01", "2027-12-31", "purnima-2027", l("পূর্ণিমা ২০২৭: পুরো তালিকা", "Purnima 2027: the full list"), 2027), note: l("‘ব্রত’: দ্রিক পঞ্চাঙ্গ যেদিন পূর্ণিমার ব্রত (উপবাস) দেখায়, সেটা মূল দিনের আগে হলে আলাদা লেখা। ঢাকার তিথি দ্রিকের ঢাকা পাতা থেকে; দুই শহরে তারিখ একই।", "'Vrat': when Drik Panchang puts the Purnima vrat (fast) a day before the main day, it is shown separately. Dhaka times are from Drik's Dhaka page; the dates match in both cities.") },
+    purnimaTable("2026-11-01", "2026-12-31", "purnima-2026", l("নভেম্বর-ডিসেম্বর ২০২৬", "November–December 2026"), 2026),
+  ],
+  sections: [
+    {
+      id: "sources",
+      h2: l("সূত্র", "Sources"),
+      paras: [
+        { text: l("২০২৭, ঢাকা।", "2027, Dhaka."), source: PURNIMA_DHAKA(2027) },
+        { text: l("২০২৬, ঢাকা।", "2026, Dhaka."), source: PURNIMA_DHAKA(2026) },
+        { text: l("দোল, রাখি আর কোজাগরী লক্ষ্মীপুজোর দিন।", "The days of Dol, Raksha Bandhan and Kojagori Lakshmi Puja."), source: BENGALI_2027 },
+        {
+          text: l(
+            "বাড়ির পঞ্জিকা (বিশুদ্ধ সিদ্ধান্ত বা গুপ্তপ্রেস) মানলে মিলিয়ে নিও; কোনো কোনো পূর্ণিমায় দিন আলাদা হতে পারে।",
+            "If you go by a printed panjika (Bishuddha Siddhanta or Gupta Press), check it: some Purnimas may fall on a different day.",
+          ),
+        },
+      ],
+    },
+  ],
+  faq: [
+    {
+      q: l("২০২৭-এ কোজাগরী লক্ষ্মীপুজো কবে?", "When is Kojagori Lakshmi Puja in 2027?"),
+      a: l(
+        "বৃহস্পতিবার ১৪ অক্টোবর ২০২৭ (দ্রিকের বাংলা ক্যালেন্ডার)। আশ্বিন পূর্ণিমা তিথি কলকাতায় ১৪ অক্টোবর সন্ধে ৬:৪৯ থেকে ১৫ অক্টোবর সন্ধে ৭:১৬।",
+        "Thursday 14 October 2027 (Drik's Bengali calendar). The Ashwina Purnima tithi in Kolkata runs from 14 Oct 6:49 pm to 15 Oct 7:16 pm.",
+      ),
+    },
+    {
+      q: l("২০২৭-এ কটা পূর্ণিমা?", "How many full moons are there in 2027?"),
+      a: l("বারোটা: পৌষ পূর্ণিমা (২২ জানুয়ারি) থেকে অগ্রহায়ণ পূর্ণিমা (১৩ ডিসেম্বর)।", "Twelve: from Pausha Purnima (22 January) to Margashirsha Purnima (13 December)."),
+    },
+    {
+      q: l("ঢাকায় পূর্ণিমার তারিখ কি কলকাতার মতোই?", "Are Purnima dates in Dhaka the same as in Kolkata?"),
+      a: l("২০২৬-২৭-এ প্রতিটা পূর্ণিমার তারিখ দুই শহরে একই; তিথির সময় ঢাকায় আধ ঘণ্টা পরে।", "In 2026–27 every Purnima falls on the same date in both cities; Dhaka's tithi times run half an hour later."),
+    },
+    {
+      q: l("পূর্ণিমার ব্রত কি পূর্ণিমার দিনেই?", "Is the Purnima vrat on the Purnima day itself?"),
+      a: l(
+        "বেশির ভাগ মাসে হ্যাঁ। দ্রিক পঞ্চাঙ্গে ব্রত এক দিন আগে পড়ছে অগ্রহায়ণ ২০২৬ (২৩ ডিসেম্বর), শ্রাবণ (১৬ আগস্ট) আর কার্তিক ২০২৭-এ (১৩ নভেম্বর)।",
+        "In most months, yes. On Drik Panchang the vrat comes a day earlier for Margashirsha 2026 (23 December), Shravana (16 August) and Kartika 2027 (13 November).",
+      ),
+    },
+  ],
+  events: [],
+  links: [
+    { href: "/ekadashi-2027", label: l("🪔 একাদশী ২০২৭", "🪔 Ekadashi 2027"), primary: true },
+    { href: "/dol-purnima-2027", label: l("দোলযাত্রা ২০২৭", "Dol Purnima 2027") },
+    { href: "/calendar-2027", label: l("📅 পুজোর ক্যালেন্ডার ২০২৭", "📅 Festival calendar 2027") },
+  ],
+  lastChecked: "2026-10-31",
+};
+
+/** Every Ekadashi and Purnima as "Coming up" entries for the home page (main dates). */
+export const LUNAR_UPCOMING: Upcoming[] = [
+  ...EKADASHI_ROWS.map(([name, date]) => ({ date, icon: "🪔", name: NAMES[name], href: "/ekadashi-2027" })),
+  ...PURNIMA_ROWS.map(([name, date]) => ({ date, icon: "🌕", name: PURNIMA_NAMES[name], href: "/purnima-2027" })),
+];

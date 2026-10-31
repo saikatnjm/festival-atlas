@@ -2413,3 +2413,89 @@ h3 {
     transform: none;
   }
 }
+
+/* Blog */
+.blog-list {
+  display: grid;
+  gap: var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+.blog-card {
+  padding: var(--space-3);
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--teal);
+}
+.blog-card h2 {
+  margin: 0 0 var(--space-1);
+  font-size: 1.2rem;
+}
+.blog-card p {
+  margin: 0;
+}
+.blog-tip {
+  padding: var(--space-2) var(--space-3);
+  background: #fff8e1;
+  border-left: 4px solid var(--marigold, #f2a900);
+  border-radius: 6px;
+}
+
+/* Wishes pages */
+.wish-list {
+  display: grid;
+  gap: var(--space-2);
+  padding-left: 1.4rem;
+}
+.wish-list li {
+  padding: var(--space-2) var(--space-3);
+  background: #fff;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+}
+.wish-bn {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.wish-en {
+  margin: 0.25rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+.wish-actions {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0.4rem 0 0;
+}
+
+/* Coming up strip (home) */
+.coming-up {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  gap: var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+.coming-up a {
+  display: grid;
+  gap: 0.15rem;
+  height: 100%;
+  padding: var(--space-2) var(--space-3);
+  color: var(--ink);
+  text-decoration: none;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 3px 3px 0 var(--teal);
+}
+.coming-icon {
+  font-size: 1.4rem;
+}
+.coming-name {
+  font-weight: 800;
+}
+.coming-date {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}

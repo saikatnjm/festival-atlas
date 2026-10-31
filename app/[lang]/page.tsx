@@ -7,6 +7,7 @@ import { cityName } from "@/data/pandals";
 import { topCities } from "@/data/pandals/counts";
 import Character from "@/components/play/art/Character";
 import CastStrip from "@/components/home/CastStrip";
+import ComingUp from "@/components/home/ComingUp";
 import Countdown from "@/components/home/Countdown";
 import HeroCard from "@/components/home/HeroCard";
 import MyPlanChip from "@/components/home/MyPlanChip";
@@ -18,6 +19,8 @@ import type { Lang } from "@/lib/i18n";
 import EventList from "@/components/local/EventList";
 import { playStrings } from "@/components/play/strings";
 import { events } from "@/data/events/events";
+import { LUNAR_UPCOMING } from "@/data/festivals/lunar-2027";
+import { UPCOMING } from "@/data/festivals/upcoming";
 import { fun } from "@/data/i18n/fun";
 import { REGIONS, regionInfo, ui } from "@/data/local/content";
 import JsonLd, { abs } from "@/lib/jsonld";
@@ -103,6 +106,15 @@ export default async function HomePage({ params }: { params: Promise<Params> }) 
           <MyPlanChip lang={lang} />
         </div>
         <HeroCard lang={lang} s={playStrings(t)} />
+      </section>
+
+      <section className="home-section" aria-labelledby="home-coming">
+        <h2 id="home-coming">{fun.pujas.comingH2[lang]}</h2>
+        <p className="section-lead">{fun.pujas.comingLead[lang]}</p>
+        <ComingUp lang={lang} items={[...UPCOMING, ...LUNAR_UPCOMING].sort((a, b) => a.date.localeCompare(b.date))} />
+        <p>
+          <Link href={withLang(lang, "/calendar-2027")}>{lang === "bn" ? "📅 পুরো ক্যালেন্ডার ২০২৭ →" : "📅 The full 2027 calendar →"}</Link>
+        </p>
       </section>
 
       <section className="home-section" aria-labelledby="home-play">

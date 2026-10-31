@@ -102,7 +102,7 @@ export const SHIVRATRI_2027: FestivalPage = {
     { name: l("শিবরাত্রি ২০২৭, বাংলাদেশ", "Maha Shivratri 2027, Bangladesh"), start: "2027-03-06", end: "2027-03-07", place: { name: "Dhaka", locality: "Dhaka", country: "BD" } },
   ],
   links: [
-    { href: "/greetings?d=shivratri", label: l("🔱 শিবরাত্রির শুভেচ্ছা কার্ড", "🔱 Shivratri greeting card"), primary: true },
+    { href: "/greetings/shivratri", label: l("🔱 শিবরাত্রির শুভেচ্ছা কার্ড", "🔱 Shivratri greeting card"), primary: true },
     { href: "/saraswati-puja-2027", label: l("সরস্বতী পুজো ২০২৭", "Saraswati Puja 2027") },
     { href: "/poila-boishakh-2027", label: l("পয়লা বৈশাখ ১৪৩৪", "Poila Boishakh 1434") },
     { href: "/dol-purnima-2027", label: l("দোলযাত্রা ২০২৭", "Dol Purnima 2027") },

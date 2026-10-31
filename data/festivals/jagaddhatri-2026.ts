@@ -161,7 +161,8 @@ export const JAGADDHATRI_2026: FestivalPage = {
     { name: l("জগদ্ধাত্রী পুজো ২০২৬, কৃষ্ণনগর", "Jagaddhatri Puja 2026, Krishnanagar"), start: "2026-11-19", place: { name: "Krishnanagar", locality: "Krishnanagar", region: "West Bengal", country: "IN" } },
   ],
   links: [
-    { href: "/greetings?d=jagaddhatri", label: l("🏮 জগদ্ধাত্রী পুজোর শুভেচ্ছা কার্ড", "🏮 Jagaddhatri Puja greeting card"), primary: true },
+    { href: "/greetings/jagaddhatri", label: l("🏮 জগদ্ধাত্রী পুজোর শুভেচ্ছা কার্ড", "🏮 Jagaddhatri Puja greeting card"), primary: true },
+    { href: "/blog/chandannagar-jagaddhatri-lights", label: l("📖 চন্দননগরের আলোর গল্প", "📖 Chandannagar's lights: the story") },
     { href: "/kali-puja-2026", label: l("কালীপুজো ২০২৬", "Kali Puja 2026") },
     { href: "/durga-puja-2026", label: l("দুর্গাপুজো ২০২৬-এর তারিখ", "Durga Puja 2026 dates") },
     { href: "/calendar-2027", label: l("📅 পুজোর ক্যালেন্ডার ২০২৭", "📅 Festival calendar 2027") },

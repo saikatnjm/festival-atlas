@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import FestivalPage from "@/components/festival/FestivalPage";
-import { EKADASHI_2027 as F } from "@/data/festivals/ekadashi-2027";
+import { EKADASHI_2027 as F } from "@/data/festivals/lunar-2027";
 import { LANGS } from "@/lib/i18n";
 import { langOf } from "@/lib/route";
 import { pageMeta } from "@/lib/site";

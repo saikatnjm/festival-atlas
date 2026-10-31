@@ -3,6 +3,16 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## Blog, wishes pages, Purnima 2027, "Coming up" (2026-10-31, afternoon)
+Owner asked for continuous work on traffic; built with parallel cheap-model agents (research, drafting, Bangla review) and checked by hand.
+- **Blog** (`/blog`, `/blog/[slug]`; `data/blog/*.ts`, `components/blog/ArticlePage.tsx`): sourced explainers in both languages with Article + FAQPage + Breadcrumb JSON-LD, inline sources, per-article OG image, sitemap with `lastModified`. Articles: Kali Puja and Diwali, Naihati Boro Maa, Bhai Phota rituals, Chandannagar's lights, Saraswati Puja rituals, Poila Boishakh traditions (+ batch 3 below when merged). A test enforces title/description length, every inline source listed, no ASCII digits in Bangla. Removed an unsourced "second only to Rio" claim. Footer link; festival pages and the Kali page link to the matching stories.
+- **Wishes pages** `/greetings/<day>` (17 days × 2 languages): every line visible and copyable (Bangla, plus English on /en), the card maker preset to that day, link to the festival's date page, links to the other days; per-day OG image. Titles target "<festival> wishes in Bengali". All internal links now use these pages instead of `?d=`.
+- **`/purnima-2027`**: 12 Purnimas of 2027 + Nov–Dec 2026, tithi times for Kolkata and Dhaka, the vrat day where Drik puts it a day earlier (Margashirsha 2026, Shravana, Kartika 2027), Dol / Raksha Bandhan / Kojagori notes. `ekadashi-2027.ts` renamed `lunar-2027.ts` (shared formatters; test-imported files may only `import type`).
+- **Home**: "Coming up" strip (next 6 festivals, Ekadashis, Purnimas with day counts, read after mount) + link to the 2027 calendar; the countdown pill now counts down to the next festival after Bijoya week instead of "See you next year"; the "More pujas" section copy no longer says the pages are in the works.
+- Amavasya page **not built**: Kolkata and Dhaka lists label some months differently (Darsha vs named); needs a manual look at the live pages.
+- News check 31 Oct: still no 2026 cracker order, no 2026 Kali Puja themes, no 2026 Chandannagar arrangements.
+- Verified in the scratch copy (Node 24): 56/56 tests, build (381 pages), typecheck, smoke 234/234.
+
 ## Durga Puja 2027 + Dol Purnima 2027 pages (2026-10-31, late night)
 Not pushed yet.
 - **`/durga-puja-2027`** (`data/festivals/durga-2027.ts`): Mahalaya Wed 29 Sep; Shashthi Tue 5 Oct (Bilva Nimantran, Kalparambha, Akal Bodhon, Adhivas) → Saptami 6 (Kolabou) → Ashtami 7 (Kumari Puja) → Fri 8 Oct Sandhi Puja (Drik also prints "Maha Navami" that day, shown as printed) → Navami Sat 9 → Vijaya Dashami Sun 10 (Sindoor Khela, Visarjan). Drik Durga Puja calendars for Kolkata and Dhaka fetched by hand: same six days. No clock times yet (Drik prints none); BD 2027 holidays not out. `/durga-puja-2026` now points to it under the lead and in the button row; calendar hub rows link to it.

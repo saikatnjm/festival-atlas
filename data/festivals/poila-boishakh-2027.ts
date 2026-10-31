@@ -93,7 +93,8 @@ export const POILA_BOISHAKH_2027: FestivalPage = {
     { name: l("পহেলা বৈশাখ ১৪৩৪, বাংলাদেশ", "Pohela Boishakh 1434, Bangladesh"), start: "2027-04-14", place: { name: "Dhaka", locality: "Dhaka", country: "BD" } },
   ],
   links: [
-    { href: "/greetings?d=noboborsho", label: l("🎉 শুভ নববর্ষ কার্ড", "🎉 Shubho Noboborsho card"), primary: true },
+    { href: "/greetings/noboborsho", label: l("🎉 শুভ নববর্ষ কার্ড", "🎉 Shubho Noboborsho card"), primary: true },
+    { href: "/blog/poila-boishakh-traditions", label: l("📖 নববর্ষের রীতি", "📖 New Year traditions") },
     { href: "/saraswati-puja-2027", label: l("সরস্বতী পুজো ২০২৭", "Saraswati Puja 2027") },
     { href: "/shivratri-2027", label: l("শিবরাত্রি ২০২৭", "Shivratri 2027") },
     { href: "/dol-purnima-2027", label: l("দোলযাত্রা ২০২৭", "Dol Purnima 2027") },

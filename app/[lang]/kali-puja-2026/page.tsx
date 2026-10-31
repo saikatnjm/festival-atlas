@@ -217,8 +217,14 @@ export default async function KaliPujaPage({ params }: { params: Promise<Params>
       </section>
 
       <p className="cta-row">
-        <Link className="button" href={`${withLang(lang, "/greetings")}?d=kali`}>
+        <Link className="button" href={withLang(lang, "/greetings/kali")}>
           🪔 {lang === "bn" ? "কালীপুজোর শুভেচ্ছা কার্ড বানাও" : "Make a Kali Puja greeting card"}
+        </Link>
+        <Link className="button button-light" href={withLang(lang, "/blog/kali-puja-and-diwali")}>
+          📖 {lang === "bn" ? "কালীপুজো আর দীপাবলি: গল্প" : "Kali Puja and Diwali: the story"}
+        </Link>
+        <Link className="button button-light" href={withLang(lang, "/blog/naihati-boro-maa-kali-puja")}>
+          📖 {lang === "bn" ? "নৈহাটির বড়মা" : "Naihati's Boro Maa"}
         </Link>
         <Link className="button button-light" href={withLang(lang, "/jagaddhatri-puja-2026")}>
           🏮 {lang === "bn" ? "জগদ্ধাত্রী পুজো ২০২৬" : "Jagaddhatri Puja 2026"}

@@ -57,7 +57,7 @@ export const KALI_WEEK: { what: L; when: L; note?: L; source: { title: string; u
     when: l("বুধবার ১১ নভেম্বর", "Wednesday 11 November"),
     note: l("দ্রিক পঞ্চাঙ্গ অনুযায়ী; কোনো কোনো পঞ্জিকায় দিন আলাদা হতে পারে, বাড়ির পঞ্জিকা মিলিয়ে নাও।", "Per Drik Panchang; some panjikas may differ, so check the one at home."),
     source: HT_PHONTA,
-    href: "/greetings?d=bhaiphota",
+    href: "/greetings/bhaiphota",
   },
   {
     what: l("জগদ্ধাত্রী পুজো (নবমী)", "Jagaddhatri Puja (Navami)"),

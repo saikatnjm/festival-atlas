@@ -62,7 +62,7 @@ export default async function GreetingsPage({ params }: { params: Promise<Params
         <ul className="link-list">
           {GREETINGS.map((g) => (
             <li key={g.id}>
-              <Link href={`${withLang(lang, "/greetings")}?d=${g.id}`}>
+              <Link href={withLang(lang, `/greetings/${g.id}`)}>
                 {g.icon} {g.headline[lang]}
               </Link>{" "}
               <span className="fineprint">{g.lines[0][lang]}</span>

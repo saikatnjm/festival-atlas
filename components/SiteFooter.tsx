@@ -22,6 +22,8 @@ export default function SiteFooter({ lang, t }: { lang: Lang; t: Dict }) {
     {
       title: T.explore[lang],
       links: [
+        { href: withLang(lang, "/calendar-2027"), label: lang === "bn" ? "📅 পুজোর ক্যালেন্ডার ২০২৭" : "📅 Festival calendar 2027" },
+        { href: withLang(lang, "/blog"), label: lang === "bn" ? "📖 পুজোর কথা" : "📖 Puja stories" },
         { href: withLang(lang, "/durga-puja-2026"), label: `📅 ${fun.home.datesPage[lang]}` },
         { href: withLang(lang, "/puja/kolkata"), label: `🥁 ${fun.home.kolkataPage[lang]}` },
         { href: withLang(lang, "/puja/dhaka"), label: `🛕 ${fun.home.dhakaPage[lang]}` },
