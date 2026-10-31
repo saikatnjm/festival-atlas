@@ -81,6 +81,24 @@ reusable `FestivalPage` renderer + `data/calendar/*.ts`, so later pages are data
 | C8 | `/durga-puja-2027` **Review** (built 31 Oct, days only; add times when panjikas publish). Later: Rath Yatra, Janmashtami, Lokkhi Puja 2027 pages (dates already on `/calendar-2027`) | mid-2027 |
 Not planned: daily "today's tithi" pages, wedding/annaprashan dates (no open sourced data; high competition).
 
+## Built on 31 Oct 2026 (autonomous session; all pushed)
+| Area | What exists now |
+|---|---|
+| Festival pages (FestivalPage + data file each) | Kali Puja 2026, Jagaddhatri 2026, Rash Purnima 2026, Poush Sankranti 2027, Saraswati 2027, Shivratri 2027, Dol 2027, Ram Navami 2027, Poila Boishakh 1434, Jamai Shashthi 2027, Rath Yatra 2027, Janmashtami 2027, Durga Puja 2027 (+ Mahalaya tarpan), Lakshmi Puja 2027 |
+| Lists / tools | `/calendar-2027` hub, `/ekadashi-2027`, `/purnima-2027`, `/amavasya-2027`, `/bengali-calendar-1433` (today's Bangla date, BD month starts, WB Sankrantis) |
+| Directory | Kali Puja (14) and Jagaddhatri (5) listings with chips, badges, passport groups, hub breadcrumbs |
+| Blog `/blog` | 21 sourced articles (Kali/Diwali, Bhoot Chaturdashi, Naihati, Tarapith, Dakshineswar, Kalighat, Belur Math, Bangladesh Shyama Puja, Bhai Phota, Chhath, Chandannagar, Krishnanagar, Nabanna, Poush Mela, Book Fair, Ekadashi fasting, Saraswati rituals, Poila Boishakh, Mahishasura Mardini, Kumartuli, Durga Puja UNESCO) |
+| Wishes `/greetings/<day>` | 23 days incl. Kali, Diwali, Bhai Phota, Jagaddhatri, Rash, Christmas, New Year, Poush, Saraswati, Shivratri, Dol, Noboborsho, Jamai Shashthi |
+| AI / search | `/llms.txt`, `/llms-full.txt`, AI crawler rules, Organization JSON-LD, dated pages, IndexNow key + `npm run indexnow`, share buttons, "Coming up" + next-festival countdown + Bangla date on home |
+
+## Next (in order)
+1. **Owner steps**: after the deploy, `npm run indexnow`; add the site to Bing Webmaster Tools; resubmit `sitemap.xml` in Search Console; watch Search Console queries for 2–3 weeks and reorder this list by real impressions.
+2. **Kali Puja 2026 updates (3–8 Nov)**: 2026 pandal themes into the Kali entries as they're reported; the 2026 cracker order (roadmap 2).
+3. **Jagaddhatri 2026 updates (by 16 Nov)**: Chandannagar procession date, special trains, committee count.
+4. Pages still missing a source: Basanti Puja, Charak/Gajan, Kartik Puja, Itu Puja, Nabanna date (no Drik row); Gangasagar Mela 2027 dates (not announced); Kolkata Christmas guide.
+5. Calendar 2028 and Durga Puja 2027 clock times when panjikas publish (usually mid-2027).
+6. Puja Wrapped card (roadmap 8), crowd-safety layer (roadmap 6), updates opt-in (roadmap 9).
+
 ## Done
 - 31 Oct: Next.js 16.4.0 → 16.4.3 security upgrade (`npm audit` clean).
 - 31 Oct: SEO pass on all pages, both languages (share images, title/description lengths); see PROJECT_STATUS.md.
