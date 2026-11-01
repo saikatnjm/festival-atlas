@@ -5,7 +5,7 @@ import { toPlace, type Place, type PlaceInput } from "./places-shared";
 export * from "./places-shared";
 
 function config(): { url: string; key: string } | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/+$/, "");
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim().replace(/(\/rest\/v1)?\/*$/, "");
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   return url && key ? { url, key } : null;
 }

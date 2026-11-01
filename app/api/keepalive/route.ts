@@ -14,10 +14,10 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401, headers: { "Cache-Control": "no-store" } });
   }
   if (!communityConfigured()) return NextResponse.json({ ok: false, disabled: true }, { status: 503, headers: { "Cache-Control": "no-store" } });
-  const { answered, errors } = await pingDatabase();
+  const { answered, errors, project } = await pingDatabase();
   if (errors.length) console.error("keepalive:", errors.join("; "));
   return NextResponse.json(
-    { ok: answered > 0, answered, errors, at: new Date().toISOString() },
+    { ok: answered > 0, answered, errors, project, at: new Date().toISOString() },
     { status: answered > 0 ? 200 : 503, headers: { "Cache-Control": "no-store" } },
   );
 }

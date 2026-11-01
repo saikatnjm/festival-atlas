@@ -5,7 +5,7 @@ import { EMPTY_COMMUNITY, LEADERBOARD_GAMES, isGame, isResult, type ActivityRow,
 export * from "./community-shared";
 
 function config(): { url: string; key: string } | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/+$/, "");
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim().replace(/(\/rest\/v1)?\/*$/, "");
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   return url && key ? { url, key } : null;
 }
@@ -18,7 +18,11 @@ function headers(key: string): Record<string, string> {
 
 async function rpc<T>(c: { url: string; key: string }, fn: string, args: Record<string, unknown> = {}): Promise<T> {
   const res = await fetch(`${c.url}/rest/v1/rpc/${fn}`, { method: "POST", headers: headers(c.key), body: JSON.stringify(args), cache: "no-store" });
-  if (!res.ok) throw new Error(`${fn} ${res.status}`);
+  if (!res.ok) {
+    // PostgREST's error code (e.g. PGRST202 = function not in its schema cache) says more than the status.
+    const code = await res.json().then((b: { code?: unknown }) => (typeof b?.code === "string" ? ` ${b.code.slice(0, 12)}` : ""), () => "");
+    throw new Error(`${fn} ${res.status}${code}`);
+  }
   return (await res.json()) as T;
 }
 
@@ -48,13 +52,13 @@ export async function fetchCommunity(): Promise<Community> {
  * Keep-alive for the Supabase Free plan, which pauses a project after a week without database
  * activity: three cheap read-only RPCs (the same ones the live pages use). Returns how many answered, and why the rest failed.
  */
-export async function pingDatabase(): Promise<{ answered: number; errors: string[] }> {
+export async function pingDatabase(): Promise<{ answered: number; errors: string[]; project: string }> {
   const c = config();
   if (!c) throw new Error("community not configured");
   const calls = await Promise.allSettled([rpc(c, "community_stats"), rpc(c, "live_board"), rpc(c, "timings_today")]);
   // Errors carry only the function name and HTTP status (or the fetch failure), never a key.
   const errors = calls.flatMap((r) => (r.status === "rejected" ? [r.reason instanceof Error ? r.reason.message : String(r.reason)] : []));
-  return { answered: calls.length - errors.length, errors };
+  return { answered: calls.length - errors.length, errors, project: new URL(c.url).host };
 }
 
 export async function recordPlay(row: { device: string; game: string; result: string | null; score: number; nickname: string | null }): Promise<void> {

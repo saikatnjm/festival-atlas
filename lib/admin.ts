@@ -10,7 +10,7 @@ export * from "./admin-shared";
 export function adminEnv() {
   const user = process.env.ADMIN_USER ?? "";
   const pass = process.env.ADMIN_PASSWORD ?? "";
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/+$/, "") ?? "";
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim().replace(/(\/rest\/v1)?\/*$/, "") ?? "";
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
   // Sessions are signed with a secret derived from the credentials, so changing the password logs everyone out.
   const secret = process.env.ADMIN_SESSION_SECRET || (user && pass ? `${user}:${pass}` : "");
