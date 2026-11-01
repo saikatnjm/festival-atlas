@@ -3,6 +3,10 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## Supabase reconnected + keep-alive (2026-11-01, evening)
+- Free-plan projects pause after a week without database activity ([docs](https://supabase.com/docs/guides/platform/free-project-pausing)). `/api/keepalive` runs three read-only RPCs; Vercel cron daily (`vercel.json`) + GitHub `keepalive.yml` twice a day; guarded by `CRON_SECRET` (set in Vercel and GitHub). The response lists the project host and failed calls (function, HTTP status, PostgREST code), never keys.
+- Production had been answering `disabled` (env vars missing from Production), then 404 on every RPC: the new `pujoguide` project had no schema (owner ran `supabase/schema.sql` + `notify pgrst, 'reload schema'`), and the URL value carried a `/rest/v1` suffix or whitespace, now stripped in all five `lib/*` configs. `/api/live`, `/api/community`, `/api/places` all `ok:true` since 17:56 UTC.
+
 ## 20 new search landing pages (2026-11-01)
 Owner asked for ~20 pages on the biggest Hindu puja searches (WB + BD). Keyword research by a cheap-model agent (no Trends/Keyword Planner access, so ranked by seasonality and competitor coverage); pages drafted by Sonnet agents from Drik Panchang (Kolkata + Dhaka, fetched 1 Nov 2026), checked by hand against our existing pages and spot-checked against Drik.
 - **Nov–Dec 2026:** `/dhanteras-2026` (Fri 6 Nov; Kolkata muhurat 5:28–7:26 pm), `/kartik-puja-2026` (Kartik Sankranti 16 Nov 7:48 pm by Drik; 17 Nov by Surya Siddhanta per MyAstrology; Katwa Kartik Larai from The Statesman via a bengalinfo.com copy), `/tulsi-vivah-2026` (Sat 21 Nov; Prabodhini Ekadashi Fri 20 Nov), `/vivah-panchami-2026` (Mon 14 Dec), `/gita-jayanti-2026` (Sun 20 Dec, Mokshada Ekadashi).
