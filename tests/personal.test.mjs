@@ -34,6 +34,9 @@ import { JAMAI_2027, JANMASHTAMI_2027, LAKSHMI_2027, RAM_NAVAMI_2027, RATH_2027 
 import { RASH_2026 } from "../data/festivals/rash-2026.ts";
 import { POUSH_SANKRANTI_2027 } from "../data/festivals/poush-sankranti-2027.ts";
 import { GRIHA_PRAVESH_2027, VIVAH_2027 } from "../data/festivals/muhurat-2027.ts";
+import { MASIK_SHIVRATRI_2027, PRADOSH_2027, SANKASHTI_2027 } from "../data/festivals/vrat-2027.ts";
+import { DIWALI_2027, GANESH_2027, NAVRATRI_2027, RAKHI_2027 } from "../data/festivals/major-2027.ts";
+import { AKSHAYA_2027, GURU_PURNIMA_2027, HANUMAN_2027, VISHWAKARMA_2027 } from "../data/festivals/more-2027.ts";
 import { DHANTERAS_2026, KARTIK_PUJA_2026, TULSI_VIVAH_2026 } from "../data/festivals/nov-2026.ts";
 import { UPCOMING, daysUntil as daysTo, nextUp } from "../data/festivals/upcoming.ts";
 import { LUNAR_UPCOMING } from "../data/festivals/lunar-2027.ts";
@@ -332,7 +335,7 @@ test("spring 2027 cards follow the festival pages' sourced dates", () => {
 });
 
 test("festival pages: bilingual, sourced rows, titles and descriptions within limits", () => {
-  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027, AMAVASYA_2027, RASH_2026, POUSH_SANKRANTI_2027, BENGALI_CALENDAR_1433, RATH_2027, JANMASHTAMI_2027, LAKSHMI_2027, JAMAI_2027, RAM_NAVAMI_2027, DHANTERAS_2026, KARTIK_PUJA_2026, TULSI_VIVAH_2026, VIVAH_2027, GRIHA_PRAVESH_2027]) {
+  for (const f of [JAGADDHATRI_2026, SARASWATI_2027, SHIVRATRI_2027, POILA_BOISHAKH_2027, EKADASHI_2027, CALENDAR_2027, DOL_2027, DURGA_2027, PURNIMA_2027, AMAVASYA_2027, RASH_2026, POUSH_SANKRANTI_2027, BENGALI_CALENDAR_1433, RATH_2027, JANMASHTAMI_2027, LAKSHMI_2027, JAMAI_2027, RAM_NAVAMI_2027, DHANTERAS_2026, KARTIK_PUJA_2026, TULSI_VIVAH_2026, VIVAH_2027, GRIHA_PRAVESH_2027, SANKASHTI_2027, PRADOSH_2027, MASIK_SHIVRATRI_2027, NAVRATRI_2027, RAKHI_2027, GANESH_2027, DIWALI_2027, HANUMAN_2027, AKSHAYA_2027, GURU_PURNIMA_2027, VISHWAKARMA_2027]) {
     for (const k of ["title", "description", "h1", "lead"]) assert.ok(f[k].bn && f[k].en, `${f.path} ${k}`);
     assert.ok(f.title.en.length <= 60, `${f.path} title ${f.title.en.length}`);
     assert.ok(f.description.en.length <= 160 && f.description.bn.length <= 170, `${f.path} description`);

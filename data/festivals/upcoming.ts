@@ -29,15 +29,22 @@ export const UPCOMING: Upcoming[] = [
   { date: "2027-02-11", icon: "📚", name: l("সরস্বতী পুজো", "Saraswati Puja"), href: "/saraswati-puja-2027" },
   { date: "2027-03-06", icon: "🔱", name: l("শিবরাত্রি", "Shivratri"), href: "/shivratri-2027" },
   { date: "2027-03-22", icon: "🎨", name: l("দোল", "Dol"), href: "/dol-purnima-2027" },
+  { date: "2027-04-07", icon: "🪔", name: l("চৈত্র নবরাত্রি", "Chaitra Navratri"), href: "/navratri-2027" },
   { date: "2027-04-15", icon: "🏹", name: l("রামনবমী", "Ram Navami"), href: "/ram-navami-2027" },
   { date: "2027-04-15", icon: "🎉", name: l("পয়লা বৈশাখ", "Poila Boishakh"), href: "/poila-boishakh-2027" },
+  { date: "2027-04-20", icon: "🐒", name: l("হনুমান জয়ন্তী", "Hanuman Jayanti"), href: "/hanuman-jayanti-2027" },
+  { date: "2027-05-09", icon: "🪙", name: l("অক্ষয় তৃতীয়া", "Akshaya Tritiya"), href: "/akshaya-tritiya-2027" },
   { date: "2027-06-10", icon: "🥭", name: l("জামাইষষ্ঠী", "Jamai Shashthi"), href: "/jamai-shashthi-2027" },
   { date: "2027-07-05", icon: "🛕", name: l("রথযাত্রা", "Rath Yatra"), href: "/rath-yatra-2027" },
+  { date: "2027-07-18", icon: "🙏", name: l("গুরু পূর্ণিমা", "Guru Purnima"), href: "/guru-purnima-2027" },
+  { date: "2027-08-17", icon: "🧵", name: l("রাখি পূর্ণিমা", "Raksha Bandhan"), href: "/raksha-bandhan-2027" },
   { date: "2027-08-25", icon: "🪈", name: l("জন্মাষ্টমী", "Janmashtami"), href: "/janmashtami-2027" },
+  { date: "2027-09-04", icon: "🐘", name: l("গণেশ চতুর্থী", "Ganesh Chaturthi"), href: "/ganesh-chaturthi-2027" },
+  { date: "2027-09-17", icon: "🪁", name: l("বিশ্বকর্মা পুজো", "Vishwakarma Puja"), href: "/vishwakarma-puja-2027" },
   { date: "2027-09-29", icon: "🌅", name: l("মহালয়া", "Mahalaya"), href: "/durga-puja-2027" },
   { date: "2027-10-05", end: "2027-10-10", icon: "🥁", name: l("দুর্গাপুজো", "Durga Puja"), href: "/durga-puja-2027" },
   { date: "2027-10-14", icon: "🪷", name: l("কোজাগরী লক্ষ্মীপুজো", "Kojagori Lakshmi Puja"), href: "/lakshmi-puja-2027" },
-  { date: "2027-10-28", icon: "🌑", name: l("কালীপুজো", "Kali Puja"), href: "/calendar-2027" },
+  { date: "2027-10-28", icon: "🌑", name: l("কালীপুজো", "Kali Puja"), href: "/diwali-2027" },
 ];
 
 /** The next `n` entries that haven't ended by `today` (YYYY-MM-DD), from a date-sorted list. */
