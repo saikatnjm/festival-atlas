@@ -46,15 +46,15 @@ export async function fetchCommunity(): Promise<Community> {
 
 /**
  * Keep-alive for the Supabase Free plan, which pauses a project after a week without database
- * activity: three cheap read-only RPCs (the same ones the live pages use). Returns how many answered.
+ * activity: three cheap read-only RPCs (the same ones the live pages use). Returns how many answered, and why the rest failed.
  */
-export async function pingDatabase(): Promise<number> {
+export async function pingDatabase(): Promise<{ answered: number; errors: string[] }> {
   const c = config();
   if (!c) throw new Error("community not configured");
   const calls = await Promise.allSettled([rpc(c, "community_stats"), rpc(c, "live_board"), rpc(c, "timings_today")]);
-  const ok = calls.filter((r) => r.status === "fulfilled").length;
-  if (ok === 0) throw new Error("database did not answer");
-  return ok;
+  // Errors carry only the function name and HTTP status (or the fetch failure), never a key.
+  const errors = calls.flatMap((r) => (r.status === "rejected" ? [r.reason instanceof Error ? r.reason.message : String(r.reason)] : []));
+  return { answered: calls.length - errors.length, errors };
 }
 
 export async function recordPlay(row: { device: string; game: string; result: string | null; score: number; nickname: string | null }): Promise<void> {
