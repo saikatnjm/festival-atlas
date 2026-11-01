@@ -44,6 +44,19 @@ export async function fetchCommunity(): Promise<Community> {
   return { stats, leaderboard, activity: activity.filter((a) => (a.pandal_id === null || isResult(a.pandal_id)) && (a.result === null || isResult(a.result))) };
 }
 
+/**
+ * Keep-alive for the Supabase Free plan, which pauses a project after a week without database
+ * activity: three cheap read-only RPCs (the same ones the live pages use). Returns how many answered.
+ */
+export async function pingDatabase(): Promise<number> {
+  const c = config();
+  if (!c) throw new Error("community not configured");
+  const calls = await Promise.allSettled([rpc(c, "community_stats"), rpc(c, "live_board"), rpc(c, "timings_today")]);
+  const ok = calls.filter((r) => r.status === "fulfilled").length;
+  if (ok === 0) throw new Error("database did not answer");
+  return ok;
+}
+
 export async function recordPlay(row: { device: string; game: string; result: string | null; score: number; nickname: string | null }): Promise<void> {
   const c = config();
   if (!c) throw new Error("community not configured");

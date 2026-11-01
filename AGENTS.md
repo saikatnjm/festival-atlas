@@ -91,6 +91,7 @@ The smoke script expects `NEXT_PUBLIC_SITE_URL=http://localhost:3100`.
 | `NEXT_PUBLIC_GA_ID` | client | Google Analytics 4 (`components/Analytics.tsx`, events via `lib/analytics.ts`). |
 | `ADMIN_USER`, `ADMIN_PASSWORD` (10+ chars) | server | `/en/admin` login (HMAC-signed 12 h cookie). Optional `ADMIN_SESSION_SECRET`. |
 | `SUPABASE_SERVICE_ROLE_KEY` | server only | Admin reads/updates/deletes (feedback, nicknames, place approval, purge). |
+| `CRON_SECRET` | server | Optional; when set, `/api/keepalive` (Supabase Free-plan keep-alive: Vercel cron in `vercel.json` daily, GitHub `keepalive.yml` twice a day) requires `Authorization: Bearer …`. Set the same value as a GitHub repo secret. |
 | `NEXT_PUBLIC_GSC_VERIFICATION`, `NEXT_PUBLIC_BING_SITE_VERIFICATION` | build | Optional search-console verification meta tags (never hardcode tokens). |
 
 Without Supabase vars every live/community feature hides itself and `/api/*` answers `disabled: true`.
