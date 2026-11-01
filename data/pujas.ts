@@ -17,12 +17,16 @@ export interface PujaEntry {
 
 // Pujas after Durga Puja, in calendar order; add more here when their sections are planned.
 export const UPCOMING_PUJAS: readonly PujaEntry[] = [
+  { id: "dhanteras", icon: "🪙", name: l("ধনতেরাস ২০২৬", "Dhanteras 2026"), when: l("কার্তিক কৃষ্ণা ত্রয়োদশী, নভেম্বর", "Kartik krishna Trayodashi, November"), href: "/dhanteras-2026" },
   { id: "kali", icon: "🕯️", name: l("কালীপুজো ও দীপাবলি", "Kali Puja & Diwali"), when: l("কার্তিক অমাবস্যা, নভেম্বর", "Kartik new moon, November"), href: "/kali-puja-2026" },
   { id: "jagaddhatri", icon: "🏮", name: l("জগদ্ধাত্রী পুজো", "Jagaddhatri Puja"), when: l("কার্তিক শুক্লা নবমী, নভেম্বর", "Kartik shukla Navami, November"), href: "/jagaddhatri-puja-2026" },
   { id: "bangla-date", icon: "🗓️", name: l("আজ বাংলা কত তারিখ", "Today's Bangla date"), when: l("বাংলা ক্যালেন্ডার ১৪৩৩", "Bengali calendar 1433"), href: "/bengali-calendar-1433" },
   { id: "calendar", icon: "📅", name: l("পুজোর ক্যালেন্ডার ২০২৭", "Festival calendar 2027"), when: l("সারা বছর", "All year"), href: "/calendar-2027" },
+  { id: "kartik", icon: "🦚", name: l("কার্তিক পুজো ২০২৬", "Kartik Puja 2026"), when: l("কার্তিক সংক্রান্তি, নভেম্বর", "Kartik Sankranti, November"), href: "/kartik-puja-2026" },
+  { id: "tulsi", icon: "🌿", name: l("তুলসী বিবাহ ২০২৬", "Tulsi Vivah 2026"), when: l("কার্তিক শুক্লা দ্বাদশী, নভেম্বর", "Kartik shukla Dwadashi, November"), href: "/tulsi-vivah-2026" },
   { id: "rash", icon: "🪷", name: l("রাস পূর্ণিমা", "Rash Purnima"), when: l("কার্তিক পূর্ণিমা, নভেম্বর", "Kartik full moon, November"), href: "/rash-purnima-2026" },
   { id: "poush", icon: "🍘", name: l("পৌষ সংক্রান্তি", "Poush Sankranti"), when: l("মধ্য জানুয়ারি", "Mid-January"), href: "/poush-sankranti-2027" },
+  { id: "vivah", icon: "💍", name: l("বিয়ের শুভ দিন ২০২৭", "Marriage dates 2027"), when: l("সারা বছর", "All year"), href: "/vivah-dates-2027" },
   { id: "ekadashi", icon: "🪔", name: l("একাদশী ২০২৭", "Ekadashi 2027"), when: l("মাসে দু’বার", "Twice a month"), href: "/ekadashi-2027" },
   { id: "purnima", icon: "🌕", name: l("পূর্ণিমা ২০২৭", "Purnima 2027"), when: l("মাসে একবার", "Once a month"), href: "/purnima-2027" },
   { id: "amavasya", icon: "🌑", name: l("অমাবস্যা ২০২৭", "Amavasya 2027"), when: l("মাসে একবার", "Once a month"), href: "/amavasya-2027" },
