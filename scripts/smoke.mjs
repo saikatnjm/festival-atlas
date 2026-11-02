@@ -208,6 +208,8 @@ const pages = [
   ["/en/radhashtami-2027", 200, "10:20 am"],
   ["/en/blog/dhakeshwari-temple-dhaka", 200, '"@type":"Article"'],
   ["/bn/blog/bishnupur-terracotta-temples", 200, "বিষ্ণুপুর"],
+  ["/en/blog/sandhi-puja-108-lamps", 200, "Sandhi"],
+  ["/bn/blog/sindoor-khela-bijoya-dashami", 200, "সিঁদুর"],
   ["/en/ekadashi-2027/nirjala-ekadashi", 200, "12:58 pm to 3:40 pm"],
   ["/bn/ekadashi-2027/saphala-ekadashi-december", 200, "সফলা"],
   ["/en/ekadashi-2027", 200, 'href="/en/ekadashi-2027/devshayani-ekadashi"'],
