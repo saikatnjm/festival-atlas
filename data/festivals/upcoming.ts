@@ -48,6 +48,7 @@ export const UPCOMING: Upcoming[] = [
   { date: "2027-08-25", icon: "🪈", name: l("জন্মাষ্টমী", "Janmashtami"), href: "/janmashtami-2027" },
   { date: "2027-09-04", icon: "🐘", name: l("গণেশ চতুর্থী", "Ganesh Chaturthi"), href: "/ganesh-chaturthi-2027" },
   { date: "2027-09-08", icon: "🌸", name: l("রাধাষ্টমী", "Radhashtami"), href: "/radhashtami-2027" },
+  { date: "2027-09-16", icon: "🕯️", name: l("পিতৃপক্ষ শুরু", "Pitru Paksha begins"), href: "/pitru-paksha-2027" },
   { date: "2027-09-17", icon: "🪁", name: l("বিশ্বকর্মা পুজো", "Vishwakarma Puja"), href: "/vishwakarma-puja-2027" },
   { date: "2027-09-29", icon: "🌅", name: l("মহালয়া", "Mahalaya"), href: "/mahalaya-2027" },
   { date: "2027-10-05", end: "2027-10-10", icon: "🥁", name: l("দুর্গাপুজো", "Durga Puja"), href: "/durga-puja-2027" },
