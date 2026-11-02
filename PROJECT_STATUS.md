@@ -3,6 +3,15 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## 70+ new pages: months, Ekadashis, 2027 festivals, stories (2026-11-02)
+Owner asked for 50+ SEO pages in a day. Keyword research (cheap agent; no volume data, ranked by seasonality and competition) → Sonnet drafting agents (2 at a time) → hand checks against existing pages and Drik → wired, verified, pushed per batch.
+- **Month pages** `/calendar-2027/<month>` (12, `data/festivals/months-2027.ts`, one dynamic route): generated from the sourced festival pages and the Ekadashi/Purnima/Amavasya/Sankashti/Pradosh/Masik lists, each row keeping its own source; festivals de-duplicated (a festival's own page wins); marriage/Griha Pravesh counts. Linked from the year hub.
+- **One page per Ekadashi of 2027** `/ekadashi-2027/<name>` (24, `ekadashi-pages-2027.ts` + `ekadashi-extra-2027.ts`): tithi from the 2027 list, parana windows (Kolkata + Dhaka) from each Ekadashi's own Drik page (Nirjala, Devshayani re-checked by hand), Saphala's December date gets `saphala-ekadashi-december`. The list and month pages link to them (`EKADASHI_SLUG` in `lunar-2027.ts`).
+- **2027 festival pages** (27): Kali Puja, Bhai Phota, Dhanteras, Chhath, Holi, Mahalaya, Jagaddhatri, Kartik Puja, Rash Purnima, Sankranti list (12), Buddha Purnima, Snana Yatra, Radhashtami, Karwa Chauth, Hartalika Teej, Vat Savitri, Govardhan, Ganga Dussehra, Dev Deepawali (Varanasi-only on Drik, labelled). Ulto Rath **not built**: Drik prints no 2027 date.
+- **Stories** (18 so far): Bangladesh temples (Dhakeshwari, Chandranath, Kantajew, Puthia, Jeshoreshwari, Shakti Peethas of WB/BD), West Bengal temples (Bishnupur, Tarakeswar, Mayapur, Hangseshwari, Thanthania, Bakreshwar–Kankalitala), Durga rituals (Kola Bou, Sandhi Puja, Kumari Puja, Sindoor Khela, Dhunuchi, Akal Bodhon).
+- Share sheet adds one hashtag from the page path (`#KaliPuja2027`); WhatsApp text stays plain. hreflang was already right.
+- Every batch verified in the scratch copy (Node 24): tests, typecheck, build (629 pages at batch D), smoke. **Owner step:** `npm run indexnow` after the deploy.
+
 ## Supabase reconnected + keep-alive (2026-11-01, evening)
 - Free-plan projects pause after a week without database activity ([docs](https://supabase.com/docs/guides/platform/free-project-pausing)). `/api/keepalive` runs three read-only RPCs; Vercel cron daily (`vercel.json`) + GitHub `keepalive.yml` twice a day; guarded by `CRON_SECRET` (set in Vercel and GitHub). The response lists the project host and failed calls (function, HTTP status, PostgREST code), never keys.
 - Production had been answering `disabled` (env vars missing from Production), then 404 on every RPC: the new `pujoguide` project had no schema (owner ran `supabase/schema.sql` + `notify pgrst, 'reload schema'`), and the URL value carried a `/rest/v1` suffix or whitespace, now stripped in all five `lib/*` configs. `/api/live`, `/api/community`, `/api/places` all `ok:true` since 17:56 UTC.
