@@ -210,6 +210,8 @@ const pages = [
   ["/en/govardhan-puja-2027", 200, "Govardhan"],
   ["/en/dev-deepawali-2027", 200, "Varanasi"],
   ["/bn/vat-savitri-2027", 200, "সাবিত্রী"],
+  ["/en/blog/langalbandh-ashtami-snan-narayanganj", 200, "Langalbandh"],
+  ["/en/blog/charak-puja-gajan-festival", 200, "Charak"],
   ["/en/blog/dhakeshwari-temple-dhaka", 200, '"@type":"Article"'],
   ["/bn/blog/bishnupur-terracotta-temples", 200, "বিষ্ণুপুর"],
   ["/en/blog/sandhi-puja-108-lamps", 200, "Sandhi"],
