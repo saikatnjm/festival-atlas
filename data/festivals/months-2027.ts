@@ -4,7 +4,7 @@
 // disagree with them.
 
 import type { L } from "@/lib/i18n";
-import { AMAVASYA_KOL, AMAVASYA_NAMES, AMAVASYA_ROWS, dayLabel, EKADASHI_ROWS, NAMES, PURNIMA_KOL, PURNIMA_NAMES, PURNIMA_ROWS, SMARTA_KOL, timeLabel } from "./lunar-2027";
+import { AMAVASYA_KOL, AMAVASYA_NAMES, AMAVASYA_ROWS, dayLabel, EKADASHI_ROWS, EKADASHI_SLUG, NAMES, PURNIMA_KOL, PURNIMA_NAMES, PURNIMA_ROWS, SMARTA_KOL, timeLabel } from "./lunar-2027";
 import { GRIHA_ROWS, VIVAH_ROWS } from "./muhurat-2027";
 import type { FestivalPage, FestivalSource } from "./types";
 import { MASIK_KOL, MASIK_NAMES, MASIK_ROWS, PAKSHA, PRADOSH_KOL, PRADOSH_NAMES, PRADOSH_ROWS, SANKASHTI_KOL, SANKASHTI_NAMES, SANKASHTI_ROWS } from "./vrat-2027";
@@ -62,7 +62,7 @@ function items(pages: FestivalPage[]): Item[] {
       out.push({ date: e.start, kind: "festival", name: e.name, detail: e.end ? { bn: `${dayLabel(e.end, "bn", false)} পর্যন্ত`, en: `until ${dayLabel(e.end, "en", false)}` } : l("তারিখ আর সময় পাতায়", "Date and times on its page"), source, href: f.path });
     }
   }
-  for (const [n, d, ks, ke] of EKADASHI_ROWS) if (d.startsWith("2027")) out.push({ date: d, kind: "ekadashi", name: NAMES[n], detail: tithi(ks, ke), source: SMARTA_KOL(2027), href: "/ekadashi-2027" });
+  for (const [n, d, ks, ke] of EKADASHI_ROWS) if (d.startsWith("2027")) out.push({ date: d, kind: "ekadashi", name: NAMES[n], detail: tithi(ks, ke), source: SMARTA_KOL(2027), href: EKADASHI_SLUG[d] ? `/ekadashi-2027/${EKADASHI_SLUG[d]}` : "/ekadashi-2027" });
   for (const [n, d, , ks, ke] of PURNIMA_ROWS) if (d.startsWith("2027")) out.push({ date: d, kind: "purnima", name: PURNIMA_NAMES[n], detail: tithi(ks, ke), source: PURNIMA_KOL(2027), href: "/purnima-2027" });
   for (const [n, d, , ks, ke] of AMAVASYA_ROWS) if (d.startsWith("2027")) out.push({ date: d, kind: "amavasya", name: AMAVASYA_NAMES[n], detail: tithi(ks, ke), source: AMAVASYA_KOL(2027), href: "/amavasya-2027" });
   for (const [n, d, ks, ke] of SANKASHTI_ROWS) out.push({ date: d, kind: "sankashti", name: SANKASHTI_NAMES[n], detail: tithi(ks, ke), source: SANKASHTI_KOL, href: "/sankashti-chaturthi-2027" });

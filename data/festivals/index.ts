@@ -21,6 +21,7 @@ import { POUSH_SANKRANTI_2027 } from "./poush-sankranti-2027";
 import { RASH_2026 } from "./rash-2026";
 import { SARASWATI_2027 } from "./saraswati-2027";
 import { SHIVRATRI_2027 } from "./shivratri-2027";
+import { EKADASHI_PAGES } from "./ekadashi-pages-2027";
 import { monthPages } from "./months-2027";
 import type { FestivalPage } from "./types";
 
@@ -74,5 +75,5 @@ const BASE_PAGES: FestivalPage[] = [
   RASH_2027,
 ];
 
-/** Every page, plus the twelve 2027 month pages built from them. */
-export const FESTIVAL_PAGES: FestivalPage[] = [...BASE_PAGES, ...monthPages(BASE_PAGES)];
+/** Every page, plus one page per 2027 Ekadashi and the twelve 2027 month pages built from them. */
+export const FESTIVAL_PAGES: FestivalPage[] = [...BASE_PAGES, ...EKADASHI_PAGES, ...monthPages(BASE_PAGES)];

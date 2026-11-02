@@ -90,6 +90,23 @@ const BN_DIGITS = "০১২৩৪৫৬৭৮৯";
 const bnNum = (s: string) => s.replace(/\d/g, (d) => BN_DIGITS[Number(d)]);
 
 /** "2027-01-03" → "Sun 3 Jan 2027" / "রবি ৩ জানুয়ারি ২০২৭" (weekday from the calendar date itself). */
+const SLUG_MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+/**
+ * Page slug of each 2027 Ekadashi, by date (/ekadashi-2027/<slug>). An Ekadashi that falls twice in the year
+ * (Saphala) gets the month on its second page.
+ */
+export const EKADASHI_SLUG: Record<string, string> = (() => {
+  const out: Record<string, string> = {};
+  const seen = new Set<string>();
+  for (const [key, date] of EKADASHI_ROWS) {
+    if (!date.startsWith("2027")) continue;
+    const base = NAMES[key].en.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    out[date] = seen.has(key) ? `${base}-${SLUG_MONTHS[Number(date.slice(5, 7)) - 1]}` : base;
+    seen.add(key);
+  }
+  return out;
+})();
+
 export function dayLabel(iso: string, lang: Lang, withYear = true): string {
   const [y, m, d] = iso.split("-").map(Number);
   const wd = new Date(Date.UTC(y, m - 1, d)).getUTCDay();
@@ -133,6 +150,7 @@ const table = (year: number, id: string, h2: L): FestivalTable => ({
   rows: EKADASHI_ROWS.filter((r) => r[1].startsWith(String(year))).map(([name, date, ks, ke, ds, de, isk]) => ({
     cells: [NAMES[name], day(date), range(ks, ke), range(ds, de), iskconCell(isk)],
     source: SMARTA_KOL(year),
+    ...(EKADASHI_SLUG[date] ? { href: `/ekadashi-2027/${EKADASHI_SLUG[date]}` } : {}),
   })),
 });
 
