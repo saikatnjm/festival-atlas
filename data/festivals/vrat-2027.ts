@@ -60,11 +60,11 @@ const window_ = (w: string): L => {
 const KOL = "1275004";
 const DHAKA = "1185241";
 const src = (title: string, path: string, geo: string, year = 2027) => ({ title, url: `https://www.drikpanchang.com/${path}?geoname-id=${geo}&year=${year}` });
-const SANKASHTI_KOL = src("Drik Panchang, 2027 Sankashti Chaturthi dates for Kolkata", "vrats/sankashti-chaturthi-dates.html", KOL);
+export const SANKASHTI_KOL = src("Drik Panchang, 2027 Sankashti Chaturthi dates for Kolkata", "vrats/sankashti-chaturthi-dates.html", KOL);
 const SANKASHTI_DHAKA = src("Drik Panchang, 2027 Sankashti Chaturthi dates for Dhaka", "vrats/sankashti-chaturthi-dates.html", DHAKA);
-const PRADOSH_KOL = src("Drik Panchang, 2027 Pradosh dates for Kolkata", "vrats/pradoshdates.html", KOL);
+export const PRADOSH_KOL = src("Drik Panchang, 2027 Pradosh dates for Kolkata", "vrats/pradoshdates.html", KOL);
 const PRADOSH_DHAKA = src("Drik Panchang, 2027 Pradosh dates for Dhaka", "vrats/pradoshdates.html", DHAKA);
-const MASIK_KOL = src("Drik Panchang, 2027 Masik Shivaratri dates for Kolkata", "vrats/masik-shivaratri-dates.html", KOL);
+export const MASIK_KOL = src("Drik Panchang, 2027 Masik Shivaratri dates for Kolkata", "vrats/masik-shivaratri-dates.html", KOL);
 const MASIK_DHAKA = src("Drik Panchang, 2027 Masik Shivaratri dates for Dhaka", "vrats/masik-shivaratri-dates.html", DHAKA);
 const WIKI_SANKASHTI = { title: "Wikipedia, Sankashti Chaturthi", url: "https://en.wikipedia.org/wiki/Sankashti_Chaturthi" };
 const WIKI_PRADOSHA = { title: "Wikipedia, Pradosha", url: "https://en.wikipedia.org/wiki/Pradosha" };
@@ -78,7 +78,7 @@ const PANJIKA_NOTE = l("বাড়ির পঞ্জিকা (বিশু�
 
 // ---- Sankashti Chaturthi (/sankashti-chaturthi-2027) ----
 
-const SANKASHTI_NAMES: Record<string, L> = {
+export const SANKASHTI_NAMES: Record<string, L> = {
   lambodara: l("লম্বোদর সংকষ্টী", "Lambodara Sankashti"),
   dwijapriya: l("দ্বিজপ্রিয় সংকষ্টী", "Dwijapriya Sankashti"),
   bhalachandra: l("ভালচন্দ্র সংকষ্টী", "Bhalachandra Sankashti"),
@@ -203,7 +203,7 @@ export const SANKASHTI_2027: FestivalPage = {
 
 // ---- Pradosh Vrat (/pradosh-vrat-2027) ----
 
-const PRADOSH_NAMES: Record<string, L> = {
+export const PRADOSH_NAMES: Record<string, L> = {
   ravi: l("রবি প্রদোষ", "Ravi Pradosh"),
   soma: l("সোম প্রদোষ", "Soma Pradosh"),
   bhauma: l("ভৌম প্রদোষ", "Bhauma Pradosh"),
@@ -212,7 +212,7 @@ const PRADOSH_NAMES: Record<string, L> = {
   shukra: l("শুক্র প্রদোষ", "Shukra Pradosh"),
   shani: l("শনি প্রদোষ", "Shani Pradosh"),
 };
-const PAKSHA: Record<string, L> = { K: l("কৃষ্ণ", "Krishna"), S: l("শুক্ল", "Shukla") };
+export const PAKSHA: Record<string, L> = { K: l("কৃষ্ণ", "Krishna"), S: l("শুক্ল", "Shukla") };
 
 /** [date, weekday name, paksha, Kolkata Trayodashi start, end, Kolkata Pradosh window, Dhaka start, end, Dhaka window]. */
 type PradoshRow = [string, keyof typeof PRADOSH_NAMES, "K" | "S", string, string, string, string, string, string];
@@ -334,7 +334,7 @@ export const PRADOSH_2027: FestivalPage = {
 // Drik prints a midnight puja window per date without the word "Nishita" on the list; its text ties the midnight
 // window to Nishita Kaal. Two Pausha entries (Jan and Dec) are separate lunar months of Pausha as Drik prints them.
 
-const MASIK_NAMES: Record<string, L> = {
+export const MASIK_NAMES: Record<string, L> = {
   pausha: l("পৌষ", "Pausha"),
   pausha2: l("পৌষ", "Pausha"),
   magha: l("মাঘ", "Magha"),

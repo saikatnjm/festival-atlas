@@ -11,13 +11,13 @@ const l = (bn: string, en: string): L => ({ bn, en });
 
 const drik = (kind: "vrats/ekadashidates" | "iskcon/iskcon-ekadashi-list", geo: string, year: number) =>
   `https://www.drikpanchang.com/${kind}.html?geoname-id=${geo}&year=${year}`;
-const SMARTA_KOL = (y: number) => ({ title: `Drik Panchang, ${y} Ekadashi dates for Kolkata`, url: drik("vrats/ekadashidates", "1275004", y) });
-const SMARTA_DHAKA = (y: number) => ({ title: `Drik Panchang, ${y} Ekadashi dates for Dhaka`, url: drik("vrats/ekadashidates", "1185241", y) });
-const ISKCON_KOL = (y: number) => ({ title: `Drik Panchang, ${y} ISKCON Ekadasi list for Kolkata`, url: drik("iskcon/iskcon-ekadashi-list", "1275004", y) });
-const ISKCON_DHAKA = (y: number) => ({ title: `Drik Panchang, ${y} ISKCON Ekadasi list for Dhaka`, url: drik("iskcon/iskcon-ekadashi-list", "1185241", y) });
+export const SMARTA_KOL = (y: number) => ({ title: `Drik Panchang, ${y} Ekadashi dates for Kolkata`, url: drik("vrats/ekadashidates", "1275004", y) });
+export const SMARTA_DHAKA = (y: number) => ({ title: `Drik Panchang, ${y} Ekadashi dates for Dhaka`, url: drik("vrats/ekadashidates", "1185241", y) });
+export const ISKCON_KOL = (y: number) => ({ title: `Drik Panchang, ${y} ISKCON Ekadasi list for Kolkata`, url: drik("iskcon/iskcon-ekadashi-list", "1275004", y) });
+export const ISKCON_DHAKA = (y: number) => ({ title: `Drik Panchang, ${y} ISKCON Ekadasi list for Dhaka`, url: drik("iskcon/iskcon-ekadashi-list", "1185241", y) });
 const MUHURATAM = { title: "muhuratam.in, Ekadashi 2027 Kolkata", url: "https://muhuratam.in/vrat-upvas/ekadashi/kolkata/2027" };
 
-const NAMES: Record<string, L> = {
+export const NAMES: Record<string, L> = {
   rama: l("রমা একাদশী", "Rama Ekadashi"),
   devutthana: l("দেবোত্থান (প্রবোধিনী) একাদশী", "Devutthana (Prabodhini) Ekadashi"),
   utpanna: l("উৎপন্না একাদশী", "Utpanna Ekadashi"),
@@ -236,11 +236,11 @@ export const EKADASHI_2027: FestivalPage = {
 // month, "<Month> Purnima Vrat" and "<Month> Purnima"; they share one tithi window and usually one date.
 // Where the vrat (fasting) day is a day earlier, both are shown.
 
-const PURNIMA_KOL = (y: number) => ({ title: `Drik Panchang, ${y} Purnima dates for Kolkata`, url: `https://www.drikpanchang.com/vrats/purnimasidates.html?year=${y}&geoname-id=1275004` });
+export const PURNIMA_KOL = (y: number) => ({ title: `Drik Panchang, ${y} Purnima dates for Kolkata`, url: `https://www.drikpanchang.com/vrats/purnimasidates.html?year=${y}&geoname-id=1275004` });
 const PURNIMA_DHAKA = (y: number) => ({ title: `Drik Panchang, ${y} Purnima dates for Dhaka`, url: `https://www.drikpanchang.com/vrats/purnimasidates.html?year=${y}&geoname-id=1185241` });
 const BENGALI_2027 = { title: "Drik Panchang, Bengali calendar 2027 (Kolkata)", url: "https://www.drikpanchang.com/bengali/calendar/bengali-calendar.html?geoname-id=1275004&year=2027" };
 
-const PURNIMA_NAMES: Record<string, L> = {
+export const PURNIMA_NAMES: Record<string, L> = {
   kartika: l("কার্তিক পূর্ণিমা", "Kartika Purnima"),
   margashirsha: l("অগ্রহায়ণ (মার্গশীর্ষ) পূর্ণিমা", "Margashirsha Purnima"),
   pausha: l("পৌষ পূর্ণিমা", "Pausha Purnima"),
@@ -371,10 +371,10 @@ export const PURNIMA_2027: FestivalPage = {
 // Drik Panchang's yearly Amavasya pages for Kolkata and Dhaka (fetched 31 Oct 2026, re-checked twice). Where
 // Drik prints a "Darsha Amavasya" a day before the named-month Amavasya, both days are shown.
 
-const AMAVASYA_KOL = (y: number) => ({ title: `Drik Panchang, ${y} Amavasya dates for Kolkata`, url: `https://www.drikpanchang.com/vrats/amavasyadates.html?year=${y}&geoname-id=1275004` });
+export const AMAVASYA_KOL = (y: number) => ({ title: `Drik Panchang, ${y} Amavasya dates for Kolkata`, url: `https://www.drikpanchang.com/vrats/amavasyadates.html?year=${y}&geoname-id=1275004` });
 const AMAVASYA_DHAKA = (y: number) => ({ title: `Drik Panchang, ${y} Amavasya dates for Dhaka`, url: `https://www.drikpanchang.com/vrats/amavasyadates.html?year=${y}&geoname-id=1185241` });
 
-const AMAVASYA_NAMES: Record<string, L> = {
+export const AMAVASYA_NAMES: Record<string, L> = {
   kartika: l("কার্তিক অমাবস্যা", "Kartika Amavasya"),
   margashirsha: l("অগ্রহায়ণ (মার্গশীর্ষ) অমাবস্যা", "Margashirsha Amavasya"),
   pausha: l("পৌষ অমাবস্যা", "Pausha Amavasya"),

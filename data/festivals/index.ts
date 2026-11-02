@@ -13,15 +13,17 @@ import { MASIK_SHIVRATRI_2027, PRADOSH_2027, SANKASHTI_2027 } from "./vrat-2027"
 import { DIWALI_2027, GANESH_2027, NAVRATRI_2027, RAKHI_2027 } from "./major-2027";
 import { AKSHAYA_2027, GURU_PURNIMA_2027, HANUMAN_2027, VISHWAKARMA_2027 } from "./more-2027";
 import { GITA_JAYANTI_2026, GRAHAN_2027, MANASA_2027, VIVAH_PANCHAMI_2026 } from "./extra-2027";
+import { BHAI_PHOTA_2027, CHHATH_2027, DHANTERAS_2027, KALI_PUJA_2027 } from "./autumn-2027";
 import { DHANTERAS_2026, KARTIK_PUJA_2026, TULSI_VIVAH_2026 } from "./nov-2026";
 import { POILA_BOISHAKH_2027 } from "./poila-boishakh-2027";
 import { POUSH_SANKRANTI_2027 } from "./poush-sankranti-2027";
 import { RASH_2026 } from "./rash-2026";
 import { SARASWATI_2027 } from "./saraswati-2027";
 import { SHIVRATRI_2027 } from "./shivratri-2027";
+import { monthPages } from "./months-2027";
 import type { FestivalPage } from "./types";
 
-export const FESTIVAL_PAGES: FestivalPage[] = [
+const BASE_PAGES: FestivalPage[] = [
   DHANTERAS_2026,
   KARTIK_PUJA_2026,
   TULSI_VIVAH_2026,
@@ -60,4 +62,11 @@ export const FESTIVAL_PAGES: FestivalPage[] = [
   GITA_JAYANTI_2026,
   GRAHAN_2027,
   MANASA_2027,
+  DHANTERAS_2027,
+  KALI_PUJA_2027,
+  BHAI_PHOTA_2027,
+  CHHATH_2027,
 ];
+
+/** Every page, plus the twelve 2027 month pages built from them. */
+export const FESTIVAL_PAGES: FestivalPage[] = [...BASE_PAGES, ...monthPages(BASE_PAGES)];

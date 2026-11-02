@@ -48,7 +48,10 @@ export const UPCOMING: Upcoming[] = [
   { date: "2027-09-29", icon: "🌅", name: l("মহালয়া", "Mahalaya"), href: "/durga-puja-2027" },
   { date: "2027-10-05", end: "2027-10-10", icon: "🥁", name: l("দুর্গাপুজো", "Durga Puja"), href: "/durga-puja-2027" },
   { date: "2027-10-14", icon: "🪷", name: l("কোজাগরী লক্ষ্মীপুজো", "Kojagori Lakshmi Puja"), href: "/lakshmi-puja-2027" },
-  { date: "2027-10-28", icon: "🌑", name: l("কালীপুজো", "Kali Puja"), href: "/diwali-2027" },
+  { date: "2027-10-27", icon: "🪙", name: l("ধনতেরাস", "Dhanteras"), href: "/dhanteras-2027" },
+  { date: "2027-10-28", icon: "🌑", name: l("কালীপুজো", "Kali Puja"), href: "/kali-puja-2027" },
+  { date: "2027-10-31", icon: "🧿", name: l("ভাইফোঁটা", "Bhai Phota"), href: "/bhai-phota-2027" },
+  { date: "2027-11-02", icon: "🌅", name: l("ছট পুজো", "Chhath Puja"), href: "/chhath-puja-2027" },
 ];
 
 /** The next `n` entries that haven't ended by `today` (YYYY-MM-DD), from a date-sorted list. */
