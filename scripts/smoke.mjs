@@ -216,6 +216,8 @@ const pages = [
   ["/bn/vat-savitri-2027", 200, "সাবিত্রী"],
   ["/en/blog/langalbandh-ashtami-snan-narayanganj", 200, "Langalbandh"],
   ["/en/blog/charak-puja-gajan-festival", 200, "Charak"],
+  ["/en/blog/bengali-hindu-wedding-rituals", 200, "/en/vivah-dates-2027"],
+  ["/bn/blog/annaprashan-mukhe-bhaat", 200, "অন্নপ্রাশন"],
   ["/en/blog/dhakeshwari-temple-dhaka", 200, '"@type":"Article"'],
   ["/bn/blog/bishnupur-terracotta-temples", 200, "বিষ্ণুপুর"],
   ["/en/blog/sandhi-puja-108-lamps", 200, "Sandhi"],
