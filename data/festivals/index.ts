@@ -14,6 +14,7 @@ import { DIWALI_2027, GANESH_2027, NAVRATRI_2027, RAKHI_2027 } from "./major-202
 import { AKSHAYA_2027, GURU_PURNIMA_2027, HANUMAN_2027, VISHWAKARMA_2027 } from "./more-2027";
 import { GITA_JAYANTI_2026, GRAHAN_2027, MANASA_2027, VIVAH_PANCHAMI_2026 } from "./extra-2027";
 import { BHAI_PHOTA_2027, CHHATH_2027, DHANTERAS_2027, KALI_PUJA_2027 } from "./autumn-2027";
+import { HOLI_2027, JAGADDHATRI_2027, KARTIK_PUJA_2027, MAHALAYA_2027, RASH_2027 } from "./winter-2027";
 import { DHANTERAS_2026, KARTIK_PUJA_2026, TULSI_VIVAH_2026 } from "./nov-2026";
 import { POILA_BOISHAKH_2027 } from "./poila-boishakh-2027";
 import { POUSH_SANKRANTI_2027 } from "./poush-sankranti-2027";
@@ -66,6 +67,11 @@ const BASE_PAGES: FestivalPage[] = [
   KALI_PUJA_2027,
   BHAI_PHOTA_2027,
   CHHATH_2027,
+  HOLI_2027,
+  MAHALAYA_2027,
+  JAGADDHATRI_2027,
+  KARTIK_PUJA_2027,
+  RASH_2027,
 ];
 
 /** Every page, plus the twelve 2027 month pages built from them. */

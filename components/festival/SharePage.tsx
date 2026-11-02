@@ -13,9 +13,10 @@ const T = {
 
 /**
  * Share this page: the phone's share sheet (falls back to copying the link) and a WhatsApp link. The URL is
- * read in the handler, so the prerendered HTML stays the same everywhere.
+ * read in the handler, so the prerendered HTML stays the same everywhere. `tag` (one hashtag) is added to the
+ * share-sheet text only, for Instagram/X/Facebook; WhatsApp gets the plain text.
  */
-export default function SharePage({ lang, title, text }: { lang: Lang; title: string; text: string }) {
+export default function SharePage({ lang, title, text, tag }: { lang: Lang; title: string; text: string; tag?: string }) {
   const [msg, setMsg] = useState("");
   const url = () => window.location.href.split("#")[0];
   return (
@@ -24,7 +25,7 @@ export default function SharePage({ lang, title, text }: { lang: Lang; title: st
         type="button"
         className="button"
         onClick={async () => {
-          const out = await shareLink({ title, text, url: url() });
+          const out = await shareLink({ title, text: tag ? `${text} ${tag}` : text, url: url() });
           if (out === "copied") {
             setMsg(T.copied[lang]);
             window.setTimeout(() => setMsg(""), 2500);

@@ -30,6 +30,7 @@ export const UPCOMING: Upcoming[] = [
   { date: "2027-01-22", end: "2027-02-03", icon: "📖", name: l("কলকাতা বইমেলা", "Kolkata Book Fair"), href: "/blog/kolkata-book-fair-2027" },
   { date: "2027-02-11", icon: "📚", name: l("সরস্বতী পুজো", "Saraswati Puja"), href: "/saraswati-puja-2027" },
   { date: "2027-03-06", icon: "🔱", name: l("শিবরাত্রি", "Shivratri"), href: "/shivratri-2027" },
+  { date: "2027-03-21", icon: "🔥", name: l("হোলিকা দহন", "Holika Dahan"), href: "/holi-2027" },
   { date: "2027-03-22", icon: "🎨", name: l("দোল", "Dol"), href: "/dol-purnima-2027" },
   { date: "2027-04-07", icon: "🪔", name: l("চৈত্র নবরাত্রি", "Chaitra Navratri"), href: "/navratri-2027" },
   { date: "2027-04-15", icon: "🏹", name: l("রামনবমী", "Ram Navami"), href: "/ram-navami-2027" },
@@ -45,13 +46,15 @@ export const UPCOMING: Upcoming[] = [
   { date: "2027-08-25", icon: "🪈", name: l("জন্মাষ্টমী", "Janmashtami"), href: "/janmashtami-2027" },
   { date: "2027-09-04", icon: "🐘", name: l("গণেশ চতুর্থী", "Ganesh Chaturthi"), href: "/ganesh-chaturthi-2027" },
   { date: "2027-09-17", icon: "🪁", name: l("বিশ্বকর্মা পুজো", "Vishwakarma Puja"), href: "/vishwakarma-puja-2027" },
-  { date: "2027-09-29", icon: "🌅", name: l("মহালয়া", "Mahalaya"), href: "/durga-puja-2027" },
+  { date: "2027-09-29", icon: "🌅", name: l("মহালয়া", "Mahalaya"), href: "/mahalaya-2027" },
   { date: "2027-10-05", end: "2027-10-10", icon: "🥁", name: l("দুর্গাপুজো", "Durga Puja"), href: "/durga-puja-2027" },
   { date: "2027-10-14", icon: "🪷", name: l("কোজাগরী লক্ষ্মীপুজো", "Kojagori Lakshmi Puja"), href: "/lakshmi-puja-2027" },
   { date: "2027-10-27", icon: "🪙", name: l("ধনতেরাস", "Dhanteras"), href: "/dhanteras-2027" },
   { date: "2027-10-28", icon: "🌑", name: l("কালীপুজো", "Kali Puja"), href: "/kali-puja-2027" },
   { date: "2027-10-31", icon: "🧿", name: l("ভাইফোঁটা", "Bhai Phota"), href: "/bhai-phota-2027" },
   { date: "2027-11-02", icon: "🌅", name: l("ছট পুজো", "Chhath Puja"), href: "/chhath-puja-2027" },
+  { date: "2027-11-07", icon: "🏮", name: l("জগদ্ধাত্রী পুজো", "Jagaddhatri Puja"), href: "/jagaddhatri-puja-2027" },
+  { date: "2027-11-14", icon: "🪷", name: l("রাস পূর্ণিমা", "Rash Purnima"), href: "/rash-purnima-2027" },
 ];
 
 /** The next `n` entries that haven't ended by `today` (YYYY-MM-DD), from a date-sorted list. */

@@ -248,7 +248,7 @@ export default function FestivalPage({ lang, f, children }: { lang: Lang; f: Fes
         </dl>
       </section>
 
-      <SharePage lang={lang} title={f.title[lang]} text={f.h1[lang]} />
+      <SharePage lang={lang} title={f.title[lang]} text={f.h1[lang]} tag={hashtag(f.path)} />
       <p className="cta-row">
         {f.links.map((x) => (
           <Link key={x.href} className={x.primary ? "button" : "button button-light"} href={withLang(lang, x.href)}>
@@ -258,4 +258,12 @@ export default function FestivalPage({ lang, f, children }: { lang: Lang; f: Fes
       </p>
     </article>
   );
+}
+
+/** One hashtag from the page path: "/kali-puja-2027" → "#KaliPuja2027", "/ekadashi-2027/nirjala-ekadashi" → "#NirjalaEkadashi2027". */
+function hashtag(path: string): string {
+  const parts = path.split("/").filter(Boolean);
+  const last = parts[parts.length - 1] ?? "";
+  const year = /\d/.test(last) ? "" : (parts[0]?.match(/\d{4}/)?.[0] ?? "");
+  return `#${last.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join("")}${year}`;
 }
