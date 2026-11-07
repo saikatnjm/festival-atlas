@@ -2524,10 +2524,10 @@
   "city": "Dhaka",
   "area": "Ramna, beside Suhrawardy Udyan",
   "area_bn": "রমনা, সোহরাওয়ার্দী উদ্যানের পাশে",
-  "lat": 23.74,
-  "lng": 90.40222,
+  "lat": 23.7312171,
+  "lng": 90.3995774,
   "pin": "area",
-  "coordSource": "https://en.wikipedia.org/wiki/Ramna_Thana",
+  "coordSource": "https://www.openstreetmap.org/way/1151616624",
   "year": 2026,
   "status": "confirmed",
   "puja": "kali",
@@ -2613,16 +2613,25 @@
   "name_bn": "সিদ্ধেশ্বরী কালী মন্দিরের শ্যামাপুজো",
   "country": "BD",
   "city": "Dhaka",
-  "area": "Siddheshwari",
-  "area_bn": "সিদ্ধেশ্বরী",
+  "area": "Siddheshwari Lane, Chamelibag",
+  "area_bn": "সিদ্ধেশ্বরী লেন, চামেলীবাগ",
+  "lat": 23.7439515,
+  "lng": 90.4113986,
+  "pin": "area",
+  "coordSource": "https://www.openstreetmap.org/way/993036678",
   "year": 2026,
   "status": "confirmed",
   "puja": "kali",
-  "description": "An old Kali temple in central Dhaka (Siddheshwari, near Mouchak), named by Dhaka Tribune among the temples where the Kali Puja begins at midnight. No exact pin yet: ask for 'Siddheshwari Kali Mandir' near Mouchak crossing.",
+  "address": "14 Siddheswari Lane, Chamelibag, Dhaka 1217",
+  "description": "An old Kali temple in central Dhaka (Siddheshwari Lane, Chamelibag, near Malibagh and Mouchak), named by Dhaka Tribune among the temples where the Kali Puja begins at midnight.",
   "sources": [
    {
     "title": "Dhaka Tribune: Hindu community to celebrate Kali Puja Monday (2025)",
     "url": "https://www.dhakatribune.com/bangladesh/394355/hindu-community-to-celebrate-kali-puja-monday"
+   },
+   {
+    "title": "OpenStreetMap, Sree Sree Siddheswari Kali Temple (ODbL)",
+    "url": "https://www.openstreetmap.org/way/993036678"
    }
   ],
   "lastVerified": "2026-11-07"
@@ -2652,6 +2661,198 @@
    {
     "title": "Wikipedia, Shankhari Bazaar",
     "url": "https://en.wikipedia.org/wiki/Shankhari_Bazaar"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "raksha-kali-mata-mandir-shankhari-bazar",
+  "name": "Sri Sri Raksha Kali Mata Mandir, Shankhari Bazar",
+  "name_bn": "শ্রী শ্রী রক্ষা কালী মাতা মন্দির, শাঁখারীবাজার",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Shankhari Bazar, Old Dhaka",
+  "area_bn": "শাঁখারীবাজার, পুরান ঢাকা",
+  "lat": 23.7101072,
+  "lng": 90.4080935,
+  "pin": "area",
+  "coordSource": "https://www.openstreetmap.org/way/234135711",
+  "status": "pending",
+  "puja": "kali",
+  "address": "58 Shakhari Bazar Road, Islampur, Dhaka 1100",
+  "description": "A Kali temple inside the Shankhari Bazar lane, mapped on OpenStreetMap. The lane is Dhaka's biggest Kali Puja night (see the Shankhari Bazar and Tanti Bazar entry); this temple's own 2026 programme isn't published, so ask on the spot.",
+  "sources": [
+   {
+    "title": "OpenStreetMap, Sri Sri Raksha Kali Mata Temple, Shankhari Bazar (ODbL)",
+    "url": "https://www.openstreetmap.org/way/234135711"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "joykali-mandir-kali-puja",
+  "name": "Joy Kali Mandir, Thatari Bazar",
+  "name_bn": "জয়কালী মন্দির, ঠাঁটারিবাজার",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Thatari Bazar / Kaptan Bazar",
+  "area_bn": "ঠাঁটারিবাজার / কাপ্তানবাজার",
+  "lat": 23.7214813,
+  "lng": 90.4168279,
+  "pin": "area",
+  "coordSource": "https://www.openstreetmap.org/way/507920337",
+  "status": "pending",
+  "puja": "kali",
+  "address": "Joy Kali Mandir Road, Thatari Bazar, Dhaka 1203",
+  "description": "The Joy Kali temple between Thatari Bazar and Wari, on the main road near Kaptan Bazar, mapped on OpenStreetMap. A Kali temple by name; its 2026 Shyama Puja programme isn't published, so ask on the spot.",
+  "sources": [
+   {
+    "title": "OpenStreetMap, Jai Kali Mandir (ODbL)",
+    "url": "https://www.openstreetmap.org/way/507920337"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "raksha-kali-mandir-armanitola",
+  "name": "Sri Sri Raksha Kali Mandir, Armanitola",
+  "name_bn": "শ্রী শ্রী রক্ষা কালী মন্দির, আরমানিটোলা",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Birendra Bose Street, Armanitola",
+  "area_bn": "বীরেন্দ্র বসু স্ট্রিট, আরমানিটোলা",
+  "lat": 23.713124,
+  "lng": 90.3998711,
+  "pin": "area",
+  "coordSource": "https://www.openstreetmap.org/way/245267779",
+  "status": "pending",
+  "puja": "kali",
+  "address": "190 Birendra Bosh Street, Becharam Dewri, Armanitola, Dhaka 1100",
+  "description": "A small Kali temple on Birendra Bose Street in Armanitola (Old Dhaka), next to Kalibari Market, mapped on OpenStreetMap. Its 2026 Shyama Puja programme isn't published, so ask on the spot.",
+  "sources": [
+   {
+    "title": "OpenStreetMap, Sri Sri Raksha Kali Mandir (ODbL)",
+    "url": "https://www.openstreetmap.org/way/245267779"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "shri-kali-mandir-jigatola",
+  "name": "Shri Kali Mandir, Jigatola",
+  "name_bn": "শ্রী কালী মন্দির, জিগাতলা",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Hazi Afsar Uddin Road, Jigatola",
+  "area_bn": "হাজী আফসার উদ্দিন রোড, জিগাতলা",
+  "lat": 23.7422391,
+  "lng": 90.3666769,
+  "pin": "area",
+  "coordSource": "https://www.openstreetmap.org/node/3528984481",
+  "status": "pending",
+  "puja": "kali",
+  "address": "Hazi Afsar Uddin Road, Staff Quarter, Jigatola, Dhaka 1205",
+  "description": "A Kali temple in Jigatola (Dhanmondi side), mapped on OpenStreetMap with its Bangla name. Its 2026 Shyama Puja programme isn't published, so ask on the spot.",
+  "sources": [
+   {
+    "title": "OpenStreetMap, শ্রী কালী মন্দির, Jigatola (ODbL)",
+    "url": "https://www.openstreetmap.org/node/3528984481"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "sri-sri-kali-mandir-banasree",
+  "name": "Sri Sri Kali Mandir, Banasree",
+  "name_bn": "শ্রী শ্রী কালী মন্দির, বনশ্রী",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Block C, Banasree",
+  "area_bn": "ব্লক সি, বনশ্রী",
+  "lat": 23.7629363,
+  "lng": 90.4297405,
+  "pin": "area",
+  "coordSource": "https://www.openstreetmap.org/node/9801903412",
+  "status": "pending",
+  "puja": "kali",
+  "address": "Road 3, Block C, Banasree, Dhaka 1219",
+  "description": "A Kali temple in Banasree (Rampura side), mapped on OpenStreetMap with its Bangla name. Its 2026 Shyama Puja programme isn't published, so ask on the spot.",
+  "sources": [
+   {
+    "title": "OpenStreetMap, শ্রী শ্রী কালী মন্দির, Banasree (ODbL)",
+    "url": "https://www.openstreetmap.org/node/9801903412"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "mirpur-siddheswari-kali-mata-mandir",
+  "name": "Mirpur Siddheswari Kali Mata Mandir",
+  "name_bn": "মিরপুর সিদ্ধেশ্বরী কালী মাতা মন্দির",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Harirampur, Gabtali (Mirpur)",
+  "area_bn": "হরিরামপুর, গাবতলী (মিরপুর)",
+  "lat": 23.7879014,
+  "lng": 90.3398186,
+  "pin": "area",
+  "coordSource": "https://www.openstreetmap.org/node/13257717178",
+  "status": "pending",
+  "puja": "kali",
+  "address": "N501, Jahanabad, Harirampur, Gabtali, Dhaka 1348",
+  "description": "A Kali temple on the Mirpur–Gabtali side, mapped on OpenStreetMap. Its 2026 Shyama Puja programme isn't published, so ask on the spot.",
+  "sources": [
+   {
+    "title": "OpenStreetMap, Mirpur Siddheswari Kali Mata Mondir (ODbL)",
+    "url": "https://www.openstreetmap.org/node/13257717178"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "kali-mandir-mirpur-beribadh",
+  "name": "Kali Mandir, Mirpur Beribadh Road",
+  "name_bn": "কালী মন্দির, মিরপুর বেড়িবাঁধ রোড",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Goran Chatbari, Mirpur",
+  "area_bn": "গোড়ান চটবাড়ি, মিরপুর",
+  "lat": 23.8180427,
+  "lng": 90.3425144,
+  "pin": "area",
+  "coordSource": "https://www.openstreetmap.org/node/13251973299",
+  "status": "pending",
+  "puja": "kali",
+  "address": "Mirpur Beribadh Road, Goran Chatbari, Dhaka 1216",
+  "description": "A Kali temple on Mirpur Beribadh Road (Goran Chatbari), mapped on OpenStreetMap. Its 2026 Shyama Puja programme isn't published, so ask on the spot.",
+  "sources": [
+   {
+    "title": "OpenStreetMap, Kali Mandir, Mirpur Beribadh Road (ODbL)",
+    "url": "https://www.openstreetmap.org/node/13251973299"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "dayaganj-jelepara-kali-temple",
+  "name": "Dayaganj Jelepara Kali Temple",
+  "name_bn": "দয়াগঞ্জ জেলেপাড়া কালী মন্দির",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Dayaganj",
+  "area_bn": "দয়াগঞ্জ",
+  "lat": 23.7107736,
+  "lng": 90.4264771,
+  "pin": "area",
+  "coordSource": "https://www.openstreetmap.org/node/11775069399",
+  "status": "pending",
+  "puja": "kali",
+  "address": "Doyagonj Natun Rasta, Rishipara, Dayaganj, Dhaka 1232",
+  "description": "The fishing community's Kali temple in Dayaganj (south-east of Old Dhaka), mapped on OpenStreetMap. Its 2026 Shyama Puja programme isn't published, so ask on the spot.",
+  "sources": [
+   {
+    "title": "OpenStreetMap, Dayagunj Jelepara Kali Temple (ODbL)",
+    "url": "https://www.openstreetmap.org/node/11775069399"
    }
   ],
   "lastVerified": "2026-11-07"
