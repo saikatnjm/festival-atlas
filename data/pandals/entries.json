@@ -2515,5 +2515,145 @@
    }
   ],
   "lastVerified": "2026-10-31"
+ },
+ {
+  "id": "ramna-kali-mandir-shyama-puja",
+  "name": "Ramna Kali Mandir Shyama Puja",
+  "name_bn": "রমনা কালী মন্দিরের শ্যামাপুজো",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Ramna, beside Suhrawardy Udyan",
+  "area_bn": "রমনা, সোহরাওয়ার্দী উদ্যানের পাশে",
+  "lat": 23.74,
+  "lng": 90.40222,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Ramna_Thana",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "address": "Beside Suhrawardy Udyan, south side of Ramna Park, opposite Bangla Academy, Dhaka",
+  "description": "Dhaka's best-known Kali temple holds Shyama Puja on the Kartik new-moon night, with the main puja at midnight (Nishita in Dhaka: 11:16 pm to 12:08 am on 8 November 2026, per Drik Panchang). Dhaka Tribune names it among the city's Kali Puja temples, where the puja begins at midnight followed by anjali, homa and mahaprasad.",
+  "sources": [
+   {
+    "title": "Dhaka Tribune: Hindu community to celebrate Kali Puja Monday (2025)",
+    "url": "https://www.dhakatribune.com/bangladesh/394355/hindu-community-to-celebrate-kali-puja-monday"
+   },
+   {
+    "title": "Drik Panchang, Bengal Kali Puja 2026 (Dhaka)",
+    "url": "https://www.drikpanchang.com/diwali/kali-puja/bengal-kalipuja-date-time.html?geoname-id=1185241&year=2026"
+   },
+   {
+    "title": "Wikipedia, Ramna Kali Mandir",
+    "url": "https://en.wikipedia.org/wiki/Ramna_Kali_Mandir"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "dhakeshwari-shyama-puja",
+  "name": "Dhakeshwari National Temple Shyama Puja",
+  "name_bn": "ঢাকেশ্বরী জাতীয় মন্দিরের শ্যামাপুজো",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Bakshi Bazar, Old Dhaka",
+  "area_bn": "বকশীবাজার, পুরান ঢাকা",
+  "lat": 23.7226056,
+  "lng": 90.3900222,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Dhakeshwari_Temple",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "address": "Dhakeshwari Road, Bakshi Bazar, Dhaka",
+  "description": "The national temple of Bangladesh is the first stop for most Dhaka families on Shyama Puja night: lamps all over the compound and the midnight puja. Dhaka Tribune lists it first among the city's Kali Puja temples.",
+  "sources": [
+   {
+    "title": "Dhaka Tribune: Hindu community to celebrate Kali Puja Monday (2025)",
+    "url": "https://www.dhakatribune.com/bangladesh/394355/hindu-community-to-celebrate-kali-puja-monday"
+   },
+   {
+    "title": "Wikipedia, Dhakeshwari Temple",
+    "url": "https://en.wikipedia.org/wiki/Dhakeshwari_Temple"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "ramakrishna-mission-dhaka-kali-puja",
+  "name": "Ramakrishna Math and Mission, Dhaka: Kali Puja",
+  "name_bn": "রামকৃষ্ণ মঠ ও মিশন, ঢাকা: কালীপুজো",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Gopibagh / Tikatuli",
+  "area_bn": "গোপীবাগ / টিকাটুলী",
+  "lat": 23.7209,
+  "lng": 90.4236,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Ramakrishna_Mission_Temple,_Dhaka",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "address": "R. K. Mission Road, Dhaka",
+  "description": "The Math's Kali Puja runs through the night: in 2025 the special puja began at 9:30 pm, pushpanjali was at 4:15 am and khichuri prasad was served from 5:30 am to about 5,000 people (the Math's own report). The 2026 programme was not published when we checked.",
+  "sources": [
+   {
+    "title": "Ramakrishna Math & Mission Dhaka: The Celebration of Sri Sri Kali Puja 2025 (26 Oct 2025)",
+    "url": "https://media.dhakarkmm.org/the-celebration-of-sri-sri-kali-puja-2025-1333"
+   },
+   {
+    "title": "Dhaka Tribune: Hindu community to celebrate Kali Puja Monday (2025)",
+    "url": "https://www.dhakatribune.com/bangladesh/394355/hindu-community-to-celebrate-kali-puja-monday"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "siddheshwari-kali-mandir-shyama-puja",
+  "name": "Siddheshwari Kali Mandir Shyama Puja",
+  "name_bn": "সিদ্ধেশ্বরী কালী মন্দিরের শ্যামাপুজো",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Siddheshwari",
+  "area_bn": "সিদ্ধেশ্বরী",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "description": "An old Kali temple in central Dhaka (Siddheshwari, near Mouchak), named by Dhaka Tribune among the temples where the Kali Puja begins at midnight. No exact pin yet: ask for 'Siddheshwari Kali Mandir' near Mouchak crossing.",
+  "sources": [
+   {
+    "title": "Dhaka Tribune: Hindu community to celebrate Kali Puja Monday (2025)",
+    "url": "https://www.dhakatribune.com/bangladesh/394355/hindu-community-to-celebrate-kali-puja-monday"
+   }
+  ],
+  "lastVerified": "2026-11-07"
+ },
+ {
+  "id": "shankhari-bazar-tanti-bazar-kali-puja",
+  "name": "Shankhari Bazar and Tanti Bazar Kali Puja",
+  "name_bn": "শাঁখারীবাজার ও তাঁতীবাজারের কালীপুজো",
+  "country": "BD",
+  "city": "Dhaka",
+  "area": "Old Dhaka",
+  "area_bn": "পুরান ঢাকা",
+  "lat": 23.7096,
+  "lng": 90.4073,
+  "pin": "area",
+  "coordSource": "https://en.wikipedia.org/wiki/Shankhari_Bazaar",
+  "year": 2026,
+  "status": "confirmed",
+  "puja": "kali",
+  "address": "Shankhari Bazar lane, off Islampur Road, Old Dhaka; Tanti Bazar is the next lane north",
+  "description": "Old Dhaka's conch-shell lane and the neighbouring Tanti Bazar hold what Dhaka Tribune calls the city's largest Kali Puja celebration: makeshift pandals, decorated temples (including the Shib Mandir) and lamps along the lanes, with Bangla Bazar close by. Walk; the lanes are too narrow for cars.",
+  "sources": [
+   {
+    "title": "Dhaka Tribune: Hindu community to celebrate Kali Puja Monday (2025)",
+    "url": "https://www.dhakatribune.com/bangladesh/394355/hindu-community-to-celebrate-kali-puja-monday"
+   },
+   {
+    "title": "Wikipedia, Shankhari Bazaar",
+    "url": "https://en.wikipedia.org/wiki/Shankhari_Bazaar"
+   }
+  ],
+  "lastVerified": "2026-11-07"
  }
 ]

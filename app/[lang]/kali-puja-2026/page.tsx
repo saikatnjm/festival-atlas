@@ -3,7 +3,10 @@ import Link from "next/link";
 import { getDict } from "@/data/i18n";
 import type { Region } from "@/data/events/events";
 import { CRACKERS, CROWD, KALI_2026, KALI_PANDALS_TEXT as KP, KALI_TEXT as T, KALI_TIMINGS, KALI_WEEK } from "@/data/kali-puja";
+import KaliPlanner from "@/components/kali/KaliPlanner";
+import { fun } from "@/data/i18n/fun";
 import { areaOf, cityName, nameOf, pandals, pujaOf, sortPandals } from "@/data/pandals";
+import { toItems } from "@/data/pandals/view";
 import { getArticle } from "@/data/blog";
 import { regionInfo } from "@/data/local/content";
 import { TIMINGS_TEXT } from "@/data/puja-timings";
@@ -65,7 +68,14 @@ export default async function KaliPujaPage({ params }: { params: Promise<Params>
   });
 
   const kaliPandals = sortPandals(pandals.filter((p) => pujaOf(p) === "kali"));
-  const kaliCities = [...new Set(kaliPandals.map((p) => p.city))];
+  // Dhaka first (the most-asked list), then Kolkata, then the rest in data order.
+  const CITY_ORDER = ["Dhaka", "Kolkata"];
+  const kaliCities = [...new Set(kaliPandals.map((p) => p.city))].sort((a, b) => {
+    const ia = CITY_ORDER.indexOf(a);
+    const ib = CITY_ORDER.indexOf(b);
+    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  });
+  const planItems = toItems(lang).filter((p) => p.puja === "kali");
 
   return (
     <article>
@@ -132,12 +142,26 @@ export default async function KaliPujaPage({ params }: { params: Promise<Params>
         <p className="fineprint">{T.bdHoliday[lang]}</p>
       </section>
 
+      {planItems.length ? (
+        <section className="home-section" aria-labelledby="kali-plan">
+          <h2 id="kali-plan">{fun.kaliPlan.h2[lang]}</h2>
+          <p className="section-lead">{fun.kaliPlan.lead[lang]}</p>
+          <KaliPlanner
+            lang={lang}
+            items={planItems}
+            cityLabels={Object.fromEntries([...new Set(planItems.map((p) => p.city))].map((c) => [c, cityName(c, lang)]))}
+            mapAria={t.puja.mapAria}
+            mapLoading={t.puja.mapLoading}
+          />
+        </section>
+      ) : null}
+
       {kaliPandals.length ? (
         <section className="home-section" aria-labelledby="kali-pandals">
           <h2 id="kali-pandals">{KP.h2[lang]}</h2>
           <p className="section-lead">{KP.lead[lang]}</p>
           {kaliCities.map((city) => (
-            <div key={city}>
+            <div key={city} id={`city-${city.toLowerCase()}`}>
               <h3>{cityName(city, lang)}</h3>
               <ul className="link-list">
                 {kaliPandals
@@ -159,6 +183,12 @@ export default async function KaliPujaPage({ params }: { params: Promise<Params>
                     );
                   })}
               </ul>
+              {city === "Dhaka" ? (
+                <p className="fineprint">
+                  {KP.dhakaNote[lang]} <Src source={KP.dhakaSource} label={T.sources[lang]} />{" "}
+                  <Link href={withLang(lang, "/add-pandal")}>{fun.places.addCta[lang]}</Link>
+                </p>
+              ) : null}
             </div>
           ))}
           <p className="cta-row">

@@ -3,6 +3,11 @@
 Start with `AGENTS.md` (working contract for any model/tool), then this file, newest section first.
 The forward plan lives in `docs/ROADMAP.md` (one pipeline item at a time).
 
+## Kali Puja night planner + Dhaka Shyama Puja venues (latest, 2026-11-07)
+- **Five Dhaka `puja: "kali"` entries** (Ramna Kali Mandir, Dhakeshwari, Ramakrishna Math (2025 programme: puja 9:30 pm, pushpanjali 4:15 am, khichuri 5:30 am), Siddheshwari (no pin yet), Shankhari + Tanti Bazar), sourced to Dhaka Tribune's Kali Puja temple list (2025), the Math's own report and Drik's Dhaka Nishita. Each has its own `/puja/<id>` page, Bangla names, pins where sourced. The hub lists Dhaka first and notes the other venues Dhaka Tribune names (Baradeshwari Kalimata, Postogola, Biharilal Jeo, Bangla Bazar) without pins.
+- **Planner** (`components/kali/KaliPlanner.tsx`, on `/kali-puja-2026#plan`): city chips (Dhaka first), tap places or map pins → ordered list (move/remove), "Whole route in Google Maps" (walking directions with waypoints; pins by coordinates, pin-less places by name), "Send to friends" (share sheet / copied link `?plan=id,id`), saved in `localStorage` (`fa:kali:plan:2026`). City labels come from the server so the directory JSON stays out of the client bundle. Not run here; CI runs it. Smoke: planner heading, Ramna Bangla name, Ramna pandal page.
+- Links to share: `https://pujoguide.vercel.app/bn/kali-puja-2026#city-dhaka` (Dhaka list) and `…/bn/kali-puja-2026#plan` (planner).
+
 ## 103 new pages: months, Ekadashis, 2027 festivals, stories (2026-11-02)
 Owner asked for 50+ SEO pages in a day. Keyword research (cheap agent; no volume data, ranked by seasonality and competition) → Sonnet drafting agents (2 at a time) → hand checks against existing pages and Drik → wired, verified, pushed per batch.
 - **Month pages** `/calendar-2027/<month>` (12, `data/festivals/months-2027.ts`, one dynamic route): generated from the sourced festival pages and the Ekadashi/Purnima/Amavasya/Sankashti/Pradosh/Masik lists, each row keeping its own source; festivals de-duplicated (a festival's own page wins); marriage/Griha Pravesh counts. Linked from the year hub.
@@ -112,7 +117,7 @@ Roadmap item 5. Not pushed yet.
 - **Data model**: optional `puja: "kali"` on entries (absent = Durga Puja), `pujaOf()`; validator accepts only `"kali"`. 14 entries: Naihati Boro Maa (UNI 25 Oct 2026: no VIP gate), Fatakesto, Somen Mitra's, Naba Rabin Sangha, Pathuriaghata Byayam Samity, Janbazar Sammilita, Haowa Shokal (Baranagar), Barisha Shanti Sangha, Shyamapally Shyama Sangha, Mainak Club, Keoratala Mahashmashan, ABS Sporting, Nabapally Association (Barasat), Girish Park Five Star. Source for most: Kolkata Khoj "Best Kali Puja Pandals 2026" (checked 27 Oct 2026, says its themes are 2025's), so 2025 themes sit in `history` and every description says the 2026 theme isn't announced yet. Pins: Wikipedia locality pages (Amherst Street = Raja Rammohan Roy Sarani); Naba Rabin Sangha and Mainak Club have no sourced pin. New cities Naihati, Barasat, Baranagar in `geo-bn.json`.
 - **Directory**: "🌑 Kali Puja" chip and badge; `puja` filter in the URL (`/puja?puja=kali`). Collections (`/puja/kolkata|dhaka|abroad`) and home city counts are Durga-only (map links add `&puja=durga`).
 - **Pandal page**: title "{name}: Kali Puja 2026 in {place}" (dict templates now take `{puja}`), Event JSON-LD on 8 Nov, breadcrumb to `/kali-puja-2026`, "same city" list stays within the same puja.
-- **`/kali-puja-2026`**: "Kali Puja pandals 2026: Kolkata, Barasat, Naihati" section grouped by city with 2025 themes, ItemList JSON-LD, map link.
+- **`/kali-puja-2026`**: "Where to go: Dhaka, Kolkata, Barasat, Naihati" section grouped by city with 2025 themes, ItemList JSON-LD, map link.
 - Verified in the scratch copy (Node 24): validate (92 entries), 51/51 tests (filter + collections updated), build, typecheck, smoke 171/171 (7 new).
 - **Plan for calendar landing pages** (Ekadashi, Purnima/Amavasya, festival hubs, calendar 2027): `docs/ROADMAP.md` → "Calendar landing pages". Next: C1 `/jagaddhatri-puja-2026` with a reusable festival-page renderer.
 

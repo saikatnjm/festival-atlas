@@ -1912,6 +1912,93 @@ h3 {
   margin: 0;
 }
 
+/* Kali Puja night planner */
+.kplan-grid {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-2) 0;
+}
+@media (min-width: 52rem) {
+  .kplan-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+.kplan-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+.kplan-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding: var(--space-2);
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+}
+.kplan-item.is-on {
+  box-shadow: 4px 4px 0 var(--teal);
+}
+.kplan-item.is-selected {
+  outline: 3px solid var(--marigold);
+}
+.kplan-text {
+  flex: 1;
+  min-width: 0;
+}
+.kplan-text .entry-name {
+  margin: 0 0 0.2rem;
+  font-size: 1.05rem;
+}
+.kplan-text .entry-desc {
+  margin: 0.3rem 0 0;
+  font-size: 0.9rem;
+}
+.kplan-add {
+  flex: none;
+  white-space: nowrap;
+}
+.kplan-map .map-shell {
+  position: relative;
+  height: 50dvh;
+  min-height: 20rem;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.kplan-plan {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--coral);
+}
+.kplan-plan h3 {
+  margin: 0 0 var(--space-1);
+}
+.kplan-stops {
+  margin: 0 0 var(--space-2);
+  padding-left: 1.4rem;
+  display: grid;
+  gap: 0.4rem;
+}
+.kplan-stops li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  align-items: center;
+}
+.kplan-stop-btns {
+  display: inline-flex;
+  gap: 0.3rem;
+  flex: none;
+}
+
 /* Community-added places in the explorer */
 .community-places {
   margin-top: var(--space-3);

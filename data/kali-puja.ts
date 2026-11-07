@@ -152,11 +152,16 @@ export const KALI_TEXT = {
 
 /** The Kali Puja pandal list on /kali-puja-2026 (entries are `puja: "kali"` in data/pandals/entries.json). */
 export const KALI_PANDALS_TEXT = {
-  h2: l("কালীপুজোর প্যান্ডেল ২০২৬: কলকাতা, বারাসত, নৈহাটি", "Kali Puja pandals 2026: Kolkata, Barasat, Naihati"),
+  h2: l("কোথায় যাবে: ঢাকা, কলকাতা, বারাসত, নৈহাটি", "Where to go: Dhaka, Kolkata, Barasat, Naihati"),
   lead: l(
-    "প্রতিটা পুজোর পাতায় সূত্র, ম্যাপ, ভিড়ের খবর আর পাসপোর্টের টিক। ২০২৬-এর থিম এখনও ঘোষণা হয়নি; যেখানে আছে, সেটা ২০২৫-এর থিম।",
-    "Each puja's page has its sources, a map pin, live crowd reports and a passport tick. 2026 themes aren't announced yet; where a theme is shown, it is 2025's.",
+    "প্রতিটা জায়গার পাতায় সূত্র, ম্যাপ, ভিড়ের খবর আর পাসপোর্টের টিক। ২০২৬-এর থিম এখনও ঘোষণা হয়নি; যেখানে আছে, সেটা ২০২৫-এর থিম।",
+    "Each place's page has its sources, a map pin, live crowd reports and a passport tick. 2026 themes aren't announced yet; where a theme is shown, it is 2025's.",
   ),
   theme2025: l("২০২৫-এর থিম", "2025 theme"),
-  map: l("🗺️ ম্যাপে কালীপুজোর প্যান্ডেল", "🗺️ Kali Puja pandals on the map"),
+  map: l("🗺️ ম্যাপে কালীপুজোর জায়গাগুলো", "🗺️ Kali Puja places on the map"),
+  dhakaNote: l(
+    "ঢাকা ট্রিবিউনের তালিকায় আরও যেসব জায়গার নাম আছে: বড়দেশ্বরী কালীমাতা মন্দির, পোস্তগোলা শ্মশান, সূত্রাপুরের বিহারীলাল জিউ মন্দির, বাংলাবাজার। এগুলোর সঠিক পিন এখনও পাইনি; জানলে ‘পুজো যোগ করো’ থেকে পাঠাও।",
+    "Dhaka Tribune's list also names Baradeshwari Kalimata Mandir, Postogola crematorium, Biharilal Jeo Mandir (Sutrapur) and Bangla Bazar. We have no exact pins for these yet; if you know one, send it from 'Add a pandal'.",
+  ),
+  dhakaSource: { title: "Dhaka Tribune: Hindu community to celebrate Kali Puja Monday (2025)", url: "https://www.dhakatribune.com/bangladesh/394355/hindu-community-to-celebrate-kali-puja-monday" },
 };
